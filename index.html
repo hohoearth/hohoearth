@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduTech Archive | 교육과 기술의 경계를 넓히다</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#111827',
+              muted: '#6b7280',
+              border: '#e5e7eb',
+              light: '#fbfbfd'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Marked.js (마크다운 파서) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- 커스텀 스타일 -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-black selection:text-white">
+
+  <!-- ============================================== -->
+  <!-- 1. 테슬라 스타일 투명 플로팅 헤더 (Glass Nav) -->
+  <!-- ============================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- 브랜드 로고 -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center font-black tracking-tighter text-sm group-hover:scale-105 transition-transform">
+          Ω
+        </div>
+        <span id="brand-title" class="font-extrabold tracking-wider text-sm sm:text-base uppercase text-slate-900">
+          EduTech Archive
+        </span>
+      </a>
+
+      <!-- 중앙 퀵 네비게이션 -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-slate-500">
+        <a href="#showcase" class="hover:text-black transition-colors">주요 활동</a>
+        <a href="#lab" class="hover:text-black transition-colors">AI활용 도구</a>
+        <a href="#archive" class="hover:text-black transition-colors">전체 아카이브</a>
+        <a href="#philosophy" class="hover:text-black transition-colors">선생님 소개</a>
+      </nav>
+
+      <!-- 우측 액션 (검색, 바로가기 버튼) -->
+      <div class="flex items-center gap-3">
+        <a 
+          href="#archive" 
+          class="px-4 py-2 text-xs font-bold rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 transition-all flex items-center gap-2"
+        >
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">활동 검색</span>
+        </a>
+        <button 
+          onclick="ClassroomTools.openPicker()" 
+          class="px-4 py-2 text-xs font-bold rounded-full bg-black text-white hover:bg-zinc-800 transition-all shadow-md shadow-black/10 flex items-center gap-1.5"
+        >
+          <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+          <span>AI활용 도구</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 2. 풀스크린 시네마틱 히어로 섹션 (Clean White Hero) -->
+  <!-- ============================================== -->
+  <section class="relative min-h-[92vh] w-full flex flex-col justify-between pt-28 pb-12 px-6 overflow-hidden bg-gradient-to-b from-indigo-50/40 via-white to-[#fbfbfd]">
+    
+    <!-- 배경 은은한 시네마틱 이미지 & 블렌딩 -->
+    <div class="absolute inset-0 -z-10">
+      <img 
+        src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80" 
+        alt="Hero Background" 
+        class="w-full h-full object-cover opacity-10 scale-105"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#fbfbfd] via-[#fbfbfd]/70 to-transparent"></div>
+    </div>
+
+    <!-- 히어로 중앙 타이포그래피 (테슬라 클린 룩) -->
+    <div class="max-w-5xl mx-auto w-full my-auto text-center space-y-6 pt-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-white text-indigo-600 border border-indigo-100 shadow-sm animate-fade-in-up">
+        <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+        <span id="hero-badge">2026 Education & Tech Archive</span>
+      </div>
+
+      <h1 id="hero-title" class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 leading-tight animate-fade-in-up delay-100">
+        과학·정보 교육활동 & 탐구 아카이브
+      </h1>
+
+      <p id="hero-desc" class="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed animate-fade-in-up delay-200">
+        기술과 과학으로 교실의 경계를 넓히고, 학생들과 함께 탐구하며 만드는 교육을 실천합니다.
+      </p>
+
+      <!-- 듀얼 액션 버튼 -->
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
+        <a 
+          href="#showcase" 
+          class="w-full sm:w-auto px-8 py-4 rounded-xl glass-btn-primary flex items-center justify-center gap-2 tracking-wider uppercase text-xs"
+        >
+          <span>주요 활동 보기</span>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </a>
+        <a 
+          href="#archive" 
+          class="w-full sm:w-auto px-8 py-4 rounded-xl glass-btn-secondary flex items-center justify-center gap-2 tracking-wider uppercase text-xs"
+        >
+          <span>전체 수업 아카이브</span>
+          <i data-lucide="layout-grid" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- 하단 스펙 인디케이터 바 (Clean Spec Bar) -->
+    <div class="max-w-5xl mx-auto w-full pt-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-t border-slate-200/80 text-center">
+        <div>
+          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight" id="stat-classes">12+</div>
+          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 mt-1">수업 아카이브</div>
+        </div>
+        <div>
+          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight" id="stat-projects">8+</div>
+          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 mt-1">과학전람회 & 연구</div>
+        </div>
+        <div>
+          <div class="text-3xl font-black text-emerald-600 font-mono tracking-tight" id="stat-tools">100%</div>
+          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 mt-1">오픈소스 웹 도구</div>
+        </div>
+        <div>
+          <div class="text-3xl font-black text-indigo-600 font-mono tracking-tight" id="stat-total">35+</div>
+          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 mt-1">총 교육활동 기록</div>
+        </div>
+      </div>
+
+      <!-- 아래로 스크롤 안내 -->
+      <div class="text-center pt-2">
+        <a href="#showcase" class="inline-block text-slate-400 hover:text-black transition-colors animate-bounce">
+          <i data-lucide="chevron-down" class="w-6 h-6"></i>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 3. FEATURED SHOWCASE (대형 시네마틱 쇼케이스) -->
+  <!-- ============================================== -->
+  <section id="showcase" class="py-24 px-6 max-w-7xl mx-auto space-y-20">
+    
+    <div class="text-center max-w-3xl mx-auto space-y-3">
+      <span class="text-xs font-bold tracking-widest text-indigo-600 uppercase">Featured Highlights</span>
+      <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">혁신적인 교육활동 쇼케이스</h2>
+      <p class="text-slate-500 text-sm sm:text-base">교실에서 실제 학생들과 함께 만들어낸 깊이 있는 탐구와 기술 결과물입니다.</p>
+    </div>
+
+    <!-- 쇼케이스 1: 스마트 스마트팜 (화이트 카드 룩) -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
+        <!-- 좌측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10">
+          <div class="space-y-4">
+            <span class="px-3.5 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 inline-block">
+              융합과학 & 정보 12차시
+            </span>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              아두이노 & 인공지능 센서로 구현하는 스마트 스마트팜 프로젝트
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              조도, 온습도 센서 데이터 수집부터 머신러닝 생육 예측 모델 구축까지. 단순한 코딩을 넘어 물리적 현상을 측정하고 데이터로 문제를 해결하는 전 과정을 다룹니다.
+            </p>
+          </div>
+
+          <!-- 하단 스펙 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="flex items-center gap-6 text-xs text-slate-500">
+              <div><strong class="text-slate-900 block text-sm font-bold">12차시</strong> 교육과정 설계</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">피지컬 컴퓨팅</strong> 아두이노 센서</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">머신러닝</strong> 생육 최적화</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button 
+                onclick="openDetailModal('class-ai-sensor')" 
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase"
+              >
+                지도안 & 수업 기록 보기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto bg-slate-100">
+          <img 
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80" 
+            alt="Smart Farm Project" 
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-white via-transparent to-transparent opacity-60"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쇼케이스 2: 음향 부양 장치 -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
+        <!-- 좌측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto order-2 lg:order-1 bg-slate-100">
+          <img 
+            src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80" 
+            alt="Acoustic Levitation" 
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-l from-white via-transparent to-transparent opacity-60"></div>
+        </div>
+
+        <!-- 우측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10 order-1 lg:order-2">
+          <div class="space-y-4">
+            <span class="px-3.5 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 inline-block">
+              전국과학전람회 우수상 지도
+            </span>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              초음파 위상배열을 이용한 비접촉식 미세입자 음향 부양 장치
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              40kHz 초음파 트랜스듀서 36개를 최적 배열하여 정상파 노드에 액적 및 미세 플라스틱을 안정적으로 30분 이상 공중에 부양시키는 저비용 연구 장치 개발 사례입니다.
+            </p>
+          </div>
+
+          <!-- 하단 스펙 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="flex items-center gap-6 text-xs text-slate-500">
+              <div><strong class="text-slate-900 block text-sm font-bold">40 kHz</strong> 위상 제어</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">36개</strong> 트랜스듀서 배열</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">1년</strong> 장기 학생 탐구 지도</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button 
+                onclick="openDetailModal('project-sound-levitation')" 
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase"
+              >
+                출품 보고서 & 연구 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 4. INTERACTIVE CLASSROOM LAB (AI활용 도구 섹션) -->
+  <!-- ============================================== -->
+  <section id="lab" class="py-24 px-6 bg-slate-50 border-y border-slate-200/80">
+    <div class="max-w-7xl mx-auto space-y-12">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <span class="text-xs font-bold tracking-widest text-emerald-600 uppercase">Interactive Tools</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1">교실을 바꾸는 AI활용 도구</h2>
+          <p class="text-slate-500 text-sm mt-2">교실 TV나 프로젝터에 띄우고 원클릭으로 실행할 수 있는 실용 유틸리티입니다.</p>
+        </div>
+        <div class="text-xs font-mono font-semibold text-slate-400">
+          INSTANT BROWSER-BASED UTILITIES
+        </div>
+      </div>
+
+      <!-- 도구 2종 카드 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- 도구 1: 랜덤 발표자 추첨기 -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-md hover:shadow-xl transition-all space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center">
+              <i data-lucide="dice-5" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">교실 발표자 & 모둠 랜덤 추첨기</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              학생 번호 범위 지정, 중복 당첨 방지, 역동적인 룰렛 사운드와 함께 수업 참여도를 극대화하는 추첨기입니다.
+            </p>
+          </div>
+          <button 
+            onclick="ClassroomTools.openPicker()" 
+            class="w-full py-4 rounded-xl bg-black hover:bg-slate-800 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-md flex items-center justify-center gap-2"
+          >
+            <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+            <span>지금 바로 추첨기 실행</span>
+          </button>
+        </div>
+
+        <!-- 도구 2: 시각적 집중 타이머 -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-md hover:shadow-xl transition-all space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center">
+              <i data-lucide="clock" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">시각적 모둠 활동 집중 타이머</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              대형 TV 화면에 최적화된 풀스크린 타이머. 1분·3분·5분·10분 원클릭 프리셋 및 종료 카운트다운 비프음 제공.
+            </p>
+          </div>
+          <button 
+            onclick="ClassroomTools.openTimer()" 
+            class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2"
+          >
+            <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+            <span>지금 바로 타이머 실행</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 5. ALL ARCHIVES & EXPLORER (전체 아카이브 탐색기) -->
+  <!-- ============================================== -->
+  <section id="archive" class="py-24 px-6 max-w-7xl mx-auto space-y-10">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
+      <div>
+        <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">Complete Archive</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1">교육활동 전체 아카이브</h2>
+      </div>
+
+      <!-- 실시간 검색창 -->
+      <div class="relative w-full md:w-80">
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="수업, 도구, 키워드 검색..." 
+          class="w-full pl-10 pr-4 py-3 text-sm rounded-2xl bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition shadow-sm"
+        />
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 탭 버튼 목록 -->
+    <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <!-- JavaScript로 동적 렌더링 -->
+    </div>
+
+    <!-- 선택된 태그 필터 배너 -->
+    <div id="active-tag-banner" class="hidden items-center gap-2"></div>
+
+    <!-- 활동 카드 그리드 -->
+    <div id="items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- JavaScript로 동적 렌더링 -->
+    </div>
+
+    <!-- 검색 결과 없음 -->
+    <div id="empty-state" class="hidden py-20 text-center space-y-4">
+      <div class="w-16 h-16 rounded-full bg-slate-100 border border-slate-200 mx-auto flex items-center justify-center text-slate-400">
+        <i data-lucide="inbox" class="w-8 h-8"></i>
+      </div>
+      <p class="text-slate-500 text-sm">해당 조건에 일치하는 활동 기록이 없습니다.</p>
+      <button onclick="setCategory('all'); currentSearchQuery=''; currentTag=''; renderItems();" class="text-xs text-indigo-600 font-semibold underline">
+        전체 보기로 돌아가기
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 6. PHILOSOPHY & PROFILE (선생님 소개 및 교육 철학) -->
+  <!-- ============================================== -->
+  <section id="philosophy" class="py-24 px-6 border-t border-slate-200/80 bg-white">
+    <div class="max-w-4xl mx-auto space-y-12">
+      
+      <div class="rounded-3xl p-8 sm:p-14 border border-slate-200/80 text-center space-y-8 bg-[#fbfbfd] shadow-sm">
+        <div class="w-24 h-24 rounded-full overflow-hidden mx-auto border-2 border-indigo-200 shadow-lg">
+          <img 
+            id="author-avatar" 
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" 
+            alt="Profile" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 id="author-name" class="text-2xl sm:text-3xl font-extrabold text-slate-900">김선생</h3>
+          <p id="author-role" class="text-sm font-bold tracking-wider uppercase text-indigo-600">과학 & 정보·융합 교육 교사</p>
+        </div>
+
+        <blockquote class="text-base sm:text-xl font-medium text-slate-700 max-w-2xl mx-auto leading-relaxed italic">
+          “지식은 화면에서 빠르게 얻을 수 있지만, 끈기와 촉각적 확신은 학생이 직접 물질과 마찰하며 실패할 때 비로소 태어납니다.”
+        </blockquote>
+
+        <p id="author-bio" class="text-sm text-slate-500 max-w-xl mx-auto leading-relaxed">
+          기술과 과학으로 교실의 경계를 넓히고, 학생들과 함께 탐구하며 만드는 교육을 실천합니다.
+        </p>
+
+        <!-- 소셜 & 연락처 링크 -->
+        <div id="social-links" class="flex items-center justify-center gap-3 pt-4 border-t border-slate-200"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 7. 푸터 (Footer) -->
+  <!-- ============================================== -->
+  <footer class="py-12 px-6 border-t border-slate-200 bg-[#fbfbfd] text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="flex items-center justify-center gap-3 uppercase tracking-widest text-[11px] text-slate-600 font-bold">
+        <span>EduTech Archive</span>
+        <span>•</span>
+        <span>Clean Studio Design</span>
+        <span>•</span>
+        <span>Open Source</span>
+      </div>
+      <p class="text-slate-400">
+        학생들과 함께한 탐구의 여정, 그리고 앞으로 펼쳐질 배움의 기록을 모았습니다.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- 8. 상세 모달 (클린 화이트 모달) -->
+  <!-- ============================================== -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
+    <div class="relative w-full max-w-3xl max-h-[90vh] bg-white rounded-3xl border border-slate-200 overflow-hidden flex flex-col shadow-2xl">
+      <!-- 닫기 버튼 -->
+      <button 
+        onclick="closeDetailModal()" 
+        class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 backdrop-blur-md transition"
+      >
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- 모달 스크롤 본문 -->
+      <div id="detail-modal-body" class="overflow-y-auto flex-1"></div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 9. 수업 웹 도구 모달 -->
+  <!-- ============================================== -->
+  <div id="tool-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+        <h3 id="tool-modal-title" class="font-bold text-lg text-slate-900 flex items-center gap-2"></h3>
+        <button 
+          onclick="ClassroomTools.closeModal()" 
+          class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:text-slate-800 flex items-center justify-center transition"
+        >
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="tool-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 스크립트 로드 순서 -->
+  <script src="data/site-config.js"></script>
+  <script src="data/items.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
