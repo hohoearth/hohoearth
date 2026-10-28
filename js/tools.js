@@ -2,6 +2,12 @@
 // 🛠️ 교실 수업용 내장 인터랙티브 도구 모듈 (Clean Light UI)
 // ==========================================
 
+function safeCreateIcons() {
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    safeCreateIcons();
+  }
+}
+
 window.ClassroomTools = {
   picker: {
     isRunning: false,
@@ -69,7 +75,7 @@ window.ClassroomTools = {
       </div>
     `;
 
-    lucide.createIcons();
+    safeCreateIcons();
     modal.classList.remove("hidden");
     modal.classList.add("flex");
   },
@@ -163,7 +169,7 @@ window.ClassroomTools = {
       </div>
     `;
 
-    lucide.createIcons();
+    safeCreateIcons();
     this.updateTimerDisplay();
     modal.classList.remove("hidden");
     modal.classList.add("flex");

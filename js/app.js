@@ -6,13 +6,23 @@ let currentCategory = "all";
 let currentSearchQuery = "";
 let currentTag = "";
 
+function safeCreateIcons() {
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    safeCreateIcons();
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  renderSiteConfig();
-  renderCategoryTabs();
-  renderItems();
-  setupEventListeners();
-  setupScrollEffects();
-  lucide.createIcons();
+  try {
+    renderSiteConfig();
+    renderCategoryTabs();
+    renderItems();
+    setupEventListeners();
+    setupScrollEffects();
+    safeCreateIcons();
+  } catch (err) {
+    console.error("Initialization error:", err);
+  }
 });
 
 // 1. 헤더 스크롤 효과
@@ -118,7 +128,7 @@ function setCategory(catId) {
   currentTag = "";
   renderCategoryTabs();
   renderItems();
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 // 4. 아이템 목록 렌더링 (화이트 카드 갤러리)
@@ -249,7 +259,7 @@ function renderItems() {
     `;
   }).join('');
 
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 // 5. 검색 및 단축키
@@ -352,7 +362,7 @@ function openDetailModal(itemId) {
     </div>
   `;
 
-  lucide.createIcons();
+  safeCreateIcons();
   modal.classList.remove("hidden");
   modal.classList.add("flex");
   document.body.style.overflow = "hidden";
