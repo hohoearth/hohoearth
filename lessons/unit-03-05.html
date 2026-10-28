@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. 허블-르메트르 법칙과 우주 팽창 | 사대부고 2학년 지구과학 (자체교재 p.72~74 & 수업 PPT)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[16/16]</span> Ⅲ. 우주 &gt; 02. 허블-르메트르 법칙과 우주 팽창
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-50 text-purple-800 border border-purple-200">
+          교재 p. 72 ~ 74 &amp; 수업 PPT
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">01. 해수의 성질</span><span class="text-[10px] opacity-70 font-mono">01-01</span></a>
+        <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">02. 해수의 순환</span><span class="text-[10px] opacity-70 font-mono">01-02</span></a>
+        <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">03. 기압과 날씨 변화</span><span class="text-[10px] opacity-70 font-mono">01-03</span></a>
+        <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">04. 태풍과 주요 악기상</span><span class="text-[10px] opacity-70 font-mono">01-04</span></a>
+        <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">05. 엘니뇨와 남방진동</span><span class="text-[10px] opacity-70 font-mono">01-05</span></a>
+        <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">06. 지구의 기후 변화</span><span class="text-[10px] opacity-70 font-mono">01-06</span></a>
+        <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">07. 지층과 암석의 나이</span><span class="text-[10px] opacity-70 font-mono">02-01</span></a>
+        <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">08. 퇴적암과 퇴적 환경</span><span class="text-[10px] opacity-70 font-mono">02-02</span></a>
+        <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">09. 지질시대의 환경과 생물</span><span class="text-[10px] opacity-70 font-mono">02-03</span></a>
+        <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">10. 마그마와 화성암</span><span class="text-[10px] opacity-70 font-mono">02-04</span></a>
+        <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">11. 변성 작용과 변성암</span><span class="text-[10px] opacity-70 font-mono">02-05</span></a>
+        <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">12. 태양계 천체의 운동</span><span class="text-[10px] opacity-70 font-mono">03-01</span></a>
+        <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">13. 별의 물리량</span><span class="text-[10px] opacity-70 font-mono">03-02</span></a>
+        <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">14. H-R도와 별의 진화</span><span class="text-[10px] opacity-70 font-mono">03-03</span></a>
+        <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">15. 외부 은하</span><span class="text-[10px] opacity-70 font-mono">03-04</span></a>
+        <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm"><span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span><span class="text-[10px] opacity-70 font-mono">03-05</span></a>
+        <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">17. 현대 우주론의 정립</span><span class="text-[10px] opacity-70 font-mono">03-06</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-purple-50/70 via-fuchsia-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-purple-50 text-purple-800 border border-purple-200">
+            Ⅲ. 우주 / 2. 은하와 우주
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 p. 72 ~ 74
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1">
+            <i data-lucide="presentation" class="w-3.5 h-3.5"></i>
+            2022 수업 PPT(3-2-2) 완전 연계
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          02. 허블-르메트르 법칙과 우주 팽창
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          올베르스의 역설과 밤하늘의 어둠, 정적 우주론(아인슈타인의 우주 상수 $\Lambda$)과 팽창 우주론(프리드먼 &middot; 르메트르)의 논쟁, 도플러 효과와 흡수선 적색 편이($z = \Delta\lambda/\lambda_0$), 은하의 후퇴 속도($v = cz$), 허블-르메트르 법칙($v = Hr$), 우주의 나이($T = 1/H$)와 크기($R = c/H$), 풍선 팽창 모형, 그리고 <strong>실제 외부 은하 (가)&middot;(나)&middot;(다) 스펙트럼 정량 분석 실습</strong>까지 수업 PPT 내용을 완벽히 담았습니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="../assets/lessons/unit-03-05/practice_galaxies_spectra.jpeg" alt="외부 은하의 스펙트럼과 후퇴 속도 관측" class="w-full h-44 sm:h-52 object-cover rounded-2xl cursor-zoom-in group-hover:scale-105 transition" onclick="openLightbox(this.src, '수업 PPT 수록: 외부 은하의 흡수 스펙트럼 비교 실습 자료')" />
+          <div class="text-[11px] text-center text-slate-500 font-medium pt-1.5">▲ 수업 PPT 외부 은하 스펙트럼 실습 자료</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">01. 해수의 성질</span><span class="text-[10px] opacity-70 font-mono">01-01</span></a>
+        <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">02. 해수의 순환</span><span class="text-[10px] opacity-70 font-mono">01-02</span></a>
+        <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">03. 기압과 날씨 변화</span><span class="text-[10px] opacity-70 font-mono">01-03</span></a>
+        <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">04. 태풍과 주요 악기상</span><span class="text-[10px] opacity-70 font-mono">01-04</span></a>
+        <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">05. 엘니뇨와 남방진동</span><span class="text-[10px] opacity-70 font-mono">01-05</span></a>
+        <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">06. 지구의 기후 변화</span><span class="text-[10px] opacity-70 font-mono">01-06</span></a>
+        <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">07. 지층과 암석의 나이</span><span class="text-[10px] opacity-70 font-mono">02-01</span></a>
+        <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">08. 퇴적암과 퇴적 환경</span><span class="text-[10px] opacity-70 font-mono">02-02</span></a>
+        <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">09. 지질시대의 환경과 생물</span><span class="text-[10px] opacity-70 font-mono">02-03</span></a>
+        <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">10. 마그마와 화성암</span><span class="text-[10px] opacity-70 font-mono">02-04</span></a>
+        <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">11. 변성 작용과 변성암</span><span class="text-[10px] opacity-70 font-mono">02-05</span></a>
+        <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">12. 태양계 천체의 운동</span><span class="text-[10px] opacity-70 font-mono">03-01</span></a>
+        <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">13. 별의 물리량</span><span class="text-[10px] opacity-70 font-mono">03-02</span></a>
+        <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">14. H-R도와 별의 진화</span><span class="text-[10px] opacity-70 font-mono">03-03</span></a>
+        <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">15. 외부 은하</span><span class="text-[10px] opacity-70 font-mono">03-04</span></a>
+        <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm"><span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span><span class="text-[10px] opacity-70 font-mono">03-05</span></a>
+        <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900"><span class="truncate">17. 현대 우주론의 정립</span><span class="text-[10px] opacity-70 font-mono">03-06</span></a>
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 체크리스트 (수업 PPT Slide 3 반영) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span><span>외부 은하의 스펙트럼 관측 자료를 분석하여 <strong>적색 편이량($z$)과 후퇴 속도($v$)</strong>를 구하고, <strong>허블-르메트르 법칙($v = Hr$)</strong>을 유도할 수 있다. (수업 PPT 학습목표)</span></li>
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span><span><strong>허블 상수($H$)의 물리적 의미</strong>를 이해하고, 이를 이용하여 <strong>우주의 나이($T = 1/H$)</strong>와 <strong>관측 가능한 우주의 크기($R = c/H$)</strong>를 계산할 수 있다.</span></li>
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span><span>풍선 표면 모형을 통해 우주에는 <strong>팽창의 중심이 없음</strong>을 설명하고, 우주 팽창을 지지하는 관측 증거들을 설명할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 핵심 개념을 체크하며 복습해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>올베르스의 역설과 2가지 해결</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>정적 우주(우주상수) vs 팽창 우주</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>도플러 효과 &amp; 파장 변화 모식도</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>적색 편이량 (z = &Delta;&lambda; / &lambda;₀)</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>외부 은하의 후퇴 속도 (v = cz)</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>허블-르메트르 법칙 (v = Hr)</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>허블 상수 (67.4 km/s/Mpc)의 의미</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>우주의 나이 (1/H) &amp; 우주의 크기 (c/H)</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>풍선 모형과 중심 없는 균질 팽창</span></label>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>은하 (가)&middot;(나)&middot;(다) 정량 계산 실습</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 자체교재 &amp; 2022 수업 PPT 완벽 통합
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 - 올베르스의 역설 (수업 PPT Slide 4 & 5 반영) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 &middot; 질문</span>
+            <span class="text-xs font-bold text-amber-900">수업 PPT Slide 4 &amp; 5: 왜 밤하늘은 검은색일까?</span>
+          </div>
+          <span class="text-xs text-amber-700 font-mono">Olbers' Paradox</span>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 만약 우주가 무한히 크고 영원불변하며 정적이고, 그 안에 수많은 별들이 균일하게 흩어져 있다면, 어떤 방향을 보더라도 반드시 어떤 별의 표면에 닿게 되어 <strong>밤하늘이 대낮의 태양처럼 눈부시게 밝아야 한다(올베르스의 역설)</strong>. 그런데 실제 밤하늘은 왜 칠흑같이 어두울까?
+        </div>
+
+        <!-- 수업 PPT 사진 자료 (Slide 4 & 5 고화질 이미지) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+          <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-between group">
+            <div class="w-full h-44 flex items-center justify-center overflow-hidden rounded-xl bg-slate-900">
+              <img src="../assets/lessons/unit-03-05/olbers_night_sky.jpeg" alt="어두운 밤하늘과 은하수 (PPT Slide 4)" class="w-full h-full object-cover group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 4: 왜 밤하늘은 어두운가? (올베르스의 역설 질문)')" />
+            </div>
+            <figcaption class="text-[11px] text-slate-600 mt-2 font-bold text-center">▲ PPT Slide 4: 어두운 밤하늘과 은하수</figcaption>
+          </figure>
+
+          <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-between group">
+            <div class="w-full h-44 flex items-center justify-center overflow-hidden rounded-xl bg-slate-900">
+              <img src="../assets/lessons/unit-03-05/olbers_light_sphere.jpeg" alt="우주의 유한한 나이와 빛의 도달 영역 (PPT Slide 5)" class="w-full h-full object-contain p-1 group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 5: 빛의 유한한 속도와 우주의 유한한 나이 모식도')"/>
+            </div>
+            <figcaption class="text-[11px] text-slate-600 mt-2 font-bold text-center">▲ PPT Slide 5: 빛의 도달 한계(유한한 우주)</figcaption>
+          </figure>
+
+          <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-between group">
+            <div class="w-full h-44 flex items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+              <img src="../assets/lessons/unit-03-05/slide_04_olbers.png" alt="수업 PPT 원본 슬라이드 4" class="w-full h-full object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT 원본 슬라이드 4: 올베르스의 역설 질문 슬라이드')" />
+            </div>
+            <figcaption class="text-[11px] text-slate-600 mt-2 font-bold text-center">▲ PPT 슬라이드 4 원본 화면</figcaption>
+          </figure>
+        </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>올베르스의 역설이 해결된 2가지 과학적 이유 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 수업 PPT에서 제시한 2가지 핵심 해법을 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm space-y-3">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1 flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> 수업 PPT Slide 5 공식 해설: 밤하늘이 어두운 2가지 결정적 이유
+            </div>
+            <div class="space-y-2">
+              <div class="p-3 bg-amber-50/80 rounded-xl border border-amber-200">
+                <strong>1. 우주의 나이가 유한하고 빛의 속도가 유한하기 때문 ($c \approx 3 \times 10^5\text{ km/s}$)</strong><br>
+                우주의 역사는 약 138억 년으로 유한합니다. 아무리 별이 많아도 138억 광년보다 더 먼 곳에 있는 별빛은 아직 지구에 도착조차 하지 못했습니다!
+              </div>
+              <div class="p-3 bg-amber-50/80 rounded-xl border border-amber-200">
+                <strong>2. 우주가 팽창하고 있기 때문 (우주론적 적색 편이)</strong><br>
+                우주 공간 자체가 팽창함에 따라 먼 천체에서 오는 빛의 파장이 길어져(적색 편이), 에너지가 큰 가시광선 영역에서 에너지가 훨씬 작은 적외선이나 마이크로파 영역으로 밀려나 사람의 눈에는 보이지 않게 됩니다.
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 pt-1">➔ 결론: 밤하늘이 어둡다는 사실 자체가 <strong>"우주는 영원불변한 정적 공간이 아니라, 시작이 있었고 지금도 팽창하고 있다"</strong>는 거대한 증거입니다!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 -->
+      <section class="space-y-4 scroll-mt-24">
+        <div class="flex items-center gap-3">
+          <span class="px-3.5 py-1 rounded-full text-xs font-black bg-indigo-600 text-white">수치 시뮬레이션</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">🌌 허블 상수($H$) 및 도플러 적색 편이($z$)에 따른 후퇴 속도&middot;거리&middot;우주 나이 시뮬레이터</h3>
+        </div>
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+          흡수선의 기준 정지 파장($\lambda_0$)과 관측 파장($\lambda$), 그리고 허블 상수($H$)를 직접 조절하여 <strong>적색 편이량($z = \Delta\lambda/\lambda_0$)</strong>, <strong>후퇴 속도($v = cz$)</strong>, <strong>은하까지의 거리($r = v/H$)</strong>, 그리고 <strong>우주의 나이($T = 1/H$)</strong>가 어떻게 연동되어 변하는지 확인해보세요.
+        </p>
+        
+        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-md border border-slate-800">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-purple-500 text-white text-xs font-black">수치 시뮬레이션</span>
+              <h4 class="font-extrabold text-base sm:text-lg">도플러 적색 편이 &amp; 허블 법칙 실시간 연산기</h4>
+            </div>
+            <span class="text-xs text-slate-400 font-mono">v = c&middot;z = H&middot;r | T = 1/H</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+            <div class="lg:col-span-6 space-y-4">
+              <div>
+                <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+                  <span>기준 정지 파장 ($\lambda_0$)</span>
+                  <span id="hubble-lambda0-disp" class="text-emerald-400 font-mono text-xs font-bold">395.0 nm (수업 PPT 칼슘 흡수선 기준)</span>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="setBaseLambda(395)" class="px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-700 text-xs font-bold">수업 PPT 기준선 (395 nm)</button>
+                  <button onclick="setBaseLambda(400)" class="px-2.5 py-1 rounded-lg bg-slate-700 text-slate-300 border border-slate-600 text-xs font-bold">교재 기준선 (400 nm)</button>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+                  <span>관측된 흡수선 파장 ($\lambda$)</span>
+                  <span id="hubble-lambda-val" class="text-rose-400 font-mono text-sm font-bold">411.0 nm (PPT 은하 가)</span>
+                </div>
+                <input id="hubble-lambda" type="range" min="395" max="500" step="0.5" value="411" class="w-full accent-rose-400 cursor-pointer" oninput="updateHubbleSim()" />
+                <div class="flex justify-between text-[10px] text-slate-500">
+                  <span>395 nm (정지 z=0)</span>
+                  <span>439 nm (PPT 은하 다)</span>
+                  <span>500 nm (초원거리 은하)</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+                  <span>허블 상수 ($H$)</span>
+                  <span id="hubble-h0-val" class="text-purple-400 font-mono text-sm font-bold">67.4 km/s/Mpc (플랑크 관측값)</span>
+                </div>
+                <input id="hubble-h0" type="range" min="50" max="100" step="0.2" value="67.4" class="w-full accent-purple-400 cursor-pointer" oninput="updateHubbleSim()" />
+                <div class="flex justify-between text-[10px] text-slate-500">
+                  <span>50 km/s/Mpc</span>
+                  <span>67.4 km/s/Mpc (최신 플랑크)</span>
+                  <span>100 km/s/Mpc</span>
+                </div>
+              </div>
+
+              <!-- 프리셋 버튼: PPT 수업 은하 (가), (나), (다) 바로 불러오기 -->
+              <div class="space-y-1 pt-1">
+                <div class="text-[11px] font-bold text-slate-400">⭐ 수업 PPT 실전 은하 프리셋:</div>
+                <div class="flex flex-wrap gap-2">
+                  <button onclick="setHubblePreset(395, 411, 67.4)" class="px-2.5 py-1.5 rounded-lg bg-indigo-900/80 hover:bg-indigo-800 text-xs font-bold text-indigo-200 border border-indigo-700">은하 (가) 411 nm</button>
+                  <button onclick="setHubblePreset(395, 421, 67.4)" class="px-2.5 py-1.5 rounded-lg bg-indigo-900/80 hover:bg-indigo-800 text-xs font-bold text-indigo-200 border border-indigo-700">은하 (나) 421 nm</button>
+                  <button onclick="setHubblePreset(395, 439, 67.4)" class="px-2.5 py-1.5 rounded-lg bg-indigo-900/80 hover:bg-indigo-800 text-xs font-bold text-indigo-200 border border-indigo-700">은하 (다) 439 nm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-slate-950 p-5 rounded-2xl border border-slate-700/80 flex flex-col justify-between space-y-4">
+              <div class="space-y-3">
+                <div class="text-xs text-slate-400 font-bold uppercase tracking-wider flex items-center justify-between">
+                  <span>천체 관측 연산 결과</span>
+                  <span class="text-[10px] text-emerald-400 font-mono">c = 300,000 km/s</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3 text-center">
+                  <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-400">적색 편이량 (z = &Delta;&lambda;/&lambda;₀)</div>
+                    <div id="hubble-z-disp" class="text-xl font-black font-mono text-rose-300 mt-1">0.041</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-400">후퇴 속도 (v = cz)</div>
+                    <div id="hubble-v-disp" class="text-xl font-black font-mono text-sky-300 mt-1">12,152 km/s</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-400">은하까지의 거리 (r = v/H)</div>
+                    <div id="hubble-r-disp" class="text-xl font-black font-mono text-emerald-300 mt-1">180.3 Mpc</div>
+                    <div id="hubble-ly-disp" class="text-[9px] text-slate-500 font-mono">약 5.88억 광년</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                    <div class="text-[10px] font-bold text-slate-400">계산된 우주의 나이 (T = 1/H)</div>
+                    <div id="hubble-age-disp" class="text-xl font-black font-mono text-purple-300 mt-1">145.1억 년</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+                💡 <strong>핵심 비례 관계:</strong> 파장 이동량($\Delta\lambda$)이 클수록 적색 편이량($z$)과 후퇴 속도($v$)가 커집니다. 허블 상수($H$)가 클수록 거리-후퇴속도 그래프의 기울기가 급해져 같은 속도 대비 거리는 가까워지고, 우주의 나이($1/H$)는 더 젊게 계산됩니다!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ④ 본문 개념 정리 (수업 PPT 21개 슬라이드 완전 반영!) -->
+      <div class="space-y-12">
+        
+        <!-- [섹션 1] 정적 우주론 vs 팽창 우주론의 역사적 대립 (PPT Slide 6 ~ 10) -->
+        <section id="sec-1" class="space-y-6 scroll-mt-24">
+          <div class="flex items-center gap-3">
+            <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">개념 1</span>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 정적 우주 vs 팽창 우주: 우주는 멈춰 있을까? 팽창하고 있을까? (PPT Slide 6~10)</h3>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+            <div class="space-y-4">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(1) 20세기 초 우주론의 격돌: 아인슈타인 vs 프리드먼 &middot; 르메트르</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 아인슈타인의 정적 우주론 카드 -->
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3 flex flex-col justify-between">
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-800 text-xs font-bold">정적 우주론 (Static Universe)</span>
+                      <span class="text-xs text-slate-500 font-mono">1917년</span>
+                    </div>
+                    <h5 class="text-base font-extrabold text-slate-900">알베르트 아인슈타인 (Albert Einstein)</h5>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                      당시 지배적이던 상식에 따라 "우주는 과거나 현재나 영원히 크기가 변하지 않는 정적인 공간"이라고 믿었습니다. 그러나 자신의 일반 상대성 이론에 따르면 우주 속 물질들의 <strong>만유인력(중력)에 의해 우주가 한 점으로 수축&middot;붕괴</strong>해야만 했습니다.
+                    </p>
+                    <div class="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 leading-relaxed">
+                      <strong>⭐ 우주 상수($\Lambda$, Cosmological Constant) 도입:</strong> 우주가 붕괴하지 않고 정적 상태를 유지할 수 있도록, 중력에 반대되는 <strong>밀어내는 척력(반발력)</strong>으로 '우주 상수'를 방정식에 억지로 추가하였습니다.
+                    </div>
+                  </div>
+                  <figure class="mt-3 pt-3 border-t border-slate-200 flex items-center gap-3">
+                    <img src="../assets/lessons/unit-03-05/einstein_portrait.jpeg" alt="아인슈타인 초상화" class="w-14 h-14 rounded-xl object-cover border border-slate-300 cursor-zoom-in shrink-0" onclick="openLightbox(this.src, '알베르트 아인슈타인 (정적 우주론 지지, 우주 상수 도입)')" />
+                    <figcaption class="text-[11px] text-slate-600">
+                      <strong>아인슈타인</strong>: "우주는 멈춰있다. 중력 붕괴를 막으려면 척력을 내는 우주 상수가 필수적이다."
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <!-- 프리드먼과 르메트르의 팽창 우주론 카드 -->
+                <div class="bg-indigo-50/60 rounded-2xl p-5 border border-indigo-200 space-y-3 flex flex-col justify-between">
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-bold">팽창 우주론 (Expanding Universe)</span>
+                      <span class="text-xs text-indigo-700 font-mono">1922~1927년</span>
+                    </div>
+                    <h5 class="text-base font-extrabold text-indigo-950">알렉산더 프리드먼 &amp; 조르주 르메트르</h5>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                      아인슈타인의 장방정식을 수학적으로 면밀히 재검토하여, <strong>우주 상수를 굳이 넣지 않아도 물질의 밀도와 팽창 에너지에 따라 우주는 팽창하거나 수축할 수 있음</strong>을 수학적으로 완벽하게 입증하였습니다.
+                    </p>
+                    <div class="p-3 bg-white rounded-xl border border-indigo-200 text-xs text-slate-800 leading-relaxed space-y-1">
+                      <div><strong>• 프리드먼(1922):</strong> 닫힌 우주, 평탄한 우주, 열린 우주 모델 수학적 해법 발표.</div>
+                      <div><strong>• 르메트르(1927):</strong> 우주는 과거 거대한 '원시 원자(Primeval Atom)'가 폭발하여 팽창을 시작했다고 제안 (빅뱅 우주론의 모태).</div>
+                    </div>
+                  </div>
+                  <figure class="mt-3 pt-3 border-t border-indigo-200 flex items-center gap-3">
+                    <img src="../assets/lessons/unit-03-05/friedmann_portrait.jpeg" alt="프리드먼 초상화" class="w-14 h-14 rounded-xl object-cover border border-indigo-300 cursor-zoom-in shrink-0" onclick="openLightbox(this.src, '알렉산더 프리드먼 (팽창 우주론 수학적 모델 정립)')" />
+                    <figcaption class="text-[11px] text-slate-600">
+                      <strong>프리드먼 &amp; 르메트르</strong>: "수학적 방정식은 우주가 시간에 따라 크기가 변하고 팽창하고 있음을 가리킨다."
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <!-- 허블의 결정적 관측 -->
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center gap-4">
+                <img src="../assets/textbook/fig_03-05_p73_4.png" alt="에드윈 허블" class="w-16 h-16 rounded-xl object-cover border border-emerald-300 shrink-0 cursor-zoom-in" onclick="openLightbox(this.src, '에드윈 허블 (1929년 우주 팽창을 관측적으로 최초 입증)')" />
+                <div class="text-xs sm:text-sm text-emerald-950 leading-relaxed">
+                  <strong>🏆 1929년 에드윈 허블(Edwin Hubble)의 결정적 발견:</strong><br>
+                  윌슨산 천문대의 100인치 망원경으로 외부 은하들을 관측한 결과, 거의 모든 은하들의 스펙트럼에서 파장이 길어지는 <strong>적색 편이</strong>가 나타남을 발견하였습니다! 이로써 팽창 우주론이 승리하였고, 아인슈타인은 우주 상수를 넣었던 것을 <em>"내 인생 최고의 실수(the biggest blunder of my life)"</em>라며 깨끗이 철회하였습니다.
+                </div>
+              </div>
+
+              <!-- 수업 PPT 슬라이드 원본 자료 카드 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <figure class="bg-slate-50 rounded-2xl p-3 border border-slate-200 group">
+                  <div class="h-48 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100">
+                    <img src="../assets/lessons/unit-03-05/slide_08_static_universe.png" alt="PPT Slide 8 정적 우주론" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 8: 정적 우주 - 아인슈타인과 우주 상수')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2">▲ 수업 PPT Slide 8: 정적 우주론과 우주 상수</figcaption>
+                </figure>
+
+                <figure class="bg-slate-50 rounded-2xl p-3 border border-slate-200 group">
+                  <div class="h-48 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100">
+                    <img src="../assets/lessons/unit-03-05/slide_09_expanding_universe.png" alt="PPT Slide 9 팽창 우주론" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 9: 팽창 우주 - 프리드먼과 르메트르')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2">▲ 수업 PPT Slide 9: 팽창 우주론의 해법 제시</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- [섹션 2] 도플러 효과 & 스펙트럼 적색 편이량(z) 및 후퇴 속도(v) (PPT Slide 11 ~ 14) -->
+        <section id="sec-2" class="space-y-6 scroll-mt-24">
+          <div class="flex items-center gap-3">
+            <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">개념 2</span>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 도플러 효과와 적색 편이(Redshift) 및 후퇴 속도($v$) 계산 (PPT Slide 11~14)</h3>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+            
+            <!-- (1) 도플러 효과 원리와 파면 모식도 -->
+            <div class="space-y-4">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(1) 도플러 효과(Doppler Effect)와 파장의 변화 원리 (수업 PPT Slide 12)</span>
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                파동을 방출하는 파원(은하, 자동차)과 관측자가 상대 운동할 때 파동의 파장과 진동수가 변하는 현상입니다. 도로에서 구급차가 다가올 때는 사이렌 소리가 높은 음으로 들리다가, 멀어질 때는 낮은 음으로 바뀌는 현상과 같은 원리입니다.
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3">
+                  <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                    <div class="font-black text-xs text-indigo-700 uppercase tracking-wider">파장의 변화 공식 (수업 PPT Slide 12)</div>
+                    <div class="text-center py-2 bg-white rounded-xl border border-slate-200 text-base sm:text-lg font-mono font-bold text-slate-900">
+                      $$\lambda' = \frac{v \mp v_s}{f}$$
+                    </div>
+                    <div class="text-xs text-slate-600 leading-relaxed">
+                      ($v$: 파동의 전파 속력, $v_s$: 파원의 이동 속도, $f$: 고유 진동수)
+                    </div>
+                  </div>
+
+                  <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                    <div class="p-3 rounded-xl bg-blue-50/80 border border-blue-200 flex items-start gap-2">
+                      <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">청</span>
+                      <div>
+                        <strong>파원이 다가올 때 (진행 방향 앞쪽):</strong> 파면이 빽빽하게 압축되어 파장이 원래보다 짧아짐($\lambda < \lambda_0$) ➔ <strong>청색 편이 (Blue shift)</strong>
+                      </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-rose-50/80 border border-rose-200 flex items-start gap-2">
+                      <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">적</span>
+                      <div>
+                        <strong>파원이 멀어질 때 (진행 방향 뒤쪽):</strong> 파면 사이가 넓게 늘어나 파장이 원래보다 길어짐($\lambda > \lambda_0$) ➔ <strong>적색 편이 (Red shift)</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- PPT Slide 12 주행 차량 파면 모식도 -->
+                <figure class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col items-center justify-between group">
+                  <div class="w-full h-56 flex items-center justify-center overflow-hidden rounded-xl bg-white border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/doppler_wavefront.jpeg" alt="도플러 효과 파면 압축 및 팽창 모식도" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 12: 도플러 효과 파면 모식도 (이동하는 차량 앞뒤 파장 변화)')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 12 수록: 파원의 이동에 따른 파면의 압축과 팽창</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <!-- (2) 적색 편이량(z)과 후퇴 속도(v) 공식 -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-rose-600"></span>
+                <span>(2) 적색 편이량($z$)과 후퇴 속도($v$) 계산 공식 (수업 PPT Slide 13 &middot; 수능 필수!)</span>
+              </h4>
+              
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-7 space-y-4">
+                  <div class="p-5 bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl shadow-sm space-y-3">
+                    <div class="text-xs font-mono font-bold text-indigo-300 uppercase tracking-widest">Core Mathematical Formulas</div>
+                    <div class="space-y-2 text-center py-1">
+                      <div class="text-lg sm:text-xl font-bold font-mono text-rose-300">
+                        $$z = \frac{\Delta\lambda}{\lambda_0} = \frac{\lambda - \lambda_0}{\lambda_0}$$
+                      </div>
+                      <div class="text-xl sm:text-2xl font-black font-mono text-sky-300">
+                        $$\mathbf{v = c \times z = c \times \frac{\lambda - \lambda_0}{\lambda_0}}$$
+                      </div>
+                    </div>
+                    <div class="text-[11px] text-slate-300 pt-2 border-t border-slate-700/80 leading-relaxed grid grid-cols-2 gap-2">
+                      <div>&bull; $\lambda_0$: 기준 정지 파장 (nm)</div>
+                      <div>&bull; $\lambda$: 실제로 관측된 파장 (nm)</div>
+                      <div>&bull; $\Delta\lambda = \lambda - \lambda_0$: 파장 변화량</div>
+                      <div>&bull; $c$: 빛의 속도 ($\approx 3 \times 10^5\text{ km/s}$)</div>
+                    </div>
+                  </div>
+
+                  <div class="text-xs sm:text-sm text-slate-700 space-y-1 leading-relaxed">
+                    <p>💡 <strong>의미 해석:</strong> 적색 편이량 $z$는 단위가 없는 무차원 수치이며, 파장의 상대적 증가율을 나타냅니다. 후퇴 속도($v$)가 빛의 속도($c$)에 비해 충분히 작을 때($v \ll c$) 위 도플러 근사 공식이 매우 정확하게 성립합니다.</p>
+                  </div>
+                </div>
+
+                <div class="md:col-span-5 space-y-3">
+                  <!-- PPT Slide 13 수록 모식도 -->
+                  <figure class="bg-slate-50 rounded-2xl p-3 border border-slate-200 group">
+                    <div class="h-40 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                      <img src="../assets/lessons/unit-03-05/redshift_formula.png" alt="적색 편이량 공식 다이어그램" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 13: 적색 편이량 공식과 파장 이동 스펙트럼 다이어그램')" />
+                    </div>
+                    <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2">▲ PPT Slide 13: 정지 파장 대비 관측 파장의 편이량</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <!-- (3) 거리에 따른 은하 스펙트럼 적색 편이 비교 -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(3) 거리가 먼 은하일수록 적색 편이량이 커진다! (수업 PPT Slide 14)</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <p>
+                    동일한 원소(예: 칼슘 H&middot;K선, 수소 흡수선)에 의해 생기는 흡수선 스펙트럼을 여러 외부 은하에서 비교해보면 다음과 같은 놀라운 규칙성이 발견됩니다:
+                  </p>
+                  <ul class="space-y-2">
+                    <li class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                      <strong>1. 정지 상태 (연구실 실험):</strong> 기준 파장 $\lambda_0$에서 흡수선이 나타남.
+                    </li>
+                    <li class="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200">
+                      <strong>2. 가까운 은하:</strong> 흡수선이 붉은색(장파장) 쪽으로 조금 이동함 ($\Delta\lambda$ 작음 ➔ 후퇴 속도 느림).
+                    </li>
+                    <li class="p-2.5 rounded-xl bg-rose-50/80 border border-rose-200">
+                      <strong>3. 매우 먼 은하:</strong> 흡수선이 붉은색 쪽으로 훨씬 많이 이동함 ($\Delta\lambda$ 큼 ➔ 후퇴 속도 대단히 빠름!).
+                    </li>
+                  </ul>
+                  <p class="font-bold text-slate-900">
+                    ➔ 즉, <strong>은하의 거리가 멀수록 후퇴 속도가 빠르다</strong>는 결정적 단서가 스펙트럼에 그대로 기록되어 있습니다!
+                  </p>
+                </div>
+
+                <!-- PPT Slide 14 외부 은하 스펙트럼 비교 -->
+                <figure class="bg-slate-50 rounded-2xl p-4 border border-slate-200 group flex flex-col justify-between">
+                  <div class="w-full h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/galaxy_spectral_redshift.png" alt="외부 은하 거리별 스펙트럼 비교" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 14: 외부 은하의 거리에 따른 흡수선 적색 편이 비교')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 14 수록: 거리에 비례하여 증가하는 흡수선 이동량</figcaption>
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- [섹션 3] 허블-르메트르 법칙과 우주의 나이 & 크기, 풍선 모형 (PPT Slide 15 ~ 18) -->
+        <section id="sec-3" class="space-y-6 scroll-mt-24">
+          <div class="flex items-center gap-3">
+            <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">개념 3</span>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">3. 허블-르메트르 법칙과 우주의 나이 &middot; 크기 &middot; 풍선 모형 (PPT Slide 15~18)</h3>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+            
+            <!-- (1) 허블-르메트르 법칙 v = Hr -->
+            <div class="space-y-4">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(1) 허블-르메트르 법칙 ($v = Hr$)과 그래프의 기울기 (수업 PPT Slide 15)</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-7 space-y-3">
+                  <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    외부 은하의 후퇴 속도($v$)는 은하까지의 거리($r$)에 정비례합니다.
+                  </p>
+                  <div class="p-4 bg-indigo-50/70 border border-indigo-200 rounded-2xl text-center space-y-1">
+                    <div class="text-xl sm:text-2xl font-black text-indigo-900 font-mono">
+                      $$\mathbf{v = H \times r}$$
+                    </div>
+                    <div class="text-xs text-indigo-700 font-bold">
+                      거리-후퇴 속도 그래프에서 <strong>직선의 기울기 = 허블 상수($H$)</strong>
+                    </div>
+                  </div>
+                  <div class="text-xs text-slate-600 leading-relaxed space-y-1.5">
+                    <div>&bull; <strong>가로축</strong>: 은하까지의 거리 $r$ (단위: $\text{Mpc}$)</div>
+                    <div>&bull; <strong>세로축</strong>: 은하의 후퇴 속도 $v$ (단위: $\text{km/s}$)</div>
+                    <div>&bull; <strong>기울기 ($v/r$)</strong>: 허블 상수 $H$ (단위: $\text{km/s/Mpc}$)</div>
+                  </div>
+                </div>
+
+                <!-- PPT Slide 15 허블 다이어그램 그래프 -->
+                <figure class="md:col-span-5 bg-slate-50 rounded-2xl p-4 border border-slate-200 group flex flex-col justify-between">
+                  <div class="w-full h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/hubble_law_graph.png" alt="허블-르메트르 법칙 그래프" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 15: 허블-르메트르 법칙 그래프 (기울기 = 허블 상수 H)')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 15: 거리-후퇴속도 비례 그래프</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <!-- (2) 최신 허블 상수 관측값과 물리적 의미 -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(2) 허블 상수의 최신 관측값과 물리적 의미 (수업 PPT Slide 16)</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3">
+                  <div class="p-4 rounded-2xl bg-purple-50/80 border border-purple-200 space-y-2">
+                    <div class="font-black text-xs text-purple-900 uppercase">최신 플랑크(Planck) 위성 정밀 관측 결과 (2018)</div>
+                    <div class="text-xl font-black font-mono text-purple-950 text-center py-1">
+                      $$H = 67.4 \pm 0.5\text{ km/s/Mpc}$$
+                    </div>
+                    <p class="text-xs text-purple-900 leading-relaxed">
+                      (참고: 국소 우주의 초신성 관측 결과는 약 $73\text{ km/s/Mpc}$로 측정되어 두 값 사이에 차이가 존재하는 '허블 텐션' 연구가 활발합니다.)
+                    </p>
+                  </div>
+
+                  <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-1.5">
+                    <strong class="text-slate-900">🌟 허블 상수의 정확한 물리적 의미:</strong>
+                    <p>
+                      "은하 사이의 거리가 <strong>$1\text{ Mpc}$ 멀어질 때마다 후퇴 속도가 매초 약 $67.4\text{ km}$씩 증가</strong>한다!"
+                    </p>
+                    <p class="text-slate-500 text-xs">
+                      은하가 공간 속을 로켓처럼 날아가는 것이 아니라, <strong>은하와 은하 사이의 우주 공간 자체가 매초 팽창</strong>하고 있는 것입니다.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- PPT Slide 16 플랑크 관측값 모식도 -->
+                <figure class="bg-slate-50 rounded-2xl p-4 border border-slate-200 group flex flex-col justify-between">
+                  <div class="w-full h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/planck_hubble_constant.png" alt="플랑크 위성 허블 상수 측정값" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 16: 허블 상수의 물리적 의미와 플랑크 위성 관측값')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 16: 허블 상수의 의미와 최신 측정값</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <!-- (3) 우주의 나이와 우주의 크기 유도 -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-emerald-600"></span>
+                <span>(3) 우주의 나이($T = 1/H$)와 관측 가능한 우주의 크기($R = c/H$) (수업 PPT Slide 17)</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-7 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                    <div class="font-bold text-slate-900">1. 우주의 나이 유도 (등속 팽창 가정 시)</div>
+                    <p>우주가 시작된 직후부터 일정한 속도로 팽창해 왔다고 가정하면, 거리 = 속력 &times; 시간($r = v \times T$) 공식에서:</p>
+                    <div class="text-center py-1 font-mono font-bold text-base text-indigo-700">
+                      $$T = \frac{r}{v} = \frac{r}{Hr} = \mathbf{\frac{1}{H}} \approx 138\text{억 년} \sim 145\text{억 년}$$
+                    </div>
+                  </div>
+
+                  <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                    <div class="font-bold text-slate-900">2. 관측 가능한 우주의 크기(우주의 지평선 반지름 $R$)</div>
+                    <p>후퇴 속도가 빛의 속도($v = c$)에 도달하는 경계까지의 거리를 계산하면:</p>
+                    <div class="text-center py-1 font-mono font-bold text-base text-indigo-700">
+                      $$c = H \times R \implies \mathbf{R = \frac{c}{H}} \approx 138\text{억 광년} \sim 145\text{억 광년}$$
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950">
+                    ⭐ <strong>시험 출제 1순위:</strong> 허블 상수($H$)가 커지면 그래프의 기울기가 가팔라져서, <strong>우주의 나이는 젊어지고($1/H$ 감소)</strong>, <strong>우주의 크기는 작아집니다($c/H$ 감소)</strong>!
+                  </div>
+                </div>
+
+                <!-- PPT Slide 17 거속시 및 우주 나이 크기 유도 슬라이드 -->
+                <figure class="md:col-span-5 bg-slate-50 rounded-2xl p-4 border border-slate-200 group flex flex-col justify-between">
+                  <div class="w-full h-56 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/universe_age_size.png" alt="우주의 나이와 크기 공식 다이어그램" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 17: 우주의 나이(1/H)와 크기(c/H) 유도 공식')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 17: 거리-속력-시간 관계와 우주 나이/크기</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <!-- (4) 풍선 모형과 우주 팽창의 중심 (PPT Slide 18) -->
+            <div class="space-y-4 pt-4 border-t border-slate-100">
+              <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                <span>(4) 풍선 팽창 모형과 "우주 팽창의 중심은 어디인가?" (수업 PPT Slide 18)</span>
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <p>
+                    풍선 표면에 여러 개의 동전(은하)을 붙인 뒤 풍선을 불어 팽창시키는 모형을 관찰해봅시다:
+                  </p>
+                  <ul class="space-y-2">
+                    <li class="flex items-start gap-2">
+                      <span class="text-indigo-600 font-bold">&bull;</span>
+                      <div><strong>동전 자체의 크기는 변하지 않는다:</strong> 은하 내부나 태양계는 중력 및 전자기력으로 단단히 묶여 있으므로 공간이 팽창해도 크기가 커지지 않습니다.</div>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-indigo-600 font-bold">&bull;</span>
+                      <div><strong>동전 사이의 거리가 멀어진다:</strong> 풍선 표면(공간 자체)이 늘어나면서 동전 사이의 거리가 멀어집니다.</div>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-indigo-600 font-bold">&bull;</span>
+                      <div><strong>⭐ 팽창의 중심은 없다!</strong> 풍선의 2차원 표면 위에는 중심점이 없습니다. 어떤 동전에 서서 관측하더라도 항상 주변 동전들이 거리에 비례하여 멀어지는 것으로 관측됩니다!</div>
+                    </li>
+                  </ul>
+                  <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 text-indigo-950 font-medium text-xs">
+                    우주 어디에서 관측하든 모든 방향으로 균일하게 팽창하므로, <strong>우주에는 특별한 중심이 존재하지 않습니다(우주 원리).</strong>
+                  </div>
+                </div>
+
+                <!-- PPT Slide 18 풍선 표면 모형 -->
+                <figure class="bg-slate-50 rounded-2xl p-4 border border-slate-200 group flex flex-col justify-between">
+                  <div class="w-full h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/balloon_expansion_model.png" alt="풍선 팽창 모형" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 18: 동전을 붙인 풍선 팽창 실험 모형')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2.5">▲ 수업 PPT Slide 18: 풍선 표면의 팽창과 중심 없는 우주</figcaption>
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- [섹션 4] 수업 PPT 실전 탐구 활동: 외부 은하 (가), (나), (다) 정량 계산 실습 (PPT Slide 19 ~ 21) -->
+        <section id="sec-4" class="space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-rose-600 text-white">수업 PPT 실전 탐구</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">4. 외부 은하 관측 자료 분석 및 정량 계산 실습 (수업 PPT Slide 19~21)</h3>
+            </div>
+            <span class="text-xs font-mono font-bold text-slate-500">Real Astronomical Data</span>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6">
+            
+            <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 text-slate-800 text-xs sm:text-sm leading-relaxed space-y-1.5">
+              <div class="font-black text-indigo-950 flex items-center gap-2 text-sm">
+                <i data-lucide="microscope" class="w-4 h-4 text-indigo-600"></i>
+                <span>[탐구 조건] 정지 상태 기준 파장 및 물리 상수</span>
+              </div>
+              <div>&bull; 정지 상태에서의 칼슘 흡수선 기준 파장: $\mathbf{\lambda_0 = 395\text{ nm}}$</div>
+              <div>&bull; 빛의 전파 속력: $\mathbf{c = 3 \times 10^5\text{ km/s}}$</div>
+              <div>&bull; 세 외부 은하 (가), (나), (다)의 거리와 스펙트럼에서 관측된 파장을 아래 자료를 보고 분석하시오.</div>
+            </div>
+
+            <!-- PPT Slide 19 스펙트럼 원본 고화질 이미지 -->
+            <figure class="bg-slate-50 rounded-2xl p-4 border border-slate-200 group">
+              <div class="w-full flex items-center justify-center overflow-hidden rounded-xl bg-white border border-slate-200 p-2">
+                <img src="../assets/lessons/unit-03-05/practice_galaxies_spectra.jpeg" alt="수업 PPT 은하 가, 나, 다 스펙트럼 관측 자료" class="w-full max-h-72 object-contain group-hover:scale-[1.01] transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 19: 은하 (가), (나), (다) 흡수 스펙트럼 관측 자료 원본')" />
+              </div>
+              <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span>▲ 수업 PPT Slide 19 원본: 정지 상태 및 은하 (가), (나), (다)의 칼슘 흡수선 이동 자료</span>
+              </figcaption>
+            </figure>
+
+            <!-- 인터랙티브 정량 분석 표 (수업 PPT Slide 20 반영) -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h5 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-1.5">
+                  <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i>
+                  <span>[데이터 정리 표] 은하별 파장 변화량 &middot; 적색 편이량 &middot; 후퇴 속도</span>
+                </h5>
+                <button onclick="toggleAnswer('galaxy-calc-reveal')" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+                  <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  <span>수업 PPT 정답 및 계산 결과 펼치기</span>
+                </button>
+              </div>
+
+              <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs">
+                <table class="w-full text-left text-xs sm:text-sm text-slate-800">
+                  <thead class="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200 text-center">
+                    <tr>
+                      <th class="py-3 px-3">은하</th>
+                      <th class="py-3 px-3">거리 ($r$)</th>
+                      <th class="py-3 px-3">관측 파장 ($\lambda$)</th>
+                      <th class="py-3 px-3 bg-indigo-50/50">파장 변화량 ($\Delta\lambda = \lambda - \lambda_0$)</th>
+                      <th class="py-3 px-3 bg-purple-50/50">적색 편이량 ($z = \Delta\lambda/\lambda_0$)</th>
+                      <th class="py-3 px-3 bg-rose-50/50">후퇴 속도 ($v = c \times z$)</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-center font-mono">
+                    <!-- 은하 가 -->
+                    <tr class="hover:bg-slate-50/80 transition">
+                      <td class="py-3 px-3 font-bold font-sans text-slate-900">은하 (가)</td>
+                      <td class="py-3 px-3 font-bold">300 Mpc</td>
+                      <td class="py-3 px-3 text-rose-600 font-bold">411 nm</td>
+                      <td class="py-3 px-3 bg-indigo-50/30">
+                        <span class="font-bold text-indigo-700">16 nm</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(411 - 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-purple-50/30">
+                        <span class="font-bold text-purple-700">0.041</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(16 / 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-rose-50/30">
+                        <span class="font-black text-rose-700 text-sm">약 12,300 km/s</span>
+                        <span class="text-[10px] text-slate-400 font-sans block">(3&times;10⁵ &times; 0.041)</span>
+                      </td>
+                    </tr>
+                    <!-- 은하 나 -->
+                    <tr class="hover:bg-slate-50/80 transition">
+                      <td class="py-3 px-3 font-bold font-sans text-slate-900">은하 (나)</td>
+                      <td class="py-3 px-3 font-bold">430 Mpc</td>
+                      <td class="py-3 px-3 text-rose-600 font-bold">421 nm</td>
+                      <td class="py-3 px-3 bg-indigo-50/30">
+                        <span class="font-bold text-indigo-700">26 nm</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(421 - 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-purple-50/30">
+                        <span class="font-bold text-purple-700">0.066</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(26 / 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-rose-50/30">
+                        <span class="font-black text-rose-700 text-sm">약 19,800 km/s</span>
+                        <span class="text-[10px] text-slate-400 font-sans block">(3&times;10⁵ &times; 0.066)</span>
+                      </td>
+                    </tr>
+                    <!-- 은하 다 -->
+                    <tr class="hover:bg-slate-50/80 transition">
+                      <td class="py-3 px-3 font-bold font-sans text-slate-900">은하 (다)</td>
+                      <td class="py-3 px-3 font-bold">770 Mpc</td>
+                      <td class="py-3 px-3 text-rose-600 font-bold">439 nm</td>
+                      <td class="py-3 px-3 bg-indigo-50/30">
+                        <span class="font-bold text-indigo-700">44 nm</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(439 - 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-purple-50/30">
+                        <span class="font-bold text-purple-700">0.111</span>
+                        <span class="text-[11px] text-slate-400 font-sans block">(44 / 395)</span>
+                      </td>
+                      <td class="py-3 px-3 bg-rose-50/30">
+                        <span class="font-black text-rose-700 text-sm">약 33,300 km/s</span>
+                        <span class="text-[10px] text-slate-400 font-sans block">(3&times;10⁵ &times; 0.111)</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- PPT Slide 21 심화 탐구 토론 질문 -->
+            <div id="galaxy-calc-reveal" class="space-y-4 pt-2">
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+                <div class="font-black text-slate-900 text-sm sm:text-base flex items-center gap-2">
+                  <i data-lucide="message-square-code" class="w-4 h-4 text-indigo-600"></i>
+                  <span>[수업 PPT Slide 21 토론 과제 해설]</span>
+                </div>
+
+                <div class="space-y-3 text-xs sm:text-sm text-slate-800 leading-relaxed">
+                  <div class="p-3.5 bg-white rounded-xl border border-slate-200 shadow-2xs space-y-1.5">
+                    <div class="font-bold text-indigo-900">Q1. 은하까지의 거리와 후퇴 속도 사이에는 어떤 관계가 성립하는가?</div>
+                    <p>
+                      거리 $r$이 300 Mpc ➔ 430 Mpc ➔ 770 Mpc로 멀어짐에 따라 후퇴 속도 $v$도 12,300 km/s ➔ 19,800 km/s ➔ 33,300 km/s로 비례하여 증가합니다. 즉, <strong>은하의 후퇴 속도는 은하까지의 거리에 정비례($v \propto r$)</strong>하며 허블-르메트르 법칙이 성립함을 직접 확인할 수 있습니다.
+                    </p>
+                  </div>
+
+                  <div class="p-3.5 bg-white rounded-xl border border-slate-200 shadow-2xs space-y-1.5">
+                    <div class="font-bold text-indigo-900">Q2. 만약 은하 (나)에 있는 외계인 관측자가 은하 (다)를 관측한다면 어떻게 보일까?</div>
+                    <p>
+                      우리은하와 은하 (나), (다)가 일직선상에 있다고 가정할 때, 은하 (나)에서 본 은하 (다)까지의 거리는 $770 - 430 = 340\text{ Mpc}$입니다. 은하 (나)의 관측자가 보더라도 은하 (다)의 스펙트럼에서 적색 편이가 관측되며, 후퇴 속도는 $33,300 - 19,800 = 13,500\text{ km/s}$로 멀어지는 것으로 관측됩니다. 즉, <strong>우리은하뿐만 아니라 어떤 은하에서 보더라도 똑같이 주변 은하들이 멀어지는 팽창 우주가 관측됩니다!</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PPT Slide 20 & 21 원본 카드 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <figure class="bg-slate-50 rounded-2xl p-3 border border-slate-200 group">
+                  <div class="h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/slide_20_table_calc.png" alt="수업 PPT Slide 20 표 계산 슬라이드" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 20: 은하 (가), (나), (다) 표 완성 정답 슬라이드')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2">▲ 수업 PPT Slide 20: 관측 자료 계산 표 원본</figcaption>
+                </figure>
+
+                <figure class="bg-slate-50 rounded-2xl p-3 border border-slate-200 group">
+                  <div class="h-44 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-slate-100 p-2">
+                    <img src="../assets/lessons/unit-03-05/slide_21_discussion.png" alt="수업 PPT Slide 21 토론 질문 슬라이드" class="max-h-full w-auto object-contain group-hover:scale-105 transition cursor-zoom-in" onclick="openLightbox(this.src, '수업 PPT Slide 21: 거리와 후퇴속도의 관계 및 다른 은하에서의 관측 토론')" />
+                  </div>
+                  <figcaption class="text-[11px] text-center text-slate-600 font-semibold mt-2">▲ 수업 PPT Slide 21: 탐구 토론 질문 슬라이드</figcaption>
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 &amp; 실전 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">버튼을 클릭하면 단계별 정답과 풀이 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <!-- 문제 1 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">
+                <strong>[교재 p.73 계산 적용]</strong> 정지 상태에서의 기준 파장($\lambda_0$)이 400 nm인 흡수선이 어떤 외부 은하 A의 스펙트럼에서 440 nm로 관측되었다. 빛의 속도 $c = 3 \times 10^5\text{ km/s}$, 허블 상수 $H = 75\text{ km/s/Mpc}$ 일 때, 은하 A의 (1) 적색 편이량 $z$, (2) 후퇴 속도 $v$, (3) 은하까지의 거리 $r$을 구하시오.
+              </p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed space-y-1.5">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 단계별 풀이
+                </div>
+                <div>&bull; <strong>(1) 적색 편이량($z$)</strong>: $z = \frac{\Delta\lambda}{\lambda_0} = \frac{440 - 400}{400} = \frac{40}{400} =$ <strong>$0.1$</strong></div>
+                <div>&bull; <strong>(2) 후퇴 속도($v$)</strong>: $v = c \times z = 3 \times 10^5\text{ km/s} \times 0.1 =$ <strong>$30,000\text{ km/s}$</strong></div>
+                <div>&bull; <strong>(3) 은하까지의 거리($r$)</strong>: $r = \frac{v}{H} = \frac{30,000}{75} =$ <strong>$400\text{ Mpc}$</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 문제 2 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">
+                <strong>[수업 PPT &amp; 교재 종합]</strong> 만약 정밀 관측을 통해 측정된 허블 상수($H$)의 값이 기존에 알려진 값보다 더 큰 것으로 판명되었다면, 이로부터 추정되는 (1) 우주의 나이($T$), (2) 관측 가능한 우주의 크기($R$), (3) 거리-후퇴속도 그래프의 기울기는 각각 어떻게 달라지는가?
+              </p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed space-y-1.5">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 핵심 원리
+                </div>
+                <div>&bull; <strong>(1) 우주의 나이 ($T = 1/H$)</strong>: 허블 상수 $H$가 커지면 분모가 커지므로 우주의 나이는 <strong>더 젊어진다(작아진다)</strong>.</div>
+                <div>&bull; <strong>(2) 관측 가능한 우주의 크기 ($R = c/H$)</strong>: $H$가 커지면 우주의 크기는 <strong>더 작아진다</strong>.</div>
+                <div>&bull; <strong>(3) 거리-후퇴속도 그래프의 기울기</strong>: 기울기 자체가 허블 상수($H$)이므로 <strong>기울기가 더 가팔라진다(증가한다)</strong>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 문제 3 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q3</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">
+                <strong>[교재 p.74 &amp; PPT Slide 21 적용]</strong> 우리은하에서 볼 때 일직선상의 같은 방향에 있는 은하 A(거리 100 Mpc, 후퇴 속도 7,000 km/s)와 은하 B(거리 300 Mpc, 후퇴 속도 21,000 km/s)가 있다. 은하 A에 있는 관측자가 은하 B를 관측한다면 은하 B의 후퇴 속도는 얼마로 관측되며, 이것이 의미하는 우주론적 원리는 무엇인가?
+              </p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-2')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-2" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed space-y-1.5">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                <div>&bull; <strong>은하 A에서 본 은하 B의 후퇴 속도</strong>: $21,000\text{ km/s} - 7,000\text{ km/s} =$ <strong>$14,000\text{ km/s}$</strong></div>
+                <div>&bull; <strong>거리 확인</strong>: $300\text{ Mpc} - 100\text{ Mpc} = 200\text{ Mpc}$이며, 허블 상수 $H = 70\text{ km/s/Mpc}$일 때 $v = 70 \times 200 = 14,000\text{ km/s}$로 정확히 일치합니다.</div>
+                <div>&bull; <strong>의미</strong>: 우주 팽창에는 특정한 중심이 없으며, <strong>어느 은하에서 관측하더라도 허블-르메트르 법칙이 동일하게 성립</strong>함을 뜻합니다.</div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        <a href="unit-03-04.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center gap-3">
+          <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase text-slate-400">이전 소단원 (15/16)</div>
+            <div class="text-sm font-extrabold text-slate-900 truncate">01. 외부 은하</div>
+          </div>
+        </a>
+        
+        <a href="unit-03-06.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (17/16)</div>
+            <div class="text-sm font-extrabold text-slate-900 truncate">03. 현대 우주론의 정립</div>
+          </div>
+          <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 완벽 지원)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // 허블 인터랙티브 시뮬레이션 제어 스크립트
+    let currentBaseLambda = 395.0; // 수업 PPT 기본값 (395 nm)
+
+    function setBaseLambda(val) {
+      currentBaseLambda = parseFloat(val);
+      const disp = document.getElementById('hubble-lambda0-disp');
+      if (disp) {
+        disp.innerText = currentBaseLambda.toFixed(1) + (currentBaseLambda === 395 ? ' nm (수업 PPT 칼슘 흡수선)' : ' nm (교재 기준선)');
+      }
+      updateHubbleSim();
+    }
+
+    function updateHubbleSim() {
+      const lambdaInput = document.getElementById('hubble-lambda');
+      const h0Input = document.getElementById('hubble-h0');
+      if (!lambdaInput || !h0Input) return;
+
+      const lambda0 = currentBaseLambda;
+      const lambda = parseFloat(lambdaInput.value);
+      const H0 = parseFloat(h0Input.value);
+      const c = 300000.0; // km/s
+      
+      const deltaLambda = lambda - lambda0;
+      document.getElementById('hubble-lambda-val').innerText = lambda.toFixed(1) + ' nm (Δλ=' + deltaLambda.toFixed(1) + ' nm)';
+      document.getElementById('hubble-h0-val').innerText = H0.toFixed(1) + ' km/s/Mpc';
+      
+      const z = deltaLambda / lambda0;
+      const v = c * z;
+      const r_mpc = v / H0;
+      const r_ly = r_mpc * 3.26; // 1 Mpc = 3.26 million light years
+      const age_gyr = (977.8 / H0); // conversion to billion years (approx)
+      
+      document.getElementById('hubble-z-disp').innerText = z.toFixed(3);
+      document.getElementById('hubble-v-disp').innerText = Math.round(v).toLocaleString() + ' km/s';
+      document.getElementById('hubble-r-disp').innerText = (r_mpc > 0 ? r_mpc.toFixed(1) : '0.0') + ' Mpc';
+      document.getElementById('hubble-ly-disp').innerText = '약 ' + (r_ly > 0 ? r_ly.toFixed(2) : '0') + '억 광년';
+      document.getElementById('hubble-age-disp').innerText = age_gyr.toFixed(1) + '억 년';
+    }
+
+    function setHubblePreset(baseLam, obsLam, h0) {
+      setBaseLambda(baseLam);
+      const lInput = document.getElementById('hubble-lambda');
+      const hInput = document.getElementById('hubble-h0');
+      if (lInput) lInput.value = obsLam;
+      if (hInput) hInput.value = h0;
+      updateHubbleSim();
+    }
+
+    // 초기 시뮬레이션 계산 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      updateHubbleSim();
+    });
+  </script>
+</body>
+</html>

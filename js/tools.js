@@ -224,15 +224,10 @@ window.ClassroomTools = {
   updateTimerDisplay() {
     const display = document.getElementById("timer-display");
     if (!display) return;
-    const mins = Math.floor(this.timer.remainingSeconds / 60).toString().padStart(2, '0');
-    const secs = (this.timer.remainingSeconds % 60).toString().padStart(2, '0');
-    display.innerText = `${mins}:${secs}`;
 
-    if (this.timer.remainingSeconds <= 10 && this.timer.remainingSeconds > 0) {
-      display.classList.add("text-rose-600", "animate-pulse");
-    } else {
-      display.classList.remove("text-rose-600", "animate-pulse");
-    }
+    const m = Math.floor(this.timer.remainingSeconds / 60);
+    const s = this.timer.remainingSeconds % 60;
+    display.innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   },
 
   playBeepSound() {
@@ -249,7 +244,7 @@ window.ClassroomTools = {
       osc.start();
       osc.stop(audioCtx.currentTime + 1.2);
     } catch (e) {
-      console.log("Audio not supported", e);
+      console.log("AudioContext not supported or blocked");
     }
   },
 
@@ -259,5 +254,21 @@ window.ClassroomTools = {
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
+    if (this.picker.isRunning) {
+      clearInterval(this.picker.intervalId);
+      this.picker.isRunning = false;
+    }
+    if (this.timer.isRunning) {
+      clearInterval(this.timer.intervalId);
+      this.timer.isRunning = false;
+    }
+  }
+};
+
+window.handleToolAction = function(action) {
+  if (action === "open-picker-tool") {
+    ClassroomTools.openPicker();
+  } else if (action === "open-timer-tool") {
+    ClassroomTools.openTimer();
   }
 };

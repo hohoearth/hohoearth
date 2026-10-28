@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03. 지질시대의 환경과 생물 | 사대부고 2학년 지구과학 자체 교재(교재 p. 39 ~ 44)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[09/16]</span> Ⅱ. 지구의 역사와 한반도의 암석 &gt; 03. 지질시대의 환경과 생물
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">
+          자체 교재 교재 p. 39 ~ 44
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-amber-50/70 via-orange-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+            Ⅱ. 지구의 역사와 한반도의 암석 / 1. 지구의 역사
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 교재 p. 39 ~ 44
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          03. 지질시대의 환경과 생물
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          선캄브리아 시대부터 고생대·중생대·신생대에 이르는 수륙 분포(로디니아·판게아·히말라야)와 기후 변화, 시대별 표준 화석과 생물 진화, 그리고 빙하 코어·산소 동위원소비를 이용한 고기후 연구 방법을 탐구합니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=80" alt="03. 지질시대의 환경과 생물" class="w-full h-44 sm:h-52 object-cover rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 (필수 포함 요소 1 & 2) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>지질 시대를 누대·대·기 수준에서 구분하고 구분 기준을 설명할 수 있다.</span></li>
+<li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>지층과 화석, 고기후 연구 자료를 통해 지질 시대의 수륙 분포, 기후 및 생물 진화 과정을 해석할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 개념은 직접 체크해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>표준 화석 vs 시상 화석</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>선캄브리아 시대 · 고생대 · 중생대 · 신생대</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>판게아와 대멸종</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>고기후 연구 방법 (빙하 코어 · 산소 동위원소비 · 나이테)</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 고2 지구과학 자체 교재 원문 기반
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 (필수 포함 요소 3) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 · 생각해보기</span>
+            <span class="text-xs font-bold text-amber-900">수업 시작 전 핵심 질문</span>
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 영화 <쥐라기 월드>에는 거대한 공룡들이 울창한 양치·겉씨식물 숲을 누비는 장면이 나온다. 과학자들은 인류가 태어나기 훨씬 전인 중생대의 기온과 식생, 공룡의 생태 환경을 어떻게 복원할 수 있었을까?
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_02-03_p39_1.png" alt="생각해보기 교재 삽화" class="max-h-52 object-contain rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '생각해보기 교재 원문 자료')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 수록 삽화 (클릭 시 확대)</figcaption>
+              </figure>
+            
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=900&q=80" alt="지층 속 화석과 퇴적물을 통해 복원한 중생대 공룡과 고생물" class="max-h-52 w-full object-cover rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '지층 속 화석과 퇴적물을 통해 복원한 중생대 공룡과 고생물')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 지층 속 화석과 퇴적물을 통해 복원한 중생대 공룡과 고생물</figcaption>
+              </figure>
+            </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>생각해보기 예시 답안 & 과학적 해설 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 먼저 스스로 이유를 추론해 본 뒤 버튼을 눌러 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1.5">✨ 과학적 해설 및 모범 답안</div>
+            <p>지층에서 발견되는 <strong>표준 화석</strong>으로 지질 시대를 결정하고, 환경 변화에 민감한 <strong>시상 화석(산호, 고사리 등)</strong>과 빙하 코어, 꽃가루 화석, 산소 동위원소비($^{18}\text{O}/^{16}\text{O}$) 등을 분석하여 당시의 기온과 대기 조성, 생태계를 과학적으로 복원합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 (신규 추가!) -->
+      
+
+      <!-- ④ 본문 개념 정리 (필수 포함 요소 4) -->
+      <div class="space-y-10">
+        
+          <section id="sec-1" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 1</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 지질 시대의 구분과 화석 (Fossils)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 지질 시대의 구분 단위와 표준 화석 vs 시상 화석</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>지질 시대 구분 기준</strong>: 약 46억 년의 지구 역사 중 생물계의 급격한 변화(대멸종과 대번성) 및 대규모 지각 변동(부정합)을 기준으로 <strong>누대(Eon: 시생·원생·현생 누대) ➔ 대(Era: 고생대·중생대·신생대) ➔ 기(Period)</strong>로 구분한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>시간 길이 비교</strong>: <strong>선캄브리아 시대(시생+원생 누대, 약 88.2%) &gt;&gt; 고생대 &gt; 중생대 &gt; 신생대</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>표준 화석 (시대 지시)</strong>: 생존 기간이 짧고, 분포 면적이 넓으며, 개체 수가 많은 화석 (삼엽충, 필석, 갑주어, 방추충, 암모나이트, 공룡, 시조새, 화폐석, 매머드)</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>시상 화석 (환경 지시)</strong>: 생존 기간이 길고, 환경 변화에 민감하여 특정 환경에서만 서식하는 화석<br>▸ <strong>산호 화석</strong>: 따뜻하고 수심이 얕으며 맑은 바다<br>▸ <strong>고사리(양치식물) 화석</strong>: 온난 습윤한 육지(늪지)</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p39_2.png" alt="교재 그림: <지질 시대의 구분 (누대 - 대 - 기 및 절대 연령)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지질 시대의 구분 (누대 - 대 - 기 및 절대 연령)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지질 시대의 구분 (누대 - 대 - 기 및 절대 연령)></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-2" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 2</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 시대별 환경(수륙 분포·기후)과 생물의 진화</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 선캄브리아 시대 ~ 고생대 ~ 중생대 ~ 신생대 핵심 총정리</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div>각 지질 시대의 <strong>기후(빙하기 유무)</strong>, <strong>수륙 분포(판게아 형성·분리)</strong>, <strong>생물 최초 출현 및 번성 시기</strong>를 정확히 연결해야 한다.</div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">지질 시대</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">수륙 분포 및 기후 특징</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">주요 생물 진화 및 표준 화석</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>선캄브리아 시대</strong><br>(46억 ~ 5.41억 년 전)</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 원생 누대 말 초대륙 <strong>로디니아</strong> 형성<br>• 대체로 온난했으나 원생 누대에 <strong>빙하기 존재</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 약 35억 년 전 바다에서 <strong>남세균(사이아노박테리아)</strong> 광합성 시작 ➔ <strong>스트로마톨라이트</strong> 형성 및 산소 공급<br>• 원생 누대 말 최초의 다세포 생물인 <strong>에디아카라 동물군</strong> 출현 (단단한 골격 X, 육상 생물 X)</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>고생대</strong><br>(5.41억 ~ 2.52억 년 전)<br>캄-오-실-데-석-페</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 말기(페름기)에 초대륙 <strong>판게아</strong> 형성<br>• 중기·말기에 <strong>빙하기 존재</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>캄브리아기</strong>: 삼엽충, 완족류 대번성<br>• <strong>오르도비스기</strong>: 필석, 최초의 척추동물(무악어류) 출현<br>• <strong>실루리아기</strong>: <strong>오존층 형성 ➔ 최초의 육상 식물(쿡소니아) 출현</strong>, 갑주어<br>• <strong>데본기</strong>: 어류의 시대, 최초의 양서류 출현<br>• <strong>석탄기</strong>: 방추충(푸줄리나), 양치식물(석탄층 형성)과 양서류 번성, 파충류 출현<br>• <strong>페름기</strong>: 겉씨식물 출현, 판게아 형성 등으로 <strong>고생대 말 최대 규모 대멸종</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>중생대</strong><br>(2.52억 ~ 0.66억 년 전)<br>트-쥐-백</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 트라이아스기 말부터 <strong>판게아 분리</strong> 시작 (대서양·인도양 형성, 로키·안데스 산맥 형성)<br>• <strong>전 기간 온난 (빙하기가 전혀 없었음! ⭐)</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>트라이아스기</strong>: 암모나이트·공룡·겉씨식물 번성 시작, 최초의 포유류 출현<br>• <strong>쥐라기</strong>: 공룡·암모나이트·겉씨식물 전성기, <strong>시조새</strong> 출현<br>• <strong>백악기</strong>: 속씨식물 출현, 백악기 말 소행성 충돌(칙슐루브)로 공룡·암모나이트 대멸종</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>신생대</strong><br>(0.66억 년 전 ~ 현재)<br>고진기-신진기-제4기</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 인도 대륙과 유라시아 대륙 충돌로 <strong>히말라야·알프스 산맥</strong> 형성<br>• 고진기·신진기는 온난, <strong>제4기에 빙하기(4회)와 간빙기(3회) 반복</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>고진기·신진기</strong>: 바다에 <strong>화폐석</strong> 번성, 육지에 포유류와 속씨식물 번성<br>• <strong>제4기</strong>: <strong>매머드</strong> 번성, 인류의 조상 출현</td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p40_3.png" alt="교재 그림: <선캄브리아 시대: 시아노박테리아, 스트로마톨라이트, 에디아카라 동물군>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <선캄브리아 시대: 시아노박테리아, 스트로마톨라이트, 에디아카라 동물군>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <선캄브리아 시대: 시아노박테리아, 스트로마톨라이트, 에디아카라 동물군></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p41_5.png" alt="교재 그림: <고생대 표준 화석 1: 삼엽충, 완족류, 필석>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <고생대 표준 화석 1: 삼엽충, 완족류, 필석>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <고생대 표준 화석 1: 삼엽충, 완족류, 필석></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p41_6.png" alt="교재 그림: <고생대 표준 화석 2: 방추충(석탄기), 갑주어, 고사리>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <고생대 표준 화석 2: 방추충(석탄기), 갑주어, 고사리>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <고생대 표준 화석 2: 방추충(석탄기), 갑주어, 고사리></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p42_7.png" alt="교재 그림: <중생대 표준 화석: 암모나이트, 공룡, 시조새>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <중생대 표준 화석: 암모나이트, 공룡, 시조새>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <중생대 표준 화석: 암모나이트, 공룡, 시조새></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p42_8.png" alt="교재 그림: <겉씨식물 화석, 중생대 대륙 분포, 칙슐루브 충돌 크레이터>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <겉씨식물 화석, 중생대 대륙 분포, 칙슐루브 충돌 크레이터>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <겉씨식물 화석, 중생대 대륙 분포, 칙슐루브 충돌 크레이터></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p43_9.png" alt="교재 그림: <신생대 표준 화석: 매머드, 화폐석>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <신생대 표준 화석: 매머드, 화폐석>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <신생대 표준 화석: 매머드, 화폐석></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-3" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 3</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">3. 고기후 연구 방법과 지질 시대의 기후 변화</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 고기후 연구 방법 (교재 p.43~44)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>빙하 코어 연구</strong>: 빙하 속 미세 공기 방울을 분석하여 <strong>과거 대기 조성($\text{CO}_2$ 농도 등)</strong>을 알아내고, 빙하 얼음의 <strong>산소 동위원소비($^{18}\text{O}/^{16}\text{O}$)</strong>를 측정해 기온을 추정한다. (기온이 높을수록 빙하 속 $^{18}\text{O}/^{16}\text{O}$ 비가 높고, 해수나 유공충 화석 속 $^{18}\text{O}/^{16}\text{O}$ 비는 낮다!)</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>나무의 나이테</strong>: 온난 다습할수록 세포 분열이 활발해 <strong>나이테 간격이 넓고 밀도가 작다.</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>꽃가루 화석, 산호의 성장선, 동굴 생성물(종유석·석순), 시상 화석</strong> 등을 종합하여 지질 시대의 기온 변화를 복원한다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_02-03_p44_10.png" alt="교재 그림: <지질 시대 동안의 지구 평균 기온 변화와 빙하기(선캄브리아·고생대·신생대 제4기)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지질 시대 동안의 지구 평균 기온 변화와 빙하기(선캄브리아·고생대·신생대 제4기)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지질 시대 동안의 지구 평균 기온 변화와 빙하기(선캄브리아·고생대·신생대 제4기)></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 & 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">클릭하면 교재 빈칸 정답과 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.41~42 핵심 체크: 육상 식물이 최초로 출현한 시기와 그 배경은 무엇이며, 지질 시대 중 빙하기가 한 번도 없었던 시대는 언제인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                광합성으로 대기 중 산소가 축적되어 <strong>고생대 실루리아기에 오존층이 형성</strong>되면서 자외선이 차단되어 최초의 육상 식물(쿡소니아)이 출현했습니다. 또한 빙하기가 전혀 없었던 시대는 <strong>중생대</strong>입니다.
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.43 확인: 양치식물→겉씨식물→속씨식물, 어류→양서류→파충류→포유류의 번성 시기를 지질 시대(대)와 연결하시오.</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                • <strong>고생대</strong>: 어류·양서류 번성, 양치식물 번성<br>• <strong>중생대</strong>: 파충류(공룡) 번성, 겉씨식물 번성<br>• <strong>신생대</strong>: 포유류 번성, 속씨식물 번성
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        
+      <a href="unit-02-02.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center gap-3">
+        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">이전 소단원 (08/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">02. 퇴적암과 퇴적 환경</div>
+        </div>
+      </a>
+    
+        
+      <a href="unit-02-04.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (10/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">01. 마그마와 화성암</div>
+        </div>
+        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+      </a>
+    
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 반영)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

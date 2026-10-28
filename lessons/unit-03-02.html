@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. 별의 물리량 | 사대부고 2학년 지구과학 자체 교재(교재 p. 58 ~ 61)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[13/16]</span> Ⅲ. 우주 &gt; 02. 별의 물리량
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-50 text-purple-800 border border-purple-200">
+          자체 교재 교재 p. 58 ~ 61
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-purple-50/70 via-fuchsia-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-purple-50 text-purple-800 border border-purple-200">
+            Ⅲ. 우주 / 1. 별과 외계 행성계
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 교재 p. 58 ~ 61
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          02. 별의 물리량
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          별의 흡수 스펙트럼과 하버드 분광형(O-B-A-F-G-K-M), 플랑크 흑체 복사 곡선과 빈의 변위 법칙, 슈테판-볼츠만 법칙을 결합하여 별의 광도·표면 온도·반지름을 구하는 방법을 완벽히 정리합니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1400&q=80" alt="02. 별의 물리량" class="w-full h-44 sm:h-52 object-cover rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 (필수 포함 요소 1 & 2) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>별의 흡수 스펙트럼 특징에 따라 분광형(O, B, A, F, G, K, M)을 결정하고 표면 온도와 연결할 수 있다.</span></li>
+<li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>흑체 복사의 법칙(빈의 변위 법칙, 슈테판-볼츠만 법칙)을 이용하여 별의 표면 온도, 광도, 반지름을 계산할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 개념은 직접 체크해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>하버드 분광 분류법 (O-B-A-F-G-K-M)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>플랑크 곡선과 빈의 변위 법칙</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>슈테판-볼츠만 법칙</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>별의 광도와 반지름 공식</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 고2 지구과학 자체 교재 원문 기반
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 (필수 포함 요소 3) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 · 생각해보기</span>
+            <span class="text-xs font-bold text-amber-900">수업 시작 전 핵심 질문</span>
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 밤하늘의 별들은 빛으로 달려가도 수십~수천 년이 걸릴 만큼 아득히 먼 거리에 있다. 직접 가보거나 온도계를 꽂아볼 수도 없는 저 먼 별들의 표면 온도와 크기(반지름), 대기 성분을 천문학자들은 어떻게 정확히 알아낼까?
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_03-02_p58_1.png" alt="생각해보기 교재 삽화" class="max-h-52 object-contain rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '생각해보기 교재 원문 자료')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 수록 삽화 (클릭 시 확대)</figcaption>
+              </figure>
+            
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80" alt="별빛에 담긴 스펙트럼 암호를 해독하여 별의 온도와 크기를 밝히는 분광 관측" class="max-h-52 w-full object-cover rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '별빛에 담긴 스펙트럼 암호를 해독하여 별의 온도와 크기를 밝히는 분광 관측')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 별빛에 담긴 스펙트럼 암호를 해독하여 별의 온도와 크기를 밝히는 분광 관측</figcaption>
+              </figure>
+            </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>생각해보기 예시 답안 & 과학적 해설 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 먼저 스스로 이유를 추론해 본 뒤 버튼을 눌러 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1.5">✨ 과학적 해설 및 모범 답안</div>
+            <p>별에서 오는 <strong>빛(별빛 스펙트럼과 파장별 에너지 분포)</strong>에 모든 정보가 담겨 있습니다! 별빛을 분광기로 분해하여 <strong>흡수선의 세기(분광형)</strong>와 <strong>최대 에너지를 방출하는 파장($\lambda_{\max}$)</strong>을 측정하면 표면 온도를 알 수 있고, 별의 밝기(광도)와 표면 온도를 결합하면 별의 반지름까지 정확히 계산할 수 있습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 (신규 추가!) -->
+      
+
+      <!-- ④ 본문 개념 정리 (필수 포함 요소 4) -->
+      <div class="space-y-10">
+        
+          <section id="sec-1" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 1</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 별의 스펙트럼과 분광형 (Spectral Types)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 연속·흡수·방출 스펙트럼과 하버드 분광 분류법 (O-B-A-F-G-K-M)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>별의 흡수 스펙트럼 형성</strong>: 별의 고온 내부(광구)에서 방출된 <strong>연속 스펙트럼</strong> 빛이 별의 비교적 저온인 대기를 통과할 때, 대기 중 원소들이 고유한 파장의 빛을 흡수하여 검은 선이 나타나는 <strong>흡수 스펙트럼</strong>이 관측된다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>⭐ 주의!</strong> 별의 대기 성분은 거의 모든 별이 수소(약 75%)와 헬륨(약 24%)으로 비슷하지만, <strong>별마다 흡수선의 종류와 세기가 다른 까닭은 별의 '표면 온도'에 따라 원소의 이온화 정도가 다르기 때문</strong>이다!</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>분광형 순서 (고온 ➔ 저온)</strong>: <strong>O - B - A - F - G - K - M</strong> (각 분광형은 고온 $0 \sim$ 저온 $9$의 10단계로 세분화, 태양은 <strong>G2형</strong> 황색 별)</div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">분광형</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">별의 색깔</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">표면 온도 (K)</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">가장 강하게 나타나는 주요 흡수선 및 특징</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>O 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">청색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$28,000\text{ K}$ 이상</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>이온화된 헬륨($\text{He II}$)</strong> 흡수선 강함 (온도가 가장 높음)</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>B 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">청백색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$10,000\sim 28,000\text{ K}$</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>중성 헬륨($\text{He I}$)</strong> 흡수선이 가장 강함</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>A 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">백색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$7,500\sim 10,000\text{ K}$</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>⭐ 중성 수소($\text{H I}$) 흡수선이 가장 강하게 관측됨! (표면 온도 약 $10,000\text{ K}$)</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>F 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">황백색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$6,000\sim 7,500\text{ K}$</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 수소선 약화, 이온화된 칼슘($\text{Ca II}$) 등 금속 이온선 강화</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>G 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">황색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$5,000\sim 6,000\text{ K}$</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• <strong>태양(G2형, 약 $5,800\text{ K}$)</strong> / 이온화된 칼슘($\text{Ca II}$) 및 중성 금속선 강함</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>K 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">주황색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$3,500\sim 5,000\text{ K}$</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 중성 철($\text{Fe I}$), 칼슘 등 중성 금속 흡수선 강함</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>M 형</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">적색</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">$3,500\text{ K}$ 이하</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 온도가 매우 낮아 <strong>산화 타이타늄($\text{TiO}$) 등 분자에 의한 흡수선</strong> 강함</td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p58_2.png" alt="교재 그림: <연속 스펙트럼, 흡수 스펙트럼, 방출 스펙트럼의 생성 원리>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <연속 스펙트럼, 흡수 스펙트럼, 방출 스펙트럼의 생성 원리>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <연속 스펙트럼, 흡수 스펙트럼, 방출 스펙트럼의 생성 원리></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p59_3.png" alt="교재 그림: <분광형(O~M)에 따른 흡수 스펙트럼과 표면 온도>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <분광형(O~M)에 따른 흡수 스펙트럼과 표면 온도>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <분광형(O~M)에 따른 흡수 스펙트럼과 표면 온도></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p59_4.png" alt="교재 그림: <표면 온도에 따른 원소별 흡수선의 상대적 세기 변화 그래프>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <표면 온도에 따른 원소별 흡수선의 상대적 세기 변화 그래프>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <표면 온도에 따른 원소별 흡수선의 상대적 세기 변화 그래프></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-2" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 2</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 흑체 복사와 별의 광도 · 반지름 계산 (수능 필수 공식!)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 플랑크 곡선, 빈의 변위 법칙, 슈테판-볼츠만 법칙 (교재 p.60~61)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>플랑크 곡선의 핵심 특징</strong>: 별(흑체)의 표면 온도($T$)가 높을수록 <strong>모든 파장 영역에서 단위 면적당 방출하는 에너지가 많고</strong>, 최대 에너지를 방출하는 파장($\lambda_{\max}$)이 <strong>짧은 파장 쪽으로 이동</strong>한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>① 빈의 변위 법칙</strong>: 최대 복사 에너지를 방출하는 파장($\lambda_{\max}$)은 표면 온도($T$)에 <strong>반비례</strong>한다.<br>$$\lambda_{\max} = \frac{a}{T} \implies \lambda_{\max} \propto \frac{1}{T} \quad (a \approx 2,898\text{ }\mu\text{m}\cdot\text{K})$$</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>② 슈테판-볼츠만 법칙</strong>: 별의 <strong>단위 시간 동안 단위 면적($1\text{ m}^2$)에서 방출하는 에너지양($E$, 복사 플럭스)</strong>은 오직 <strong>표면 온도의 네제곱($T^4$)에 비례</strong>한다! (별의 반지름과는 무관함!)<br>$$E = \sigma T^4 \implies E \propto T^4$$</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>③ 별의 광도($L$)와 반지름($R$) 공식</strong>: 별 전체 표면적($4\pi R^2$)에서 단위 시간 동안 방출하는 총 에너지양을 <strong>광도($L$)</strong>라 한다.<br>$$L = 4\pi R^2 \cdot \sigma T^4 \implies \mathbf{L \propto R^2 T^4}, \quad \mathbf{R \propto \frac{\sqrt{L}}{T^2}}$$</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>절대 등급($M$)과 광도($L$)의 관계</strong>: 절대 등급이 $5\text{등급}$ 작아질수록 광도($L$)는 <strong>$100\text{배}$ ($10^2\text{배}$)</strong> 밝아진다. ($1\text{등급}$ 차이는 약 $2.512\text{배}$)</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p60_5.png" alt="교재 그림: <표면 온도에 따른 흑체의 플랑크 곡선과 빈의 변위 법칙>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <표면 온도에 따른 흑체의 플랑크 곡선과 빈의 변위 법칙>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <표면 온도에 따른 흑체의 플랑크 곡선과 빈의 변위 법칙></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p60_6.png" alt="교재 그림: <별의 표면적(4πR²)과 단위 면적당 방출 에너지(σT⁴)를 곱한 광도(L)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <별의 표면적(4πR²)과 단위 면적당 방출 에너지(σT⁴)를 곱한 광도(L)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <별의 표면적(4πR²)과 단위 면적당 방출 에너지(σT⁴)를 곱한 광도(L)></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_03-02_p61_7.png" alt="교재 p.61 실전 연습: <별의 물리량(온도·광도·반지름·절대등급) 계산 표>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 p.61 실전 연습: <별의 물리량(온도·광도·반지름·절대등급) 계산 표>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 p.61 실전 연습: <별의 물리량(온도·광도·반지름·절대등급) 계산 표></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 & 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">클릭하면 교재 빈칸 정답과 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.59 확인: 수소(H I) 흡수선이 가장 강하게 나타나는 별의 분광형, 색깔, 대략적인 표면 온도는 얼마인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                수소 흡수선이 가장 강한 별은 <strong>A형</strong> 별이며, 색깔은 <strong>백색</strong>이고 표면 온도는 약 <strong>$10,000\text{ K}$</strong>입니다.
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.61 별의 물리량 구하기 실전 문제: 별 A의 최대 에너지 방출 파장(λ_max)이 태양의 1/2배이고, 반지름(R)이 태양의 2배라면, 별 A의 (1) 표면 온도, (2) 단위 면적당 방출 에너지(E), (3) 광도(L)는 각각 태양의 몇 배인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                • <strong>(1) 표면 온도($T$)</strong>: $\lambda_{\max} \propto 1/T$ 이므로 파장이 $1/2$배이면 표면 온도는 태양의 <strong>$2$배</strong>입니다.<br>• <strong>(2) 단위 면적당 방출 에너지($E$)</strong>: $E \propto T^4$ 이므로 $2^4 =$ <strong>$16$배</strong>입니다.<br>• <strong>(3) 광도($L$)</strong>: $L \propto R^2 T^4 = 2^2 \times 2^4 = 4 \times 16 =$ <strong>$64$배</strong>입니다.
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        
+      <a href="unit-03-01.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center gap-3">
+        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">이전 소단원 (12/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">01. 태양계 천체의 운동</div>
+        </div>
+      </a>
+    
+        
+      <a href="unit-03-03.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (14/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">03. H-R도와 별의 진화</div>
+        </div>
+        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+      </a>
+    
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 반영)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

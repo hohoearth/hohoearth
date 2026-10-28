@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. 기압과 날씨 변화 | 사대부고 2학년 지구과학 자체 교재(교재 p. 11 ~ 16)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[03/16]</span> Ⅰ. 대기와 해양의 상호작용 &gt; 01. 기압과 날씨 변화
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          자체 교재 교재 p. 11 ~ 16
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-indigo-50/70 via-sky-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            Ⅰ. 대기와 해양의 상호작용 / 2. 날씨 변화와 악기상
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 교재 p. 11 ~ 16
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          01. 기압과 날씨 변화
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          지상 일기도와 기상 위성 영상(가시·적외 영상), 레이더 영상을 해석하고, 정체성·이동성 고기압과 온대 저기압(한랭·온난 전선) 통과에 따른 날씨 변화를 분석합니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=1400&q=80" alt="01. 기압과 날씨 변화" class="w-full h-44 sm:h-52 object-cover rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 (필수 포함 요소 1 & 2) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>중위도(온대) 저기압과 고기압이 통과할 때 기온, 기압, 풍향, 강수 등 날씨의 변화를 설명할 수 있다.</span></li>
+<li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>일기도, 위성 영상(가시·적외), 레이더 영상을 종합하여 날씨의 변화를 예측할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 개념은 직접 체크해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>기상 위성 영상 (가시 영상 vs 적외 영상)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>레이더 영상</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>정체성 고기압과 이동성 고기압</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>중위도(온대) 저기압과 전선</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 고2 지구과학 자체 교재 원문 기반
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 (필수 포함 요소 3) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 · 생각해보기</span>
+            <span class="text-xs font-bold text-amber-900">수업 시작 전 핵심 질문</span>
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 우리는 내일 날씨를 알기 위해 매일 일기 예보를 확인한다. 기상청은 보이지 않는 대기의 움직임과 미래의 날씨를 어떻게 정확히 관측하고 예측할까?
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_01-03_p11_1.png" alt="생각해보기 교재 삽화" class="max-h-52 object-contain rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '생각해보기 교재 원문 자료')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 수록 삽화 (클릭 시 확대)</figcaption>
+              </figure>
+            
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_01-03_p11_2.png" alt="교재 그림: 일기도 기호 판독법 (풍향, 풍속, 운량, 기압, 일기)" class="max-h-52 w-full object-cover rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: 일기도 기호 판독법 (풍향, 풍속, 운량, 기압, 일기)')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 그림: 일기도 기호 판독법 (풍향, 풍속, 운량, 기압, 일기)</figcaption>
+              </figure>
+            </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>생각해보기 예시 답안 & 과학적 해설 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 먼저 스스로 이유를 추론해 본 뒤 버튼을 눌러 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1.5">✨ 과학적 해설 및 모범 답안</div>
+            <p>지상 관측소, 레윈존데(고층 기상 관측), 기상 레이더, 정지 궤도 기상 위성(천리안 위성 등)을 통해 기온·기압·풍향·풍속·습도·구름 분포를 입체적으로 관측합니다. 이 데이터를 바탕으로 <strong>일기도</strong>를 작성하고 슈퍼컴퓨터 수치 예보 모델로 공기 덩어리(기단과 전선)의 이동을 계산하여 미래 날씨를 예측합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 (신규 추가!) -->
+      
+
+      <!-- ④ 본문 개념 정리 (필수 포함 요소 4) -->
+      <div class="space-y-10">
+        
+          <section id="sec-1" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 1</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 일기도, 위성 영상, 레이더 영상 판독</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 지상 일기도와 기상 위성 영상 비교</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>지상 일기도</strong>: 등압선(보통 $4\text{ hPa}$ 간격)과 일기 기호를 나타낸 그림. 등압선 간격이 좁을수록 풍속이 강하다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>위성 영상 (가시 영상 vs 적외 영상)</strong>: 두 영상을 함께 비교하면 구름의 <strong>두께</strong>와 <strong>최상부 높이(운정 고도)</strong>를 동시에 구분할 수 있다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>레이더 영상</strong>: 마이크로파(전파)를 발사하여 강수 입자에 반사되어 돌아오는 신호를 분석하므로 <strong>실제 비나 눈이 내리는 강수 구역의 위치, 강도, 이동 방향</strong>을 실시간으로 파악한다.</div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">구분</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">가시 영상 (Visible)</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">적외 영상 (Infrared)</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>관측 파장 및 원리</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">구름이 반사한 <strong>태양의 가시광선</strong> 세기 관측</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">구름 자체가 온도에 따라 방출하는 <strong>지구 복사(적외선)</strong> 에너지 관측</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>밝게(하얗게) 보이는 조건</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">반사율이 클수록 ➔ <strong>구름의 두께가 두꺼울수록</strong> 밝음</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">방출 에너지가 적고 온도가 낮을수록 ➔ <strong>구름 최상부 높이(운정 고도)가 높을수록(상층운)</strong> 밝음</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>어둡게 보이는 조건</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">구름이 얇거나 맑은 지역</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">구름 높이가 낮아 온도가 높은 <strong>하층운</strong> 또는 지표면</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>관측 가능 시간</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">태양 빛이 있는 <strong>낮에만 관측 가능</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>낮과 밤 24시간 내내 관측 가능</strong></td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p12_3.png" alt="교재 그림: <지상 일기도와 일기 기호>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지상 일기도와 일기 기호>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지상 일기도와 일기 기호></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p12_4.png" alt="교재 그림: <기상 위성 가시 영상>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <기상 위성 가시 영상>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <기상 위성 가시 영상></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p13_5.png" alt="교재 그림: <기상 위성 적외 영상 및 레이더 영상>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <기상 위성 적외 영상 및 레이더 영상>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <기상 위성 적외 영상 및 레이더 영상></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-2" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 2</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 고기압과 우리나라의 계절별 날씨</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 고기압과 저기압에서의 공기 운동 (북반구 기준)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>고기압 ($H$)</strong>: 지상에서 바람이 <strong>시계 방향으로 불어 나감(발산)</strong> ➔ 중심부 <strong>하강 기류</strong> ➔ 단열 압축 ➔ 기온 상승 ➔ 구름 소멸 및 <strong>맑은 날씨</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>저기압 ($L$)</strong>: 지상에서 바람이 <strong>시계 반대 방향으로 불어 들어옴(수렴)</strong> ➔ 중심부 <strong>상승 기류</strong> ➔ 단열 팽창 ➔ 기온 하강 ➔ 구름 생성 및 <strong>흐리고 비/눈</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>정체성 고기압과 계절별 날씨</strong>:<br>▸ <strong>봄·가을</strong>: 양쯔강 기단에서 떨어져 나온 <strong>이동성 고기압</strong>과 저기압이 편서풍을 타고 주기적으로 통과하여 날씨 변화가 심함 (봄철 황사, 꽃샘추위)<br>▸ <strong>초여름</strong>: 오호츠크해 기단(한랭 다습)과 북태평양 기단(고온 다습)이 만나 <strong>장마 전선(정체 전선)</strong> 형성<br>▸ <strong>여름</strong>: <strong>북태평양 고기압</strong>의 영향으로 무덥고 습하며 남동 계절풍이 붊<br>▸ <strong>겨울</strong>: <strong>시베리아 고기압</strong>의 영향으로 춥고 건조하며 북서 계절풍이 붊</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p13_6.png" alt="교재 그림: <북반구 고기압과 저기압에서의 바람과 연직 기류>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <북반구 고기압과 저기압에서의 바람과 연직 기류>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <북반구 고기압과 저기압에서의 바람과 연직 기류></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p14_7.png" alt="교재 그림: <우리나라에 영향을 미치는 기단(정체성 고기압)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <우리나라에 영향을 미치는 기단(정체성 고기압)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <우리나라에 영향을 미치는 기단(정체성 고기압)></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p14_8.png" alt="교재 그림: <편서풍에 의한 이동성 고기압의 이동>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <편서풍에 의한 이동성 고기압의 이동>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <편서풍에 의한 이동성 고기압의 이동></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-3" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 3</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">3. 전선과 중위도(온대) 저기압</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 한랭 전선과 온난 전선의 비교 (교재 p.15 표 완성)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>전선과 전선면</strong>: 성질이 다른 찬 기단과 따뜻한 기단이 만나 이루는 경계면을 전선면이라 하고, 전선면이 지표면과 만나는 선을 전선이라 한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>중위도(온대) 저기압의 에너지원</strong>: 찬 공기가 아래로 파고들고 따뜻한 공기가 위로 상승하면서 <strong>위치 에너지가 운동 에너지로 전환</strong>되는 것이 에너지원이다.</div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">구분</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">한랭 전선 (남서쪽 발달)</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">온난 전선 (남동쪽 발달)</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>형성 원리</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">찬 공기가 따뜻한 공기 아래를 파고들며 급격히 밀어 올릴 때</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">따뜻한 공기가 찬 공기 위를 따라 천천히 타고 올라갈 때</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>전선면 기울기 및 이동 속도</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">기울기가 <strong>급함</strong> / 이동 속도가 <strong>빠름</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">기울기가 <strong>완만함</strong> / 이동 속도가 <strong>느림</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>구름 형태 및 강수 특징</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>적운형 구름(적란운)</strong> / 전선 <strong>뒤쪽(후면) 좁은 구역에 강한 소나기</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>층운형 구름(난층운·권층운)</strong> / 전선 <strong>앞쪽(전면) 넓은 구역에 지속적인 이슬비</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>통과 후 기온·풍향 변화</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">기온 <strong>하강</strong>, 기압 상승, 풍향 <strong>남서풍 ➔ 북서풍</strong> 급변</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">기온 <strong>상승</strong>, 기압 하강, 풍향 <strong>남동풍 ➔ 남서풍</strong> 변화</td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p15_9.png" alt="교재 그림: <한랭 전선의 단면>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <한랭 전선의 단면>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <한랭 전선의 단면></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p15_10.png" alt="교재 그림: <온난 전선의 단면>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <온난 전선의 단면>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <온난 전선의 단면></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p15_11.png" alt="교재 그림: <중위도(온대) 저기압의 평면 및 단면 구조>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <중위도(온대) 저기압의 평면 및 단면 구조>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <중위도(온대) 저기압의 평면 및 단면 구조></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(2) 온대 저기압의 일생과 중규모 저기압</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>발생과 소멸 (5~7일)</strong>: 정체 전선 형성 ➔ 파동 발생 ➔ 온대 저기압 발달 ➔ 이동 속도가 빠른 한랭 전선이 온난 전선을 따라잡아 <strong>폐색 전선</strong> 형성 ➔ 찬 공기가 아래를 모두 채워 위치 에너지가 소진되면서 소멸</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>⭐ 관측소 통과 시 풍향 변화</strong>: 온대 저기압 중심의 남쪽을 통과하는 관측소에서는 <strong>남동풍(온난 전선 전면) ➔ 남서풍(전선 사이) ➔ 북서풍(한랭 전선 후면)</strong>으로 풍향이 <strong>시계 방향</strong>으로 변한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>중규모 저기압</strong>: 전선을 동반하지 않고 좁은 지역에서 짧은 시간 동안 강한 상승 기류로 발달하여 일기도에 잘 나타나지 않으나 강한 소나기·뇌우를 유발한다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p16_12.png" alt="교재 그림: <중위도 저기압의 발생·발달·폐색·소멸 과정>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <중위도 저기압의 발생·발달·폐색·소멸 과정>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <중위도 저기압의 발생·발달·폐색·소멸 과정></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-03_p16_13.png" alt="교재 그림: <중규모 저기압이 발생했을 때의 레이더 영상>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <중규모 저기압이 발생했을 때의 레이더 영상>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <중규모 저기압이 발생했을 때의 레이더 영상></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 & 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">클릭하면 교재 빈칸 정답과 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.12 확인: 가시 영상에서는 매우 어둡게(흐릿하게) 보이지만, 적외 영상에서는 매우 밝게(하얗게) 보이는 구름은 어떤 구름인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                두께는 얇지만 구름 최상부 높이(운정 고도)가 매우 높은 <strong>상층운(권운 등)</strong>입니다. 두께가 얇아 가시광선 반사율은 낮지만, 고도가 높아 온도가 매우 낮으므로 적외 영상에서는 하얗게 보입니다.
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.15 핵심: 온대 저기압이 우리나라를 서쪽에서 동쪽으로 통과할 때, 온난 전선 통과 전 ➔ 두 전선 사이 ➔ 한랭 전선 통과 후의 풍향과 날씨 변화를 순서대로 설명하시오.</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                ① 온난 전선 전면: <strong>남동풍</strong>이 불고 층운형 구름에서 넓은 지역에 <strong>이슬비</strong>가 내립니다.<br>② 전선 사이(온난 구역): <strong>남서풍</strong>이 불고 날씨가 맑으며 기온이 높습니다.<br>③ 한랭 전선 후면: <strong>북서풍</strong>이 불고 기온이 급강하하며 적운형 구름(적란운)에서 좁은 지역에 강한 <strong>소나기</strong>가 내립니다.
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        
+      <a href="unit-01-02.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center gap-3">
+        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">이전 소단원 (02/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">02. 해수의 순환</div>
+        </div>
+      </a>
+    
+        
+      <a href="unit-01-04.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (04/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">02. 태풍과 주요 악기상</div>
+        </div>
+        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+      </a>
+    
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 반영)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

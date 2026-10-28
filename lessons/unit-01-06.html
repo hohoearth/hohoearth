@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. 지구의 기후 변화 | 사대부고 2학년 지구과학 자체 교재(교재 p. 26 ~ 28)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[06/16]</span> Ⅰ. 대기와 해양의 상호작용 &gt; 02. 지구의 기후 변화
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          자체 교재 교재 p. 26 ~ 28
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-indigo-50/70 via-sky-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            Ⅰ. 대기와 해양의 상호작용 / 3. 대기와 해양의 상호작용
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 교재 p. 26 ~ 28
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          02. 지구의 기후 변화
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          기후 변화의 지구 내적 요인(화산 활동·지표면 반사율·수륙 분포)과 지구 외적 요인(밀란코비치 주기: 세차 운동·자전축 기울기·공전 궤도 이심률, 태양 흑점), 그리고 인위적 온실 효과와 열수지를 탐구합니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1400&q=80" alt="02. 지구의 기후 변화" class="w-full h-44 sm:h-52 object-cover rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 (필수 포함 요소 1 & 2) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>기후 변화의 원인을 자연적 요인(지구 내적·외적 요인)과 인위적 요인으로 구분하여 설명할 수 있다.</span></li>
+<li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>지구 자전축과 공전 궤도 변화에 따른 기온 연교차 변화를 추론하고 기후 변화 해결 방안을 탐색할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 개념은 직접 체크해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>지구 내적 요인 (화산재 반사율·수륙 분포)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>지구 외적 요인 (세차 운동·자전축 경사·이심률)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>인위적 요인 (온실 기체·에어로졸·사막화)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>지구의 복사 평형과 열수지</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 고2 지구과학 자체 교재 원문 기반
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 (필수 포함 요소 3) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 · 생각해보기</span>
+            <span class="text-xs font-bold text-amber-900">수업 시작 전 핵심 질문</span>
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 인도양의 아름다운 섬나라 몰디브는 해수면 상승으로 인해 바다 속으로 가라앉을 위기에 처해 있다. 만약 지금과 같은 속도로 지구 평균 기온이 상승한다면 우리나라와 우리 동네의 계절과 생태계는 어떻게 변할까?
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_01-06_p26_1.png" alt="생각해보기 교재 삽화" class="max-h-52 object-contain rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '생각해보기 교재 원문 자료')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 수록 삽화 (클릭 시 확대)</figcaption>
+              </figure>
+            
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="해수면 상승으로 침수 위기에 처한 저지대 해안과 산호초 생태계" class="max-h-52 w-full object-cover rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '해수면 상승으로 침수 위기에 처한 저지대 해안과 산호초 생태계')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 해수면 상승으로 침수 위기에 처한 저지대 해안과 산호초 생태계</figcaption>
+              </figure>
+            </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>생각해보기 예시 답안 & 과학적 해설 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 먼저 스스로 이유를 추론해 본 뒤 버튼을 눌러 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1.5">✨ 과학적 해설 및 모범 답안</div>
+            <p>해수의 <strong>열팽창</strong>과 대륙 빙하의 융해로 해수면이 상승하여 해안 저지대가 침수되고, 한반도는 아열대 기후화가 진행되어 겨울이 짧아지고 여름이 길어지며 폭염·열대야·초강력 태풍 등 극단적 기상 현상의 빈도가 급증하게 됩니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 (신규 추가!) -->
+      
+          <section class="space-y-4 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-indigo-600 text-white">수치 시뮬레이션</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">🌍 밀란코비치 주기 3요소에 따른 지구 기온 연교차 변화 시뮬레이터</h3>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">세차 운동(자전축 방향), 자전축 기울기(21.5°~24.5°), 공전 궤도 이심률을 변경해보며 북반구/남반구의 계절별 일사량과 연교차 변화를 수치로 확인하세요.</p>
+            
+    <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-md border border-slate-800">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black">수치 시뮬레이션</span>
+          <h4 class="font-extrabold text-base sm:text-lg">밀란코비치 주기 & 기온 연교차 인터랙티브 모델</h4>
+        </div>
+        <span class="text-xs text-slate-400 font-mono">천문학적 기후 변동 모델</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+        <div class="lg:col-span-6 space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>① 세차 운동 (자전축 경사 방향)</span>
+              <span id="mil-precession-val" class="text-amber-400 font-bold">현재 상태 (근일점=겨울)</span>
+            </div>
+            <select id="mil-precession" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-slate-200 cursor-pointer" onchange="updateMilSim()">
+              <option value="current">현재 상태 (근일점: 북반구 겨울 / 원일점: 북반구 여름)</option>
+              <option value="half">13,000년 후 (근일점: 북반구 여름 / 원일점: 북반구 겨울)</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>② 자전축 기울기</span>
+              <span id="mil-tilt-val" class="text-sky-400 font-mono text-sm">23.5° (현재)</span>
+            </div>
+            <input id="mil-tilt" type="range" min="21.5" max="24.5" step="0.1" value="23.5" class="w-full accent-sky-400 cursor-pointer" oninput="updateMilSim()" />
+            <div class="flex justify-between text-[10px] text-slate-500"><span>21.5° (최소)</span><span>23.5° (현재)</span><span>24.5° (최대)</span></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>③ 공전 궤도 이심률 (e)</span>
+              <span id="mil-ecc-val" class="text-emerald-400 font-mono text-sm">0.017 (현재)</span>
+            </div>
+            <input id="mil-ecc" type="range" min="0.005" max="0.060" step="0.005" value="0.017" class="w-full accent-emerald-400 cursor-pointer" oninput="updateMilSim()" />
+            <div class="flex justify-between text-[10px] text-slate-500"><span>0.005 (원에 가까움)</span><span>0.017 (현재)</span><span>0.060 (타원형)</span></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 bg-slate-950 p-5 rounded-2xl border border-slate-700/80 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-3">연교차 시뮬레이션 결과 지표 (현재 기준 비교)</div>
+            
+            <div class="grid grid-cols-2 gap-3 text-center">
+              <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div class="text-[11px] font-bold text-slate-400">북반구 기온 연교차</div>
+                <div id="mil-nh-diff" class="text-xl sm:text-2xl font-black font-mono text-amber-400 mt-1">기준 (±0.0 ℃)</div>
+                <div id="mil-nh-sub" class="text-[10px] text-slate-500 mt-0.5">여름 보통 / 겨울 보통</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div class="text-[11px] font-bold text-slate-400">남반구 기온 연교차</div>
+                <div id="mil-sh-diff" class="text-xl sm:text-2xl font-black font-mono text-sky-400 mt-1">기준 (±0.0 ℃)</div>
+                <div id="mil-sh-sub" class="text-[10px] text-slate-500 mt-0.5">여름 보통 / 겨울 보통</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1 leading-relaxed">
+            <div class="font-extrabold text-amber-300">💡 과학적 분석 결론:</div>
+            <p id="mil-summary-text" class="text-slate-300 text-[11px]">
+              현재 북반구는 근일점에서 겨울이어서 연교차가 비교적 온화합니다. 자전축 기울기가 커지면 남·북반구 모두 연교차가 증가합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function updateMilSim() {
+        const prec = document.getElementById('mil-precession').value;
+        const tilt = parseFloat(document.getElementById('mil-tilt').value);
+        const ecc = parseFloat(document.getElementById('mil-ecc').value);
+        
+        document.getElementById('mil-tilt-val').innerText = tilt.toFixed(1) + '°';
+        document.getElementById('mil-ecc-val').innerText = ecc.toFixed(3);
+        
+        // Base delta calculation relative to current baseline (tilt 23.5, ecc 0.017, prec current)
+        let nh_delta = (tilt - 23.5) * 1.8;
+        let sh_delta = (tilt - 23.5) * 1.8;
+        
+        if (prec === 'half') { // 13,000 years later: perihelion = NH summer
+          nh_delta += 4.5 + (ecc - 0.017) * 80;
+          sh_delta -= 4.5 + (ecc - 0.017) * 80;
+        } else {
+          nh_delta -= (ecc - 0.017) * 45;
+          sh_delta += (ecc - 0.017) * 45;
+        }
+        
+        const nhSign = nh_delta >= 0 ? '+' : '';
+        const shSign = sh_delta >= 0 ? '+' : '';
+        
+        const nhEl = document.getElementById('mil-nh-diff');
+        const shEl = document.getElementById('mil-sh-diff');
+        nhEl.innerText = nhSign + nh_delta.toFixed(1) + ' ℃ 편차';
+        shEl.innerText = shSign + sh_delta.toFixed(1) + ' ℃ 편차';
+        
+        nhEl.className = nh_delta > 0.5 ? 'text-xl sm:text-2xl font-black font-mono text-rose-400 mt-1' : (nh_delta < -0.5 ? 'text-xl sm:text-2xl font-black font-mono text-sky-400 mt-1' : 'text-xl sm:text-2xl font-black font-mono text-amber-400 mt-1');
+        
+        document.getElementById('mil-nh-sub').innerText = nh_delta > 0.5 ? '연교차 대폭 증가 (더 더운 여름, 더 추운 겨울)' : (nh_delta < -0.5 ? '연교차 감소 (시원한 여름, 따뜻한 겨울)' : '현재와 유사');
+        document.getElementById('mil-sh-sub').innerText = sh_delta > 0.5 ? '연교차 대폭 증가' : (sh_delta < -0.5 ? '연교차 감소' : '현재와 유사');
+        
+        let conclusion = "";
+        if (prec === 'half') {
+          conclusion = "13,000년 후에는 북반구가 근일점에서 여름을 맞아 태양 복사 에너지를 훨씬 많이 흡수하므로 <strong>북반구의 기온 연교차가 현재보다 크게 증가</strong>하여 빙하가 융해되기 쉬운 조건이 됩니다.";
+        } else {
+          conclusion = "현재 조건에서는 자전축 기울기가 커질수록 고위도 일사량 차이가 극대화되어 <strong>남·북반구 모두 연교차가 커집니다.</strong>";
+        }
+        document.getElementById('mil-summary-text').innerHTML = conclusion;
+      }
+    </script>
+    
+          </section>
+        
+
+      <!-- ④ 본문 개념 정리 (필수 포함 요소 4) -->
+      <div class="space-y-10">
+        
+          <section id="sec-1" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 1</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 기후 변화의 자연적 요인 (지구 내적 요인)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 화산 활동, 지표면 상태 변화, 수륙 분포 변화</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>화산 폭발</strong>: 대규모 화산 폭발 시 분출된 <strong>화산재와 에어로졸이 성층권에 도달하여 오랫동안 머물면서 태양 복사 에너지를 산란·반사(지구의 반사율 증가)</strong>시키므로 수년간 지구의 평균 기온이 <strong>하강</strong>한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>지표면의 상태(반사율·알베도) 변화</strong>:<br>▸ <strong>빙하 면적 감소</strong>: 반사율이 매우 높은 빙하(눈/얼음)가 녹아 반사율이 낮은 지표나 바다가 드러나면 <strong>지표면 반사율이 감소</strong>하여 태양 복사 에너지 흡수량이 늘어나 기온이 더욱 상승한다(양의 피드백).<br>▸ <strong>산림 파괴 및 사막화</strong>: 숲을 벌채하거나 사막화가 진행되면 <strong>지표면 반사율이 증가</strong>한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>대륙과 해양의 수륙 분포 변화</strong>: 판의 이동으로 대륙과 해양의 배치가 달라지면 비열과 반사율이 변하고 표층·심층 해류의 경로가 바뀌어 장기적인 기후가 변한다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p26_2.png" alt="교재 그림: <대규모 화산 분출에 의한 성층권 에어로졸 형성과 기온 하강>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <대규모 화산 분출에 의한 성층권 에어로졸 형성과 기온 하강>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <대규모 화산 분출에 의한 성층권 에어로졸 형성과 기온 하강></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-2" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 2</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 기후 변화의 자연적 요인 (지구 외적 요인 - 천문학적 요인)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) ⭐ 밀란코비치 주기와 태양 활동 변화 (수능 최고 빈출!)</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>현재 지구의 상태 (기준점 암기 필수!)</strong>: 현재 지구는 <strong>근일점(태양에서 가장 가까울 때)에서 북반구 겨울(남반구 여름)</strong>이고, <strong>원일점(태양에서 가장 멀 때)에서 북반구 여름(남반구 겨울)</strong>이다. 따라서 현재 북반구는 남반구보다 기온의 연교차가 비교적 작다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div>다른 조건이 일정할 때 각 요인의 변화가 북반구와 남반구의 기온 연교차에 미치는 영향을 정확히 구분해야 한다.</div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">외적 요인</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">변화 주기 및 범위</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">기온의 연교차 변화 (현재 기준 비교)</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>① 세차 운동</strong><br>(자전축 경사 방향 회전)</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">약 <strong>26,000년</strong> 주기로 시계 방향 회전</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 현재로부터 <strong>13,000년 후</strong>에는 자전축 경사 방향이 반대가 됨<br>• 근일점 = 북반구 여름, 원일점 = 북반구 겨울이 되므로<br>➔ <strong>북반구 연교차 증가(↑)</strong>, <strong>남반구 연교차 감소(↓)</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>② 자전축 기울기 변화</strong><br>(공전 궤도면 수직선 대비)</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">약 <strong>41,000년</strong> 주기로 $21.5^\circ\sim 24.5^\circ$ 변화 (현재 $23.5^\circ$)</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 자전축 기울기가 <strong>커지면</strong> 여름철 남중 고도는 더 높아지고 겨울철 남중 고도는 더 낮아짐<br>➔ <strong>북반구와 남반구 모두 기온의 연교차 증가(↑)</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>③ 공전 궤도 이심률 변화</strong><br>(타원의 납작한 정도)</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">약 <strong>10만 년</strong> 주기로 원 궤도 $\leftrightarrow$ 타원 궤도 변화</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 이심률이 현재보다 <strong>커지면</strong> 근일점 거리는 가까워지고 원일점 거리는 멀어짐<br>• 현재 북반구는 근일점이 겨울, 원일점이 여름이므로<br>➔ <strong>북반구 연교차 감소(↓)</strong>, <strong>남반구 연교차 증가(↑)</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>④ 태양 활동(흑점 수) 변화</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">약 <strong>11년</strong> 주기</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 태양 활동이 활발한 <strong>흑점 극대기</strong>에는 지구에 도달하는 태양 복사 에너지양이 증가하여 지구 기온 상승</td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p27_3.png" alt="교재 그림: <지구의 세차 운동 (주기 약 26,000년)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지구의 세차 운동 (주기 약 26,000년)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지구의 세차 운동 (주기 약 26,000년)></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p27_4.png" alt="교재 그림: <지구 자전축 경사각 변화 (21.5° ~ 24.5°)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지구 자전축 경사각 변화 (21.5° ~ 24.5°)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지구 자전축 경사각 변화 (21.5° ~ 24.5°)></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p27_5.png" alt="교재 그림: <지구 공전 궤도 이심률 변화 (주기 약 10만 년)>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지구 공전 궤도 이심률 변화 (주기 약 10만 년)>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지구 공전 궤도 이심률 변화 (주기 약 10만 년)></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p27_6.png" alt="교재 그림: <태양 흑점 수 변화 주기>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <태양 흑점 수 변화 주기>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <태양 흑점 수 변화 주기></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-3" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 3</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">3. 기후 변화의 인위적 요인과 지구의 열수지</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 온실 효과 강화와 지구 온난화</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>온실 기체 배출</strong>: 화석 연료 사용 증가로 대기 중 이산화 탄소($\text{CO}_2$), 메테인($\text{CH}_4$) 등 온실 기체 농도가 급증하여, 지표가 방출하는 적외선(지구 복사 에너지)을 대기가 흡수했다가 지표로 재복사하는 양이 늘어나 <strong>지구 온난화</strong>를 유발한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>에어로졸 배출</strong>: 인간 활동으로 배출된 에어로졸은 태양 복사 에너지를 산란·반사하고 구름의 응결핵 역할을 하여 구름 양을 늘림으로써 기온을 낮추는 역할을 하기도 한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>기후 변화의 영향</strong>: 해수면 상승(해수의 열팽창 + 대륙 빙하 융해), 기상 이변 증가, 생태계 서식지 변화 및 생물 다양성 감소</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p28_7.png" alt="교재 그림: <지구의 열수지와 복사 평형 모식도>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지구의 열수지와 복사 평형 모식도>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지구의 열수지와 복사 평형 모식도></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p28_8.png" alt="교재 그림: <대기 중 이산화 탄소 농도 변화>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <대기 중 이산화 탄소 농도 변화>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <대기 중 이산화 탄소 농도 변화></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-06_p28_10.png" alt="교재 그림: <지구 온난화에 따른 환경 변화>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <지구 온난화에 따른 환경 변화>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <지구 온난화에 따른 환경 변화></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 & 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">클릭하면 교재 빈칸 정답과 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.27 핵심 체크: 다른 요인의 변화가 없을 때, 현재보다 '지구 자전축 기울기가 커지고' 동시에 '공전 궤도 이심률이 작아지면' 우리나라(북반구 중위도)의 기온 연교차는 어떻게 변하는가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                자전축 기울기가 커지면 북반구 연교차가 <strong>증가</strong>하고, 공전 궤도 이심률이 작아지면(원 궤도에 가까워지면) 현재 원일점(여름)은 가까워지고 근일점(겨울)은 멀어져 북반구 연교차가 역시 <strong>증가</strong>합니다. 따라서 두 요인 모두 우리나라의 기온 연교차를 <strong>더욱 크게</strong> 만듭니다.
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.28 확인: 지구 온난화로 인해 해수면이 상승하는 가장 주요한 두 가지 물리적 원인은 무엇인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                첫째, 수온 상승에 따른 <strong>해수의 열팽창</strong>과 둘째, 그린란드 및 남극 대륙 등 <strong>육지(대륙) 빙하의 융해</strong>로 인한 해수 유입입니다. (바다에 떠 있는 북극 해빙이 녹는 것은 해수면 상승에 거의 영향을 주지 않습니다.)
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        
+      <a href="unit-01-05.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center gap-3">
+        <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">이전 소단원 (05/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">01. 엘니뇨와 남방진동</div>
+        </div>
+      </a>
+    
+        
+      <a href="unit-02-01.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (07/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">01. 지층과 암석의 나이</div>
+        </div>
+        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+      </a>
+    
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 반영)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

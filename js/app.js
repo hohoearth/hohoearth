@@ -176,23 +176,23 @@ function renderItems() {
       <article class="group bg-white border border-slate-200/80 rounded-3xl overflow-hidden hover:border-slate-300 transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:shadow-slate-200/50">
         
         <!-- 썸네일 -->
-        <div class="relative h-56 overflow-hidden bg-slate-100 cursor-pointer" onclick="openDetailModal('${item.id}')">
+        <div class="relative h-56 overflow-hidden bg-slate-100 cursor-pointer" onclick="${item.lessonUrl ? `window.location.href='${item.lessonUrl}'` : `openDetailModal('${item.id}')`}">
           <img 
             src="${item.thumbnail}" 
             alt="${item.title}" 
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            class="w-full h-full object-contain bg-white p-2 group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <!-- 상단 뱃지 -->
           <div class="absolute top-4 left-4 flex items-center gap-2">
-            <span class="px-3 py-1 text-[11px] font-bold tracking-wider uppercase rounded-full bg-white/90 backdrop-blur-md text-slate-900 border border-slate-200 shadow-sm">
-              ${catObj.name}
+            <span class="px-3 py-1 text-[11px] font-bold tracking-wider uppercase rounded-full bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200 shadow-sm">
+              ${item.unitMajor ? item.unitMajor.split('.')[0] + '단원' : catObj.name}
             </span>
-            ${item.featured ? '<span class="px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full bg-indigo-600 text-white shadow-sm">추천</span>' : ''}
+            ${item.featured ? '<span class="px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full bg-indigo-600 text-white shadow-sm">핵심단원</span>' : ''}
           </div>
-          <div class="absolute top-4 right-4 text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-slate-600 border border-slate-200 shadow-sm">
+          <div class="absolute top-4 right-4 text-[11px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-900/90 backdrop-blur-md text-white shadow-sm">
             ${item.date}
           </div>
         </div>
@@ -202,7 +202,7 @@ function renderItems() {
           <div class="space-y-2">
             <h3 
               class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-2 cursor-pointer leading-snug"
-              onclick="openDetailModal('${item.id}')"
+              onclick="${item.lessonUrl ? `window.location.href='${item.lessonUrl}'` : `openDetailModal('${item.id}')`}"
             >
               ${item.title}
             </h3>
@@ -225,14 +225,21 @@ function renderItems() {
           </div>
 
           <!-- 액션 푸터 -->
-          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
             ${
               isTool && item.toolAction
                 ? `<button onclick="handleToolAction('${item.toolAction}')" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
                     <i data-lucide="play" class="w-3.5 h-3.5 fill-white"></i> 웹 도구 바로 실행
                   </button>`
-                : `<button onclick="openDetailModal('${item.id}')" class="text-xs font-bold tracking-wider uppercase text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition">
-                    자세히 살펴보기 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                : item.lessonUrl
+                ? `<a href="${item.lessonUrl}" class="flex-1 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold tracking-wider rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> 단원 수업자료 열기
+                  </a>
+                  <button onclick="openDetailModal('${item.id}')" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition" title="요약 미리보기">
+                    요약
+                  </button>`
+                : `<button onclick="openDetailModal('${item.id}')" class="w-full py-2.5 px-4 bg-black text-white hover:bg-slate-800 text-xs font-bold tracking-wider uppercase rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                    자세히 보기 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                   </button>`
             }
           </div>
@@ -255,26 +262,21 @@ function setupEventListeners() {
     });
   }
 
+  // ESC 키로 모달 닫기
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeDetailModal();
       ClassroomTools.closeModal();
     }
+    // 단축키 '/' 누르면 검색창 포커스
+    if (e.key === "/" && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput?.focus();
+    }
   });
 }
 
-function filterByTag(tag) {
-  currentTag = tag;
-  renderItems();
-  document.getElementById("archive")?.scrollIntoView({ behavior: 'smooth' });
-}
-
-function clearTag() {
-  currentTag = "";
-  renderItems();
-}
-
-// 6. 상세 보기 모달
+// 6. 상세 모달 열기
 function openDetailModal(itemId) {
   const items = window.archiveItems || [];
   const item = items.find(i => i.id === itemId);
@@ -365,12 +367,17 @@ function closeDetailModal() {
   }
 }
 
-// 7. 내장 도구 실행 브릿지
-function handleToolAction(action) {
-  closeDetailModal();
-  if (action === "open-picker-tool") {
-    ClassroomTools.openPicker();
-  } else if (action === "open-timer-tool") {
-    ClassroomTools.openTimer();
+// 7. 태그 필터링
+function filterByTag(tag) {
+  currentTag = tag;
+  renderItems();
+  const archiveSec = document.getElementById("archive");
+  if (archiveSec) {
+    archiveSec.scrollIntoView({ behavior: "smooth" });
   }
+}
+
+function clearTag() {
+  currentTag = "";
+  renderItems();
 }

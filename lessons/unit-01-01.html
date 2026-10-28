@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. 해수의 성질 | 사대부고 2학년 지구과학 자체 교재(교재 p. 2 ~ 5)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX for crisp math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-[#fbfbfd] text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- 상단 고정 헤더 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-[98%] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="../index.html#archive" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shrink-0">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">메인 아카이브</span>
+        </a>
+        <div class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+          <span class="text-indigo-600 font-mono mr-1">[01/16]</span> Ⅰ. 대기와 해양의 상호작용 &gt; 01. 해수의 성질
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="toggle-width-btn" onclick="toggleWideMode()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition" title="화면 너비 확장/축소">
+          <i id="toggle-width-icon" data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+          <span id="toggle-width-text" class="hidden sm:inline">넓은 화면 모드</span>
+        </button>
+        <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          자체 교재 교재 p. 2 ~ 5
+        </span>
+        <button onclick="document.getElementById('unit-drawer').classList.toggle('hidden')" class="lg:hidden px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5">
+          <i data-lucide="list" class="w-3.5 h-3.5"></i>
+          <span>전체 단원(16)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 모바일용 전체 단원 서랍 -->
+  <div id="unit-drawer" class="hidden lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs p-4" onclick="this.classList.add('hidden')">
+    <div class="bg-white rounded-3xl max-w-sm ml-auto h-full overflow-y-auto p-5 space-y-3 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <span class="font-black text-sm text-slate-900">📚 2026 지구과학 자체 교재 (16단원)</span>
+        <button onclick="document.getElementById('unit-drawer').classList.add('hidden')" class="p-1 text-slate-500 hover:text-black">✕</button>
+      </div>
+      <div class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 배너 -->
+  <section class="relative py-12 sm:py-16 px-6 bg-gradient-to-b from-indigo-50/70 via-sky-50/30 to-transparent border-b border-slate-200/80 overflow-hidden">
+    <div id="hero-container" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center transition-all duration-300">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            Ⅰ. 대기와 해양의 상호작용 / 1. 해수의 성질과 순환
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white text-slate-600 border border-slate-200">
+            교재 교재 p. 2 ~ 5
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          01. 해수의 성질
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl">
+          전 세계 해양의 표층 수온과 연직 층상 구조(혼합층·수온약층·심해층), 염분비 일정 법칙, 수온-염분도(T-S 다이어그램)를 통한 수괴 밀도 분석 및 용존 기체 분포를 탐구합니다.
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+          <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1400&q=80" alt="01. 해수의 성질" class="w-full h-44 sm:h-52 object-cover rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 레이아웃 (좌측 16단원 네비게이션 + 우측 본문) -->
+  <main id="main-container" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+    
+    <!-- 좌측 사이드바: 16개 소단원 목차 -->
+    <aside id="sidebar-aside" class="hidden lg:block lg:col-span-3 sticky top-24 bg-white rounded-3xl border border-slate-200/90 p-5 shadow-xs space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto transition-all duration-300">
+      <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 pb-2 border-b border-slate-100 flex items-center justify-between">
+        <span>교재 전체 목차</span>
+        <span class="font-mono text-indigo-600">16 Units</span>
+      </div>
+      <nav class="space-y-1">
+        
+          <a href="unit-01-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition bg-slate-900 text-white font-bold shadow-sm">
+            <span class="truncate">01. 해수의 성질</span>
+            <span class="text-[10px] opacity-70 font-mono">01-01</span>
+          </a>
+        
+
+          <a href="unit-01-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">02. 해수의 순환</span>
+            <span class="text-[10px] opacity-70 font-mono">01-02</span>
+          </a>
+        
+
+          <a href="unit-01-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">03. 기압과 날씨 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-03</span>
+          </a>
+        
+
+          <a href="unit-01-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">04. 태풍과 주요 악기상</span>
+            <span class="text-[10px] opacity-70 font-mono">01-04</span>
+          </a>
+        
+
+          <a href="unit-01-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">05. 엘니뇨와 남방진동</span>
+            <span class="text-[10px] opacity-70 font-mono">01-05</span>
+          </a>
+        
+
+          <a href="unit-01-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">06. 지구의 기후 변화</span>
+            <span class="text-[10px] opacity-70 font-mono">01-06</span>
+          </a>
+        
+
+          <a href="unit-02-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">07. 지층과 암석의 나이</span>
+            <span class="text-[10px] opacity-70 font-mono">02-01</span>
+          </a>
+        
+
+          <a href="unit-02-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">08. 퇴적암과 퇴적 환경</span>
+            <span class="text-[10px] opacity-70 font-mono">02-02</span>
+          </a>
+        
+
+          <a href="unit-02-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">09. 지질시대의 환경과 생물</span>
+            <span class="text-[10px] opacity-70 font-mono">02-03</span>
+          </a>
+        
+
+          <a href="unit-02-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">10. 마그마와 화성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-04</span>
+          </a>
+        
+
+          <a href="unit-02-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">11. 변성 작용과 변성암</span>
+            <span class="text-[10px] opacity-70 font-mono">02-05</span>
+          </a>
+        
+
+          <a href="unit-03-01.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">12. 태양계 천체의 운동</span>
+            <span class="text-[10px] opacity-70 font-mono">03-01</span>
+          </a>
+        
+
+          <a href="unit-03-02.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">13. 별의 물리량</span>
+            <span class="text-[10px] opacity-70 font-mono">03-02</span>
+          </a>
+        
+
+          <a href="unit-03-03.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">14. H-R도와 별의 진화</span>
+            <span class="text-[10px] opacity-70 font-mono">03-03</span>
+          </a>
+        
+
+          <a href="unit-03-04.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">15. 외부 은하</span>
+            <span class="text-[10px] opacity-70 font-mono">03-04</span>
+          </a>
+        
+
+          <a href="unit-03-05.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">16. 허블-르메트르 법칙과 우주 팽창</span>
+            <span class="text-[10px] opacity-70 font-mono">03-05</span>
+          </a>
+        
+
+          <a href="unit-03-06.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+            <span class="truncate">17. 현대 우주론의 정립</span>
+            <span class="text-[10px] opacity-70 font-mono">03-06</span>
+          </a>
+        
+      </nav>
+    </aside>
+
+    <!-- 우측 본문 영역 (너비 확장 지원) -->
+    <div id="content-area" class="lg:col-span-9 space-y-10 transition-all duration-300">
+
+      <!-- ① 학습 목표 & 핵심 개념 (필수 포함 요소 1 & 2) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">학습 목표 (Learning Objectives)</h2>
+          </div>
+          <ul class="space-y-3 pt-1">
+            <li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>해수의 물리적·화학적 성질(수온, 염분, 밀도, 용존 기체)의 정의와 변화 요인을 설명할 수 있다.</span></li>
+<li class="flex items-start gap-3 text-slate-700 text-sm sm:text-base leading-relaxed"><span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">✓</span><span>실측 자료와 수온-염분도(T-S 다이어그램)를 활용하여 해수의 온도, 염분, 밀도, 용존 산소량 등의 분포를 분석·해석할 수 있다.</span></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="key" class="w-4 h-4"></i>
+              </div>
+              <h2 class="text-lg font-extrabold text-slate-900">핵심 개념 체크리스트</h2>
+            </div>
+            <p class="text-xs text-slate-500">학습을 마친 개념은 직접 체크해보세요!</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>수온 (혼합층·수온약층·심해층)</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>염분과 염분비 일정 법칙</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>해수의 밀도와 T-S 다이어그램</span></label>
+<label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm font-bold text-slate-800 cursor-pointer hover:border-indigo-400 transition select-none"><input type="checkbox" class="w-4 h-4 rounded accent-indigo-600" /><span>용존 기체 (O₂ · CO₂)</span></label>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 font-mono">
+            2026 사대부고 고2 지구과학 자체 교재 원문 기반
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 동기 유발: 생각해보기 (필수 포함 요소 3) -->
+      <section class="bg-gradient-to-br from-amber-50/90 via-yellow-50/60 to-orange-50/50 rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-xs space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider">동기 유발 · 생각해보기</span>
+            <span class="text-xs font-bold text-amber-900">수업 시작 전 핵심 질문</span>
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-5 border border-amber-200/80 text-slate-900 font-extrabold text-base sm:text-lg leading-relaxed shadow-2xs">
+          Q. 아라비아 반도 북서부에 있는 호수인 사해(Dead Sea)는 사람이 들어가면 구명조끼 없이도 자연스럽게 몸이 뜬다고 한다. 그 이유는 무엇일까?
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="../assets/textbook/fig_01-01_p2_1.png" alt="생각해보기 교재 삽화" class="max-h-52 object-contain rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '생각해보기 교재 원문 자료')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 교재 수록 삽화 (클릭 시 확대)</figcaption>
+              </figure>
+            
+              <figure class="bg-white rounded-2xl p-3 border border-amber-200/80 shadow-xs flex flex-col items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="고염분 환경에서 부력이 크게 작용하는 사해(Dead Sea)의 모습" class="max-h-52 w-full object-cover rounded-lg cursor-zoom-in" onclick="openLightbox(this.src, '고염분 환경에서 부력이 크게 작용하는 사해(Dead Sea)의 모습')" />
+                <figcaption class="text-[11px] text-slate-500 mt-2 font-medium">▲ 고염분 환경에서 부력이 크게 작용하는 사해(Dead Sea)의 모습</figcaption>
+              </figure>
+            </div>
+
+        <!-- 인터랙티브 답안 토글 -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="toggleAnswer('motivation-answer')" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-extrabold shadow-xs transition flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-4 h-4"></i>
+              <span>생각해보기 예시 답안 & 과학적 해설 보기</span>
+            </button>
+            <span class="text-xs text-amber-800 font-medium">💡 먼저 스스로 이유를 추론해 본 뒤 버튼을 눌러 확인해보세요!</span>
+          </div>
+
+          <div id="motivation-answer" class="hidden p-5 rounded-2xl bg-white border-2 border-amber-400 text-slate-800 text-sm sm:text-base leading-relaxed shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-amber-700 mb-1.5">✨ 과학적 해설 및 모범 답안</div>
+            <p>사해는 건조한 기후로 인해 <strong>증발량이 강수량보다 매우 많고 외부로 빠져나가는 물길이 없어 염분이 일반 해수(약 35 psu)보다 약 8~9배 높은 300 psu 내외</strong>에 달합니다. 염분이 높을수록 해수의 <strong>밀도(단위 부피당 질량)가 커지므로</strong> 사람 몸의 밀도보다 물의 밀도가 훨씬 커져 큰 부력을 받아 몸이 자연스럽게 뜨게 됩니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 수치 기반 인터랙티브 시뮬레이션 (신규 추가!) -->
+      
+          <section class="space-y-4 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-indigo-600 text-white">수치 시뮬레이션</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">🧪 수온·염분 변화에 따른 해수 밀도(T-S) 및 부력 실시간 계산기</h3>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">수온(0~30℃)과 염분(20~40 psu 및 사해 300 psu)을 조절하여 해수의 밀도 계산과 부력 상태, T-S도 상의 위치를 확인해보세요.</p>
+            
+    <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-md border border-slate-800">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-black">수치 시뮬레이션</span>
+          <h4 class="font-extrabold text-base sm:text-lg">해수 밀도 & 부력 인터랙티브 시뮬레이터</h4>
+        </div>
+        <span class="text-xs text-slate-400 font-mono">EOS-80 표준 근사식</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-800/80 p-5 rounded-2xl border border-slate-700">
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>수온 (T)</span>
+              <span id="ts-temp-val" class="text-sky-400 font-mono text-sm">15.0 ℃</span>
+            </div>
+            <input id="ts-temp" type="range" min="0" max="35" step="0.5" value="15" class="w-full accent-sky-400 cursor-pointer" oninput="updateTSSim()" />
+            <div class="flex justify-between text-[10px] text-slate-500"><span>0℃ (극지)</span><span>15℃ (중위도)</span><span>35℃ (적도)</span></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>염분 (S)</span>
+              <span id="ts-sal-val" class="text-emerald-400 font-mono text-sm">35.0 psu</span>
+            </div>
+            <input id="ts-sal" type="range" min="20" max="45" step="0.5" value="35" class="w-full accent-emerald-400 cursor-pointer" oninput="updateTSSim()" />
+            <div class="flex justify-between text-[10px] text-slate-500"><span>20 psu (담수유입)</span><span>35 psu (평균)</span><span>45 psu (고염분)</span></div>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button onclick="setTSPreset(25, 34)" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-bold text-slate-200">저위도 표층</button>
+            <button onclick="setTSPreset(12, 35)" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-bold text-slate-200">중위도 혼합층</button>
+            <button onclick="setTSPreset(1, 34.8)" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-bold text-slate-200">극지방 심해수</button>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-700/80 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">계산된 해수 밀도 (Density)</div>
+            <div class="text-3xl sm:text-4xl font-black font-mono text-sky-300" id="ts-density-disp">1.02598 g/cm³</div>
+            <div class="text-xs text-slate-400 font-mono" id="ts-sigma-disp">시그마-t (σ_t): 25.98 kg/m³</div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1.5 leading-relaxed">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              <span id="ts-buoyancy-icon">⚖️</span>
+              <span id="ts-buoyancy-status" class="text-emerald-400 font-bold">침강 경향: 중간 (안정 상태)</span>
+            </div>
+            <p id="ts-buoyancy-desc" class="text-slate-400 text-[11px]">
+              수온이 낮고 염분이 높을수록 등밀도선 오른쪽 아래로 이동하여 밀도가 증가하며, 극지역에서는 침강하여 심층수를 형성합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function updateTSSim() {
+        const T = parseFloat(document.getElementById('ts-temp').value);
+        const S = parseFloat(document.getElementById('ts-sal').value);
+        document.getElementById('ts-temp-val').innerText = T.toFixed(1) + ' ℃';
+        document.getElementById('ts-sal-val').innerText = S.toFixed(1) + ' psu';
+        
+        // UNESCO 1980 equation of state approximation
+        const rho = 1000 + (0.8 * S) - (0.006 * Math.pow(T - 4, 2) * 10) - (0.15 * T);
+        const gcm3 = (rho / 1000).toFixed(5);
+        const sigmat = (rho - 1000).toFixed(2);
+        
+        document.getElementById('ts-density-disp').innerText = gcm3 + ' g/cm³';
+        document.getElementById('ts-sigma-disp').innerText = '시그마-t (σ_t): ' + sigmat + ' kg/m³';
+        
+        const statusEl = document.getElementById('ts-buoyancy-status');
+        const descEl = document.getElementById('ts-buoyancy-desc');
+        if (rho > 1027.5) {
+          statusEl.innerText = '강한 침강 발생 (심해층 수괴 형성!)';
+          statusEl.className = 'text-indigo-400 font-bold';
+          descEl.innerText = '저온·고염분 상태로 밀도가 매우 커져 해수가 해저 바닥으로 가라앉는 강력한 침강(열염순환)이 발생합니다.';
+        } else if (rho < 1023.0) {
+          statusEl.innerText = '표층 부유 (가벼운 표층수)';
+          statusEl.className = 'text-amber-400 font-bold';
+          descEl.innerText = '고온·저염분 상태로 밀도가 작아 하부 해수와 잘 섞이지 않고 표층에 안정하게 머뭅니다.';
+        } else {
+          statusEl.innerText = '중간 안정 상태 (혼합층 및 수온약층)';
+          statusEl.className = 'text-emerald-400 font-bold';
+          descEl.innerText = '수온과 염분의 균형으로 일반적인 중위도 해역의 혼합층~수온약층에 해당합니다.';
+        }
+      }
+      function setTSPreset(t, s) {
+        document.getElementById('ts-temp').value = t;
+        document.getElementById('ts-sal').value = s;
+        updateTSSim();
+      }
+    </script>
+    
+          </section>
+        
+
+      <!-- ④ 본문 개념 정리 (필수 포함 요소 4) -->
+      <div class="space-y-10">
+        
+          <section id="sec-1" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 1</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">1. 해수의 수온 (Water Temperature)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 전 세계 해양의 표층 수온 분포</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>수온의 정의</strong>: 해수의 온도 (단위: $\text{℃}$)</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>등수온선 분포</strong>: 태양 복사 에너지의 영향으로 등수온선은 주로 <strong>위도와 나란하게</strong> 분포한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>위도에 따른 변화</strong>: 지구가 구형이기 때문에 저위도에서 고위도로 갈수록 단위 면적당 입사하는 태양 복사 에너지양($E$)이 감소하여 표층 수온이 대체로 낮아진다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>예외 요인</strong>: 대륙과 해양의 지형 분포, 바람, 한류·난류 등 <strong>해류의 영향</strong>이 더해져 등수온선이 위도와 완전히 나란하지 않고 연안에서 휘어진다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p2_2.png" alt="교재 그림: <전 세계 해양의 표층 수온 분포>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <전 세계 해양의 표층 수온 분포>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <전 세계 해양의 표층 수온 분포></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p2_3.png" alt="교재 그림: <위도에 따른 태양 복사 에너지의 양>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <위도에 따른 태양 복사 에너지의 양>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <위도에 따른 태양 복사 에너지의 양></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(2) 해수의 연직 수온 분포 (층상 구조)와 위도별 비교</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div>해수는 태양 복사 에너지의 도달 깊이와 바람의 혼합 작용에 의해 깊이에 따라 <strong>혼합층 - 수온약층 - 심해층</strong>의 3층 구조를 이룬다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>저위도 해역</strong>: 태양 복사 에너지 흡수량이 많아 표층 수온이 매우 높으나, 바람(무역풍·적도 무풍대)이 약해 <strong>혼합층이 얇고 수온약층이 뚜렷</strong>하게 발달한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>중위도 해역</strong>: 강한 바람(편서풍)이 불어 <strong>혼합층의 두께가 가장 두껍게</strong> 나타나며 계절에 따른 수온 변화가 크다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>고위도 해역</strong>: 태양 복사 에너지가 적어 표층 수온이 매우 낮고, 표층과 심층의 수온 차이가 거의 없어 <strong>층상 구조(혼합층·수온약층)가 발달하지 않는다.</strong></div></li>
+                </ul>
+                
+                  <div class="overflow-x-auto my-5 rounded-2xl border border-slate-200 shadow-xs bg-white">
+                    <table class="w-full border-collapse">
+                      <thead><tr><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">층 구분</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">깊이에 따른 수온 변화</th><th class="px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100 border-b border-slate-200">생성 원인 및 핵심 특징</th></tr></thead>
+                      <tbody><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>혼합층</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">수온이 높고 깊이에 따라 거의 일정함</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 태양 복사 에너지 흡수 + <strong>바람의 혼합 작용</strong><br>• <strong>바람이 강할수록 두껍게 발달</strong> (중위도에서 가장 두꺼움)</td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>수온약층</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">깊어질수록 수온이 급격히 낮아짐</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 아래쪽은 차갑고(고밀도) 위쪽은 따뜻하여(저밀도) <strong>대류(연직 운동)가 일어나지 않는 매우 안정한 층</strong><br>• 혼합층과 심해층 사이의 <strong>물질과 에너지 교환을 차단</strong></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top"><strong>심해층</strong></td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">수온이 매우 낮고(4℃ 이하) 일정함</td><td class="px-4 py-3.5 text-xs sm:text-sm text-slate-700 border-b border-slate-100 leading-relaxed align-top">• 태양 복사 에너지가 도달하지 못함 (위도·계절에 관계없이 연중 수온 일정)<br>• <strong>전체 해수 부피의 약 80% 이상</strong>으로 가장 많은 양 차지</td></tr></tbody>
+                    </table>
+                  </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p3_4.png" alt="교재 그림: <깊이에 따른 해수의 층상 구조>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <깊이에 따른 해수의 층상 구조>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <깊이에 따른 해수의 층상 구조></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p3_5.png" alt="교재 그림: <위도별 해수의 연직 수온 분포 비교>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <위도별 해수의 연직 수온 분포 비교>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <위도별 해수의 연직 수온 분포 비교></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-2" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 2</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">2. 해수의 염분 (Salinity)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 염분의 정의와 염분비 일정 법칙</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>염분의 정의</strong>: 해수 $1\text{ kg}$($1,000\text{ g}$) 속에 녹아 있는 모든 염류의 총량을 $\text{g}$ 수로 나타낸 값 (단위: $\text{psu}$, 실용염분단위)</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>전 세계 평균 염분</strong>: 전 세계 해양의 평균 표층 염분은 약 <strong>$35\text{ psu}$</strong>이다. (해수 $1\text{ kg}$ 중 물 $965\text{ g}$ + 염류 $35\text{ g}$)</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>⭐ 염분비 일정의 법칙 (매우 중요)</strong>: 해역에 따라 해수의 염분(절대적인 염류의 총량)은 다르더라도, 해수가 오랫동안 순환하며 섞였기 때문에 <strong>녹아 있는 각 염류(염화 나트륨 약 77.7%, 염화 마그네슘 약 10.9% 등) 사이의 상대적인 비율은 전 세계 어느 바다에서나 항상 일정</strong>하다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p3_6.png" alt="교재 그림: <해수 1kg 속의 염류의 양과 비율>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <해수 1kg 속의 염류의 양과 비율>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <해수 1kg 속의 염류의 양과 비율></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(2) 표층 염분을 변화시키는 요인</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>증발량과 강수량 (가장 큰 영향 요인)</strong>: 표층 염분은 <strong>$(\text{증발량} - \text{강수량})$</strong> 값에 비례한다.<br>▸ <strong>적도 해역</strong>: 저기압대(적도 수렴대)로 구름이 많고 강수량이 증발량보다 많아 염분이 낮다.<br>▸ <strong>중위도(위도 약 $20^\circ\sim 30^\circ$) 해역</strong>: 아열대 고기압대에 위치하여 날씨가 맑고 건조하므로 증발량이 강수량보다 훨씬 많아 <strong>표층 염분이 가장 높다.</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>하천수의 유입과 강수</strong>: 강물이 많이 흘러드는 대륙 연안 해역은 중심부 바다(외해)보다 표층 염분이 낮다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>해수의 결빙과 해빙 (극지방)</strong>:<br>▸ <strong>결빙(바닷물이 얼 때)</strong>: 순수한 물($\text{H}_2\text{O}$)만 얼음으로 얼고 염류는 주변 바닷물로 빠져나오므로 주변 해수의 <strong>염분이 높아진다.</strong><br>▸ <strong>해빙(빙하/해빙이 녹을 때)</strong>: 순수한 담수가 바다로 공급되므로 주변 해수의 <strong>염분이 낮아진다.</strong></div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p4_7.png" alt="교재 그림: <전 세계 해양의 표층 염분 분포>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <전 세계 해양의 표층 염분 분포>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <전 세계 해양의 표층 염분 분포></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p4_8.png" alt="교재 그림: <(증발량 - 강수량)과 표층 염분 관계 그래프>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <(증발량 - 강수량)과 표층 염분 관계 그래프>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <(증발량 - 강수량)과 표층 염분 관계 그래프></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-3" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 3</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">3. 해수의 밀도와 수온-염분도 (T-S 다이어그램)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 해수의 밀도 결정 요인과 분포</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>밀도의 변화 요인</strong>: 해수의 밀도는 <strong>수온이 낮을수록(반비례)</strong>, <strong>염분이 높을수록(비례)</strong>, <strong>수압이 클수록(비례, 영향 작음)</strong> 커진다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>위도별·수심별 분포</strong>: 일반적으로 표층 해수의 밀도는 표층 수온 분포와 거의 정반대 개형을 보이며(대칭형), 깊이에 따른 밀도 분포는 수온 분포와 대칭되어 수온약층 구간에서 밀도가 급격히 증가하는 <strong>밀도약층</strong>이 나타난다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p4_9.png" alt="교재 그림: <위도별 표층 수온과 표층 밀도 분포>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <위도별 표층 수온과 표층 밀도 분포>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <위도별 표층 수온과 표층 밀도 분포></span>
+                        </figcaption>
+                      </figure>
+                    
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p4_10.png" alt="교재 그림: <수심에 따른 해수의 수온과 밀도 분포>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <수심에 따른 해수의 수온과 밀도 분포>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <수심에 따른 해수의 수온과 밀도 분포></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(2) 수온-염분도 (T-S 다이어그램)와 수괴 분석</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>수괴(Water Mass)</strong>: 대기의 '기단'과 마찬가지로 물리·화학적 성질(수온, 염분)이 비슷한 거대한 해수 덩어리</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>T-S도 해석 핵심</strong>: 세로축은 수온($T$), 가로축은 염분($S$), 오른쪽 아래로 내려갈수록 커지는 대각선 곡선은 <strong>등밀도선</strong>을 나타낸다. 즉, <strong>오른쪽 아래(저온·고염분)로 갈수록 밀도가 크다!</strong></div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>두 수괴의 혼합</strong>: 성질이 다른 두 수괴 $A$와 $C$가 같은 양으로 혼합되면, T-S도에서 두 점을 이은 <strong>직선 선분의 중점</strong>에 해당하는 새로운 수온·염분·밀도를 가진 혼합 해수가 형성된다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p5_11.png" alt="교재 그림: <수온-염분도(T-S 다이어그램)를 이용한 수괴 밀도 및 혼합 분석>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <수온-염분도(T-S 다이어그램)를 이용한 수괴 밀도 및 혼합 분석>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <수온-염분도(T-S 다이어그램)를 이용한 수괴 밀도 및 혼합 분석></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+
+          <section id="sec-4" class="space-y-6 scroll-mt-24">
+            <div class="flex items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-black bg-slate-900 text-white">핵심 개념 4</span>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">4. 해수의 용존 기체 (Dissolved Gases)</h3>
+            </div>
+            <div class="space-y-6">
+              
+              <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-4">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
+                  <span class="w-2 h-5 rounded-full bg-indigo-600"></span>
+                  <span>(1) 기체의 용해도와 수심에 따른 O₂ · CO₂ 분포</span>
+                </h4>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>기체의 용해도 조건</strong>: 해수에 녹아 있는 기체(질소, 산소, 이산화 탄소 등)의 용해도는 <strong>수온이 낮을수록, 염분이 낮을수록, 수압이 높을수록</strong> 커진다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>용존 산소량($\text{O}_2$) 연직 분포</strong>:<br>▸ <strong>표층 (최대)</strong>: 대기 중 산소의 용해 + 식물성 플랑크톤의 <strong>광합성</strong>으로 산소가 가장 풍부하다.<br>▸ <strong>수심 $100\sim 1,000\text{ m}$ (산소 극소층)</strong>: 햇빛이 닿지 않아 광합성은 멈추고 해양 생물의 호흡과 유기물 분해에 산소가 소모되어 급격히 감소한다.<br>▸ <strong>심해층 (소폭 증가)</strong>: 생물 수가 적고, <strong>극지방 표층에서 침강한 산소가 풍부한 찬 심층수</strong>가 유입되어 용존 산소량이 다시 증가한다.</div></li>
+<li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 leading-relaxed"><span class="text-indigo-600 font-bold mt-1">•</span><div><strong>용존 이산화 탄소량($\text{CO}_2$) 연직 분포</strong>:<br>▸ <strong>표층 (최소)</strong>: 광합성에 의해 소비되어 가장 적다.<br>▸ <strong>심층으로 갈수록 증가</strong>: 호흡과 유기물 분해로 생성되며, <strong>수압 증가와 수온 하강으로 용해도가 커져</strong> 탄산염 용해가 일어나므로 깊어질수록 계속 증가한다.</div></li>
+                </ul>
+                
+                <div class="grid grid-cols-1 grid-cols-1 gap-4 mt-5">
+                      <figure class="bg-slate-50/90 rounded-2xl p-4 border border-slate-200/90 flex flex-col justify-between hover:border-indigo-300 transition group">
+                        <div class="flex items-center justify-center bg-white rounded-xl p-3 border border-slate-100 min-h-[160px] overflow-hidden">
+                          <img src="../assets/textbook/fig_01-01_p5_12.png" alt="교재 그림: <수심에 따른 용존 산소량(O₂)과 용존 이산화 탄소량(CO₂) 분포>" class="max-h-72 w-auto object-contain rounded-lg group-hover:scale-[1.02] transition duration-300 cursor-zoom-in" onclick="openLightbox(this.src, '교재 그림: <수심에 따른 용존 산소량(O₂)과 용존 이산화 탄소량(CO₂) 분포>')" loading="lazy" />
+                        </div>
+                        <figcaption class="text-xs text-center text-slate-600 font-semibold mt-3 flex items-center justify-center gap-1.5">
+                          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                          <span>교재 그림: <수심에 따른 용존 산소량(O₂)과 용존 이산화 탄소량(CO₂) 분포></span>
+                        </figcaption>
+                      </figure>
+                    </div>
+              </div>
+            
+            </div>
+          </section>
+        
+      </div>
+
+      <!-- ⑤ 단원 적용하기 & 형성평가 (인터랙티브 학습지) -->
+      <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-lg">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="space-y-1">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-400">Interactive Checkpoints</span>
+            <h3 class="text-xl sm:text-2xl font-black">단원 개념 적용하기 & 확인 문제</h3>
+          </div>
+          <span class="text-xs text-slate-400">클릭하면 교재 빈칸 정답과 해설이 나타납니다</span>
+        </div>
+        <div class="grid grid-cols-1 gap-4 text-slate-900">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q1</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">교재 p.5 적용하기: 수온-염분도(T-S도)에서 수괴 A(수온 21℃, 염분 34 psu)와 수괴 C가 1:1로 혼합될 때 생성되는 해수의 위치와 밀도 변화는?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-0')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-0" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                두 수괴 A와 C를 직선으로 연결한 선분의 정중앙(중점)에 해당하는 수온과 염분을 갖게 되며, 해당 중점이 위치한 등밀도선 값을 읽어 혼합 해수의 밀도를 파악할 수 있습니다.
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0 mt-0.5">Q2</span>
+              <p class="font-bold text-slate-900 text-sm sm:text-base leading-relaxed">확인 질문: 심해층(수심 2,000m 이하)에서 수심이 깊어질수록 용존 산소량이 다시 증가하는 까닭은 무엇인가?</p>
+            </div>
+            <div>
+              <button onclick="toggleAnswer('cp-ans-1')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold border border-slate-200 transition flex items-center gap-2">
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                <span>정답 및 해설 펼쳐보기</span>
+              </button>
+              <div id="cp-ans-1" class="hidden mt-3 p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                <div class="font-extrabold text-emerald-800 mb-1 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i> 모범 답안 및 해설
+                </div>
+                고위도(극지방) 표층의 차갑고 산소가 풍부한 해수가 결빙과 냉각으로 밀도가 커져 심해 바닥으로 침강(심층 순환)하여 심해층에 산소를 공급하기 때문입니다.
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      <!-- ⑥ 이전 / 다음 단원 이동 버튼 -->
+      <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch justify-between gap-4">
+        <div class="flex-1"></div>
+        
+      <a href="unit-01-02.html" class="flex-1 p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 shadow-xs transition group flex items-center justify-end gap-3 text-right">
+        <div class="min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-400">다음 소단원 (02/16)</div>
+          <div class="text-sm font-extrabold text-slate-900 truncate">02. 해수의 순환</div>
+        </div>
+        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:text-indigo-600 transition shrink-0"></i>
+      </a>
+    
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 이미지 확대 라이트박스 모달 -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-2">
+        <span id="lightbox-caption" class="text-sm font-extrabold text-slate-800">교재 시각 자료 확대 보기</span>
+        <button onclick="closeLightbox()" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">닫기 ✕</button>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-h-[72vh] w-auto object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 화면 너비 확장/축소 토글 기능 (사용자 요청 반영)
+    let isWide = localStorage.getItem('lesson_wide_mode') === 'true';
+    applyWideMode(isWide);
+
+    function toggleWideMode() {
+      isWide = !(isWide === true);
+      localStorage.setItem('lesson_wide_mode', isWide);
+      applyWideMode(isWide);
+    }
+
+    function applyWideMode(wide) {
+      const hero = document.getElementById('hero-container');
+      const main = document.getElementById('main-container');
+      const sidebar = document.getElementById('sidebar-aside');
+      const content = document.getElementById('content-area');
+      const btnText = document.getElementById('toggle-width-text');
+      const btnIcon = document.getElementById('toggle-width-icon');
+      
+      if (!hero || !main || !content) return;
+
+      if (wide) {
+        hero.classList.remove('max-w-7xl');
+        hero.classList.add('max-w-[96%]');
+        main.classList.remove('max-w-7xl');
+        main.classList.add('max-w-[96%]');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-3');
+          sidebar.classList.add('lg:col-span-2');
+        }
+        content.classList.remove('lg:col-span-9');
+        content.classList.add('lg:col-span-10');
+        if (btnText) btnText.innerText = '표준 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'minimize-2');
+      } else {
+        hero.classList.remove('max-w-[96%]');
+        hero.classList.add('max-w-7xl');
+        main.classList.remove('max-w-[96%]');
+        main.classList.add('max-w-7xl');
+        if (sidebar) {
+          sidebar.classList.remove('lg:col-span-2');
+          sidebar.classList.add('lg:col-span-3');
+        }
+        content.classList.remove('lg:col-span-10');
+        content.classList.add('lg:col-span-9');
+        if (btnText) btnText.innerText = '넓은 화면 모드';
+        if (btnIcon) btnIcon.setAttribute('data-lucide', 'maximize-2');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '교재 시각 자료 확대 보기';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
