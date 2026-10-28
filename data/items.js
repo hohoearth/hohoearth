@@ -593,7 +593,7 @@ const archiveItems = [
   {
     "id": "tool-random-picker",
     "category": "tools",
-    "title": "교실 발표자 & 탐구 모둠 랜덤 추첨기",
+    "title": "학생 랜덤 추첨기",
     "date": "상시 운영",
     "year": "2026",
     "summary": "수업 시간 생각해보기 발표자 선정 및 실험 모둠 추첨을 위한 브라우저 내장 웹 유틸리티입니다.",
@@ -618,7 +618,7 @@ const archiveItems = [
   {
     "id": "tool-class-timer",
     "category": "tools",
-    "title": "시각적 모둠 탐구 & 형성평가 집중 타이머",
+    "title": "타이머",
     "date": "상시 운영",
     "year": "2026",
     "summary": "교재 '생각해보기' 토의 시간 및 단원 형성평가 문제 풀이 시간을 관리하는 대형 화면용 타이머입니다.",

@@ -23,7 +23,7 @@ window.ClassroomTools = {
     const body = document.getElementById("tool-modal-body");
     if (!modal || !title || !body) return;
 
-    title.innerHTML = `<i data-lucide="dice-5" class="w-5 h-5 text-indigo-600"></i> <span class="uppercase tracking-wider font-bold">교실 발표자 & 모둠 랜덤 추첨기</span>`;
+    title.innerHTML = `<i data-lucide="dice-5" class="w-5 h-5 text-indigo-600"></i> <span class="uppercase tracking-wider font-bold">학생 랜덤 추첨기</span>`;
     
     body.innerHTML = `
       <div class="space-y-8 text-center">
@@ -129,7 +129,7 @@ window.ClassroomTools = {
     const body = document.getElementById("tool-modal-body");
     if (!modal || !title || !body) return;
 
-    title.innerHTML = `<i data-lucide="clock" class="w-5 h-5 text-emerald-600"></i> <span class="uppercase tracking-wider font-bold">시각적 모둠 활동 집중 타이머</span>`;
+    title.innerHTML = `<i data-lucide="clock" class="w-5 h-5 text-emerald-600"></i> <span class="uppercase tracking-wider font-bold">타이머</span>`;
     
     body.innerHTML = `
       <div class="space-y-8 text-center">
