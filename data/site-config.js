@@ -9,7 +9,7 @@ const siteConfig = {
     name: "김호연",                           // 선생님 성함 또는 닉네임
     role: "지구과학 교사",         // 직책 또는 교과
     bio: "작은 아이디어와 교육 활동을 기록합니다.", // 한 줄 소개
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80", // 프로필 사진 URL (또는 images/my-photo.jpg)
+    avatar: "assets/profile.jpg", // 프로필 사진 URL (또는 images/my-photo.jpg)
     email: "hoyeon1035@gmail.com",             // 이메일 주소
     github: "https://github.com",             // 깃허브 주소 (없으면 "" 빈칸)
     blog: "https://blog.naver.com"            // 블로그 주소 (없으면 "" 빈칸)
@@ -17,8 +17,8 @@ const siteConfig = {
 
   // 2. 사이트 메타데이터 (메인 화면에 크게 표시되는 문구)
   site: {
-    title: "HoHo Earth",                 // 웹사이트 로고/타이틀
-    subtitle: "삶의 해상도를 높여주는 지구과학 수업", // 히어로 큰 제목
+    title: "HoHo earth",                 // 웹사이트 로고/타이틀
+    subtitle: "삶의 해상도를 높여주는 지구과학", // 히어로 큰 제목
     description: "교육활동에 대한 고민을 기록하는 공간입니다.", // 부제목 설명
     badge: "Earth Science Education"    // 상단 반짝이는 뱃지 문구
   },

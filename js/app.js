@@ -32,7 +32,7 @@ function renderSiteConfig() {
   const config = window.siteConfig;
   if (!config) return;
 
-  document.title = `${config.site.title} | ${config.author.role}`;
+  document.title = config.site.title || "HoHo earth";
   
   const brandTitle = document.getElementById("brand-title");
   if (brandTitle) brandTitle.innerText = config.site.title;
