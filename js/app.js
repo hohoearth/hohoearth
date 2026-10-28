@@ -72,14 +72,17 @@ function renderSiteConfig() {
   const items = window.archiveItems || [];
   const statClasses = items.filter(i => i.category === "class").length;
   const statProjects = items.filter(i => i.category === "project").length;
+  const statTools = items.filter(i => i.category === "tools").length;
   const statTotal = items.length;
 
   const elClasses = document.getElementById("stat-classes");
-  if (elClasses) elClasses.innerText = `${statClasses}+`;
+  if (elClasses) elClasses.innerText = `${statClasses}`;
   const elProjects = document.getElementById("stat-projects");
-  if (elProjects) elProjects.innerText = `${statProjects}+`;
+  if (elProjects) elProjects.innerText = `${statProjects}`;
+  const elTools = document.getElementById("stat-tools");
+  if (elTools) elTools.innerText = `${statTools}`;
   const elTotal = document.getElementById("stat-total");
-  if (elTotal) elTotal.innerText = `${statTotal}+`;
+  if (elTotal) elTotal.innerText = `${statTotal}`;
 
   // 소셜 링크
   const socialLinksEl = document.getElementById("social-links");
