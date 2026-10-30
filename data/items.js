@@ -539,7 +539,7 @@ const archiveItems = [
     ],
     "thumbnail": "assets/inquiry/vireo/step_01.png",
     "featured": true,
-    "downloadUrl": "https://github.com/hohoearth/hohoearth/releases/download/untagged-36ed5aad68811768adc8/CLEA_Vireo.zip",
+    "downloadUrl": "https://public.gettysburg.edu/~marschal/clea/Vireo.html",
     "links": [
       {
         "label": "🔭 온라인 탐구 활동 & 개별 활동지 작성 열기",
@@ -547,8 +547,8 @@ const archiveItems = [
         "icon": "external-link"
       },
       {
-        "label": "💾 CLEA_Vireo.zip 프로그램 다운로드 (302MB)",
-        "url": "https://github.com/hohoearth/hohoearth/releases/download/untagged-36ed5aad68811768adc8/CLEA_Vireo.zip",
+        "label": "🌐 CLEA VIREO 프로그램 다운로드 (공식 홈페이지)",
+        "url": "https://public.gettysburg.edu/~marschal/clea/Vireo.html",
         "icon": "download"
       },
       {
@@ -557,7 +557,7 @@ const archiveItems = [
         "icon": "file-text"
       }
     ],
-    "content": "### 🔭 탐구 활동 개요\n가상 천체 관측 소프트웨어인 **CLEA VIREO(The Hubble Redshift-Distance Relation)**를 활용하여 실제 천문대 연구원과 동일한 방식으로 외부 은하들을 관측하고, 우주가 팽창한다는 현대 우주론의 핵심 법칙인 **허블-르메트르 법칙($v = Hr$)**을 직접 유도해보는 지구과학 핵심 탐구 수행평가입니다.\n\n---\n\n### 🎯 관련 교육과정 성취기준\n- **[12지구03-02]** 별의 분광형 결정 및 별의 분류 과정을 이해하고, 흑체복사법칙을 이용하여 별의 물리량을 추론할 수 있다.\n- **[12지구03-05]** 허블-르메트르 법칙으로 우주의 팽창을 이해하고 우주의 진화에 대한 다양한 설명 체계의 의의를 현대 우주론의 관점에서 비교할 수 있다.\n- **[12행우02-02]** 별의 시차와 밝기를 이용하여 거리를 측정하는 다양한 방법을 비교·평가할 수 있다.\n\n---\n\n### 💻 탐구 소프트웨어 다운로드\n- **프로그램 파일**: `CLEA_Vireo.zip` (약 302 MB)\n- **제작**: Project CLEA (Contemporary Laboratory Experiences in Astronomy, Gettysburg College)\n- **지원 환경**: Windows 7 / 8 / 10 / 11\n- [💾 CLEA_Vireo.zip 프로그램 다운로드 바로가기](https://github.com/hohoearth/hohoearth/releases/download/untagged-36ed5aad68811768adc8/CLEA_Vireo.zip)\n\n---\n\n### 🌟 주요 탐구 4단계 구성\n1. **가상 망원경(4.0m) 조작 및 은하 분광 스펙트럼 촬영**:\n   - `Access 4.0 Meter` 대구경 망원경으로 돔을 열고 13개 관측 대상 은하를 슬루(Slew)하여 신호 대 잡음비(S/N비) 30 이상의 정밀 스펙트럼을 측정합니다.\n2. **흡수선(Ca II K, H 및 G band) 파장 측정 & 적색편이 계산**:\n   - 정지 파장($3933.7\\text{ \\AA}$, $3968.5\\text{ \\AA}$) 대비 관측 흡수선 파장의 이동량을 측정하여 적색 편이량($z$)과 은하의 후퇴 속도($v = cz$)를 산출합니다.\n3. **13개 은하의 물리량 표 작성 및 인터랙티브 분산형 그래프(산점도) 그리기**:\n   - 겉보기 등급과 절대 등급으로부터 거리($r$)를 구하고, 웹페이지 상에서 마우스 클릭으로 거리-후퇴속도 좌표점을 직접 찍어 선형 추세선($v = Hr$)과 결정계수($R^2$)를 도출합니다.\n4. **추세선 기울기(허블 상수 H) 분석 및 개별 활동지 작성·PDF 저장**:\n   - 추세선의 기울기가 가지는 물리적 의미를 고찰하고, 온라인 활동지에 답변을 작성한 후 A4 보고서 인쇄/PDF 저장 또는 파일 제출을 완료합니다.\n"
+    "content": "### 🔭 탐구 활동 개요\n가상 천체 관측 소프트웨어인 **CLEA VIREO(The Hubble Redshift-Distance Relation)**를 활용하여 실제 천문대 연구원과 동일한 방식으로 외부 은하들을 관측하고, 우주가 팽창한다는 현대 우주론의 핵심 법칙인 **허블-르메트르 법칙($v = Hr$)**을 직접 유도해보는 지구과학 핵심 탐구 수행평가입니다.\n\n---\n\n### 🎯 관련 교육과정 성취기준\n- **[12지구03-02]** 별의 분광형 결정 및 별의 분류 과정을 이해하고, 흑체복사법칙을 이용하여 별의 물리량을 추론할 수 있다.\n- **[12지구03-05]** 허블-르메트르 법칙으로 우주의 팽창을 이해하고 우주의 진화에 대한 다양한 설명 체계의 의의를 현대 우주론의 관점에서 비교할 수 있다.\n- **[12행우02-02]** 별의 시차와 밝기를 이용하여 거리를 측정하는 다양한 방법을 비교·평가할 수 있다.\n\n---\n\n### 💻 탐구 소프트웨어 다운로드\n- **프로그램 파일**: `CLEA_Vireo.zip` (약 302 MB)\n- **제작**: Project CLEA (Contemporary Laboratory Experiences in Astronomy, Gettysburg College)\n- **지원 환경**: Windows 7 / 8 / 10 / 11\n- [🌐 CLEA VIREO 공식 배포 페이지 바로가기](https://public.gettysburg.edu/~marschal/clea/Vireo.html)\n\n---\n\n### 🌟 주요 탐구 4단계 구성\n1. **가상 망원경(4.0m) 조작 및 은하 분광 스펙트럼 촬영**:\n   - `Access 4.0 Meter` 대구경 망원경으로 돔을 열고 13개 관측 대상 은하를 슬루(Slew)하여 신호 대 잡음비(S/N비) 30 이상의 정밀 스펙트럼을 측정합니다.\n2. **흡수선(Ca II K, H 및 G band) 파장 측정 & 적색편이 계산**:\n   - 정지 파장($3933.7\\text{ \\AA}$, $3968.5\\text{ \\AA}$) 대비 관측 흡수선 파장의 이동량을 측정하여 적색 편이량($z$)과 은하의 후퇴 속도($v = cz$)를 산출합니다.\n3. **13개 은하의 물리량 표 작성 및 인터랙티브 분산형 그래프(산점도) 그리기**:\n   - 겉보기 등급과 절대 등급으로부터 거리($r$)를 구하고, 웹페이지 상에서 마우스 클릭으로 거리-후퇴속도 좌표점을 직접 찍어 선형 추세선($v = Hr$)과 결정계수($R^2$)를 도출합니다.\n4. **추세선 기울기(허블 상수 H) 분석 및 개별 활동지 작성·PDF 저장**:\n   - 추세선의 기울기가 가지는 물리적 의미를 고찰하고, 온라인 활동지에 답변을 작성한 후 A4 보고서 인쇄/PDF 저장 또는 파일 제출을 완료합니다.\n"
   },
   {
     "id": "tool-counseling-hub",

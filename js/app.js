@@ -8,7 +8,7 @@ let currentTag = "";
 
 function safeCreateIcons() {
   if (window.lucide && typeof lucide.createIcons === 'function') {
-    safeCreateIcons();
+    lucide.createIcons();
   }
 }
 
@@ -133,6 +133,17 @@ function setCategory(catId) {
   renderItems();
   safeCreateIcons();
 }
+
+function filterAndScrollTo(catId) {
+  setCategory(catId);
+  const archiveSec = document.getElementById("archive");
+  if (archiveSec) {
+    archiveSec.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+window.setCategory = setCategory;
+window.filterAndScrollTo = filterAndScrollTo;
 
 // 4. 아이템 목록 렌더링 (화이트 카드 갤러리)
 function renderItems() {
@@ -394,3 +405,8 @@ function clearTag() {
   currentTag = "";
   renderItems();
 }
+
+window.openDetailModal = openDetailModal;
+window.closeDetailModal = closeDetailModal;
+window.filterByTag = filterByTag;
+window.clearTag = clearTag;

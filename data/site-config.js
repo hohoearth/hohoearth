@@ -29,7 +29,7 @@ const siteConfig = {
   categories: [
     { id: "all", name: "전체보기", icon: "layout-grid" },
     { id: "class", name: "수업 자료", icon: "book-open" },
-    { id: "project", name: "탐구 활동", icon: "flask-conical" },
+    { id: "project", name: "과학 탐구", icon: "flask-conical" },
     { id: "tools", name: "AI활용 도구", icon: "wrench" },
     { id: "lecture", name: "연수 자료", icon: "presentation" },
     { id: "essay", name: "교육 에세이", icon: "pen-tool" }

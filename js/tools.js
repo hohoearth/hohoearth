@@ -4,7 +4,7 @@
 
 function safeCreateIcons() {
   if (window.lucide && typeof lucide.createIcons === 'function') {
-    safeCreateIcons();
+    lucide.createIcons();
   }
 }
 
