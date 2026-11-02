@@ -137,7 +137,7 @@
           <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">수업자료</div>
         </div>
         <div onclick="filterAndScrollTo('project')" class="cursor-pointer group p-3 rounded-2xl hover:bg-slate-100/80 transition-all">
-          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">2</div>
+          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">3</div>
           <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">탐구 활동</div>
         </div>
         <div onclick="filterAndScrollTo('tools')" class="cursor-pointer group p-3 rounded-2xl hover:bg-emerald-50/80 transition-all">
@@ -311,6 +311,74 @@
           <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></span>
             <span>Spectral Classification &amp; Difference Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쇼케이스 3: [1학년 과학탐구실험] 빛의 역제곱 법칙 탐구 및 자동 그래프 분석 -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+        <!-- 좌측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10">
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-amber-50 text-amber-700 border border-amber-200/60">
+                1학년 과학탐구실험
+              </span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                실시간 자동 그래프 &amp; 회귀분석
+              </span>
+              <span class="text-xs font-mono text-slate-500 font-semibold">2026 수행평가</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              빛의 역제곱 법칙 탐구 및 자동 분석
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              거리 변화에 따른 조도(Lux)를 측정하여 <strong>빛의 역제곱 법칙(<em>I &prop; 1/r&sup2;</em>)</strong>을 검증하는 1학년 과학탐구실험입니다. 측정값을 입력하면 <strong>거리-조도 곡선 및 1/r&sup2; 선형 추세선(<em>R&sup2;</em>)이 실시간 자동 플로팅</strong>되며, 원본 양식 그대로 2페이지 A4 보고서 출력이 가능합니다.
+            </p>
+          </div>
+
+          <!-- 하단 링크 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="flex flex-wrap items-center gap-3">
+              <a 
+                href="activities/light-inverse-square-law.html" 
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase font-bold inline-flex items-center gap-2 shadow-md shadow-indigo-100"
+              >
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>실험 가이드 &amp; 온라인 보고서 작성</span>
+              </a>
+              <a 
+                href="downloads/과학탐구실험_빛의역제곱법칙_수행평가보고서.pdf" 
+                download
+                class="px-4 py-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors inline-flex items-center gap-2 border border-slate-200/80"
+              >
+                <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i>
+                <span>수행평가 보고서 PDF</span>
+              </a>
+              <a 
+                href="downloads/과학탐구실험_빛의역제곱법칙_실험가이드.pdf" 
+                download
+                class="px-4 py-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors inline-flex items-center gap-2 border border-slate-200/80"
+              >
+                <i data-lucide="presentation" class="w-4 h-4 text-amber-600"></i>
+                <span>실험 가이드 슬라이드</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto bg-slate-950 flex items-center justify-center p-6">
+          <img 
+            src="assets/inquiry/inverse_square_law/slide_01.png" 
+            alt="Inverse Square Law Experiment Preview" 
+            class="w-full h-full object-cover rounded-2xl border border-slate-800 shadow-2xl group-hover:scale-[1.02] transition-transform duration-700"
+          />
+          <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>Real-time Regression &amp; Plotting</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>빛의 역제곱 법칙 탐구 실험 | 충북사대부고 과학탐구실험</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    /* ======================================================== */
+    /* 🖨️ 인쇄(A4 수행평가 보고서) 전용 스타일 - 정확한 2페이지 분할 */
+    /* ======================================================== */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm 12mm 10mm 12mm;
+      }
+      header, nav, #nav-actions, #manual-section, #overview-section, .no-print, button, .no-print-area {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9pt !important;
+        line-height: 1.35 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #worksheet-section {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        background: transparent !important;
+      }
+      /* 1페이지: 1~5번 항목 (표 & 그래프 포함) */
+      .print-page-1 {
+        break-before: auto !important;
+        page-break-before: auto !important;
+        break-after: page !important;
+        page-break-after: always !important;
+        display: block !important;
+      }
+      /* 2페이지: 6~7번 항목 (결과 및 고찰) */
+      .print-page-2 {
+        break-before: page !important;
+        page-break-before: always !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+        display: block !important;
+        padding-top: 5mm !important;
+      }
+      .print-show {
+        display: block !important;
+      }
+      .print-flex {
+        display: flex !important;
+      }
+      .print-hidden {
+        display: none !important;
+      }
+      input, textarea {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 1px !important;
+        font-family: inherit !important;
+      }
+      table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        margin-top: 3px !important;
+        margin-bottom: 5px !important;
+      }
+      th, td {
+        border: 1px solid #111111 !important;
+        padding: 3px 4px !important;
+        font-size: 8.5pt !important;
+        text-align: center !important;
+      }
+      th {
+        background-color: #f1f5f9 !important;
+        font-weight: 700 !important;
+      }
+      .print-box {
+        border: 1px solid #111111 !important;
+        padding: 6px 8px !important;
+      }
+      .print-chart-container {
+        display: flex !important;
+        gap: 8px !important;
+        margin-top: 4px !important;
+      }
+      .print-chart-item {
+        flex: 1 !important;
+        border: 1px solid #333333 !important;
+        padding: 4px !important;
+        background: #ffffff !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- ============================================== -->
+  <!-- 0. 상단 네비게이션 헤더 -->
+  <!-- ============================================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-3 shadow-xs">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- 좌측 뒤로가기 & 로고 -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>홈으로</span>
+        </a>
+        <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+        <span class="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          빛의 역제곱 법칙 탐구 실험
+        </span>
+      </div>
+
+      <!-- 우측 빠른 이동 & 액션 -->
+      <div class="flex items-center gap-2 sm:gap-3" id="nav-actions">
+        <a href="#manual-section" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition hidden md:inline-flex items-center gap-1.5">
+          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <span>실험 방법 &amp; 유의사항</span>
+        </a>
+        <a href="#worksheet-section" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold transition flex items-center gap-1.5 border border-amber-200/80">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+          <span>보고서 작성 &amp; 자동 그래프</span>
+        </a>
+        <a href="../downloads/과학탐구실험_빛의역제곱법칙_수행평가보고서.pdf" download class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">보고서 PDF 양식</span>
+          <span class="sm:hidden">다운로드</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 메인 컨테이너 -->
+  <!-- ============================================== -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16">
+
+    <!-- 1. 탐구 활동 개요 배너 -->
+    <section id="overview-section" class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden space-y-6 no-print">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="space-y-3 relative z-10 max-w-3xl">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/30 text-amber-300 border border-amber-500/40">
+            고등학교 1학년 과학탐구실험
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">
+            물리학 &amp; 천체물리학 기초 실험
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/30 text-emerald-300 border border-emerald-500/40">
+            수행평가 과제
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          빛의 역제곱 법칙<br />
+          <span class="text-amber-400 text-xl sm:text-2xl lg:text-3xl font-bold font-mono">Inverse Square Law of Light Experiment</span>
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          점광원에서 방출된 빛이 공간으로 퍼져나갈 때, <strong>광원과의 거리($r$)가 멀어짐에 따라 입사하는 빛의 세기(조도 $I$, Lux)가 거리의 제곱에 반비례($I \propto 1/r^2$)하여 급격히 감소</strong>하는 물리적 메커니즘을 정밀 광학 레일과 디지털 조도계를 이용해 직접 측정하고 통계적으로 검증합니다.
+        </p>
+      </div>
+
+      <!-- 핵심 성취 목표 3개 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 relative z-10">
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-amber-300 block">① 구면 전파 기하학적 모델</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            구의 표면적 공식($A = 4\pi r^2$)과 에너지 보존 법칙을 통해 거리가 2배, 3배 될 때 조도가 $1/4$, $1/9$로 감소함을 이해한다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-indigo-300 block">② 정밀 변수 통제 및 측정</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            광원 전압을 일정하게 통제하고 암실 환경에서 주변 반사광을 차단한 후 10~50cm 거리별 조도를 3회 반복 측정한다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-emerald-300 block">③ 실시간 자동 그래프 분석</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            실험 데이터를 입력하면 $I$ vs $r$ 반비례 곡선과 $I$ vs $1/r^2$ 선형 추세선($y=ax+b, R^2$)이 즉시 자동 생성된다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 다운로드 배너 -->
+      <div class="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+        <div class="flex items-center gap-3 text-xs sm:text-sm">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center shrink-0 shadow-md">
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-slate-950"></i>
+          </div>
+          <div>
+            <div class="font-bold text-white">수행평가 공식 보고서 양식 및 PPT 가이드</div>
+            <div class="text-slate-400 text-xs">충북대학교사범대학부설고등학교 1학년 과학탐구실험 · 담당교사 김호연</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="../downloads/과학탐구실험_빛의역제곱법칙_수행평가보고서.pdf" download class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black transition flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>보고서 원본 양식 (.pdf)</span>
+          </a>
+          <a href="../downloads/과학탐구실험_빛의역제곱법칙_실험가이드.pdf" download class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/10">
+            <i data-lucide="presentation" class="w-4 h-4 text-indigo-300"></i>
+            <span>실험 가이드 슬라이드 (.pdf)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. 재구성된 실험 방법 및 유의사항 (핵심 발췌 매뉴얼) -->
+    <!-- ============================================== -->
+    <section id="manual-section" class="space-y-10 no-print">
+      
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs font-bold text-amber-600 tracking-wider uppercase font-mono">Experiment Guide &amp; Key Precautions</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+          실험 방법 및 오차 방지 유의사항
+        </h2>
+        <p class="text-xs text-slate-500 mt-1">
+          슬라이드의 핵심 내용 중 실제 실험실에서 지켜야 할 장비 세팅 방법, 변수 통제, 오차 방지 수칙만 체계적으로 재구성했습니다.
+        </p>
+      </div>
+
+      <!-- 1) 이론적 배경 & 역제곱 공식 원리 카드 -->
+      <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2 text-indigo-700 font-extrabold text-sm sm:text-base border-b border-slate-100 pb-3">
+          <i data-lucide="atom" class="w-5 h-5 text-indigo-600"></i>
+          <span>1. 이론적 배경: 빛의 역제곱 법칙 ($I \propto \frac{1}{r^2}$) 이란?</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <p>
+              • <strong>점광원과 구면 전파</strong>: 점광원(Point Source)에서 사방으로 균일하게 방출되는 빛의 총 에너지(광속 $P$)는 거리가 $r$만큼 떨어진 지점에서 <strong>반지름이 $r$인 구면 전체($A = 4\pi r^2$)</strong>로 퍼져나갑니다.
+            </p>
+            <p>
+              • <strong>수학적 정의</strong>: 단위 면적당 입사하는 빛의 세기(조도 $I$, 단위: Lux)는 다음과 같이 표현됩니다:
+            </p>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono font-bold text-indigo-700 text-sm sm:text-base">
+              \[ I = \frac{P}{4\pi r^2} \quad \Longrightarrow \quad I \propto \frac{1}{r^2} \]
+            </div>
+            <p class="text-xs text-slate-500">
+              * 따라서 거리가 <strong>2배(20cm)</strong>가 되면 조도는 기준(10cm)의 <strong>1/4 (25%)</strong>, 거리가 <strong>3배(30cm)</strong>가 되면 <strong>1/9 (11.1%)</strong>, <strong>4배(40cm)</strong>가 되면 <strong>1/16 (6.3%)</strong>로 급격히 감소합니다.
+            </p>
+          </div>
+
+          <div class="bg-slate-900 rounded-2xl p-5 text-white space-y-3 shadow-inner">
+            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
+              <span>기하학적 면적 확장 모델</span>
+              <span class="text-amber-400 font-bold">에너지 보존</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs py-2">
+              <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="font-mono text-amber-300 font-bold">거리 1r</div>
+                <div class="text-[11px] text-slate-400 mt-1">면적: \(1A\)</div>
+                <div class="text-xs font-bold text-white mt-1">조도: 100%</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="font-mono text-amber-300 font-bold">거리 2r</div>
+                <div class="text-[11px] text-slate-400 mt-1">면적: \(4A\)</div>
+                <div class="text-xs font-bold text-white mt-1">조도: 25% (1/4)</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <div class="font-mono text-amber-300 font-bold">거리 3r</div>
+                <div class="text-[11px] text-slate-400 mt-1">면적: \(9A\)</div>
+                <div class="text-xs font-bold text-white mt-1">조도: 11% (1/9)</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-snug">
+              💡 <strong>자연계 보편 법칙</strong>: 이 법칙은 빛뿐만 아니라 만유인력(\(F \propto 1/r^2\)), 쿨롱의 전기력, 소리(음파), 방사선 등 3차원 유클리드 공간으로 퍼져나가는 모든 중심력장에서 동일하게 적용됩니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2) 실험 준비물 & 변수 통제 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 준비물 카드 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+          <div class="flex items-center gap-2 text-slate-900 font-extrabold text-sm sm:text-base border-b border-slate-100 pb-2">
+            <i data-lucide="wrench" class="w-4 h-4 text-indigo-600"></i>
+            <span>2. 실험 준비물 및 역할</span>
+          </div>
+          <div class="space-y-2.5 text-xs text-slate-700">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-lg bg-amber-100 text-amber-800 font-bold flex items-center justify-center shrink-0 text-xs">1</span>
+              <div>
+                <strong class="text-slate-900 block text-xs">고휘도 LED 단일 광원</strong>
+                점광원에 가까운 일정한 밝기(광속 \(P\))의 빛을 안정적으로 공급하는 광원
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-800 font-bold flex items-center justify-center shrink-0 text-xs">2</span>
+              <div>
+                <strong class="text-slate-900 block text-xs">디지털 조도계 (Lux Meter)</strong>
+                센서 수직면에 입사하는 단위 면적당 가시광선 빛의 세기(조도 \(I\)) 정밀 계측
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 text-xs">3</span>
+              <div>
+                <strong class="text-slate-900 block text-xs">광학 레일 및 정밀 눈금자 (100cm)</strong>
+                광원과 센서 간 거리를 일직선으로 수평 정렬하고 10cm 간격을 오차 없이 이동
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <span class="w-6 h-6 rounded-lg bg-purple-100 text-purple-800 font-bold flex items-center justify-center shrink-0 text-xs">4</span>
+              <div>
+                <strong class="text-slate-900 block text-xs">무광 검은색 암막 박스 / 차광 패브릭</strong>
+                실내 형광등 및 벽면·실험대의 2차 반사광 간섭을 완전 차단하여 암실 환경 유지
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 변수 통제 카드 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+          <div class="flex items-center gap-2 text-slate-900 font-extrabold text-sm sm:text-base border-b border-slate-100 pb-2">
+            <i data-lucide="sliders" class="w-4 h-4 text-emerald-600"></i>
+            <span>3. 실험 가설 및 엄격한 변수 통제</span>
+          </div>
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100">
+              <span class="font-bold text-indigo-900 block mb-1">🎯 조작 변수 (독립 변수)</span>
+              광원과 조도계 센서 수직면 사이의 거리 <strong>\(r\) (10cm, 20cm, 30cm, 40cm, 50cm)</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-100">
+              <span class="font-bold text-amber-900 block mb-1">📊 종속 변수 (결과값)</span>
+              각 거리 지점에서 조도계 센서에 도달하는 빛의 세기 <strong>조도 \(I\) (단위: Lux)</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100">
+              <span class="font-bold text-emerald-900 block mb-1">🔒 통제 변수 (일정하게 유지)</span>
+              LED 광원의 출력 전압·전류(전원 장치 고정), 주변광(완전 암실 조성), 광축 수평 및 입사각도(\(0^\circ\))
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3) 단계별 4단계 실험 진행 과정 -->
+      <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex items-center gap-2 text-slate-900 font-extrabold text-sm sm:text-base border-b border-slate-100 pb-2">
+          <i data-lucide="play-circle" class="w-5 h-5 text-indigo-600"></i>
+          <span>4. 단계별 실험 진행 과정 (Step-by-Step Procedure)</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">STEP 1</span>
+              <i data-lucide="align-horizontal-distribute-center" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">광학대 장치 세팅</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              광학 레일의 한쪽 끝에 LED 광원을 고정하고, 조도계 센서의 수진면이 광원 정면을 향하도록 수평 정렬합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">STEP 2</span>
+              <i data-lucide="moon" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">암실 조성 &amp; 영점 보정</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              차광 패브릭을 덮어 암실 환경을 만들고, LED를 끈 상태에서 주변 잔여광(Background Lux)을 측정하여 0점 보정합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">STEP 3</span>
+              <i data-lucide="activity" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">거리별 3회 반복 측정</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              거리를 10cm, 20cm, 30cm, 40cm, 50cm로 이동하며 각 거리에서 조도(Lux)를 3회씩 측정하여 기록합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">STEP 4</span>
+              <i data-lucide="line-chart" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm">평균 산출 &amp; 그래프 분석</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              평균 조도를 산출하고, 아래 자동 그래프 도구를 통해 \(I\) vs \(r\) 및 \(I\) vs \(1/r^2\) 관계를 분석합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4) 3대 핵심 유의사항 및 오차 방지 대책 (슬라이드 11 재구성) -->
+      <div class="rounded-3xl bg-amber-500/10 border-2 border-amber-500/30 p-6 sm:p-8 space-y-4">
+        <div class="flex items-center gap-2 text-amber-900 font-extrabold text-sm sm:text-base">
+          <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600"></i>
+          <span>⚠️ 3대 핵심 실험 유의사항 및 오차 원인 분석 (오차 줄이기 꿀팁!)</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-800">
+          <div class="p-4 rounded-2xl bg-white border border-amber-200/80 space-y-2 shadow-xs">
+            <div class="font-bold text-amber-900 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              1. 점광원의 불완전성 극복
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              <strong>원인</strong>: 실제 LED 소자는 수학적인 0차원 점이 아니라 일정한 면적을 가집니다.<br />
+              <strong>대책</strong>: 센서와 광원 사이의 거리가 소자 직경보다 훨씬 큰 <strong>15cm 이상의 데이터</strong>에서 역제곱 법칙이 가장 정확하게 성립합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-amber-200/80 space-y-2 shadow-xs">
+            <div class="font-bold text-amber-900 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              2. 주변 반사광 간섭 차단
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              <strong>원인</strong>: 실험대 표면이나 교실 벽면에서 반사된 간접광이 센서로 들어가면 먼 거리(40~50cm) 측정값이 실제보다 높게 측정됩니다.<br />
+              <strong>대책</strong>: <strong>무광 검은색 패브릭 암막</strong>을 레일 바닥에 꼼꼼히 깔고 <strong>차광 조리개</strong>를 설치합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-amber-200/80 space-y-2 shadow-xs">
+            <div class="font-bold text-amber-900 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              3. 센서 수직 입사각(\(\cos\theta\)) 정렬
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              <strong>원인</strong>: 광원 중심선과 조도계 센서 평면 사이의 각도가 미세하게 비틀리면 람베르트 코사인 법칙에 의해 조도가 감소합니다.<br />
+              <strong>대책</strong>: 광학 레일 눈금과 수평계를 활용하여 <strong>광축 정중앙과 센서 수직면이 정확히 \(90^\circ\)</strong>가 되도록 고정합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. 과학탐구실험 수행평가 보고서 (자동 그래프 생성 내장) -->
+    <!-- ============================================== -->
+    <section id="worksheet-section" class="bg-white rounded-3xl border border-slate-200/90 shadow-xl p-6 sm:p-12 space-y-8">
+      
+      <!-- ==================== 1페이지 영역 ==================== -->
+      <div class="print-page-1 space-y-6">
+
+        <!-- 보고서 표지 헤더 -->
+        <div class="border-2 border-slate-900 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50/50">
+          <div class="space-y-1 text-center sm:text-left">
+            <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">충북대학교사범대학부설고등학교 1학년 과학탐구실험</div>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              과학탐구실험 수행평가 보고서
+            </h2>
+          </div>
+          
+          <div class="flex items-center gap-4 text-xs sm:text-sm font-bold w-full sm:w-auto justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-300">
+            <div class="flex items-center gap-1.5">
+              <label for="student-id" class="text-slate-700">학번:</label>
+              <input type="text" id="student-id" placeholder="예: 10101" class="w-24 sm:w-28 border-b-2 border-slate-800 text-center font-mono py-0.5 focus:outline-none bg-transparent" />
+            </div>
+            <div class="flex items-center gap-1.5">
+              <label for="student-name" class="text-slate-700">성명:</label>
+              <input type="text" id="student-name" placeholder="홍길동" class="w-24 sm:w-28 border-b-2 border-slate-800 text-center py-0.5 focus:outline-none bg-transparent" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. 실험 제목 -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>1. 실험 제목</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">주제명을 기재하세요</span>
+          </div>
+          <div class="p-2 sm:p-3">
+            <input 
+              type="text" 
+              id="report-title" 
+              value="빛의 역제곱 법칙 실험 (거리 변화에 따른 조도 감소율 및 역제곱 관계 검증)" 
+              class="w-full font-bold text-slate-900 text-xs sm:text-sm bg-transparent focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <!-- 2. 실험원리 및 이론적 배경 -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>2. 실험원리 및 이론적 배경</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">점광원, 구면 전파, 조도 공식 등 서술</span>
+          </div>
+          <div class="p-2 sm:p-3">
+            <textarea 
+              id="report-theory" 
+              rows="3" 
+              class="w-full text-xs sm:text-sm text-slate-800 leading-relaxed bg-transparent focus:outline-none resize-y" 
+              placeholder="점광원에서 사방으로 균일하게 방출되는 빛의 총 에너지(광속 P)는 구면 전체(A = 4πr²)로 전파되므로, 단위 면적당 입사하는 빛의 세기인 조도(I, Lux)는 광원과의 거리(r)의 제곱에 반비례한다 (I = P / 4πr² ∝ 1/r²). 거리가 2배, 3배 늘어나면 조도는 1/4, 1/9로 급격히 감소한다."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 3. 실험 준비물 -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>3. 실험 준비물</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">실험에 사용한 기구 목록</span>
+          </div>
+          <div class="p-2 sm:p-3">
+            <input 
+              type="text" 
+              id="report-supplies" 
+              value="고휘도 LED 단일 광원, 디지털 조도계(Lux), 광학 레일 및 정밀 눈금자(100cm), 무광 암막 패브릭, 전원 공급기, 수평계" 
+              class="w-full text-xs sm:text-sm text-slate-800 bg-transparent focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <!-- 4. 실험 과정 및 방법 -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>4. 실험 과정 및 방법</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">실험 순서를 간결하게 번호로 기술</span>
+          </div>
+          <div class="p-2 sm:p-3">
+            <textarea 
+              id="report-procedure" 
+              rows="3" 
+              class="w-full text-xs sm:text-sm text-slate-800 leading-relaxed bg-transparent focus:outline-none resize-y" 
+              placeholder="1. 광학 레일 위에 LED 광원과 조도계 센서를 일직선 및 수평으로 나란히 배치한다.&#10;2. 암막 패브릭으로 외부 빛을 차단하고 광원을 끈 상태에서 주변 암광(0점)을 보정한다.&#10;3. 거리를 10cm부터 50cm까지 10cm 간격으로 증가시키며 각 지점마다 조도(Lux)를 3회씩 측정하여 기록한다.&#10;4. 거리별 평균 조도를 계산하고 거리(r) 및 1/r²에 대한 조도 그래프를 작성하여 역제곱 법칙 성립 여부를 분석한다."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 5. 측정값 (표, 그래프 반드시 포함) -->
+        <div class="border border-slate-800 print-box space-y-3">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>5. 측정값 (표, 그래프 반드시 포함)</span>
+            <div class="no-print flex items-center gap-2">
+              <button type="button" onclick="fillExampleData()" class="px-2 py-0.5 rounded bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold text-[11px] transition">
+                ⚡ 예시 실험 데이터 자동 채우기
+              </button>
+            </div>
+          </div>
+
+          <!-- 측정 데이터 표 -->
+          <div class="p-2 sm:p-3 space-y-4">
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-slate-800 text-xs text-center">
+                <thead>
+                  <tr class="bg-slate-100 font-bold text-slate-900">
+                    <th class="border border-slate-800 py-1.5 px-2">거리 \(r\) (cm)</th>
+                    <th class="border border-slate-800 py-1.5 px-2">\(1/r^2\) (\(\text{cm}^{-2}\))</th>
+                    <th class="border border-slate-800 py-1.5 px-2">1차 조도 (Lux)</th>
+                    <th class="border border-slate-800 py-1.5 px-2">2차 조도 (Lux)</th>
+                    <th class="border border-slate-800 py-1.5 px-2">3차 조도 (Lux)</th>
+                    <th class="border border-slate-800 py-1.5 px-2 bg-indigo-50 font-extrabold text-indigo-900">평균 조도 \(I\) (Lux)</th>
+                    <th class="border border-slate-800 py-1.5 px-2 bg-amber-50 font-extrabold text-amber-900">상대 조도 (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="measurement-tbody">
+                  <!-- 10cm -->
+                  <tr data-r="10">
+                    <td class="border border-slate-800 font-bold bg-slate-50/50">10 cm</td>
+                    <td class="border border-slate-800 font-mono text-[11px] text-slate-600">0.0100 (1.00)</td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-1 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-2 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-3 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 font-mono font-bold text-indigo-700 avg-lux bg-indigo-50/30">-</td>
+                    <td class="border border-slate-800 font-mono font-bold text-amber-700 rel-lux bg-amber-50/30">100.0%</td>
+                  </tr>
+                  <!-- 20cm -->
+                  <tr data-r="20">
+                    <td class="border border-slate-800 font-bold bg-slate-50/50">20 cm</td>
+                    <td class="border border-slate-800 font-mono text-[11px] text-slate-600">0.0025 (0.25)</td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-1 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-2 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-3 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 font-mono font-bold text-indigo-700 avg-lux bg-indigo-50/30">-</td>
+                    <td class="border border-slate-800 font-mono font-bold text-amber-700 rel-lux bg-amber-50/30">-</td>
+                  </tr>
+                  <!-- 30cm -->
+                  <tr data-r="30">
+                    <td class="border border-slate-800 font-bold bg-slate-50/50">30 cm</td>
+                    <td class="border border-slate-800 font-mono text-[11px] text-slate-600">0.0011 (0.11)</td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-1 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-2 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-3 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 font-mono font-bold text-indigo-700 avg-lux bg-indigo-50/30">-</td>
+                    <td class="border border-slate-800 font-mono font-bold text-amber-700 rel-lux bg-amber-50/30">-</td>
+                  </tr>
+                  <!-- 40cm -->
+                  <tr data-r="40">
+                    <td class="border border-slate-800 font-bold bg-slate-50/50">40 cm</td>
+                    <td class="border border-slate-800 font-mono text-[11px] text-slate-600">0.0006 (0.06)</td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-1 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-2 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-3 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 font-mono font-bold text-indigo-700 avg-lux bg-indigo-50/30">-</td>
+                    <td class="border border-slate-800 font-mono font-bold text-amber-700 rel-lux bg-amber-50/30">-</td>
+                  </tr>
+                  <!-- 50cm -->
+                  <tr data-r="50">
+                    <td class="border border-slate-800 font-bold bg-slate-50/50">50 cm</td>
+                    <td class="border border-slate-800 font-mono text-[11px] text-slate-600">0.0004 (0.04)</td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-1 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-2 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 p-0.5"><input type="number" class="lux-input lux-3 w-full text-center py-1 focus:bg-amber-50 focus:outline-none" placeholder="" /></td>
+                    <td class="border border-slate-800 font-mono font-bold text-indigo-700 avg-lux bg-indigo-50/30">-</td>
+                    <td class="border border-slate-800 font-mono font-bold text-amber-700 rel-lux bg-amber-50/30">-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 자동 생성 인터랙티브 그래프 영역 (인쇄 시 나란히 깔끔하게 출력) -->
+            <div class="print-chart-container grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              
+              <!-- 그래프 1: 조도 vs 거리 곡선 -->
+              <div class="print-chart-item bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center">
+                <div class="w-full flex items-center justify-between text-xs font-bold text-slate-800 mb-1 border-b border-slate-100 pb-1">
+                  <span>[그래프 1] 거리(\(r\))에 따른 조도(\(I\)) 감쇠 곡선</span>
+                  <span class="text-[10px] text-indigo-600 font-mono">반비례 곡선</span>
+                </div>
+                <div class="w-full relative aspect-[4/3] flex items-center justify-center">
+                  <canvas id="chart-r" class="w-full h-full"></canvas>
+                </div>
+              </div>
+
+              <!-- 그래프 2: 조도 vs 1/r^2 선형 비례 추세선 -->
+              <div class="print-chart-item bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center">
+                <div class="w-full flex items-center justify-between text-xs font-bold text-slate-800 mb-1 border-b border-slate-100 pb-1">
+                  <span>[그래프 2] \(1/r^2\)에 대한 조도(\(I\)) 선형 관계</span>
+                  <span id="r2-badge" class="text-[10px] text-amber-700 font-mono font-bold">결정계수 R² = -</span>
+                </div>
+                <div class="w-full relative aspect-[4/3] flex items-center justify-center">
+                  <canvas id="chart-inv-r2" class="w-full h-full"></canvas>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ==================== 1페이지 끝 ==================== -->
+
+
+      <!-- ==================== 2페이지 영역 ==================== -->
+      <div class="print-page-2 space-y-6 pt-6 border-t border-slate-200 sm:border-t-0 sm:pt-0">
+
+        <!-- 6. 실험 결과 -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>6. 실험 결과</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">실험 데이터 분석 결과 요약</span>
+          </div>
+          <div class="p-3 sm:p-4">
+            <textarea 
+              id="report-results" 
+              rows="6" 
+              class="w-full text-xs sm:text-sm text-slate-800 leading-relaxed bg-transparent focus:outline-none resize-y" 
+              placeholder="1. 거리(r)가 10cm에서 20cm, 30cm, 40cm, 50cm로 2배, 3배, 4배, 5배 증가함에 따라 측정된 조도(I)는 기준값(100%) 대비 약 25%, 11.1%, 6.3%, 4.0%로 급격하게 감소하는 반비례 곡선을 나타내었다.&#10;2. 조도(I)와 1/r²의 관계를 분석한 결과, 1/r²이 증가함에 따라 조도 역시 비례하여 증가하는 선형 추세선(결정계수 R² ≈ 0.99 이상)을 보였다.&#10;3. 따라서 점광원으로부터 도달하는 빛의 세기는 거리의 제곱에 반비례한다는 '빛의 역제곱 법칙(I ∝ 1/r²)'이 실험적으로 타당하게 성립함을 확인하였다."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 7. 결론 및 고찰 (이론값과 차이가 있다면 왜 그럴까요?) -->
+        <div class="border border-slate-800 print-box">
+          <div class="bg-slate-100 px-3 py-1.5 border-b border-slate-800 font-bold text-xs sm:text-sm flex items-center justify-between">
+            <span>7. 결론 및 고찰 (이론값과 차이가 있다면 왜 그럴까요?)</span>
+            <span class="text-[10px] text-slate-500 font-normal no-print">오차 원인 규명 및 개선안 서술</span>
+          </div>
+          <div class="p-3 sm:p-4">
+            <textarea 
+              id="report-discussion" 
+              rows="8" 
+              class="w-full text-xs sm:text-sm text-slate-800 leading-relaxed bg-transparent focus:outline-none resize-y" 
+              placeholder="[결론]&#10;본 실험을 통해 점광원에서 방출된 빛이 3차원 공간으로 구면 전파되면서 동일한 에너지가 도달하는 면적이 거리의 제곱에 비례하여 넓어지므로, 단위 면적당 입사하는 빛의 세기는 거리의 제곱에 반비례하여 감소함을 성공적으로 검증하였다.&#10;&#10;[이론값과의 오차 원인 분석 및 개선안]&#10;1. 점광원의 불완전성: 실험에 사용한 LED 소자가 완전한 수학적 점광원이 아니라 일정 면적을 가진 발광체이므로, 10cm와 같은 근거리에서는 점광원 가정이 완벽하지 않아 미세한 오차가 발생했을 수 있다. → 광원 크기보다 충분히 먼 15cm 이상의 원거리 구간 데이터를 중심으로 분석하여 오차를 줄일 수 있다.&#10;2. 실내 반사광 간섭: 실험대 바닥이나 주변 벽면에 부딪힌 2차 반사광이 조도계 센서로 유입되어 거리가 먼 지점(40~50cm)의 조도가 이론값보다 다소 높게 측정될 수 있다. → 무광 흑색 암막 패브릭을 광학대 전체에 꼼꼼히 덮고 조광 조리개를 설치하여 반사광을 차단해야 한다.&#10;3. 센서 수직 입사각 오차: 광원과 센서 수직면 사이의 각도가 정확히 90°가 아닐 경우 코사인 법칙에 의해 조도가 감소하는 각도 오차가 발생한다. → 수평계와 광축 지향 레이저를 활용해 정밀하게 수평 정렬을 유지해야 한다."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- 하단 액션 버튼 바 (인쇄, 초기화, 저장) -->
+        <div class="no-print pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              onclick="window.print()" 
+              class="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm tracking-wide transition-all shadow-md shadow-amber-500/20 flex items-center gap-2"
+            >
+              <i data-lucide="printer" class="w-4 h-4"></i>
+              <span>보고서 A4 인쇄 / PDF 저장 (2페이지 최적화)</span>
+            </button>
+            <button 
+              type="button" 
+              onclick="saveToLocalStorage()" 
+              class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+            >
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>임시 저장</span>
+            </button>
+            <button 
+              type="button" 
+              onclick="copyWorksheetToClipboard()" 
+              class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+            >
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              <span>텍스트 복사</span>
+            </button>
+          </div>
+
+          <button 
+            type="button" 
+            onclick="resetWorksheet()" 
+            class="px-3.5 py-3 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 font-bold text-xs transition flex items-center gap-1"
+          >
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>작성 내용 초기화</span>
+          </button>
+        </div>
+
+      </div>
+      <!-- ==================== 2페이지 끝 ==================== -->
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 푸터 -->
+  <!-- ============================================== -->
+  <footer class="py-12 px-6 border-t border-slate-200 bg-white text-center text-xs text-slate-500 no-print">
+    <div class="max-w-4xl mx-auto space-y-2">
+      <div class="font-bold text-slate-700">충북대학교사범대학부설고등학교 과학탐구실험실</div>
+      <p class="text-slate-400">교사 김호연 · HoHo Earth Educational Platform</p>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- 자바스크립트: 실시간 데이터 계산 및 자동 Canvas 그래프 엔진 -->
+  <!-- ============================================== -->
+  <script>
+    const distances = [10, 20, 30, 40, 50];
+    const invR2 = distances.map(r => 1 / (r * r)); // 0.01, 0.0025, 0.00111, 0.000625, 0.0004
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFromLocalStorage();
+      updateCalculationsAndCharts();
+
+      // 모든 입력 이벤트 바인딩
+      document.querySelectorAll(".lux-input").forEach(input => {
+        input.addEventListener("input", () => {
+          updateCalculationsAndCharts();
+          saveToLocalStorage();
+        });
+      });
+
+      document.querySelectorAll("input, textarea").forEach(el => {
+        el.addEventListener("input", saveToLocalStorage);
+      });
+
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+
+      window.addEventListener("resize", () => {
+        updateCalculationsAndCharts();
+      });
+    });
+
+    // 계산 및 그래프 실시간 렌더링
+    function updateCalculationsAndCharts() {
+      const rows = document.querySelectorAll("#measurement-tbody tr");
+      const avgData = [];
+      let baselineLux = null;
+
+      rows.forEach((row, idx) => {
+        const val1 = parseFloat(row.querySelector(".lux-1")?.value);
+        const val2 = parseFloat(row.querySelector(".lux-2")?.value);
+        const val3 = parseFloat(row.querySelector(".lux-3")?.value);
+
+        const validVals = [val1, val2, val3].filter(v => !isNaN(v) && v >= 0);
+        const avgEl = row.querySelector(".avg-lux");
+        const relEl = row.querySelector(".rel-lux");
+
+        if (validVals.length > 0) {
+          const avg = validVals.reduce((a, b) => a + b, 0) / validVals.length;
+          avgEl.innerText = avg.toFixed(1);
+          avgData.push({ r: distances[idx], invR2: invR2[idx], lux: avg });
+
+          if (idx === 0) baselineLux = avg;
+
+          if (baselineLux && baselineLux > 0) {
+            const rel = (avg / baselineLux) * 100;
+            relEl.innerText = `${rel.toFixed(1)}%`;
+          } else {
+            relEl.innerText = "-";
+          }
+        } else {
+          avgEl.innerText = "-";
+          relEl.innerText = "-";
+        }
+      });
+
+      drawChartR(avgData);
+      drawChartInvR2(avgData);
+    }
+
+    // 캔버스 고해상도 리사이즈 보정
+    function setupCanvasDPI(canvas) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
+      return { ctx, width: rect.width, height: rect.height };
+    }
+
+    // [그래프 1] 조도 vs 거리 (I vs r) 반비례 곡선
+    function drawChartR(data) {
+      const canvas = document.getElementById("chart-r");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvasDPI(canvas);
+
+      ctx.clearRect(0, 0, width, height);
+
+      const margin = { top: 25, right: 25, bottom: 35, left: 45 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+
+      // 축 배경 격자
+      ctx.strokeStyle = "#f1f5f9";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = margin.top + (h / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(margin.left, y);
+        ctx.lineTo(margin.left + w, y);
+        ctx.stroke();
+
+        const x = margin.left + (w / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, margin.top);
+        ctx.lineTo(x, margin.top + h);
+        ctx.stroke();
+      }
+
+      // X, Y 메인 축
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top);
+      ctx.lineTo(margin.left, margin.top + h);
+      ctx.lineTo(margin.left + w, margin.top + h);
+      ctx.stroke();
+
+      // X축 눈금 & 라벨 (10 ~ 50 cm)
+      ctx.fillStyle = "#64748b";
+      ctx.font = "10px sans-serif";
+      ctx.textAlign = "center";
+      distances.forEach((d, i) => {
+        const x = margin.left + (w / (distances.length - 1)) * i;
+        ctx.fillText(`${d}cm`, x, margin.top + h + 15);
+      });
+      ctx.fillText("거리 r (cm)", margin.left + w / 2, margin.top + h + 30);
+
+      // Y축 스케일 계산
+      const maxLux = data.length > 0 ? Math.max(...data.map(d => d.lux), 100) * 1.15 : 1000;
+      ctx.textAlign = "right";
+      for (let i = 0; i <= 5; i++) {
+        const val = (maxLux / 5) * (5 - i);
+        const y = margin.top + (h / 5) * i;
+        ctx.fillText(Math.round(val), margin.left - 6, y + 4);
+      }
+
+      ctx.save();
+      ctx.translate(12, margin.top + h / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center";
+      ctx.fillText("조도 I (Lux)", 0, 0);
+      ctx.restore();
+
+      if (data.length === 0) {
+        ctx.fillStyle = "#94a3b8";
+        ctx.textAlign = "center";
+        ctx.font = "11px sans-serif";
+        ctx.fillText("측정값을 입력하면 곡선이 실시간으로 그려집니다", margin.left + w / 2, margin.top + h / 2);
+        return;
+      }
+
+      // 이론적 반비례 기준 곡선 (연한 점선)
+      if (data.length > 0 && data[0].r === 10) {
+        const base = data[0].lux;
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        for (let r = 10; r <= 50; r += 0.5) {
+          const theoLux = base * Math.pow(10 / r, 2);
+          const x = margin.left + (w / 40) * (r - 10);
+          const y = margin.top + h - (theoLux / maxLux) * h;
+          if (r === 10) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // 실측 데이터 선 연결 (보라/인디고)
+      ctx.strokeStyle = "#6366f1";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      data.forEach((pt, i) => {
+        const x = margin.left + (w / 40) * (pt.r - 10);
+        const y = margin.top + h - (pt.lux / maxLux) * h;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // 데이터 포인트 점 (원)
+      data.forEach(pt => {
+        const x = margin.left + (w / 40) * (pt.r - 10);
+        const y = margin.top + h - (pt.lux / maxLux) * h;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#4f46e5";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.fillStyle = "#1e1b4b";
+        ctx.font = "bold 9px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(Math.round(pt.lux), x, y - 8);
+      });
+    }
+
+    // [그래프 2] 조도 vs 1/r^2 (I vs 1/r^2) 선형 비례 및 추세선
+    function drawChartInvR2(data) {
+      const canvas = document.getElementById("chart-inv-r2");
+      const r2Badge = document.getElementById("r2-badge");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvasDPI(canvas);
+
+      ctx.clearRect(0, 0, width, height);
+
+      const margin = { top: 25, right: 25, bottom: 35, left: 45 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+
+      // 축 배경 격자
+      ctx.strokeStyle = "#f1f5f9";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = margin.top + (h / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(margin.left, y);
+        ctx.lineTo(margin.left + w, y);
+        ctx.stroke();
+
+        const x = margin.left + (w / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, margin.top);
+        ctx.lineTo(x, margin.top + h);
+        ctx.stroke();
+      }
+
+      // X, Y 메인 축
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top);
+      ctx.lineTo(margin.left, margin.top + h);
+      ctx.lineTo(margin.left + w, margin.top + h);
+      ctx.stroke();
+
+      const maxInv = 0.0105; // 1/10^2 = 0.01
+
+      // X축 눈금 & 라벨
+      ctx.fillStyle = "#64748b";
+      ctx.font = "10px sans-serif";
+      ctx.textAlign = "center";
+      for (let i = 0; i <= 5; i++) {
+        const val = (0.01 / 5) * i;
+        const x = margin.left + (w / 0.01) * val;
+        ctx.fillText(val.toFixed(3), x, margin.top + h + 15);
+      }
+      ctx.fillText("1 / r² (1/cm²)", margin.left + w / 2, margin.top + h + 30);
+
+      // Y축 스케일 계산
+      const maxLux = data.length > 0 ? Math.max(...data.map(d => d.lux), 100) * 1.15 : 1000;
+      ctx.textAlign = "right";
+      for (let i = 0; i <= 5; i++) {
+        const val = (maxLux / 5) * (5 - i);
+        const y = margin.top + (h / 5) * i;
+        ctx.fillText(Math.round(val), margin.left - 6, y + 4);
+      }
+
+      ctx.save();
+      ctx.translate(12, margin.top + h / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center";
+      ctx.fillText("조도 I (Lux)", 0, 0);
+      ctx.restore();
+
+      if (data.length < 2) {
+        ctx.fillStyle = "#94a3b8";
+        ctx.textAlign = "center";
+        ctx.font = "11px sans-serif";
+        ctx.fillText("2개 이상의 거리를 측정하면 선형 추세선이 계산됩니다", margin.left + w / 2, margin.top + h / 2);
+        if (r2Badge) r2Badge.innerText = "결정계수 R² = -";
+        return;
+      }
+
+      // 선형 회귀 분석 (y = ax + b, R^2)
+      let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0, sumYY = 0;
+      const n = data.length;
+      data.forEach(pt => {
+        sumX += pt.invR2;
+        sumY += pt.lux;
+        sumXY += pt.invR2 * pt.lux;
+        sumXX += pt.invR2 * pt.invR2;
+        sumYY += pt.lux * pt.lux;
+      });
+
+      const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+      const intercept = (sumY - slope * sumX) / n;
+
+      // 결정계수 R^2
+      const meanY = sumY / n;
+      let ssTot = 0, ssRes = 0;
+      data.forEach(pt => {
+        const predY = slope * pt.invR2 + intercept;
+        ssTot += Math.pow(pt.lux - meanY, 2);
+        ssRes += Math.pow(pt.lux - predY, 2);
+      });
+      const r2 = ssTot > 0 ? Math.max(0, 1 - (ssRes / ssTot)) : 1;
+      if (r2Badge) r2Badge.innerText = `결정계수 R² = ${r2.toFixed(4)}`;
+
+      // 선형 추세선 그리기 (주황/앰버 실선)
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      const xStart = 0;
+      const yStart = intercept;
+      const xEnd = 0.01;
+      const yEnd = slope * xEnd + intercept;
+
+      const pxStart = margin.left;
+      const pyStart = margin.top + h - (yStart / maxLux) * h;
+      const pxEnd = margin.left + (w / 0.01) * xEnd;
+      const pyEnd = margin.top + h - (yEnd / maxLux) * h;
+
+      ctx.moveTo(pxStart, Math.min(margin.top + h, Math.max(margin.top, pyStart)));
+      ctx.lineTo(pxEnd, Math.min(margin.top + h, Math.max(margin.top, pyEnd)));
+      ctx.stroke();
+
+      // 실측 데이터 포인트 플로팅
+      data.forEach(pt => {
+        const x = margin.left + (w / 0.01) * pt.invR2;
+        const y = margin.top + h - (pt.lux / maxLux) * h;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#d97706";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.fillStyle = "#78350f";
+        ctx.font = "bold 9px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(`${Math.round(pt.lux)}`, x, y - 8);
+      });
+    }
+
+    // 예시 실험 데이터 자동 채우기
+    function fillExampleData() {
+      // 슬라이드 10 기반 이론/실측 예시 데이터
+      const sample = [
+        [1005, 998, 1002], // 10cm: 약 1000 Lux
+        [248, 252, 250],   // 20cm: 약 250 Lux (1/4)
+        [112, 110, 111],   // 30cm: 약 111 Lux (1/9)
+        [64, 62, 63],      // 40cm: 약 63 Lux (1/16)
+        [41, 39, 40]       // 50cm: 약 40 Lux (1/25)
+      ];
+
+      const rows = document.querySelectorAll("#measurement-tbody tr");
+      rows.forEach((row, idx) => {
+        row.querySelector(".lux-1").value = sample[idx][0];
+        row.querySelector(".lux-2").value = sample[idx][1];
+        row.querySelector(".lux-3").value = sample[idx][2];
+      });
+
+      updateCalculationsAndCharts();
+      saveToLocalStorage();
+      alert("예시 실험 데이터(1000, 250, 111, 63, 40 Lux)가 입력되었습니다. 실시간 생성된 그래프를 확인해보세요!");
+    }
+
+    // 로컬 스토리지 저장 및 불러오기
+    const STORAGE_KEY = "light_inverse_square_law_report_2026";
+
+    function saveToLocalStorage() {
+      const data = {
+        studentId: document.getElementById("student-id")?.value || "",
+        studentName: document.getElementById("student-name")?.value || "",
+        title: document.getElementById("report-title")?.value || "",
+        theory: document.getElementById("report-theory")?.value || "",
+        supplies: document.getElementById("report-supplies")?.value || "",
+        procedure: document.getElementById("report-procedure")?.value || "",
+        results: document.getElementById("report-results")?.value || "",
+        discussion: document.getElementById("report-discussion")?.value || "",
+        measurements: []
+      };
+
+      document.querySelectorAll("#measurement-tbody tr").forEach(row => {
+        data.measurements.push([
+          row.querySelector(".lux-1")?.value || "",
+          row.querySelector(".lux-2")?.value || "",
+          row.querySelector(".lux-3")?.value || ""
+        ]);
+      });
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadFromLocalStorage() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data.studentId) document.getElementById("student-id").value = data.studentId;
+        if (data.studentName) document.getElementById("student-name").value = data.studentName;
+        if (data.title) document.getElementById("report-title").value = data.title;
+        if (data.theory) document.getElementById("report-theory").value = data.theory;
+        if (data.supplies) document.getElementById("report-supplies").value = data.supplies;
+        if (data.procedure) document.getElementById("report-procedure").value = data.procedure;
+        if (data.results) document.getElementById("report-results").value = data.results;
+        if (data.discussion) document.getElementById("report-discussion").value = data.discussion;
+
+        if (data.measurements) {
+          const rows = document.querySelectorAll("#measurement-tbody tr");
+          data.measurements.forEach((vals, idx) => {
+            if (rows[idx]) {
+              rows[idx].querySelector(".lux-1").value = vals[0] || "";
+              rows[idx].querySelector(".lux-2").value = vals[1] || "";
+              rows[idx].querySelector(".lux-3").value = vals[2] || "";
+            }
+          });
+        }
+      } catch (e) {
+        console.error("Local storage load error:", e);
+      }
+    }
+
+    function resetWorksheet() {
+      if (!confirm("작성하신 모든 보고서 내용과 측정 데이터를 초기화하시겠습니까?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      document.querySelectorAll(".lux-input").forEach(el => el.value = "");
+      document.querySelectorAll("input[type='text'], textarea").forEach(el => {
+        if (el.id !== "report-title") el.value = "";
+      });
+      updateCalculationsAndCharts();
+      alert("모든 입력 내용이 초기화되었습니다.");
+    }
+
+    function copyWorksheetToClipboard() {
+      saveToLocalStorage();
+      const id = document.getElementById("student-id")?.value || "(미입력)";
+      const name = document.getElementById("student-name")?.value || "(미입력)";
+      const title = document.getElementById("report-title")?.value || "";
+      const theory = document.getElementById("report-theory")?.value || "";
+      const supplies = document.getElementById("report-supplies")?.value || "";
+      const procedure = document.getElementById("report-procedure")?.value || "";
+      const results = document.getElementById("report-results")?.value || "";
+      const discussion = document.getElementById("report-discussion")?.value || "";
+
+      let text = `[과학탐구실험 수행평가 보고서]\n`;
+      text += `학번: ${id} / 성명: ${name}\n\n`;
+      text += `1. 실험 제목: ${title}\n\n`;
+      text += `2. 실험원리 및 이론적 배경:\n${theory}\n\n`;
+      text += `3. 실험 준비물:\n${supplies}\n\n`;
+      text += `4. 실험 과정 및 방법:\n${procedure}\n\n`;
+      text += `5. 측정값:\n`;
+      document.querySelectorAll("#measurement-tbody tr").forEach((row, i) => {
+        const d = distances[i];
+        const avg = row.querySelector(".avg-lux")?.innerText || "-";
+        const rel = row.querySelector(".rel-lux")?.innerText || "-";
+        text += `- ${d}cm : 평균 ${avg} Lux (${rel})\n`;
+      });
+      text += `\n6. 실험 결과:\n${results}\n\n`;
+      text += `7. 결론 및 고찰:\n${discussion}\n`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("작성하신 전체 보고서 내용이 클립보드에 복사되었습니다! 원하는 곳에 붙여넣기(Ctrl+V)하세요.");
+      }).catch(() => {
+        alert("클립보드 복사 권한이 없습니다.");
+      });
+    }
+  </script>
+</body>
+</html>
