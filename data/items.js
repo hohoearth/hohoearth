@@ -560,6 +560,53 @@ const archiveItems = [
     "content": "### 🔭 탐구 활동 개요\n가상 천체 관측 소프트웨어인 **CLEA VIREO(The Hubble Redshift-Distance Relation)**를 활용하여 실제 천문대 연구원과 동일한 방식으로 외부 은하들을 관측하고, 우주가 팽창한다는 현대 우주론의 핵심 법칙인 **허블-르메트르 법칙($v = Hr$)**을 직접 유도해보는 지구과학 핵심 탐구 수행평가입니다.\n\n---\n\n### 🎯 관련 교육과정 성취기준\n- **[12지구03-02]** 별의 분광형 결정 및 별의 분류 과정을 이해하고, 흑체복사법칙을 이용하여 별의 물리량을 추론할 수 있다.\n- **[12지구03-05]** 허블-르메트르 법칙으로 우주의 팽창을 이해하고 우주의 진화에 대한 다양한 설명 체계의 의의를 현대 우주론의 관점에서 비교할 수 있다.\n- **[12행우02-02]** 별의 시차와 밝기를 이용하여 거리를 측정하는 다양한 방법을 비교·평가할 수 있다.\n\n---\n\n### 💻 탐구 소프트웨어 다운로드\n- **프로그램 파일**: `CLEA_Vireo.zip` (약 302 MB)\n- **제작**: Project CLEA (Contemporary Laboratory Experiences in Astronomy, Gettysburg College)\n- **지원 환경**: Windows 7 / 8 / 10 / 11\n- [🌐 CLEA VIREO 공식 배포 페이지 바로가기](https://public.gettysburg.edu/~marschal/clea/Vireo.html)\n\n---\n\n### 🌟 주요 탐구 4단계 구성\n1. **가상 망원경(4.0m) 조작 및 은하 분광 스펙트럼 촬영**:\n   - `Access 4.0 Meter` 대구경 망원경으로 돔을 열고 13개 관측 대상 은하를 슬루(Slew)하여 신호 대 잡음비(S/N비) 30 이상의 정밀 스펙트럼을 측정합니다.\n2. **흡수선(Ca II K, H 및 G band) 파장 측정 & 적색편이 계산**:\n   - 정지 파장($3933.7\\text{ \\AA}$, $3968.5\\text{ \\AA}$) 대비 관측 흡수선 파장의 이동량을 측정하여 적색 편이량($z$)과 은하의 후퇴 속도($v = cz$)를 산출합니다.\n3. **13개 은하의 물리량 표 작성 및 인터랙티브 분산형 그래프(산점도) 그리기**:\n   - 겉보기 등급과 절대 등급으로부터 거리($r$)를 구하고, 웹페이지 상에서 마우스 클릭으로 거리-후퇴속도 좌표점을 직접 찍어 선형 추세선($v = Hr$)과 결정계수($R^2$)를 도출합니다.\n4. **추세선 기울기(허블 상수 H) 분석 및 개별 활동지 작성·PDF 저장**:\n   - 추세선의 기울기가 가지는 물리적 의미를 고찰하고, 온라인 활동지에 답변을 작성한 후 A4 보고서 인쇄/PDF 저장 또는 파일 제출을 완료합니다.\n"
   },
   {
+    "id": "activity-vireo-stellar-spectra",
+    "category": "project",
+    "unitMajor": "탐구 활동",
+    "unitSeq": "INQUIRY",
+    "lessonUrl": "activities/vireo-stellar-spectra.html",
+    "title": "VIREO를 활용한 천체 스펙트럼 관측 및 분광형 추론 탐구",
+    "date": "2026 지구과학 수행평가 & 탐구활동",
+    "year": "2026",
+    "summary": "가상 천문대 CLEA VIREO(Classification of Stellar Spectra)로 8개 미지 항성의 흡수 스펙트럼을 측정·분석하고, 표준 분광형(O5 V~M0 V) 비교 및 흡수선(H 발머선, Ca II, He, Fe, TiO 등) 탐색을 통해 별의 표면 온도와 물리적 특성을 추론하는 정밀 천체물리 탐구활동입니다.",
+    "tags": [
+      "VIREO",
+      "분광형",
+      "천체스펙트럼",
+      "흡수선",
+      "별의온도",
+      "수행평가",
+      "탐구활동",
+      "활동지제출"
+    ],
+    "thumbnail": "assets/inquiry/vireo_spectra/slide_01.png",
+    "featured": true,
+    "downloadUrl": "https://public.gettysburg.edu/~marschal/clea/Vireo.html",
+    "links": [
+      {
+        "label": "🔭 온라인 탐구 활동 & 개별 활동지 작성 열기",
+        "url": "activities/vireo-stellar-spectra.html",
+        "icon": "external-link"
+      },
+      {
+        "label": "📄 활동보고서 PDF 다운로드",
+        "url": "downloads/VIREO_천체스펙트럼_활동보고서.pdf",
+        "icon": "file-text"
+      },
+      {
+        "label": "📊 관측 가이드 슬라이드 PDF 다운로드",
+        "url": "downloads/VIREO_천체스펙트럼_관측가이드.pdf",
+        "icon": "presentation"
+      },
+      {
+        "label": "🌐 CLEA VIREO 공식 배포처 바로가기",
+        "url": "https://public.gettysburg.edu/~marschal/clea/Vireo.html",
+        "icon": "download"
+      }
+    ],
+    "content": "### 🔭 탐구 활동 개요\n별의 다양한 정보 중 가장 중요한 물리량인 **천체 스펙트럼(Spectrum)**을 가상 천문대 **CLEA VIREO(Classification of Stellar Spectra)** 소프트웨어로 직접 관측하고, 표준 분광형(O, B, A, F, G, K, M)과의 비교 및 흡수선 차분 분석을 통해 별의 분광형과 표면 온도를 추론하는 2026학년도 지구과학 핵심 탐구 수행평가입니다.\n\n---\n\n### 🎯 관련 교육과정 성취기준\n- **[12지구Ⅰ02-01]** 별의 스펙트럼형과 흡수선의 세기를 비교하여 별의 표면 온도와 광도 계급을 이해하고 추론할 수 있다.\n- **[12지구Ⅰ02-02]** 온도에 따라 다르게 나타나는 주요 흡수선(He, H 발머선, Ca II K·H, 중성 금속선, 분자 띠)의 강도를 분석할 수 있다.\n- **[12행우02-02]** 현대 천체 관측 기술(0.4m 망원경, CCD 분광기, 광자 누적 계측)을 이해하고 실제 항성 관측 데이터를 처리할 수 있다.\n\n---\n\n### 💻 탐구 소프트웨어 & 활동 양식\n- **가상 관측 소프트웨어**: `CLEA VIREO` (Classification of Stellar Spectra)\n- **지원 운영체제**: Windows 7 / 8 / 10 / 11\n- [🌐 CLEA VIREO 공식 배포 페이지 바로가기](https://public.gettysburg.edu/~marschal/clea/Vireo.html)\n- [📄 활동보고서 PDF 다운로드](downloads/VIREO_천체스펙트럼_활동보고서.pdf)\n- [📊 관측 가이드 슬라이드 PDF 다운로드](downloads/VIREO_천체스펙트럼_관측가이드.pdf)\n\n---\n\n### 🌟 주요 탐구 3단계 구성\n1. **가상 망원경(0.4m) 조작 및 8개 미지 별 스펙트럼 불러오기**:\n   - `Access 0.4 Meter` 광학 망원경을 구동하고 `Tools > Spectral Classification`에서 8개 미지 별(HD 124320, O 1015, HD 37767, HD 24189, HD 35619, HD 107399, HD 23733, HD 240344)의 분광 플럭스 데이터를 호출합니다.\n2. **표준 분광형(O5 V ~ M0 V) 비교 및 스펙트럼 차분(Show Difference) 분석**:\n   - 표준별 분광 스펙트럼과 겹쳐보고 차분 곡선이 평탄해지는 일치 분광형을 찾아 활동지 표에 기록합니다.\n3. **별별 주요 흡수선(수소선, Ca II, He, Fe, TiO) 탐색 및 종합 성장 성찰**:\n   - 분광형별 지표가 되는 핵심 흡수선의 종류를 탐색하여 기재하고, 온라인 활동지에 서술형 소감을 작성하여 A4 PDF 출력 또는 제출을 완료합니다.\n\n---\n\n### 🚀 [직접 관측 미션] 연습용 3대 별 좌표\n- **베가 (Vega)**: 적경 18h 36m 56.34s / 적위 +38° 47′ 01.3″\n- **카노푸스 (Canopus)**: 적경 06h 23m 57.11s / 적위 -52° 41′ 44.4″\n- **시리우스 (Sirius)**: 적경 06h 45m 08.92s / 적위 -16° 42′ 58.0″\n- 망원경 제어반에서 `Set Coordinates...`로 자동 선회(Slew) 후 분광기로 스펙트럼을 측정하여 `.SSP` 파일로 저장하고 분석합니다.\n"
+  },
+  {
     "id": "tool-counseling-hub",
     "category": "tools",
     "unitMajor": "교실을 바꾸는 AI활용 도구",

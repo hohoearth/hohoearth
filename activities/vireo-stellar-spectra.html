@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIREO 천체 스펙트럼 관측 및 분광형 추론 탐구 | 충북사대부고 지구과학</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    /* 인쇄(A4 활동보고서) 전용 스타일 - 원본 양식 1~2페이지 최적화 */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 14mm 12mm 14mm;
+      }
+      header, nav, #nav-actions, #manual-section, #overview-section, #practice-stars-section, .no-print, button, .no-print-area, #image-lightbox {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt !important;
+        line-height: 1.35 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #worksheet-section {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        background: transparent !important;
+      }
+      .print-page {
+        display: block !important;
+      }
+      .print-show {
+        display: block !important;
+      }
+      .print-flex {
+        display: flex !important;
+      }
+      .print-hidden {
+        display: none !important;
+      }
+      input, textarea {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 1px !important;
+        font-family: inherit !important;
+      }
+      table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        margin-top: 4px !important;
+        margin-bottom: 6px !important;
+      }
+      th, td {
+        border: 1px solid #111111 !important;
+        padding: 4px 6px !important;
+        font-size: 9pt !important;
+        text-align: center !important;
+      }
+      th {
+        background-color: #f8fafc !important;
+        font-weight: 700 !important;
+      }
+      .print-border-box {
+        border: 1px solid #111111 !important;
+        min-height: 100px !important;
+        padding: 8px !important;
+      }
+      .page-break {
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- ============================================== -->
+  <!-- 0. 상단 네비게이션 헤더 -->
+  <!-- ============================================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-3 shadow-xs">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- 좌측 뒤로가기 & 로고 -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>홈으로</span>
+        </a>
+        <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+        <span class="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+          VIREO 천체 스펙트럼 관측 &amp; 분광형 추론
+        </span>
+      </div>
+
+      <!-- 우측 빠른 이동 & 액션 -->
+      <div class="flex items-center gap-2 sm:gap-3" id="nav-actions">
+        <a href="#manual-section" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition hidden md:inline-flex items-center gap-1.5">
+          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <span>탐구 방법 가이드</span>
+        </a>
+        <a href="#worksheet-section" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition flex items-center gap-1.5">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+          <span>활동지 작성하기</span>
+        </a>
+        <a href="https://public.gettysburg.edu/~marschal/clea/Vireo.html" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">CLEA VIREO 공식 배포처</span>
+          <span class="sm:hidden">프로그램 다운로드</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 메인 컨테이너 -->
+  <!-- ============================================== -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16">
+
+    <!-- 1. 탐구 활동 개요 및 성취기준 배너 -->
+    <section id="overview-section" class="bg-gradient-to-br from-indigo-950 via-slate-900 to-black text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden space-y-6 no-print">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="space-y-3 relative z-10 max-w-3xl">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">
+            2022 개정 교육과정 연계
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/30 text-emerald-300 border border-emerald-500/40">
+            고등학교 지구과학Ⅰ (별의 특성과 진화)
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/30 text-purple-300 border border-purple-500/40">
+            2026학년도 수행평가 과제
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          VIREO 프로그램을 활용한<br />천체 스펙트럼 관측 및 분광형 추론
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          별의 물리량 중 가장 핵심적인 정보를 담고 있는 것은 바로 <strong>스펙트럼(Spectrum)</strong>입니다. 
+          가상 천문대 소프트웨어 <strong>CLEA VIREO</strong>(Classification of Stellar Spectra 모듈)를 활용하여, 미지의 별 8개의 분광 데이터를 불러오고 표준 분광형(O5 V ~ M0 V)과의 비교 및 <strong>스펙트럼 차분(Show Difference)</strong> 기법을 통해 각 별의 <strong>분광형</strong>과 <strong>주요 흡수선(수소 발머선, Ca II, Fe, He, TiO 등)</strong>을 정밀하게 탐색하고 추론합니다.
+        </p>
+      </div>
+
+      <!-- 관련 성취기준 3가지 카드 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 relative z-10">
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-indigo-300 block">[12지구Ⅰ02-01] 별의 광도와 등급</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            별의 스펙트럼형과 흡수선의 세기를 비교하여 별의 표면 온도와 광도 계급을 이해하고 추론할 수 있다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-emerald-300 block">[12지구Ⅰ02-02] 분광형과 표면 온도</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            온도에 따라 다르게 나타나는 주요 흡수선(He, H 발머선, Ca II K·H, 중성 금속선, 분자 띠)의 강도를 분석할 수 있다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-sky-300 block">[12행우02-02] 현대 천체 관측 기술</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            0.4m 광학 망원경의 적경·적위 천체 구동(Slew)과 분광기(Spectrometer) 광자 누적 계측 방식을 실습한다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 다운로드 배너 -->
+      <div class="p-4 rounded-2xl bg-indigo-950/70 border border-indigo-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+        <div class="flex items-center gap-3 text-xs sm:text-sm">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shrink-0">
+            <i data-lucide="file-check" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <div class="font-bold text-white">수업 및 수행평가 공식 양식 다운로드</div>
+            <div class="text-slate-400 text-xs">충북사대부고 2026학년도 지구과학 수업 자료 · 교사 김호연</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="https://public.gettysburg.edu/~marschal/clea/Vireo.html" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-900 text-xs font-black transition flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="external-link" class="w-4 h-4 text-indigo-600"></i>
+            <span>CLEA VIREO 공식 배포 사이트</span>
+          </a>
+          <a href="../downloads/VIREO_천체스펙트럼_활동보고서.pdf" download class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/10">
+            <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
+            <span>활동보고서 PDF</span>
+          </a>
+          <a href="../downloads/VIREO_천체스펙트럼_관측가이드.pdf" download class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/10">
+            <i data-lucide="presentation" class="w-4 h-4 text-amber-300"></i>
+            <span>관측 가이드 슬라이드 PDF</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. 단계별 탐구 가이드 (슬라이드 연계 매뉴얼) -->
+    <!-- ============================================== -->
+    <section id="manual-section" class="space-y-8 no-print">
+      
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase font-mono">Step-by-Step Lab Manual</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+            VIREO 프로그램 조작 및 분광형 분석 가이드
+          </h2>
+        </div>
+        <p class="text-xs text-slate-500">
+          모든 이미지는 클릭 시 <strong>초고화질로 확대</strong>하여 세부 메뉴를 확인할 수 있습니다.
+        </p>
+      </div>
+
+      <!-- 탐구 매뉴얼 1~4단계 그리드 -->
+      <div class="space-y-6">
+        
+        <!-- 1~2단계 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">1</span>
+                <span>프로그램 실행 및 로그인 (Login)</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_07.png', '1단계. 프로그램 로그인', 'File > Login... 을 클릭하고 사용자 이름을 입력하여 가상 관측소를 시작합니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_07.png" alt="로그인 화면" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              VIREO 프로그램을 실행한 후 상단 메뉴의 <strong class="text-slate-800">File &gt; Login...</strong>을 선택하고 본인의 이름과 학번을 입력하여 로그인합니다.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">2</span>
+                <span>실습 모듈 선택 (Classification of Stellar Spectra)</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_08.png', '2단계. 모듈 선택', 'File > Run Exercise > Classification of Stellar Spectra 를 선택합니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_08.png" alt="실습 모듈 선택" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong class="text-slate-800">File &gt; Run Exercise</strong>에서 <strong>"Classification of Stellar Spectra"</strong>(별의 스펙트럼 분류) 기능을 클릭합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3~4단계 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">3</span>
+                <span>0.4m 광학 망원경 액세스 (Access 0.4 Meter)</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_09.png', '3단계. 망원경 액세스', 'Telescopes > Optical > Access 0.4 Meter 를 클릭하여 돔 제어 패널을 엽니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_09.png" alt="망원경 액세스" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              상단 메뉴의 <strong class="text-slate-800">Telescopes &gt; Optical &gt; Access 0.4 Meter</strong>를 클릭하여 가상 천문대의 0.4m 광학 망원경 돔과 제어반을 활성화합니다.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">4</span>
+                <span>분광 분석기 실행 (Tools &gt; Spectral Classification)</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_10.png', '4단계. 분석 창 실행', 'Tools > Spectral Classification 을 클릭하여 스펙트럼 분석 창을 엽니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_10.png" alt="분광 분석 창" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              상단 <strong class="text-slate-800">Tools &gt; Spectral Classification</strong>을 클릭하면 오른쪽에 파장별 규격화된 플럭스(Intensity)를 분석하는 <strong>Classify Spectra</strong> 창이 열립니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 5~6단계 (핵심 분석 기법) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">5</span>
+                <span>미지의 별 스펙트럼 불러오기 (Program List)</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_11.png', '5단계. 미지의 별 선택', 'File > Unknown Spectra > Program List 에서 HD 124320 등 분석할 대상 별을 선택합니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_11.png" alt="프로그램 리스트 선택" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              분석 창에서 <strong class="text-slate-800">File &gt; Unknown Spectra &gt; Program List</strong>를 클릭하면 활동지에 제시된 8개 별(<strong>HD 124320, O 1015, HD 37767, HD 24189, HD 35619, HD 107399, HD 23733, HD 240344</strong>)의 스펙트럼을 즉시 불러올 수 있습니다.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-indigo-600 font-extrabold text-sm">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs">6</span>
+                <span>표준별 비교 &amp; 차분(Show Difference) 분석</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-mono">클릭 시 확대 🔍</span>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 group relative cursor-zoom-in shadow-xs" onclick="openLightbox('../assets/inquiry/vireo_spectra/slide_12.png', '6단계. 표준별 비교 및 차분 분석', '우측 Standards 목록(O5 V~M0 V)을 변경하며 Display > Show Difference로 두 스펙트럼의 차이가 최소가 되는 분광형을 결정합니다.')">
+              <img src="../assets/inquiry/vireo_spectra/slide_12.png" alt="표준별 비교 화면" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white font-bold text-xs">
+                <i data-lucide="zoom-in" class="w-4 h-4"></i>
+                <span>고화질 확대 보기</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              우측 <strong class="text-slate-800">Standards</strong> 목록에서 표준 분광형(O5 V ~ M0 V)을 선택하고, 상단 <strong class="text-slate-800">Display &gt; Show Difference (Std - Unkn)</strong>을 켭니다. 하단의 차분선이 <strong>완전히 평탄한 일직선(0)</strong>이 될 때의 분광형이 해당 별의 정확한 분광형입니다!
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 보너스: 직접 관측 연습 미션 (슬라이드 13~16) -->
+      <div id="practice-stars-section" class="mt-8 rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border border-slate-800 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>직접 탐구 미션 (망원경 수동 제어 실습)</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black tracking-tight">
+              연습용 3대 별 좌표 입력 &amp; 분광 관측 (.SSP 저장)
+            </h3>
+          </div>
+          <span class="text-xs text-slate-400 font-mono">가이드 13~16페이지 연계</span>
+        </div>
+
+        <!-- 3개 연습 별 카드 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-amber-300 text-sm">1. 베가 (Vega)</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">거문고자리 α</span>
+            </div>
+            <div class="text-xs font-mono space-y-1 text-slate-300">
+              <div>적경(RA): <strong class="text-white">18h 36m 56.34s</strong></div>
+              <div>적위(Dec): <strong class="text-white">+38° 47′ 01.3″</strong></div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-amber-300 text-sm">2. 카노푸스 (Canopus)</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">용골자리 α</span>
+            </div>
+            <div class="text-xs font-mono space-y-1 text-slate-300">
+              <div>적경(RA): <strong class="text-white">06h 23m 57.11s</strong></div>
+              <div>적위(Dec): <strong class="text-white">-52° 41′ 44.4″</strong></div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-amber-300 text-sm">3. 시리우스 (Sirius)</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">큰개자리 α</span>
+            </div>
+            <div class="text-xs font-mono space-y-1 text-slate-300">
+              <div>적경(RA): <strong class="text-white">06h 45m 08.92s</strong></div>
+              <div>적위(Dec): <strong class="text-white">-16° 42′ 58.0″</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 슬라이드 14~16 관측 절차 안내 -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-300 pt-2 border-t border-slate-800">
+          <div class="space-y-1">
+            <div class="font-bold text-white flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">A</span>
+              좌표 설정 &amp; 자동 선회
+            </div>
+            <p class="text-slate-400">망원경 제어반에서 <strong>Set Coordinates...</strong>를 누르고 적경·적위를 입력하면 망원경이 자동으로 해당 별로 선회(Slew)합니다.</p>
+          </div>
+          <div class="space-y-1">
+            <div class="font-bold text-white flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">B</span>
+              분광기(Spectrometer) 계측
+            </div>
+            <p class="text-slate-400">시야를 <strong>Telescope(15.0 Arc Min)</strong>로 전환하여 슬릿 중앙 정렬 후, Instrument를 <strong>Spectrometer &gt; Access</strong>하여 Go를 누릅니다.</p>
+          </div>
+          <div class="space-y-1">
+            <div class="font-bold text-white flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">C</span>
+              파일 저장 및 분석
+            </div>
+            <p class="text-slate-400">S/N비 100 이상 확보 후 <strong>File &gt; Save</strong>하여 별 이름(예: `VEGA.SSP`)으로 저장하고, Spectral Classification 창에서 불러와 분석합니다.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. 온라인 활동보고서 (수행평가 제출 & 인쇄 양식) -->
+    <!-- ============================================== -->
+    <section id="worksheet-section" class="bg-white rounded-3xl border border-slate-200/90 shadow-xl p-6 sm:p-12 space-y-10">
+      
+      <!-- 활동지 상단 헤더 (인쇄 시 보고서 표지 헤더) -->
+      <div class="border-b-2 border-slate-900 pb-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900 text-white text-xs font-bold font-mono">
+            지구과학Ⅰ 수행평가
+          </div>
+          <span class="text-xs text-slate-500 font-medium">충북대학교사범대학부설고등학교</span>
+        </div>
+
+        <div class="text-center space-y-1">
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            VIREO를 이용한 천체 스펙트럼 분석하기 활동보고서
+          </h2>
+          <p class="text-xs text-slate-500">2026학년도 지구과학 탐구활동 · 담당교사 김호연</p>
+        </div>
+
+        <!-- 학생 인적사항 입력란 (인쇄 최적화) -->
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 sm:gap-6 pt-2 text-sm font-semibold">
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <label for="student-id" class="text-slate-700 whitespace-nowrap">학 번:</label>
+            <input 
+              type="text" 
+              id="student-id" 
+              placeholder="예: 20101" 
+              class="w-full sm:w-32 px-3 py-1.5 border border-slate-300 rounded-lg text-slate-900 font-mono text-center font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-slate-50/50"
+            />
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <label for="student-name" class="text-slate-700 whitespace-nowrap">이 름:</label>
+            <input 
+              type="text" 
+              id="student-name" 
+              placeholder="성명 입력" 
+              class="w-full sm:w-32 px-3 py-1.5 border border-slate-300 rounded-lg text-slate-900 text-center font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-slate-50/50"
+            />
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto text-xs text-slate-500">
+            <span>작성일:</span>
+            <span id="current-date" class="font-mono font-bold text-slate-700"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- 활동 1. 천체 스펙트럼을 분석해서 분광형을 추론해보자 -->
+      <!-- ============================================== -->
+      <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
+          <h3 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+            활동1. 천체 스펙트럼을 분석해서 분광형을 추론해보자.
+          </h3>
+          <span class="text-xs text-slate-500 no-print">Program List 8개 별과 Standards 비교</span>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed no-print">
+          💡 <strong>작성 팁:</strong> <code class="px-1.5 py-0.5 rounded bg-slate-100 text-indigo-700 font-mono">Tools &gt; Spectral Classification</code>에서 각 별의 스펙트럼을 불러온 뒤, 우측 표준 분광형(O5 V ~ M0 V)과 차분(Difference)하여 일치하는 분광형(예: <span class="font-mono font-bold text-slate-800">A1 V, G0 V, K5 V 등</span>)을 기재합니다.
+        </p>
+
+        <!-- 활동 1 표 (원본 보고서의 2열 구조와 100% 동일) -->
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse border border-slate-300 text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-800">
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold">별 이름</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold text-indigo-700">추론한 분광형</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold">별 이름</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold text-indigo-700">추론한 분광형</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 1행: HD 124320 / O 1015 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 124320</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-1" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">O 1015</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-2" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 2행: HD 37767 / HD 24189 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 37767</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-3" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 24189</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-4" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 3행: HD 35619 / HD 107399 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 35619</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-5" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 107399</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-6" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 4행: HD 23733 / HD 240344 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 23733</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-7" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 240344</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="spec-8" class="w-full text-center font-mono font-bold text-indigo-700 py-1.5 px-2 bg-transparent focus:bg-indigo-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 빠른 분광형 입력 보조 칩 (화면용 편의기능) -->
+        <div class="no-print flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+          <span class="text-slate-400 font-mono text-[11px]">자주 쓰는 분광형 빠른 복사:</span>
+          <button type="button" onclick="insertSpecChip('O5 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">O5 V</button>
+          <button type="button" onclick="insertSpecChip('B0 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">B0 V</button>
+          <button type="button" onclick="insertSpecChip('B6 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">B6 V</button>
+          <button type="button" onclick="insertSpecChip('A1 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">A1 V</button>
+          <button type="button" onclick="insertSpecChip('A5 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">A5 V</button>
+          <button type="button" onclick="insertSpecChip('F0 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">F0 V</button>
+          <button type="button" onclick="insertSpecChip('F5 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">F5 V</button>
+          <button type="button" onclick="insertSpecChip('G0 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">G0 V</button>
+          <button type="button" onclick="insertSpecChip('G6 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">G6 V</button>
+          <button type="button" onclick="insertSpecChip('K0 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">K0 V</button>
+          <button type="button" onclick="insertSpecChip('K5 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">K5 V</button>
+          <button type="button" onclick="insertSpecChip('M0 V')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono">M0 V</button>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- 활동 2. 각 별에서 관측할 수 있는 흡수선의 종류를 탐색해보자 -->
+      <!-- ============================================== -->
+      <div class="space-y-4 pt-4 border-t border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
+          <h3 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+            활동2. 각 별에서 관측할 수 있는 흡수선의 종류를 탐색해보자.
+          </h3>
+          <span class="text-xs text-slate-500 no-print">흡수선 파장 및 원소 종류 탐색</span>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed no-print">
+          💡 <strong>작성 팁:</strong> VIREO 스펙트럼에서 두드러지게 나타나는 흡수선을 관찰하여 기재합니다. 
+          (예: <span class="font-bold text-slate-800">수소 발머선(Hα, Hβ, Hγ, Hδ), Ca II(K, H선), He I, He II, Fe I, Fe II, TiO 밴드 등</span>)
+        </p>
+
+        <!-- 활동 2 표 (원본 보고서 2열 구조와 100% 동일) -->
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse border border-slate-300 text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-800">
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold">별 이름</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold text-emerald-700">관측할 수 있는 흡수선의 종류</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold">별 이름</th>
+                <th class="border border-slate-300 py-2.5 px-3 w-1/4 font-extrabold text-emerald-700">관측할 수 있는 흡수선의 종류</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 1행: HD 124320 / O 1015 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 124320</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-1" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">O 1015</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-2" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 2행: HD 37767 / HD 24189 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 37767</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-3" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 24189</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-4" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 3행: HD 35619 / HD 107399 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 35619</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-5" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 107399</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-6" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+              <!-- 4행: HD 23733 / HD 240344 -->
+              <tr>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 23733</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-7" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+                <td class="border border-slate-300 py-2 px-3 font-mono font-bold text-slate-800 bg-slate-50/50">HD 240344</td>
+                <td class="border border-slate-300 p-1">
+                  <input type="text" id="lines-8" class="w-full text-center text-xs sm:text-sm text-slate-900 py-1.5 px-2 bg-transparent focus:bg-emerald-50/50 focus:outline-none rounded transition" placeholder="" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 빠른 흡수선 명칭 입력 칩 (화면용 편의기능) -->
+        <div class="no-print flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+          <span class="text-slate-400 font-mono text-[11px]">흡수선 단어 클릭 시 입력란에 삽입:</span>
+          <button type="button" onclick="insertLineChip('수소 발머선 (H Balmer)')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">수소 발머선(H)</button>
+          <button type="button" onclick="insertLineChip('Ca II (K, H선)')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">Ca II (K, H)</button>
+          <button type="button" onclick="insertLineChip('중성 헬륨 (He I)')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">중성 헬륨(He I)</button>
+          <button type="button" onclick="insertLineChip('이온화 헬륨 (He II)')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">이온화 헬륨(He II)</button>
+          <button type="button" onclick="insertLineChip('금속선 (Fe, Ca I)')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">금속선(Fe, Ca)</button>
+          <button type="button" onclick="insertLineChip('TiO 분자 밴드')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700">TiO 분자 밴드</button>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- 활동 3. 서술형 성장 평가 -->
+      <!-- ============================================== -->
+      <div class="space-y-3 pt-4 border-t border-slate-200">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <h3 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+            활동3. 이 활동을 통해 새롭게 알게 되었거나 성장한 부분에 대하여 서술하세요.
+          </h3>
+        </div>
+
+        <div class="border border-slate-300 rounded-xl p-3 bg-slate-50/30 print-border-box">
+          <textarea 
+            id="growth-reflection" 
+            rows="5" 
+            class="w-full bg-transparent resize-y text-xs sm:text-sm text-slate-800 leading-relaxed focus:outline-none focus:ring-0" 
+            placeholder="예시: 실제 천문대에서 별의 온도와 분광형을 결정할 때 망원경으로 직접 흡수 스펙트럼을 측정하고 표준 분광형과 차분 곡선을 비교하는 현대적 분석 기법을 실감나게 체험할 수 있었습니다. 별의 온도에 따라 왜 특정 흡수선(예: A형 별의 강한 수소선, M형 별의 TiO 분자선)이 강하게 나타나는지 이론과 실측을 연결하며 깊이 이해하게 되었습니다."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- 하단 액션 버튼 바 (인쇄, 초기화, 클립보드 복사) -->
+      <!-- ============================================== -->
+      <div class="no-print pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <button 
+            type="button" 
+            onclick="window.print()" 
+            class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md shadow-indigo-600/20 flex items-center gap-2"
+          >
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>활동지 A4 인쇄 / PDF 저장</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="saveToLocalStorage()" 
+            class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+          >
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>임시 저장</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="copyWorksheetToClipboard()" 
+            class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+          >
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>텍스트 복사</span>
+          </button>
+        </div>
+
+        <button 
+          type="button" 
+          onclick="resetWorksheet()" 
+          class="px-3.5 py-3 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 font-bold text-xs transition flex items-center gap-1"
+        >
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span>작성 내용 초기화</span>
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 푸터 -->
+  <!-- ============================================== -->
+  <footer class="py-12 px-6 border-t border-slate-200 bg-white text-center text-xs text-slate-500 no-print">
+    <div class="max-w-4xl mx-auto space-y-2">
+      <div class="font-bold text-slate-700">충북대학교사범대학부설고등학교 지구과학 탐구실습실</div>
+      <p class="text-slate-400">교사 김호연 · HoHo Earth Educational Platform</p>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- 고화질 이미지 라이트박스 모달 -->
+  <!-- ============================================== -->
+  <div id="image-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity" onclick="if(event.target === this) closeLightbox()">
+    <div class="relative max-w-5xl w-full bg-slate-950 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-4 bg-slate-900/90 border-b border-slate-800 text-white">
+        <div>
+          <h4 id="lightbox-title" class="font-bold text-sm sm:text-base text-white"></h4>
+          <p id="lightbox-desc" class="text-xs text-slate-400 mt-0.5 font-sans"></p>
+        </div>
+        <button onclick="closeLightbox()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="p-4 sm:p-6 flex items-center justify-center bg-black/40 max-h-[75vh] overflow-auto">
+        <img id="lightbox-img" src="" alt="확대 이미지" class="max-w-full max-h-[70vh] object-contain rounded-xl border border-slate-800" />
+      </div>
+      <div class="px-6 py-3 bg-slate-900 border-t border-slate-800 text-right">
+        <span class="text-[11px] text-slate-400">ESC를 누르거나 바깥을 클릭하면 닫힙니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자바스크립트 인터랙션 로직 -->
+  <script>
+    // 날짜 자동 표기
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateEl = document.getElementById("current-date");
+      if (dateEl) {
+        const now = new Date();
+        dateEl.innerText = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+      }
+      loadFromLocalStorage();
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+    });
+
+    // 라이트박스 열기/닫기
+    function openLightbox(src, title, desc) {
+      const box = document.getElementById("image-lightbox");
+      const img = document.getElementById("lightbox-img");
+      const titleEl = document.getElementById("lightbox-title");
+      const descEl = document.getElementById("lightbox-desc");
+      if (!box || !img) return;
+
+      img.src = src;
+      if (titleEl) titleEl.innerText = title || "관측 가이드 확대 보기";
+      if (descEl) descEl.innerText = desc || "";
+
+      box.classList.remove("hidden");
+      box.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      const box = document.getElementById("image-lightbox");
+      if (box) {
+        box.classList.add("hidden");
+        box.classList.remove("flex");
+        document.body.style.overflow = "auto";
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+
+    // 마지막 포커스된 입력창 추적 (빠른 칩 삽입용)
+    let lastFocusedInput = null;
+    document.querySelectorAll("input, textarea").forEach(el => {
+      el.addEventListener("focus", () => {
+        lastFocusedInput = el;
+      });
+    });
+
+    function insertSpecChip(val) {
+      if (lastFocusedInput && lastFocusedInput.id && lastFocusedInput.id.startsWith("spec-")) {
+        lastFocusedInput.value = val;
+      } else {
+        // 첫 번째 빈 분광형 칸 찾아서 넣기
+        for (let i = 1; i <= 8; i++) {
+          const inp = document.getElementById(`spec-${i}`);
+          if (inp && !inp.value.trim()) {
+            inp.value = val;
+            break;
+          }
+        }
+      }
+      saveToLocalStorage();
+    }
+
+    function insertLineChip(val) {
+      if (lastFocusedInput && lastFocusedInput.id && lastFocusedInput.id.startsWith("lines-")) {
+        if (lastFocusedInput.value.trim()) {
+          lastFocusedInput.value += `, ${val}`;
+        } else {
+          lastFocusedInput.value = val;
+        }
+      } else {
+        // 첫 번째 빈 흡수선 칸 찾아서 넣기
+        for (let i = 1; i <= 8; i++) {
+          const inp = document.getElementById(`lines-${i}`);
+          if (inp && !inp.value.trim()) {
+            inp.value = val;
+            break;
+          }
+        }
+      }
+      saveToLocalStorage();
+    }
+
+    // 로컬 스토리지 자동 저장/불러오기
+    const STORAGE_KEY = "vireo_stellar_spectra_data_2026";
+
+    function saveToLocalStorage() {
+      const data = {
+        studentId: document.getElementById("student-id")?.value || "",
+        studentName: document.getElementById("student-name")?.value || "",
+        specs: {},
+        lines: {},
+        reflection: document.getElementById("growth-reflection")?.value || ""
+      };
+
+      for (let i = 1; i <= 8; i++) {
+        data.specs[i] = document.getElementById(`spec-${i}`)?.value || "";
+        data.lines[i] = document.getElementById(`lines-${i}`)?.value || "";
+      }
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    // 입력 시 자동 저장
+    document.querySelectorAll("input, textarea").forEach(el => {
+      el.addEventListener("input", saveToLocalStorage);
+    });
+
+    function loadFromLocalStorage() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data.studentId) document.getElementById("student-id").value = data.studentId;
+        if (data.studentName) document.getElementById("student-name").value = data.studentName;
+        if (data.reflection) document.getElementById("growth-reflection").value = data.reflection;
+
+        if (data.specs) {
+          for (let i = 1; i <= 8; i++) {
+            if (data.specs[i]) {
+              const el = document.getElementById(`spec-${i}`);
+              if (el) el.value = data.specs[i];
+            }
+          }
+        }
+
+        if (data.lines) {
+          for (let i = 1; i <= 8; i++) {
+            if (data.lines[i]) {
+              const el = document.getElementById(`lines-${i}`);
+              if (el) el.value = data.lines[i];
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Local storage load error:", e);
+      }
+    }
+
+    function resetWorksheet() {
+      if (!confirm("작성하신 모든 내용을 초기화하시겠습니까?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+      alert("모든 입력 내용이 초기화되었습니다.");
+    }
+
+    function copyWorksheetToClipboard() {
+      saveToLocalStorage();
+      const id = document.getElementById("student-id")?.value || "(미입력)";
+      const name = document.getElementById("student-name")?.value || "(미입력)";
+      
+      const starNames = [
+        "HD 124320", "O 1015", "HD 37767", "HD 24189",
+        "HD 35619", "HD 107399", "HD 23733", "HD 240344"
+      ];
+
+      let text = `[VIREO 천체 스펙트럼 분석하기 활동보고서]\n`;
+      text += `학번: ${id} / 성명: ${name}\n\n`;
+      text += `■ 활동1. 천체 스펙트럼을 분석해서 분광형을 추론해보자\n`;
+      for (let i = 1; i <= 8; i++) {
+        const val = document.getElementById(`spec-${i}`)?.value || "-";
+        text += `- ${starNames[i-1]}: ${val}\n`;
+      }
+
+      text += `\n■ 활동2. 각 별에서 관측할 수 있는 흡수선의 종류를 탐색해보자\n`;
+      for (let i = 1; i <= 8; i++) {
+        const val = document.getElementById(`lines-${i}`)?.value || "-";
+        text += `- ${starNames[i-1]}: ${val}\n`;
+      }
+
+      text += `\n■ 활동3. 활동을 통해 새롭게 알게 되었거나 성장한 부분\n`;
+      text += document.getElementById("growth-reflection")?.value || "(미작성)";
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("작성하신 보고서 내용이 클립보드에 복사되었습니다! 원하는 곳에 붙여넣기(Ctrl+V)하세요.");
+      }).catch(err => {
+        alert("클립보드 복사 권한이 없습니다.");
+      });
+    }
+  </script>
+</body>
+</html>

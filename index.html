@@ -137,8 +137,8 @@
           <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">수업자료</div>
         </div>
         <div onclick="filterAndScrollTo('project')" class="cursor-pointer group p-3 rounded-2xl hover:bg-slate-100/80 transition-all">
-          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">8</div>
-          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">과학 탐구</div>
+          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">2</div>
+          <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">탐구 활동</div>
         </div>
         <div onclick="filterAndScrollTo('tools')" class="cursor-pointer group p-3 rounded-2xl hover:bg-emerald-50/80 transition-all">
           <div class="text-3xl font-black text-emerald-600 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-tools">3</div>
@@ -239,6 +239,78 @@
           <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>Optical Telescope 4.0m Slew Simulator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쇼케이스 2: VIREO를 활용한 천체 스펙트럼 관측 및 분광형 추론 탐구 -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+        <!-- 좌측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10">
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3.5 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 inline-block">
+                지구과학Ⅰ (별의 특성과 진화)
+              </span>
+              <span class="px-3.5 py-1 text-xs font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                2026 수행평가 과제
+              </span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              VIREO를 활용한 천체 스펙트럼 관측 및 분광형 추론
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              가상 천문대 <strong>CLEA VIREO</strong>(Classification of Stellar Spectra)를 활용하여 8개 미지 항성의 분광 스펙트럼 데이터를 관측·분석합니다. 표준 분광형(O5 V~M0 V) 비교 및 스펙트럼 차분(Show Difference) 기법으로 분광형과 표면 온도를 추론하고, 주요 흡수선(H 발머선, Ca II, He, Fe, TiO)을 탐색해보는 지구과학 핵심 탐구활동입니다.
+            </p>
+          </div>
+
+          <!-- 하단 스펙 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="grid grid-cols-3 gap-3 text-xs text-slate-500">
+              <div><strong class="text-slate-900 block text-sm font-bold">8개</strong> 미지 별 분광 관측</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">O~M형</strong> 표준 분광형 비교</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">A4 양식</strong> 온라인 활동보고서</div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <a 
+                href="activities/vireo-stellar-spectra.html" 
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase font-bold inline-flex items-center gap-2 shadow-md shadow-indigo-100"
+              >
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>탐구 가이드 &amp; 온라인 활동지 시작</span>
+              </a>
+              <a 
+                href="downloads/VIREO_천체스펙트럼_활동보고서.pdf" 
+                download
+                class="px-4 py-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors inline-flex items-center gap-2 border border-slate-200/80"
+              >
+                <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i>
+                <span>활동보고서 PDF</span>
+              </a>
+              <a 
+                href="downloads/VIREO_천체스펙트럼_관측가이드.pdf" 
+                download
+                class="px-4 py-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors inline-flex items-center gap-2 border border-slate-200/80"
+              >
+                <i data-lucide="presentation" class="w-4 h-4 text-amber-600"></i>
+                <span>관측 가이드 슬라이드</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto bg-slate-950 flex items-center justify-center p-6">
+          <img 
+            src="assets/inquiry/vireo_spectra/slide_12.png" 
+            alt="VIREO Stellar Spectra Classifier" 
+            class="w-full h-full object-cover rounded-2xl border border-slate-800 shadow-2xl group-hover:scale-[1.02] transition-transform duration-700"
+          />
+          <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></span>
+            <span>Spectral Classification &amp; Difference Analysis</span>
           </div>
         </div>
       </div>
