@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도플러 효과 시뮬레이션</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel (브라우저 내 JSX 컴파일) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // --- Lucide 아이콘 인라인 SVG 컴포넌트 ---
+    const Icon = ({ children, size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        {children}
+      </svg>
+    );
+    const Play = (p) => <Icon {...p}><polygon points="5 3 19 12 5 21 5 3"/></Icon>;
+    const Pause = (p) => <Icon {...p}><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></Icon>;
+    const RotateCcw = (p) => <Icon {...p}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></Icon>;
+    const AmbulanceIcon = (p) => <Icon {...p}><rect x="3" y="5" width="14" height="10" rx="2"/><path d="M17 9h4l1 3v3h-5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M10 9h4m-2-2v4"/></Icon>;
+    const Sparkles = (p) => <Icon {...p}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></Icon>;
+    const Maximize = (p) => <Icon {...p}><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></Icon>;
+    const Minimize = (p) => <Icon {...p}><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></Icon>;
+    const ChevronLeft = (p) => <Icon {...p}><polyline points="15 18 9 12 15 6"/></Icon>;
+    const ChevronRight = (p) => <Icon {...p}><polyline points="9 18 15 12 9 6"/></Icon>;
+    const BookOpen = (p) => <Icon {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>;
+    const Eye = (p) => <Icon {...p}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></Icon>;
+    const Activity = (p) => <Icon {...p}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></Icon>;
+
+    // 교과서 스타일 분수 컴포넌트
+    const Frac = ({ top, bot }) => (
+      <span className="inline-flex flex-col items-center justify-center align-middle mx-1 text-[0.88em] leading-none">
+        <span className="border-b border-current pb-0.5 px-1 font-mono">{top}</span>
+        <span className="pt-0.5 px-1 font-mono">{bot}</span>
+      </span>
+    );
+
+    function DopplerSimulationApp() {
+      // --- 모드 관리: 'galaxy' (은하-빛) | 'ambulance' (구급차-소리) ---
+      const [mode, setMode] = useState('galaxy');
+      const [isPlaying, setIsPlaying] = useState(false);
+      const [isFullscreen, setIsFullscreen] = useState(false);
+
+      // --- 물리 상태 변수 ---
+      // 1. 은하 모드 (광속 단위: 300,000 km/s, 은하 속도: km/s)
+      const [cSpeed] = useState(300000); // 광속 (km/s)
+      // (+) 후퇴(멀어짐, 적색편이), (-) 접근(가까워짐, 청색편이)
+      const [galaxySpeed, setGalaxySpeed] = useState(45000); 
+      const [galaxyRestLambda, setGalaxyRestLambda] = useState(656.3); // H-알파 기준 파장 (nm)
+
+      // 2. 구급차 모드 (음속 단위: 340 m/s, 구급차 속도: m/s)
+      const [soundSpeed, setSoundSpeed] = useState(340); // 음속 (m/s)
+      // (+) 멀어짐, (-) 접근
+      const [ambulanceSpeed, setAmbulanceSpeed] = useState(68); 
+      const [restFreq, setRestFreq] = useState(440); // 원래 소리 진동수 (Hz)
+
+      // 파원과 관찰자 초기 거리 (px)
+      const [initialDistance, setInitialDistance] = useState(600); // 300 ~ 1200
+
+      // 카메라 시점 (free: 3D 자유 회전, observer: 관찰자 시점, top: 조감도)
+      const [cameraMode, setCameraMode] = useState('free');
+
+      // 공식 단계별 해설 (1 ~ 5)
+      const [formulaStep, setFormulaStep] = useState(1);
+      const [isAutoPlayingFormula, setIsAutoPlayingFormula] = useState(false);
+      const totalSteps = 5;
+
+      // 실시간 진동수 및 파장 그래프 데이터 (최근 50개 포인트)
+      const [freqHistory, setFreqHistory] = useState(Array(50).fill(1));
+      const [lambdaHistory, setLambdaHistory] = useState(Array(50).fill(1));
+
+      // --- Refs ---
+      const mountRef = useRef(null);
+      const sceneRef = useRef(null);
+      const cameraRef = useRef(null);
+      const rendererRef = useRef(null);
+      const sourceMeshRef = useRef(null); // 빨간색 구 (파원)
+      const obsMeshRef = useRef(null);    // 파란색 구 (관찰자)
+      const wavesRef = useRef([]);        // 림 셰이더 구면 파면 메쉬 배열
+      const timeSinceLastWaveRef = useRef(0);
+      const sourceLabelRef = useRef(null);
+      const obsLabelRef = useRef(null);
+
+      // 물리 시뮬레이션 내부 좌표: 관찰자는 x=0 (기준), 파원은 x=initialDistance 에서 시작
+      const simPosRef = useRef({
+        obsX: 0,
+        sourceX: 600,
+        needsReset: false
+      });
+
+      // 최신 상태 동기화 Ref
+      const stateRef = useRef({
+        mode,
+        isPlaying,
+        galaxySpeed,
+        cSpeed,
+        galaxyRestLambda,
+        soundSpeed,
+        ambulanceSpeed,
+        restFreq,
+        initialDistance,
+        cameraMode
+      });
+
+      useEffect(() => {
+        stateRef.current = {
+          mode,
+          isPlaying,
+          galaxySpeed,
+          cSpeed,
+          galaxyRestLambda,
+          soundSpeed,
+          ambulanceSpeed,
+          restFreq,
+          initialDistance,
+          cameraMode
+        };
+      }, [mode, isPlaying, galaxySpeed, cSpeed, galaxyRestLambda, soundSpeed, ambulanceSpeed, restFreq, initialDistance, cameraMode]);
+
+      // --- 공식 천천히 자동 재생 타이머 (4초 주기) ---
+      useEffect(() => {
+        let timer;
+        if (isAutoPlayingFormula) {
+          timer = setInterval(() => {
+            setFormulaStep(prev => (prev >= totalSteps ? 1 : prev + 1));
+          }, 4000);
+        }
+        return () => clearInterval(timer);
+      }, [isAutoPlayingFormula]);
+
+      // --- 위치 초기화 핸들러 ---
+      const resetPositions = (curMode = mode, dist = initialDistance) => {
+        simPosRef.current.obsX = 0;
+        simPosRef.current.sourceX = dist;
+        timeSinceLastWaveRef.current = 0;
+
+        if (sceneRef.current) {
+          wavesRef.current.forEach(w => {
+            sceneRef.current.remove(w.mesh);
+            w.mesh.geometry.dispose();
+            w.mesh.material.dispose();
+          });
+        }
+        wavesRef.current = [];
+        setFreqHistory(Array(50).fill(1));
+        setLambdaHistory(Array(50).fill(1));
+      };
+
+      const handleModeChange = (newMode) => {
+        setMode(newMode);
+        resetPositions(newMode, initialDistance);
+      };
+
+      const handleDistanceChange = (dist) => {
+        setInitialDistance(dist);
+        resetPositions(mode, dist);
+      };
+
+      const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => {});
+        } else {
+          document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
+        }
+      };
+
+      // --- 핵심 물리 계산 (지구과학 I 비상대론적 근사: v << c) ---
+      let calc = {
+        vRel: 0,
+        waveV: 0,
+        lambda0: 0,
+        lambdaObs: 0,
+        deltaLambda: 0,
+        f0: 0,
+        fObs: 0,
+        z: 0,
+        shiftType: 'none', // 'red' | 'blue' | 'none'
+        vPercentC: 0
+      };
+
+      if (mode === 'galaxy') {
+        calc.waveV = cSpeed; // 300,000 km/s
+        calc.vRel = galaxySpeed; // (+) 멀어짐(후퇴), (-) 가까워짐(접근)
+        calc.lambda0 = galaxyRestLambda; // nm
+        calc.f0 = (cSpeed * 1e12) / calc.lambda0; // Hz
+        calc.vPercentC = (calc.vRel / cSpeed) * 100;
+
+        // 비상대론적 공식: z = v / c = Δλ / λ0
+        calc.z = calc.vRel / cSpeed;
+        calc.deltaLambda = calc.lambda0 * calc.z;
+        calc.lambdaObs = calc.lambda0 + calc.deltaLambda;
+        calc.fObs = calc.z !== -1 ? calc.f0 / (1 + calc.z) : 0;
+
+        if (calc.deltaLambda > 0.05) calc.shiftType = 'red';
+        else if (calc.deltaLambda < -0.05) calc.shiftType = 'blue';
+      } else {
+        // 구급차 모드
+        calc.waveV = soundSpeed; // 340 m/s
+        calc.vRel = ambulanceSpeed; // (+) 멀어짐, (-) 가까워짐
+        calc.f0 = restFreq; // Hz
+        calc.lambda0 = soundSpeed / restFreq; // m
+
+        // 음파 도플러: f' = f0 * (v / (v + vRel)) [vRel > 0 멀어질 때 f' 감소, vRel < 0 접근할 때 f' 증가]
+        const denom = soundSpeed + ambulanceSpeed;
+        if (denom <= 0) {
+          calc.fObs = Infinity;
+        } else {
+          calc.fObs = calc.f0 * (soundSpeed / denom);
+        }
+        calc.lambdaObs = calc.fObs > 0 && calc.fObs !== Infinity ? soundSpeed / calc.fObs : 0;
+        calc.deltaLambda = calc.lambdaObs - calc.lambda0;
+        calc.z = calc.lambda0 > 0 ? calc.deltaLambda / calc.lambda0 : 0;
+
+        if (calc.deltaLambda > 0.001) calc.shiftType = 'red';
+        else if (calc.deltaLambda < -0.001) calc.shiftType = 'blue';
+      }
+
+      // 실시간 진동수 및 파장 그래프 데이터 주기적 기록 (0.1초 간격)
+      useEffect(() => {
+        const graphInterval = setInterval(() => {
+          if (stateRef.current.isPlaying) {
+            setFreqHistory(prev => {
+              const next = [...prev, calc.fObs];
+              if (next.length > 50) next.shift();
+              return next;
+            });
+            setLambdaHistory(prev => {
+              const next = [...prev, calc.lambdaObs];
+              if (next.length > 50) next.shift();
+              return next;
+            });
+          }
+        }, 100);
+        return () => clearInterval(graphInterval);
+      }, [calc.fObs, calc.lambdaObs]);
+
+      // 진동수 실시간 SVG 그래프 포인트 계산 (기준선 ratio=1.0 -> y=50)
+      const renderFreqPoints = () => {
+        if (!calc.f0 || calc.f0 === 0) return "";
+        return freqHistory.map((val, i) => {
+          const safeVal = isNaN(val) || val === Infinity ? calc.f0 * 1.5 : val;
+          const ratio = safeVal / calc.f0;
+          const y = 50 - (ratio - 1.0) * 120;
+          const clampedY = Math.max(5, Math.min(95, y));
+          const x = (i / 49) * 100;
+          return `${x.toFixed(1)},${clampedY.toFixed(1)}`;
+        }).join(' ');
+      };
+
+      // 파장 실시간 SVG 그래프 포인트 계산 (기준선 ratio=1.0 -> y=50)
+      const renderLambdaPoints = () => {
+        if (!calc.lambda0 || calc.lambda0 === 0) return "";
+        return lambdaHistory.map((val, i) => {
+          const safeVal = isNaN(val) ? calc.lambda0 : val;
+          const ratio = safeVal / calc.lambda0;
+          const y = 50 - (ratio - 1.0) * 120;
+          const clampedY = Math.max(5, Math.min(95, y));
+          const x = (i / 49) * 100;
+          return `${x.toFixed(1)},${clampedY.toFixed(1)}`;
+        }).join(' ');
+      };
+
+      // --- Three.js 3D 환경 구축 ---
+      useEffect(() => {
+        if (!mountRef.current) return;
+        const width = mountRef.current.clientWidth;
+        const height = mountRef.current.clientHeight;
+
+        const scene = new THREE.Scene();
+        sceneRef.current = scene;
+        scene.background = new THREE.Color(0x020617); // 깊은 우주 다크 배경
+
+        const camera = new THREE.PerspectiveCamera(45, width / height, 1, 20000);
+        cameraRef.current = camera;
+        camera.position.set(300, 450, 1100);
+        camera.lookAt(300, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        rendererRef.current = renderer;
+        mountRef.current.innerHTML = '';
+        mountRef.current.appendChild(renderer.domElement);
+
+        // 3D 공간 그리드 헬퍼 & 축선
+        const grid = new THREE.GridHelper(5000, 100, 0x1e293b, 0x0f172a);
+        grid.position.y = -35;
+        scene.add(grid);
+
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(-4000, 0, 0), new THREE.Vector3(4000, 0, 0)
+        ]);
+        const centerLine = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0x334155 }));
+        scene.add(centerLine);
+
+        // 1. 관찰자(Observer, 지구): 기존처럼 파란색 구로 표현
+        const obsGeo = new THREE.SphereGeometry(20, 32, 32);
+        const obsMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6 }); // 파란색 구
+        const obsMesh = new THREE.Mesh(obsGeo, obsMat);
+        obsMesh.position.set(0, 0, 0);
+        scene.add(obsMesh);
+        obsMeshRef.current = obsMesh;
+
+        // 2. 파원(Source, 은하/구급차): 기존처럼 빨간색 구로 표현
+        const sourceGeo = new THREE.SphereGeometry(20, 32, 32);
+        const sourceMat = new THREE.MeshBasicMaterial({ color: 0xef4444 }); // 빨간색 구
+        const sourceMesh = new THREE.Mesh(sourceGeo, sourceMat);
+        sourceMesh.position.set(600, 0, 0);
+        scene.add(sourceMesh);
+        sourceMeshRef.current = sourceMesh;
+
+        // 기본 구면 파면 지오메트리 (마루선 림 셰이더용)
+        const baseSphereGeo = new THREE.SphereGeometry(1, 64, 64);
+
+        // 마우스 3D 회전 제어 변수
+        let isDragging = false;
+        let prevMouse = { x: 0, y: 0 };
+        let camTheta = Math.PI / 2.2;
+        let camPhi = Math.PI / 3.4;
+        let camRadius = 1300;
+
+        const onMouseDown = (e) => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; };
+        const onMouseMove = (e) => {
+          if (!isDragging || stateRef.current.cameraMode !== 'free') return;
+          camTheta -= (e.clientX - prevMouse.x) * 0.005;
+          camPhi = Math.max(0.1, Math.min(Math.PI / 2 - 0.05, camPhi - (e.clientY - prevMouse.y) * 0.005));
+          prevMouse = { x: e.clientX, y: e.clientY };
+        };
+        const onMouseUp = () => { isDragging = false; };
+        const onWheel = (e) => {
+          if (stateRef.current.cameraMode !== 'free') return;
+          camRadius = Math.max(300, Math.min(4500, camRadius + e.deltaY * 0.8));
+        };
+
+        const canvasDom = renderer.domElement;
+        canvasDom.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+        canvasDom.addEventListener('wheel', onWheel);
+
+        // 애니메이션 루프
+        let animId;
+        let lastTime = performance.now();
+
+        const animate = (time) => {
+          const dt = Math.min((time - lastTime) / 1000, 0.1) || 0.016;
+          lastTime = time;
+
+          const s = stateRef.current;
+          const pos = simPosRef.current;
+
+          const simWaveSpeed = 280; // 화면 내 파동 전파 속도 (px/s)
+
+          // 물리 이동 업데이트
+          if (s.isPlaying) {
+            // 속도 환산:
+            // 은하 모드: v > 0 (멀어짐) 이면 은하가 관찰자(x=0)의 반대(+x 방향)로 이동!
+            //           v < 0 (가까워짐) 이면 은하가 관찰자(x=0) 쪽(-x 방향)으로 이동!
+            let vPx = 0;
+            if (s.mode === 'galaxy') {
+              vPx = (s.galaxySpeed / s.cSpeed) * simWaveSpeed;
+            } else {
+              vPx = (s.ambulanceSpeed / s.soundSpeed) * simWaveSpeed;
+            }
+
+            // 파원 위치 업데이트: (+)이면 x좌표 증가(멀어짐), (-)이면 x좌표 감소(가까워짐)
+            pos.sourceX += vPx * dt;
+
+            // 너무 멀어지거나 화면 밖으로 지나치게 벗어나면 자연스럽게 루프
+            if (pos.sourceX > 2500) {
+              pos.sourceX = 100;
+            } else if (pos.sourceX < -1500) {
+              pos.sourceX = 1800;
+            }
+
+            // 파면 방출 타이머 (초당 약 3.5개 방출)
+            timeSinceLastWaveRef.current += dt;
+            const emitInterval = 0.28;
+
+            if (timeSinceLastWaveRef.current >= emitInterval) {
+              timeSinceLastWaveRef.current %= emitInterval;
+
+              // 기존의 아름다운 마루선 림 셰이더(Rim Shader) 생성:
+              // 파원의 이동 방향에 따라 다가가는 쪽은 파란색(청색 편이), 멀어지는 쪽은 빨간색(적색 편이)
+              const waveUniforms = {
+                colorCyan: { value: new THREE.Color(0x38bdf8) },
+                colorRed: { value: new THREE.Color(0xf43f5e) },
+                colorBlue: { value: new THREE.Color(0x2563eb) },
+                intensity: { value: Math.min(Math.abs(vPx) / simWaveSpeed, 1.0) },
+                sourceDir: { value: vPx >= 0 ? 1.0 : -1.0 }, // 이동 방향 부호
+                currentRadius: { value: 0.0 },
+                maxRadius: { value: 2400.0 }
+              };
+
+              const mat = new THREE.ShaderMaterial({
+                uniforms: waveUniforms,
+                vertexShader: `
+                  varying vec3 vNormal; varying vec3 vViewPosition; varying vec3 vPos;
+                  void main() {
+                    vPos = position;
+                    vNormal = normalize(normalMatrix * normal);
+                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                    vViewPosition = -mvPosition.xyz;
+                    gl_Position = projectionMatrix * mvPosition;
+                  }
+                `,
+                fragmentShader: `
+                  uniform vec3 colorCyan; uniform vec3 colorRed; uniform vec3 colorBlue;
+                  uniform float intensity; uniform float sourceDir;
+                  uniform float currentRadius; uniform float maxRadius;
+                  varying vec3 vNormal; varying vec3 vViewPosition; varying vec3 vPos;
+                  void main() {
+                    // 구면상의 x좌표 위치와 파원의 이동 방향을 비교하여 색상 결정
+                    float t = vPos.x * sourceDir;
+                    vec3 finalColor = colorCyan;
+                    if (intensity > 0.02) {
+                      if (t > 0.0) finalColor = mix(colorCyan, colorBlue, t * intensity);
+                      else finalColor = mix(colorCyan, colorRed, -t * intensity);
+                    }
+                    vec3 normal = normalize(vNormal); vec3 viewDir = normalize(vViewPosition);
+                    // 림 라이팅: 구면의 가장자리(접선)만 선명한 파면 마루선으로 표현!
+                    float rim = smoothstep(0.72, 1.0, 1.0 - abs(dot(viewDir, normal)));
+                    float distanceAlpha = max(0.0, 1.0 - (currentRadius / maxRadius));
+                    gl_FragColor = vec4(finalColor, rim * distanceAlpha * 0.95);
+                  }
+                `,
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide
+              });
+
+              const waveMesh = new THREE.Mesh(baseSphereGeo, mat);
+              waveMesh.position.set(pos.sourceX, 0, 0);
+              scene.add(waveMesh);
+
+              wavesRef.current.push({
+                mesh: waveMesh,
+                radius: 1,
+                maxRadius: 2400,
+                speed: simWaveSpeed
+              });
+            }
+
+            // 기존 파면 확장 및 페이드아웃
+            for (let i = wavesRef.current.length - 1; i >= 0; i--) {
+              const w = wavesRef.current[i];
+              w.radius += w.speed * dt;
+              w.mesh.scale.set(w.radius, w.radius, w.radius);
+              w.mesh.material.uniforms.currentRadius.value = w.radius;
+
+              if (w.radius >= w.maxRadius) {
+                scene.remove(w.mesh);
+                w.mesh.geometry.dispose();
+                w.mesh.material.dispose();
+                wavesRef.current.splice(i, 1);
+              }
+            }
+          }
+
+          // 구체 3D 위치 동기화 (관찰자는 x=0 고정, 파원은 x=pos.sourceX)
+          sourceMesh.position.set(pos.sourceX, 0, 0);
+          obsMesh.position.set(pos.obsX, 0, 0);
+
+          // 카메라 시점 업데이트
+          const midX = (pos.sourceX + pos.obsX) / 2;
+          if (s.cameraMode === 'observer') {
+            camera.position.set(pos.obsX, 25, 45);
+            camera.lookAt(pos.sourceX, 0, 0);
+            camera.up.set(0, 1, 0);
+          } else if (s.cameraMode === 'top') {
+            camera.position.set(midX, 1600, 0);
+            camera.lookAt(midX, 0, 0);
+            camera.up.set(0, 0, -1);
+          } else {
+            camera.position.x = midX + camRadius * Math.sin(camPhi) * Math.cos(camTheta);
+            camera.position.y = camRadius * Math.cos(camPhi);
+            camera.position.z = camRadius * Math.sin(camPhi) * Math.sin(camTheta);
+            camera.lookAt(midX, 0, 0);
+            camera.up.set(0, 1, 0);
+          }
+
+          // 2D HTML 라벨 위치 투영
+          const updateLabel = (ref, mesh, offsetY) => {
+            if (!ref.current) return;
+            const vec = new THREE.Vector3();
+            mesh.getWorldPosition(vec);
+            vec.project(camera);
+            const x = (vec.x * 0.5 + 0.5) * mountRef.current.clientWidth;
+            const y = (vec.y * -0.5 + 0.5) * mountRef.current.clientHeight;
+
+            if (vec.z > 1) {
+              ref.current.style.opacity = '0';
+            } else {
+              ref.current.style.opacity = '1';
+              ref.current.style.transform = `translate(-50%, -50%) translate(${x}px, ${y + offsetY}px)`;
+            }
+          };
+
+          updateLabel(sourceLabelRef, sourceMesh, -38);
+          updateLabel(obsLabelRef, obsMesh, 38);
+
+          renderer.render(scene, camera);
+          animId = requestAnimationFrame(animate);
+        };
+
+        animId = requestAnimationFrame(animate);
+
+        const handleResize = () => {
+          if (!mountRef.current) return;
+          const w = mountRef.current.clientWidth;
+          const h = mountRef.current.clientHeight;
+          renderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        };
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+          cancelAnimationFrame(animId);
+          window.removeEventListener('resize', handleResize);
+          canvasDom.removeEventListener('mousedown', onMouseDown);
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+          canvasDom.removeEventListener('wheel', onWheel);
+          if (mountRef.current) mountRef.current.innerHTML = '';
+          renderer.dispose();
+        };
+      }, []);
+
+      // 초기 거리 변경 시 리셋
+      useEffect(() => {
+        resetPositions(mode, initialDistance);
+      }, [initialDistance]);
+
+      // 스펙트럼 및 파장 바 위치 계산 (은하: 400~700nm, 구급차: 0.4~1.5m)
+      const getSpectrumPercent = (val) => {
+        if (mode === 'galaxy') {
+          const min = 400;
+          const max = 700;
+          const clamped = Math.max(min, Math.min(max, val));
+          return ((clamped - min) / (max - min)) * 100;
+        } else {
+          // 음파 파장 범위: 0.4m ~ 1.5m
+          const min = 0.4;
+          const max = 1.5;
+          const clamped = Math.max(min, Math.min(max, val));
+          return ((clamped - min) / (max - min)) * 100;
+        }
+      };
+
+      return (
+        <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 font-sans">
+          
+          {/* 상단 네비게이션 헤더 */}
+          <header className="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-30 px-6 py-3.5">
+            <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 text-white shadow-lg shadow-cyan-500/20">
+                  <Sparkles size={24} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <a 
+                      href="../index.html#archive" 
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition"
+                      title="전체 수업자료 목록으로 이동"
+                    >
+                      <ChevronLeft size={14} />
+                      수업자료
+                    </a>
+                    <a 
+                      href="unit-03-05.html" 
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-700/60 transition hidden sm:inline-flex"
+                      title="16단원 허블-르메트르 법칙 교재로 이동"
+                    >
+                      <BookOpen size={14} />
+                      16단원 교재
+                    </a>
+                    <h1 className="text-xl font-bold tracking-tight text-white">도플러 효과 시뮬레이션</h1>
+                    <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800/80">
+                      고등학교 지구과학 I
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    허블-르메트르 법칙 및 천문학적 적색·청색 편이 분석 학습기
+                  </p>
+                </div>
+              </div>
+
+              {/* 빠른 모드 전환 & 전체화면 */}
+              <div className="flex items-center gap-2.5">
+                <div className="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center gap-1 shadow-inner">
+                  <button
+                    onClick={() => handleModeChange('galaxy')}
+                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      mode === 'galaxy'
+                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <Sparkles size={14} className={mode === 'galaxy' ? 'text-amber-300' : ''} />
+                    은하 (빛의 속도)
+                  </button>
+                  <button
+                    onClick={() => handleModeChange('ambulance')}
+                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      mode === 'ambulance'
+                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <AmbulanceIcon size={14} />
+                    구급차 (음속)
+                  </button>
+                </div>
+
+                <button
+                  onClick={toggleFullscreen}
+                  className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition shadow"
+                  title="전체화면 (수업용)"
+                >
+                  {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* 메인 콘텐츠 영역 */}
+          <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* 좌측 패널: 컨트롤 및 실시간 측정치 (4컬럼) */}
+            <div className="lg:col-span-4 flex flex-col gap-5">
+              
+              {/* 재생 및 리셋 박스 */}
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex flex-col gap-4">
+                <div className="flex gap-2.5">
+                  <button
+                    onClick={() => setIsPlaying(!isPlaying)}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all shadow-lg ${
+                      isPlaying
+                        ? 'bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-amber-500/20'
+                        : 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-600/30'
+                    }`}
+                  >
+                    {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                    {isPlaying ? '일시정지' : '시뮬레이션 재생'}
+                  </button>
+                  <button
+                    onClick={() => resetPositions(mode, initialDistance)}
+                    className="p-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition shadow"
+                    title="초기 위치로 리셋"
+                  >
+                    <RotateCcw size={18} />
+                  </button>
+                </div>
+
+                {/* 슬라이더 제어 영역 */}
+                <div className="space-y-4 pt-1">
+                  
+                  {/* 파원과 관찰자 거리 슬라이더 */}
+                  <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-slate-300 font-medium flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        파원과 관찰자의 거리
+                      </span>
+                      <span className="font-mono text-emerald-400 font-bold">
+                        {initialDistance} <span className="text-[10px] text-slate-500">px</span>
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="300"
+                      max="1200"
+                      step="20"
+                      value={initialDistance}
+                      onChange={(e) => handleDistanceChange(Number(e.target.value))}
+                      className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                    />
+                    <div className="flex justify-between text-[10px] text-slate-500">
+                      <span>가까움 (300px)</span>
+                      <span>멂 (1200px)</span>
+                    </div>
+                  </div>
+
+                  {mode === 'galaxy' ? (
+                    <>
+                      {/* 은하 이동 속도: (+) 멀어짐 / (-) 가까워짐 (직접 입력 지원) */}
+                      <div className="space-y-2 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300 font-medium flex items-center gap-1.5">
+                            <span className={`w-2 h-2 rounded-full ${galaxySpeed > 0 ? 'bg-rose-500' : galaxySpeed < 0 ? 'bg-blue-500' : 'bg-slate-400'}`}></span>
+                            은하 이동 속도 (<span className="italic">v</span>)
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <input
+                              type="number"
+                              min="-150000"
+                              max="150000"
+                              step="1000"
+                              value={galaxySpeed}
+                              onChange={(e) => {
+                                const val = Number(e.target.value);
+                                if (!isNaN(val)) setGalaxySpeed(val);
+                              }}
+                              className={`w-24 px-2 py-0.5 text-right font-mono font-bold text-xs bg-slate-900 border rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 ${
+                                galaxySpeed > 0 
+                                  ? 'text-rose-400 border-rose-800/80' 
+                                  : galaxySpeed < 0 
+                                  ? 'text-blue-400 border-blue-800/80' 
+                                  : 'text-slate-300 border-slate-700'
+                              }`}
+                              title="속도를 직접 숫자로 입력할 수 있습니다"
+                            />
+                            <span className="text-[11px] text-slate-400 font-mono">km/s</span>
+                          </div>
+                        </div>
+
+                        <input
+                          type="range"
+                          min="-90000"
+                          max="90000"
+                          step="1000"
+                          value={Math.max(-90000, Math.min(90000, galaxySpeed))}
+                          onChange={(e) => setGalaxySpeed(Number(e.target.value))}
+                          className="w-full accent-cyan-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                        />
+
+                        <div className="flex justify-between text-[10px] font-medium">
+                          <span className="text-blue-400 font-semibold">(-) 가까워짐 (접근)</span>
+                          <button
+                            type="button"
+                            onClick={() => setGalaxySpeed(0)}
+                            className="text-slate-400 hover:text-slate-200 underline text-[10px]"
+                            title="속도를 0으로 설정"
+                          >
+                            정지 (0)
+                          </button>
+                          <span className="text-rose-400 font-semibold">(+) 멀어짐 (후퇴)</span>
+                        </div>
+
+                        {/* 문제 풀이용 대표 속도 빠른 선택 버튼 */}
+                        <div className="flex flex-wrap items-center gap-1 pt-1.5 border-t border-slate-800/60">
+                          <span className="text-[10px] text-slate-500 mr-0.5">자주 쓰는 속도:</span>
+                          {[
+                            { label: '-30,000', val: -30000, color: 'text-blue-400' },
+                            { label: '0', val: 0, color: 'text-slate-300' },
+                            { label: '+15,000', val: 15000, color: 'text-rose-300' },
+                            { label: '+30,000', val: 30000, color: 'text-rose-300' },
+                            { label: '+60,000', val: 60000, color: 'text-rose-400' },
+                          ].map((chip) => (
+                            <button
+                              key={chip.val}
+                              type="button"
+                              onClick={() => setGalaxySpeed(chip.val)}
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-mono border transition ${
+                                galaxySpeed === chip.val
+                                  ? 'bg-cyan-950 border-cyan-500 text-cyan-200 font-bold'
+                                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700'
+                              } ${chip.color}`}
+                            >
+                              {chip.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <p className="text-[11px] text-slate-400 mt-0.5">
+                          광속(<span className="font-mono">c = 300,000 km/s</span>)의 약 <span className="font-mono text-cyan-300 font-semibold">{calc.vPercentC.toFixed(1)}%</span>
+                        </p>
+                      </div>
+
+                      {/* 기준 파장 선택 */}
+                      <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300 font-medium">기준 파장 (정지 상태 λ₀)</span>
+                          <span className="font-mono text-amber-400 font-bold">{galaxyRestLambda} <span className="text-[10px]">nm</span></span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-1.5 pt-1">
+                          <button
+                            onClick={() => setGalaxyRestLambda(656.3)}
+                            className={`px-2 py-1.5 rounded text-[11px] font-semibold border ${
+                              galaxyRestLambda === 656.3
+                                ? 'bg-rose-950 text-rose-300 border-rose-700'
+                                : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                            }`}
+                          >
+                            H-α (656.3nm)
+                          </button>
+                          <button
+                            onClick={() => setGalaxyRestLambda(486.1)}
+                            className={`px-2 py-1.5 rounded text-[11px] font-semibold border ${
+                              galaxyRestLambda === 486.1
+                                ? 'bg-cyan-950 text-cyan-300 border-cyan-700'
+                                : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                            }`}
+                          >
+                            H-β (486.1nm)
+                          </button>
+                          <button
+                            onClick={() => setGalaxyRestLambda(500.0)}
+                            className={`px-2 py-1.5 rounded text-[11px] font-semibold border ${
+                              galaxyRestLambda === 500.0
+                                ? 'bg-emerald-950 text-emerald-300 border-emerald-700'
+                                : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                            }`}
+                          >
+                            표준 (500nm)
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* 구급차 모드 슬라이더들 */}
+                      <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300 font-medium">공기 중 음속 (<span className="italic">v</span>)</span>
+                          <span className="font-mono text-cyan-400 font-bold">{soundSpeed} <span className="text-[10px]">m/s</span></span>
+                        </div>
+                        <input
+                          type="range"
+                          min="300"
+                          max="380"
+                          step="2"
+                          value={soundSpeed}
+                          onChange={(e) => setSoundSpeed(Number(e.target.value))}
+                          className="w-full accent-cyan-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300 font-medium">구급차(음원) 상대 속도 (<span className="italic">v<sub>s</sub></span>)</span>
+                          <div className="flex items-center gap-1">
+                            <input
+                              type="number"
+                              min="-200"
+                              max="200"
+                              step="1"
+                              value={ambulanceSpeed}
+                              onChange={(e) => {
+                                const val = Number(e.target.value);
+                                if (!isNaN(val)) setAmbulanceSpeed(val);
+                              }}
+                              className={`w-20 px-2 py-0.5 text-right font-mono font-bold text-xs bg-slate-900 border rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500 ${
+                                ambulanceSpeed > 0 
+                                  ? 'text-rose-400 border-rose-800/80' 
+                                  : ambulanceSpeed < 0 
+                                  ? 'text-blue-400 border-blue-800/80' 
+                                  : 'text-slate-300 border-slate-700'
+                              }`}
+                              title="속도를 직접 숫자로 입력할 수 있습니다"
+                            />
+                            <span className="text-[10px] text-slate-400 font-mono">m/s</span>
+                          </div>
+                        </div>
+                        <input
+                          type="range"
+                          min="-150"
+                          max="150"
+                          step="5"
+                          value={ambulanceSpeed}
+                          onChange={(e) => setAmbulanceSpeed(Number(e.target.value))}
+                          className="w-full accent-rose-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                        />
+                        <div className="flex justify-between text-[10px] font-medium">
+                          <span className="text-blue-400">(-) 가까워짐 (접근)</span>
+                          <span className="text-slate-400">정지 (0)</span>
+                          <span className="text-rose-400">(+) 멀어짐 (후퇴)</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300 font-medium">원래 소리 진동수 (<span className="italic">f<sub>0</sub></span>)</span>
+                          <span className="font-mono text-amber-400 font-bold">{restFreq} <span className="text-[10px]">Hz</span></span>
+                        </div>
+                        <input
+                          type="range"
+                          min="200"
+                          max="800"
+                          step="20"
+                          value={restFreq}
+                          onChange={(e) => setRestFreq(Number(e.target.value))}
+                          className="w-full accent-amber-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* 실시간 측정값 요약 카드 */}
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex flex-col gap-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                  <Eye size={14} className="text-cyan-400" />
+                  실시간 관측 측정치
+                </h3>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                    <p className="text-[11px] text-slate-400 mb-0.5">관측 파장 (<span className="italic">λ'</span>)</p>
+                    <p className="text-lg font-mono font-bold text-cyan-300">
+                      {mode === 'galaxy' 
+                        ? `${calc.lambdaObs.toFixed(2)} nm` 
+                        : `${calc.lambdaObs.toFixed(3)} m`}
+                    </p>
+                    <p className="text-[10px] text-slate-500 mt-1">
+                      기준 파장: {mode === 'galaxy' ? `${calc.lambda0} nm` : `${calc.lambda0.toFixed(3)} m`}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                    <p className="text-[11px] text-slate-400 mb-0.5">파장 변화량 (<span className="italic">Δλ</span>)</p>
+                    <p className={`text-lg font-mono font-bold ${calc.deltaLambda > 0 ? 'text-rose-400' : calc.deltaLambda < 0 ? 'text-blue-400' : 'text-slate-300'}`}>
+                      {calc.deltaLambda > 0 ? `+${calc.deltaLambda.toFixed(2)}` : calc.deltaLambda.toFixed(2)} {mode === 'galaxy' ? 'nm' : 'm'}
+                    </p>
+                    <p className="text-[10px] text-slate-500 mt-1">
+                      Δλ = λ' - λ₀
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                    <p className="text-[11px] text-slate-400 mb-0.5">적색편이도 (<span className="italic">z</span>)</p>
+                    <p className={`text-lg font-mono font-bold ${calc.z > 0 ? 'text-rose-400' : calc.z < 0 ? 'text-blue-400' : 'text-slate-300'}`}>
+                      {calc.z > 0 ? `+${calc.z.toFixed(4)}` : calc.z.toFixed(4)}
+                    </p>
+                    <p className="text-[10px] text-slate-500 mt-1">
+                      z = Δλ / λ₀ = v / c
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex flex-col justify-center">
+                    <p className="text-[11px] text-slate-400 mb-1">관측 상태</p>
+                    {calc.shiftType === 'red' ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-950/80 text-rose-300 border border-rose-800/80 text-xs font-bold w-fit">
+                        <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        적색 편이 (후퇴)
+                      </span>
+                    ) : calc.shiftType === 'blue' ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-950/80 text-blue-300 border border-blue-800/80 text-xs font-bold w-fit">
+                        <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                        청색 편이 (접근)
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold w-fit">
+                        변화 없음 (정지)
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* 우측 패널: 3D 파면 시뮬레이션 + 스펙트럼 비교선 + 단계별 공식 해설 (8컬럼) */}
+            <div className="lg:col-span-8 flex flex-col gap-5">
+              
+              {/* 3D 뷰어 캔버스 박스 */}
+              <div className="relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden min-h-[420px] shadow-2xl flex flex-col">
+                
+                {/* 상단 오버레이 (모드 및 뷰 컨트롤) */}
+                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-slate-950/80 backdrop-blur px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
+                  <span className="text-slate-400">모드:</span>
+                  <span className="font-bold text-cyan-400">{mode === 'galaxy' ? '은하 (빛의 속도)' : '구급차 (음속)'}</span>
+                  <span className="text-slate-500 mx-1">|</span>
+                  <span className="text-slate-300">파면(골·마루 림 라인) 표시 중</span>
+                </div>
+
+                <div className="absolute top-4 right-4 z-20 flex gap-1.5 bg-slate-950/80 backdrop-blur p-1 rounded-xl border border-slate-800">
+                  <button
+                    onClick={() => setCameraMode('free')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition ${
+                      cameraMode === 'free' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    3D 회전
+                  </button>
+                  <button
+                    onClick={() => setCameraMode('observer')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition ${
+                      cameraMode === 'observer' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    관찰자 시점
+                  </button>
+                  <button
+                    onClick={() => setCameraMode('top')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition ${
+                      cameraMode === 'top' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    상단 조감도
+                  </button>
+                </div>
+
+                {/* 3D WebGL 캔버스 */}
+                <div ref={mountRef} className="w-full h-full flex-1 cursor-grab active:cursor-grabbing outline-none min-h-[380px]" />
+
+                {/* 파원(빨간색 구) 및 관찰자(파란색 구) 2D 오버레이 라벨 */}
+                <div
+                  ref={sourceLabelRef}
+                  className="absolute pointer-events-none transition-transform duration-75 text-center"
+                  style={{ opacity: 0 }}
+                >
+                  <div className="bg-red-500/20 text-red-300 border border-red-500/60 backdrop-blur px-2.5 py-0.5 rounded-lg text-xs font-bold shadow-lg whitespace-nowrap">
+                    🔴 파원 ({mode === 'galaxy' ? '은하' : '음원'})
+                  </div>
+                </div>
+
+                <div
+                  ref={obsLabelRef}
+                  className="absolute pointer-events-none transition-transform duration-75 text-center flex flex-col items-center"
+                  style={{ opacity: 0 }}
+                >
+                  <div className="bg-blue-500/20 text-blue-300 border border-blue-500/60 backdrop-blur px-2.5 py-0.5 rounded-lg text-xs font-bold shadow-lg whitespace-nowrap">
+                    🔵 관찰자 ({mode === 'galaxy' ? '지구' : '사람'})
+                  </div>
+                </div>
+              </div>
+
+              {/* 실시간 진동수 & 파장 변화 그래프 카드 (동적 실시간 비교) */}
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                      <Activity size={18} className="text-cyan-400" />
+                      실시간 진동수(f') 및 파장(λ') 변화 그래프 (Real-time)
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      파원의 상대 운동에 따른 관측 진동수와 관측 파장의 상반된 실시간 변화 추이를 비교해보세요.
+                    </p>
+                  </div>
+                  <span className={`text-[11px] px-2.5 py-0.5 rounded font-mono font-bold border ${
+                    isPlaying 
+                      ? 'bg-cyan-950 text-cyan-300 border-cyan-700 animate-pulse' 
+                      : 'bg-slate-950 text-slate-400 border-slate-800'
+                  }`}>
+                    {isPlaying ? '● 실시간 기록 중' : '❚❚ 일시정지됨'}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* 1. 실시간 진동수 변화 그래프 */}
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col">
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        관측 진동수 (f')
+                      </span>
+                      <span className="text-xs font-mono font-bold text-cyan-300">
+                        {mode === 'galaxy' 
+                          ? `${(calc.fObs / 1e12).toFixed(1)} THz` 
+                          : `${calc.fObs === Infinity ? '∞' : calc.fObs.toFixed(1)} Hz`}
+                      </span>
+                    </div>
+
+                    <div className="relative w-full h-24 bg-slate-900/90 rounded-lg border border-slate-800/80 overflow-hidden">
+                      {/* 기준 진동수 중앙 점선 (f0) */}
+                      <div className="absolute left-0 w-full border-t border-slate-600 border-dashed z-0" style={{ top: '50%' }} />
+                      <span className="absolute left-2 text-[9px] text-slate-400 z-10 font-mono" style={{ top: 'calc(50% - 14px)' }}>
+                        기준 진동수 f₀ ({mode === 'galaxy' ? `${(calc.f0 / 1e12).toFixed(1)} THz` : `${calc.f0} Hz`})
+                      </span>
+
+                      {/* 상단/하단 영역 안내 */}
+                      <span className="absolute right-2 top-1 text-[9px] text-blue-400/80 font-medium">↑ 진동수 증가 (접근)</span>
+                      <span className="absolute right-2 bottom-1 text-[9px] text-rose-400/80 font-medium">↓ 진동수 감소 (후퇴)</span>
+
+                      {/* 동적 SVG 폴리라인 */}
+                      <svg className="absolute inset-0 w-full h-full z-10" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <polyline
+                          points={renderFreqPoints()}
+                          fill="none"
+                          stroke="#22d3ee"
+                          strokeWidth="2.5"
+                          vectorEffect="non-scaling-stroke"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 2. 실시간 파장 변화 그래프 */}
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col">
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-rose-400"></span>
+                        관측 파장 (λ')
+                      </span>
+                      <span className="text-xs font-mono font-bold text-rose-400">
+                        {mode === 'galaxy' ? `${calc.lambdaObs.toFixed(2)} nm` : `${calc.lambdaObs.toFixed(3)} m`}
+                      </span>
+                    </div>
+
+                    <div className="relative w-full h-24 bg-slate-900/90 rounded-lg border border-slate-800/80 overflow-hidden">
+                      {/* 기준 파장 중앙 점선 (lambda 0) */}
+                      <div className="absolute left-0 w-full border-t border-slate-600 border-dashed z-0" style={{ top: '50%' }} />
+                      <span className="absolute left-2 text-[9px] text-slate-400 z-10 font-mono" style={{ top: 'calc(50% - 14px)' }}>
+                        기준 파장 λ₀ ({mode === 'galaxy' ? `${calc.lambda0} nm` : `${calc.lambda0.toFixed(3)} m`})
+                      </span>
+
+                      {/* 상단/하단 영역 안내 */}
+                      <span className="absolute right-2 top-1 text-[9px] text-rose-400/80 font-medium">↑ 파장 증가 (적색편이)</span>
+                      <span className="absolute right-2 bottom-1 text-[9px] text-blue-400/80 font-medium">↓ 파장 감소 (청색편이)</span>
+
+                      {/* 동적 SVG 폴리라인 */}
+                      <svg className="absolute inset-0 w-full h-full z-10" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <polyline
+                          points={renderLambdaPoints()}
+                          fill="none"
+                          stroke="#f43f5e"
+                          strokeWidth="2.5"
+                          vectorEffect="non-scaling-stroke"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 스펙트럼 및 파장 편이 비교 바 (교과서 핵심 도해) */}
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 via-emerald-400 to-rose-500"></span>
+                      {mode === 'galaxy' 
+                        ? '가시광선 스펙트럼 흡수선 편이 비교 (400nm ~ 700nm)' 
+                        : '음파 파장 및 음고(Pitch) 편이 비교 (0.4m ~ 1.5m)'}
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {mode === 'galaxy'
+                        ? '실험실 기준 스펙트럼(정지)과 관측된 은하 스펙트럼의 흡수선 위치 이동을 직접 확인하세요.'
+                        : '정지 상태 기준 음파 파장과 구급차 상대 운동에 따른 관측 음파 파장 변화를 확인하세요.'}
+                    </p>
+                  </div>
+                  <div className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-cyan-300">
+                    Δλ = {calc.deltaLambda > 0 ? `+${calc.deltaLambda.toFixed(mode === 'galaxy' ? 2 : 3)}` : calc.deltaLambda.toFixed(mode === 'galaxy' ? 2 : 3)} {mode === 'galaxy' ? 'nm' : 'm'}
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-1">
+                  {/* 1. 기준 상태 */}
+                  <div>
+                    <div className="flex justify-between text-xs text-slate-400 mb-1">
+                      <span className="font-semibold text-slate-300">
+                        {mode === 'galaxy' ? '1. 실험실 기준 스펙트럼 (정지 상태, v = 0)' : '1. 기준 음파 파장 (정지 상태, v = 0)'}
+                      </span>
+                      <span className="font-mono text-amber-400">
+                        기준선: {mode === 'galaxy' ? `${calc.lambda0} nm` : `${calc.lambda0.toFixed(3)} m`}
+                      </span>
+                    </div>
+                    <div className={`relative h-9 w-full rounded-lg overflow-hidden border border-slate-700 shadow-inner ${
+                      mode === 'galaxy' 
+                        ? 'bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-400 to-red-600'
+                        : 'bg-gradient-to-r from-blue-600 via-teal-500 via-amber-500 to-rose-600'
+                    }`}>
+                      <div
+                        className="absolute top-0 bottom-0 w-1 bg-black z-10 shadow"
+                        style={{ left: `${getSpectrumPercent(calc.lambda0)}%` }}
+                        title={`기준선 (${mode === 'galaxy' ? `${calc.lambda0} nm` : `${calc.lambda0.toFixed(3)} m`})`}
+                      >
+                        <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-slate-900 border border-amber-500/80 text-[10px] text-amber-300 font-mono px-1 rounded whitespace-nowrap">
+                          λ₀
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 2. 관측 상태 */}
+                  <div>
+                    <div className="flex justify-between text-xs text-slate-400 mb-1">
+                      <span className="font-semibold text-slate-300">
+                        {mode === 'galaxy' ? '2. 관측된 스펙트럼 (이동 중)' : '2. 관측된 음파 파장 (이동 중)'}
+                      </span>
+                      <span className={`font-mono font-bold ${calc.deltaLambda > 0 ? 'text-rose-400' : calc.deltaLambda < 0 ? 'text-blue-400' : 'text-slate-300'}`}>
+                        관측선: {mode === 'galaxy' ? `${calc.lambdaObs.toFixed(2)} nm` : `${calc.lambdaObs.toFixed(3)} m`}
+                      </span>
+                    </div>
+                    <div className={`relative h-9 w-full rounded-lg overflow-hidden border border-slate-700 shadow-inner ${
+                      mode === 'galaxy' 
+                        ? 'bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-400 to-red-600'
+                        : 'bg-gradient-to-r from-blue-600 via-teal-500 via-amber-500 to-rose-600'
+                    }`}>
+                      <div
+                        className="absolute top-0 bottom-0 border-l border-dashed border-white/50 z-0"
+                        style={{ left: `${getSpectrumPercent(calc.lambda0)}%` }}
+                      />
+                      <div
+                        className={`absolute top-0 bottom-0 w-1.5 bg-black z-10 transition-all duration-150 ${
+                          calc.shiftType === 'red' ? 'ring-2 ring-rose-500' : calc.shiftType === 'blue' ? 'ring-2 ring-blue-500' : ''
+                        }`}
+                        style={{ left: `${getSpectrumPercent(calc.lambdaObs)}%` }}
+                        title={`관측선 (${mode === 'galaxy' ? `${calc.lambdaObs.toFixed(2)} nm` : `${calc.lambdaObs.toFixed(3)} m`})`}
+                      >
+                        <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-slate-900 border border-cyan-500 text-[10px] text-cyan-300 font-mono px-1 rounded shadow whitespace-nowrap">
+                          λ'
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-2">
+                      <span>{mode === 'galaxy' ? '400 nm (보라)' : '0.4 m (단파장 / 고음)'}</span>
+                      <span className="text-slate-400">
+                        {mode === 'galaxy'
+                          ? '← 청색 편이 (가까워질 때) | 적색 편이 (멀어질 때) →'
+                          : '← 음고 상승·파장 단축 (가까워질 때) | 음고 하강·파장 연장 (멀어질 때) →'}
+                      </span>
+                      <span>{mode === 'galaxy' ? '700 nm (빨강)' : '1.5 m (장파장 / 저음)'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 도플러 효과 -> 파장 공식 '천천히 순서대로' 해설 카드 */}
+              <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex flex-col gap-4">
+                
+                {/* 상단 컨트롤 */}
+                <div className="flex flex-wrap justify-between items-center gap-3 border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300">
+                      <BookOpen size={18} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">
+                        도플러 효과: 진동수에서 파장으로의 공식 유도 (천천히 순서대로)
+                      </h3>
+                      <p className="text-xs text-slate-400">
+                        기초 파동식에서 고등학교 지구과학 I 적색편이 공식까지 단계별로 이해하기
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setIsAutoPlayingFormula(!isAutoPlayingFormula)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow ${
+                        isAutoPlayingFormula
+                          ? 'bg-amber-500 hover:bg-amber-600 text-slate-950 animate-pulse'
+                          : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                      }`}
+                    >
+                      {isAutoPlayingFormula ? <Pause size={14} /> : <Play size={14} />}
+                      {isAutoPlayingFormula ? '자동 넘김 중지' : '천천히 자동 재생'}
+                    </button>
+
+                    <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+                      <button
+                        onClick={() => { setIsAutoPlayingFormula(false); setFormulaStep(Math.max(1, formulaStep - 1)); }}
+                        disabled={formulaStep === 1}
+                        className="p-1 rounded text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400"
+                        title="이전 단계"
+                      >
+                        <ChevronLeft size={16} />
+                      </button>
+                      <span className="font-mono text-xs px-2 text-cyan-400 font-bold">
+                        {formulaStep} / {totalSteps}
+                      </span>
+                      <button
+                        onClick={() => { setIsAutoPlayingFormula(false); setFormulaStep(Math.min(totalSteps, formulaStep + 1)); }}
+                        disabled={formulaStep === totalSteps}
+                        className="p-1 rounded text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400"
+                        title="다음 단계"
+                      >
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 프로그레스 인디케이터 바 */}
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[1, 2, 3, 4, 5].map((step) => (
+                    <button
+                      key={step}
+                      onClick={() => { setIsAutoPlayingFormula(false); setFormulaStep(step); }}
+                      className={`h-1.5 rounded-full transition-all ${
+                        formulaStep === step
+                          ? 'bg-cyan-400 shadow shadow-cyan-400/50'
+                          : formulaStep > step
+                          ? 'bg-cyan-800'
+                          : 'bg-slate-800'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* 단계별 상세 설명 콘텐츠 */}
+                <div className="bg-slate-950 p-5 rounded-xl border border-slate-800/80 min-h-[140px] flex flex-col justify-center">
+                  
+                  {formulaStep === 1 && (
+                    <div className="space-y-2 animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-bold">
+                          1단계
+                        </span>
+                        <h4 className="text-sm font-bold text-white">파동의 기본 관계식 (속도, 진동수, 파장)</h4>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        모든 파동의 진행 속도(<span className="italic">v</span>)는 진동수(<span className="italic">f</span>)와 파장(<span className="italic">λ</span>)의 곱으로 나타납니다.
+                        빛(전자기파)의 경우 전파 속도는 항상 광속 <span className="font-mono text-cyan-300">c</span> 입니다.
+                      </p>
+                      <div className="bg-slate-900 p-3 rounded-lg border border-slate-800 text-center font-mono text-base text-cyan-300 font-bold mt-2 flex items-center justify-center flex-wrap gap-2">
+                        <span>v = f × λ</span>
+                        <span className="text-slate-400">⟹</span>
+                        <span>λ = <Frac top="v" bot="f" /></span>
+                        <span className="text-xs text-slate-400 font-normal ml-3">(빛의 경우: λ = <Frac top="c" bot="f" />)</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {formulaStep === 2 && (
+                    <div className="space-y-2 animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-bold">
+                          2단계
+                        </span>
+                        <h4 className="text-sm font-bold text-white">도플러 효과에 의한 진동수 변화 (f')</h4>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        파원이나 관찰자가 시선 방향으로 상대 운동을 할 때, 단위 시간당 도달하는 파면의 개수가 달라집니다.
+                        파원이 가까워지면 진동수가 증가(f' &gt; f₀)하고, 멀어지면 진동수가 감소(f' &lt; f₀)합니다.
+                      </p>
+                      <div className="bg-slate-900 p-3 rounded-lg border border-slate-800 text-center font-mono text-sm text-cyan-300 font-bold mt-2 flex items-center justify-center flex-wrap gap-2">
+                        <span>f' = f₀ × (<Frac top="c" bot="c + v" />)</span>
+                        <span className="text-xs text-slate-400 font-normal">(+ 후퇴 시 f' 감소, - 접근 시 f' 증가)</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {formulaStep === 3 && (
+                    <div className="space-y-2 animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-bold">
+                          3단계
+                        </span>
+                        <h4 className="text-sm font-bold text-white">진동수를 파장으로 변환 (f = c/λ, f' = c/λ')</h4>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        천문학에서는 빛의 진동수보다 망원경 분광기로 직접 측정하는 <strong>스펙트럼의 파장(λ)</strong>을 주로 다룹니다.
+                        f = c/λ 관계를 대입하여 정리하면 관측 파장 λ'을 얻을 수 있습니다.
+                      </p>
+                      <div className="bg-slate-900 p-3 rounded-lg border border-slate-800 text-center font-mono text-sm text-cyan-300 font-bold mt-2 flex items-center justify-center flex-wrap gap-2">
+                        <span><Frac top="c" bot="λ'" /> = <Frac top="c" bot="λ₀" /> × (<Frac top="c" bot="c + v" />)</span>
+                        <span className="text-slate-400">⟹</span>
+                        <span>λ' = λ₀ × (1 + <Frac top="v" bot="c" />)</span>
+                        <span className="text-xs text-slate-400 font-normal ml-2">(v ≪ c 일 때)</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {formulaStep === 4 && (
+                    <div className="space-y-2 animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-bold">
+                          4단계
+                        </span>
+                        <h4 className="text-sm font-bold text-white">파장의 변화량 (Δλ)과 편이 방향</h4>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        관측된 파장(λ')에서 원래의 고유 파장(λ₀)을 뺀 값을 <strong>파장의 변화량(Δλ)</strong>이라고 합니다.
+                      </p>
+                      <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-center font-mono text-sm text-cyan-300 font-bold">
+                        Δλ = λ' - λ₀ = λ₀ × (<Frac top="v" bot="c" />)
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                        <div className="bg-rose-950/40 border border-rose-800/80 p-2.5 rounded-lg text-xs">
+                          <p className="font-bold text-rose-300 mb-1">🔴 적색 편이 (Redshift)</p>
+                          <p className="text-slate-300 text-[11px]">은하가 멀어질 때 (v &gt; 0) ⟹ Δλ &gt; 0 (파장이 길어져 붉은색 쪽으로 이동)</p>
+                        </div>
+                        <div className="bg-blue-950/40 border border-blue-800/80 p-2.5 rounded-lg text-xs">
+                          <p className="font-bold text-blue-300 mb-1">🔵 청색 편이 (Blueshift)</p>
+                          <p className="text-slate-300 text-[11px]">은하가 가까워질 때 (v &lt; 0) ⟹ Δλ &lt; 0 (파장이 짧아져 푸른색 쪽으로 이동)</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {formulaStep === 5 && (
+                    <div className="space-y-2 animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-bold">
+                          5단계 (최종)
+                        </span>
+                        <h4 className="text-sm font-bold text-white">고등학교 지구과학 I 핵심 공식 (허블-르메트르 법칙 기반)</h4>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        적색편이량 z는 원래 파장에 대한 파장 변화량의 비율이며, 비상대론적 근사에서 은하의 후퇴 속도(v)와 광속(c)의 비와 같습니다.
+                      </p>
+                      <div className="bg-gradient-to-r from-cyan-950/60 to-blue-950/60 border border-cyan-800 p-3 rounded-lg text-center font-mono text-base font-bold text-cyan-200 mt-2 flex flex-col items-center justify-center gap-2">
+                        <div className="flex items-center justify-center flex-wrap gap-2 text-lg">
+                          <span>z = <Frac top="Δλ" bot="λ₀" /> = <Frac top="λ' - λ₀" bot="λ₀" /> = <Frac top="v" bot="c" /></span>
+                        </div>
+                        <div className="text-xs font-normal text-amber-300">
+                          ∴ 후퇴 속도 v = c × <Frac top="Δλ" bot="λ₀" /> = c × z
+                        </div>
+                      </div>
+                      <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-300 mt-2 flex flex-wrap justify-between items-center gap-2">
+                        <span className="text-slate-400">현재 값 대입:</span>
+                        <span>Δλ = {mode === 'galaxy' ? `${calc.deltaLambda.toFixed(2)} nm` : `${calc.deltaLambda.toFixed(3)} m`}</span>
+                        <span>λ₀ = {mode === 'galaxy' ? `${calc.lambda0} nm` : `${calc.lambda0.toFixed(3)} m`}</span>
+                        <span className="text-cyan-400 font-bold">z = {calc.z.toFixed(4)}</span>
+                        <span className="text-amber-400 font-bold">v = {mode === 'galaxy' ? `${calc.vRel.toLocaleString()} km/s` : `${calc.vRel} m/s`}</span>
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+
+            </div>
+
+          </main>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<DopplerSimulationApp />);
+  </script>
+</body>
+</html>
