@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공공데이터를 활용한 태풍의 특징 분석 | 충북사대부고 지구과학</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js for scientific plotting -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    /* ======================================================== */
+    /* 🖨️ A4 수행평가 보고서 인쇄 전용 스타일 */
+    /* ======================================================== */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 14mm 12mm 14mm;
+      }
+      header, nav, #nav-actions, #overview-section, #guide-section, #activity-1-section, #activity-2-section, .no-print, button, .interactive-controls, #modal-fullscreen-map {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt !important;
+        line-height: 1.4 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #worksheet-section {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        background: transparent !important;
+      }
+      .print-break-page {
+        break-before: page !important;
+        page-break-before: always !important;
+      }
+      .print-show {
+        display: block !important;
+      }
+      .print-flex {
+        display: flex !important;
+      }
+      .print-hidden {
+        display: none !important;
+      }
+      input, textarea {
+        border: 1px solid #94a3b8 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 3px 6px !important;
+        font-family: inherit !important;
+        font-size: 9pt !important;
+      }
+      table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        margin-top: 4px !important;
+        margin-bottom: 6px !important;
+      }
+      th, td {
+        border: 1px solid #334155 !important;
+        padding: 4px 6px !important;
+        font-size: 8.5pt !important;
+        text-align: center !important;
+      }
+      th {
+        background-color: #f1f5f9 !important;
+        font-weight: 700 !important;
+      }
+      .print-box {
+        border: 1px solid #334155 !important;
+        padding: 8px 10px !important;
+      }
+      .chart-container-box {
+        break-inside: avoid !important;
+      }
+    }
+
+    /* Tab button active styles */
+    .track-tab-btn.active {
+      background-color: #0891b2;
+      color: #ffffff;
+    }
+    .obs-tab-btn.active {
+      background-color: #4f46e5;
+      color: #ffffff;
+    }
+    /* Compass arrow style */
+    .wind-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+    /* Map Canvas custom cursor */
+    .canvas-grab {
+      cursor: grab;
+    }
+    .canvas-grabbing {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-cyan-600 selection:text-white">
+
+  <!-- ============================================== -->
+  <!-- 0. 상단 네비게이션 헤더 -->
+  <!-- ============================================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-3 shadow-xs">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- 좌측 뒤로가기 & 로고 -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>홈으로</span>
+        </a>
+        <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+        <span class="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse"></span>
+          공공데이터를 활용한 태풍의 특징 분석
+        </span>
+      </div>
+
+      <!-- 우측 빠른 이동 & 액션 -->
+      <div class="flex items-center gap-2 sm:gap-3" id="nav-actions">
+        <a href="#activity-1-section" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition hidden md:inline-flex items-center gap-1.5">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-cyan-600"></i>
+          <span>태풍 궤적 지도</span>
+        </a>
+        <a href="#activity-2-section" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition hidden md:inline-flex items-center gap-1.5">
+          <i data-lucide="line-chart" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>지상 관측소 그래프</span>
+        </a>
+        <a href="#worksheet-section" class="px-3.5 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 text-xs font-bold transition flex items-center gap-1.5 border border-cyan-200">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-cyan-700"></i>
+          <span>온라인 보고서 작성</span>
+        </a>
+        <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>보고서 인쇄</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 메인 컨테이너 -->
+  <!-- ============================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-16">
+
+    <!-- 1. 탐구 활동 개요 배너 -->
+    <section id="overview-section" class="bg-gradient-to-br from-slate-900 via-slate-800 to-cyan-950 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden space-y-6 no-print">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="space-y-3 relative z-10 max-w-3xl">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/30 text-cyan-300 border border-cyan-500/40">
+            고등학교 지구과학 탐구 활동
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">
+            기상청 기상자료개방포털 공공데이터
+          </span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/30 text-emerald-300 border border-emerald-500/40">
+            수행평가 연계
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          공공데이터를 활용한 태풍의 특징 분석<br />
+          <span class="text-cyan-400 text-lg sm:text-2xl lg:text-3xl font-bold font-mono">Typhoon Track &amp; Ground Observation Data Analysis</span>
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          대한민국 기상청(KMA) 기상자료개방포털의 실제 관측 공공데이터(엑셀 데이터셋)를 바탕으로, 학생들이 직접 <strong>태풍 힌남노(2022)와 카눈(2023)의 궤적을 동아시아 백지도에 플롯</strong>하고, 지상 관측소의 <strong>기압, 풍속·강수량, 풍향 산점도 및 16방위 회전 화살표를 시각화</strong>하여 <strong>위험반원(우측)과 가항반원(좌측)의 물리적 특징</strong>을 스스로 탐구하고 규명합니다.
+        </p>
+      </div>
+
+      <!-- 핵심 성취 목표 3개 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 relative z-10">
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-cyan-300 block">① 동아시아 음영 백지도 궤적 플롯</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            힌남노 및 카눈 표에 위도·경도 좌표를 입력하면 지형 백지도에 위치 점과 중심기압 라벨, 이동 경로가 실시간 렌더링되며, 줌/팬과 전체화면 확대를 지원합니다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-indigo-300 block">② 지상 관측 실측값 직접 입력 &amp; 개별 그래프</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            빈 표에 기압·풍속·강수량 실측값을 입력함에 따라 3개의 개별 과학 그래프(기압 골짜기, 풍속/강우 복합)가 실시간으로 자동 완성됩니다.
+          </p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+          <span class="text-[11px] font-mono font-bold text-amber-300 block">③ 풍향 산점도 &amp; 16방위 바람 회전 탐구</span>
+          <p class="text-xs text-slate-300 leading-snug">
+            풍향 각도(0°~360°) 산점도와 화살표 스트립을 통해 위험반원의 시계 방향(순행) 회전과 가항반원의 반시계 방향(역행) 회전을 직접 확인합니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 탐구 데이터셋 엑셀 다운로드 안내 강조 배너 -->
+      <div class="p-5 rounded-2xl bg-slate-800/95 border-2 border-cyan-500/60 flex flex-col md:flex-row items-center justify-between gap-5 relative z-10 shadow-lg">
+        <div class="flex items-start sm:items-center gap-3.5 text-xs sm:text-sm">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center shrink-0 shadow-md">
+            <i data-lucide="file-spreadsheet" class="w-6 h-6 text-slate-950"></i>
+          </div>
+          <div class="space-y-1">
+            <div class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2">
+              <span>탐구용 공식 데이터셋 (.xlsx) 및 활동지 양식</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-black bg-cyan-500 text-slate-950">학생 필수 다운로드</span>
+            </div>
+            <div class="text-slate-300 text-xs leading-relaxed">
+              아래 <strong>[태풍 탐구 데이터셋 엑셀]</strong>을 다운로드하여 엑셀을 열고, <strong>활동 1(힌남노/카눈 궤적)과 활동 2, 3(지상관측)의 표에 값을 입력</strong>하면서 지도와 그래프의 변화를 관찰하세요!
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <a href="../downloads/태풍_카눈_및_힌남노_탐구_데이터셋.xlsx" download class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black transition flex items-center gap-1.5 shadow-md">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>태풍 탐구 데이터셋 (.xlsx)</span>
+          </a>
+          <a href="../downloads/기상자료개방포털을_활용한_태풍_분석.hwpx" download class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/20">
+            <i data-lucide="file-text" class="w-4 h-4 text-cyan-300"></i>
+            <span>탐구 활동지 양식 (.hwpx)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. 이론 배경 & 공공데이터 분석 가이드 -->
+    <!-- ============================================== -->
+    <section id="guide-section" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6 no-print">
+      <div class="border-b border-slate-100 pb-4">
+        <span class="text-xs font-bold text-cyan-600 tracking-wider uppercase font-mono">Scientific Principle &amp; Data Guide</span>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
+          태풍의 물리적 메커니즘과 관측 데이터 해석 가이드
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- 카드 1: 태풍의 이동 경로와 대기 대순환 -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-3">
+          <div class="flex items-center gap-2.5 text-cyan-700 font-extrabold text-sm">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            <span>1. 태풍의 포물선 이동 경로</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            태풍은 발생 초기 열대 무역풍대에서 <strong>북서진</strong>하다가, 위도 25°~30° 부근의 <strong>전향점(Recurvature Point)</strong>을 지나 중위도 편서풍대에 진입하면 <strong>북동진</strong>하는 포물선 궤적을 그립니다. 이때 북태평양 고기압의 세력 확장 및 수축 상태가 태풍의 최종 진로를 결정짓는 핵심 요인이 됩니다.
+          </p>
+        </div>
+
+        <!-- 카드 2: 위험반원 vs 가항반원 -->
+        <div class="p-5 rounded-2xl bg-rose-50/60 border border-rose-200/70 space-y-3">
+          <div class="flex items-center gap-2.5 text-rose-700 font-extrabold text-sm">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <span>2. 위험반원(우측) vs 가항반원(좌측)</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            태풍 진행 방향의 <strong>오른쪽(위험반원)</strong>은 태풍 자체의 반시계 방향 바람과 중위도 편서풍(또는 대규모 배경 바람)의 방향이 일치하여 풍속이 중첩·극대화됩니다. 반면 <strong>왼쪽(가항반원)</strong>은 두 바람 방향이 상쇄되어 풍속이 상대적으로 감소합니다.
+          </p>
+        </div>
+
+        <!-- 카드 3: 풍향의 시계 vs 반시계 회전 -->
+        <div class="p-5 rounded-2xl bg-indigo-50/60 border border-indigo-200/70 space-y-3">
+          <div class="flex items-center gap-2.5 text-indigo-700 font-extrabold text-sm">
+            <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+            <span>3. 풍향 변화를 통한 반원 판별</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            태풍이 통과할 때 관측소의 풍향 변화는 매우 명확합니다.<br />
+            • <strong class="text-rose-700">위험반원 관측소</strong>: 풍향이 <strong>시계 방향(Clockwise)</strong>으로 순행 회전<br />
+            • <strong class="text-blue-700">가항반원 관측소</strong>: 풍향이 <strong>반시계 방향(Counter-clockwise)</strong>으로 역행 회전
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 16방위 각도 기준표 -->
+      <div class="mt-4 p-4 rounded-2xl bg-slate-900 text-white space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-cyan-300 font-mono flex items-center gap-1.5">
+            <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
+            16방위 풍향 각도 ($0^\circ \sim 360^\circ$) 기준표
+          </span>
+          <span class="text-[11px] text-slate-400">북풍($0^\circ/360^\circ$), 동풍($90^\circ$), 남풍($180^\circ$), 서풍($270^\circ$)</span>
+        </div>
+        <div class="grid grid-cols-4 sm:grid-cols-8 gap-2 text-center text-xs">
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-amber-400">N</span><span class="text-[11px] text-slate-300">0° / 360°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">NNE</span><span class="text-[11px] text-slate-400">22.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-cyan-300">NE</span><span class="text-[11px] text-slate-400">45°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">ENE</span><span class="text-[11px] text-slate-400">67.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-emerald-400">E</span><span class="text-[11px] text-slate-300">90°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">ESE</span><span class="text-[11px] text-slate-400">112.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-cyan-300">SE</span><span class="text-[11px] text-slate-400">135°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">SSE</span><span class="text-[11px] text-slate-400">157.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-rose-400">S</span><span class="text-[11px] text-slate-300">180°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">SSW</span><span class="text-[11px] text-slate-400">202.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-cyan-300">SW</span><span class="text-[11px] text-slate-400">225°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">WSW</span><span class="text-[11px] text-slate-400">247.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-purple-400">W</span><span class="text-[11px] text-slate-300">270°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">WNW</span><span class="text-[11px] text-slate-400">292.5°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-cyan-300">NW</span><span class="text-[11px] text-slate-400">315°</span></div>
+          <div class="p-2 bg-slate-800 rounded-lg"><span class="block font-bold text-slate-200">NNW</span><span class="text-[11px] text-slate-400">337.5°</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. 활동 1: 태풍 힌남노 & 카눈 궤적 데이터 분석 (동아시아 백지도 플로터) -->
+    <!-- ============================================== -->
+    <section id="activity-1-section" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6 no-print">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold text-cyan-600 tracking-wider uppercase font-mono">Activity 01 · Trajectory Mapping</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
+            활동 1. 동아시아 백지도 태풍 궤적 플로터 (힌남노 &amp; 카눈 데이터 입력)
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            엑셀 데이터셋의 궤적 시트를 확인하고, 아래 <strong>힌남노(2022)</strong>와 <strong>카눈(2023)</strong> 탭을 선택하여 위도, 경도, 기압, 풍속을 직접 입력하세요!
+          </p>
+        </div>
+
+        <!-- 힌남노 / 카눈 / 커스텀 탭 선택기 (사용자 요청: 처음처럼 복원) -->
+        <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200/80 shrink-0">
+          <button id="track-tab-hinnamnor" onclick="switchTrackTab('hinnamnor')" class="track-tab-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold transition">
+            태풍 힌남노(2022) 궤적
+          </button>
+          <button id="track-tab-khanun" onclick="switchTrackTab('khanun')" class="track-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">
+            태풍 카눈(2023) 궤적
+          </button>
+          <button id="track-tab-custom" onclick="switchTrackTab('custom')" class="track-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">
+            나만의 태풍 조사
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- 좌측: 태풍 궤적 좌표 입력 테이블 (빈칸 시작) -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="list-ordered" class="w-4 h-4 text-cyan-600"></i>
+              <span id="track-table-heading">태풍 힌남노(2022) 궤적 데이터 입력 (빈칸 채우기)</span>
+            </span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="addTrackRow()" class="px-2.5 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center gap-1 transition shadow-2xs">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>행 추가</span>
+              </button>
+              <button onclick="clearCurrentTrackData()" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 text-xs font-medium flex items-center gap-1 transition" title="현재 태풍 표 비우기">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>비우기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 스크롤 가능한 데이터 입력 테이블 -->
+          <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-xs max-h-[480px] overflow-y-auto bg-white">
+            <table class="w-full text-xs text-left" id="track-data-table">
+              <thead class="bg-slate-100 text-slate-700 sticky top-0 z-10 border-b border-slate-200 font-bold">
+                <tr>
+                  <th class="p-2 text-center w-8">#</th>
+                  <th class="p-2 text-center w-28">일시</th>
+                  <th class="p-2 text-center w-20">위도(°N)</th>
+                  <th class="p-2 text-center w-20">경도(°E)</th>
+                  <th class="p-2 text-center w-24">중심기압(hPa)</th>
+                  <th class="p-2 text-center w-20">최대풍속</th>
+                  <th class="p-2 text-center w-8">삭제</th>
+                </tr>
+              </thead>
+              <tbody id="track-table-body" class="divide-y divide-slate-100">
+                <!-- Javascript will dynamically render blank rows here -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 도움말 & 색상 범례 -->
+          <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-600"></i>
+                <span>태풍 강도 및 중심기압 색상 기준</span>
+              </span>
+              <span class="text-[11px] text-slate-500 font-normal">위도: 10~50°N / 경도: 100~160°E</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2.5 text-[11px]">
+              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-purple-600 inline-block"></span> 초강력 (&lt;930 hPa)</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> 매우 강 (930~950 hPa)</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> 강 (950~970 hPa)</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-cyan-500 inline-block"></span> 중 (970~985 hPa)</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> 보통 (&ge;985 hPa)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측: 인터랙티브 동아시아 백지도 Canvas & 줌/팬/모달 도구 -->
+        <div class="lg:col-span-6 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <i data-lucide="map" class="w-4 h-4 text-cyan-600"></i>
+              <span>동아시아 음영 백지도 (10°N~50°N, 100°E~160°E)</span>
+            </span>
+            
+            <!-- 줌/팬 & 크게보기 컨트롤러 바 -->
+            <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200">
+              <button onclick="zoomMap(1.2)" class="px-2 py-1 rounded-lg bg-white hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-0.5 shadow-2xs" title="확대 (+)">
+                <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">확대</span>
+              </button>
+              <button onclick="zoomMap(0.8)" class="px-2 py-1 rounded-lg bg-white hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-0.5 shadow-2xs" title="축소 (-)">
+                <i data-lucide="zoom-out" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">축소</span>
+              </button>
+              <button onclick="resetMapZoomPan()" class="px-2 py-1 rounded-lg bg-white hover:bg-slate-200 text-slate-700 text-xs font-medium transition shadow-2xs" title="초기화 (100%)">
+                <span id="zoom-level-text" class="font-mono text-[11px] font-bold">100%</span>
+              </button>
+              <div class="h-3 w-px bg-slate-300 mx-0.5"></div>
+              <button onclick="openFullscreenMapModal()" class="px-2.5 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition flex items-center gap-1 shadow-2xs" title="전체화면 대형 팝업으로 크게 보기">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                <span>크게 보기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 라벨 토글 및 다운로드 옵션 -->
+          <div class="flex items-center justify-between text-xs text-slate-600 px-1">
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="checkbox" id="toggle-pressure-labels" checked onchange="drawTrackCanvas()" class="rounded text-cyan-600" />
+                <span class="text-[11px]">기압 수치 표시</span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="checkbox" id="toggle-date-labels" checked onchange="drawTrackCanvas()" class="rounded text-cyan-600" />
+                <span class="text-[11px]">일시 라벨</span>
+              </label>
+            </div>
+            <button onclick="downloadMapImage()" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-bold flex items-center gap-1 transition shadow-2xs">
+              <i data-lucide="download" class="w-3 h-3"></i>
+              <span>지도 이미지 저장</span>
+            </button>
+          </div>
+
+          <!-- Canvas 래퍼 (줌 & 드래그 인터랙션) -->
+          <div id="map-canvas-container" class="relative rounded-2xl overflow-hidden border border-slate-300 shadow-md bg-slate-900 flex items-center justify-center h-[520px] select-none">
+            <canvas id="typhoonMapCanvas" width="1782" height="1594" class="w-full h-full object-contain canvas-grab"></canvas>
+            
+            <!-- 툴팁 -->
+            <div id="map-tooltip" class="absolute hidden pointer-events-none bg-slate-900/95 text-white text-xs px-3 py-2 rounded-xl shadow-xl border border-cyan-500/50 font-mono z-20 space-y-0.5 backdrop-blur-md"></div>
+
+            <!-- 안내 오버레이 (빈 상태 시) -->
+            <div id="map-empty-overlay" class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-xl border border-slate-700/80 pointer-events-none flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+              <span>좌측 표에 위도와 경도를 입력하면 지도 위에 궤적이 플롯됩니다.</span>
+            </div>
+
+            <!-- 하단 줌 컨트롤 플로팅 버튼 -->
+            <div class="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur-md text-white px-3 py-1.5 rounded-xl border border-slate-700/80 text-[11px] font-mono flex items-center gap-2">
+              <i data-lucide="move" class="w-3 h-3 text-cyan-400"></i>
+              <span>마우스 드래그로 지도 이동 / 휠로 확대</span>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-slate-500 flex items-center justify-between px-1">
+            <span>💡 지도 위를 마우스로 드래그하여 원하는 위치로 이동하거나 휠을 굴려 확대해보세요.</span>
+            <span>원추 도법 100°E~160°E</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. 활동 2 & 3: 지상 관측소 데이터 분석 & 개별 그래프 시각화 -->
+    <!-- ============================================== -->
+    <section id="activity-2-section" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-8 no-print">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase font-mono">Activity 02 &amp; 03 · Ground Stations</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
+            활동 2 &amp; 3. 지상 관측 데이터 분석 (학생 직접 입력 &amp; 개별 그래프)
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            엑셀 데이터셋을 보고 표의 빈칸에 관측값을 입력하세요. <strong>해면기압, 풍속·강수량, 풍향 산점도 및 16방위 회전 화살표</strong>가 자동으로 그려집니다!
+          </p>
+        </div>
+
+        <!-- 관측소 데이터셋 선택 탭 (힌남노 vs 카눈) -->
+        <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200/80 shrink-0">
+          <button id="obs-tab-hinnamnor" onclick="selectObsDataset('hinnamnor')" class="obs-tab-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold transition">
+            활동 2. 힌남노 (포항 vs 광주)
+          </button>
+          <button id="obs-tab-khanun" onclick="selectObsDataset('khanun')" class="obs-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">
+            활동 3. 카눈 (통영 vs 서울)
+          </button>
+        </div>
+      </div>
+
+      <!-- 관측소 비교 배너 정보 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="station-info-banner">
+        <!-- Station 1 -->
+        <div class="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 flex items-start justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase bg-rose-600 text-white" id="st1-badge">관측소 1</span>
+              <h3 class="font-extrabold text-sm sm:text-base text-rose-950" id="station1-name">포항 관측소</h3>
+            </div>
+            <p class="text-xs text-rose-800 mt-1" id="station1-desc">
+              태풍 진행 경로의 오른쪽(위험반원 후보) 관측소입니다.
+            </p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-bold text-rose-700 block">풍향 회전 탐구</span>
+            <span class="text-xs font-black text-rose-950 px-2 py-0.5 bg-rose-200/80 rounded-md inline-block mt-0.5" id="station1-rot-badge">데이터 입력 후 확인</span>
+          </div>
+        </div>
+
+        <!-- Station 2 -->
+        <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 flex items-start justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase bg-blue-600 text-white" id="st2-badge">관측소 2</span>
+              <h3 class="font-extrabold text-sm sm:text-base text-blue-950" id="station2-name">광주 관측소</h3>
+            </div>
+            <p class="text-xs text-blue-800 mt-1" id="station2-desc">
+              태풍 진행 경로의 왼쪽(가항반원 후보) 관측소입니다.
+            </p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-bold text-blue-700 block">풍향 회전 탐구</span>
+            <span class="text-xs font-black text-blue-950 px-2 py-0.5 bg-blue-200/80 rounded-md inline-block mt-0.5" id="station2-rot-badge">데이터 입력 후 확인</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 관측 데이터 입력 표 (두 관측소 나란히 배치, 빈칸 시작) -->
+      <div class="border border-slate-200 rounded-3xl p-5 bg-slate-50/50 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="edit" class="w-4 h-4 text-indigo-600"></i>
+            <span class="text-xs sm:text-sm font-bold text-slate-800">지상 관측소 실측 데이터 입력표 (엑셀을 보고 값을 입력하세요)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-slate-500">※ 입력한 값에 따라 아래의 3개 그래프가 실시간으로 그려집니다.</span>
+          </div>
+        </div>
+
+        <div id="obs-table-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Station 1 Table (빈칸 시작) -->
+          <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-2xs space-y-0">
+            <div class="bg-rose-50 px-3.5 py-2.5 border-b border-rose-100 flex items-center justify-between">
+              <span class="text-xs font-black text-rose-900" id="st1-tbl-header">포항 관측소 실측 데이터 입력</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="addObsRow(1)" class="px-2 py-0.5 text-[11px] font-bold bg-white text-rose-700 border border-rose-200 rounded-md hover:bg-rose-100 transition shadow-2xs">+ 행 추가</button>
+                <button onclick="clearObsRows(1)" class="px-2 py-0.5 text-[11px] font-medium bg-white text-slate-500 border border-slate-200 rounded-md hover:bg-rose-50 hover:text-rose-600 transition" title="표 비우기">비우기</button>
+              </div>
+            </div>
+            <div class="max-h-72 overflow-y-auto">
+              <table class="w-full text-xs text-left" id="table-station-1">
+                <thead class="bg-slate-50 text-slate-600 sticky top-0 border-b border-slate-100 font-bold">
+                  <tr>
+                    <th class="p-1.5 text-center w-20">일시</th>
+                    <th class="p-1.5 text-center">해면기압(hPa)</th>
+                    <th class="p-1.5 text-center">풍향방위</th>
+                    <th class="p-1.5 text-center">풍향(°)</th>
+                    <th class="p-1.5 text-center">풍속(m/s)</th>
+                    <th class="p-1.5 text-center">강수량(mm)</th>
+                    <th class="p-1.5 text-center w-8">삭제</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-station-1" class="divide-y divide-slate-100">
+                  <!-- dynamic blank rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Station 2 Table (빈칸 시작) -->
+          <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-2xs space-y-0">
+            <div class="bg-blue-50 px-3.5 py-2.5 border-b border-blue-100 flex items-center justify-between">
+              <span class="text-xs font-black text-blue-900" id="st2-tbl-header">광주 관측소 실측 데이터 입력</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="addObsRow(2)" class="px-2 py-0.5 text-[11px] font-bold bg-white text-blue-700 border border-blue-200 rounded-md hover:bg-blue-100 transition shadow-2xs">+ 행 추가</button>
+                <button onclick="clearObsRows(2)" class="px-2 py-0.5 text-[11px] font-medium bg-white text-slate-500 border border-slate-200 rounded-md hover:bg-blue-50 hover:text-blue-600 transition" title="표 비우기">비우기</button>
+              </div>
+            </div>
+            <div class="max-h-72 overflow-y-auto">
+              <table class="w-full text-xs text-left" id="table-station-2">
+                <thead class="bg-slate-50 text-slate-600 sticky top-0 border-b border-slate-100 font-bold">
+                  <tr>
+                    <th class="p-1.5 text-center w-20">일시</th>
+                    <th class="p-1.5 text-center">해면기압(hPa)</th>
+                    <th class="p-1.5 text-center">풍향방위</th>
+                    <th class="p-1.5 text-center">풍향(°)</th>
+                    <th class="p-1.5 text-center">풍속(m/s)</th>
+                    <th class="p-1.5 text-center">강수량(mm)</th>
+                    <th class="p-1.5 text-center w-8">삭제</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-station-2" class="divide-y divide-slate-100">
+                  <!-- dynamic blank rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 개별 그래프 3세트 -->
+      <div class="space-y-10">
+
+        <!-- 그래프 1: 해면기압 변화 곡선 -->
+        <div class="p-5 sm:p-6 rounded-3xl border border-slate-200/90 bg-white shadow-sm space-y-4 chart-container-box">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-cyan-600"></span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">
+                1) 해면기압 변화 곡선 비교 ($P_{\text{sea}}$, $\text{hPa}$)
+              </h3>
+            </div>
+            <div class="text-xs text-slate-500 font-mono">
+              ※ 태풍 최근접 시 중심기압 골짜기(극솟값) 형성
+            </div>
+          </div>
+
+          <div class="relative h-64 sm:h-80 w-full">
+            <canvas id="pressureChart"></canvas>
+          </div>
+
+          <!-- 해석 가이드 -->
+          <div class="p-3.5 rounded-xl bg-cyan-50/70 border border-cyan-200 text-xs text-cyan-950 space-y-1">
+            <div class="font-bold flex items-center gap-1.5">
+              <i data-lucide="help-circle" class="w-3.5 h-3.5 text-cyan-700"></i>
+              <span>기압 그래프 해석 키포인트</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed" id="pressure-guide-text">
+              위의 데이터 표에 값을 입력하면 실시간으로 기압 곡선이 생성됩니다. 태풍이 관측소에 가장 근접했을 때 해면기압이 최저점을 기록하며, 태풍 중심과의 거리가 가까울수록 기압 하강 폭이 훨씬 가파르고 깊게 나타납니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 그래프 2: 풍속 및 시간당 강수량 그래프 -->
+        <div class="p-5 sm:p-6 rounded-3xl border border-slate-200/90 bg-white shadow-sm space-y-4 chart-container-box">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">
+                2) 풍속 ($v$, $\text{m/s}$) 및 시간당 강수량 ($R$, $\text{mm}$) 복합 비교
+              </h3>
+            </div>
+            <div class="text-xs text-slate-500 font-mono">
+              ※ 실선: 풍속(좌축) / 막대: 1시간 강수량(우축)
+            </div>
+          </div>
+
+          <div class="relative h-64 sm:h-80 w-full">
+            <canvas id="windRainChart"></canvas>
+          </div>
+
+          <!-- 해석 가이드 -->
+          <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-1">
+            <div class="font-bold flex items-center gap-1.5">
+              <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-700"></i>
+              <span>풍속 &amp; 강수량 그래프 해석 키포인트</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed" id="windrain-guide-text">
+              위험반원에 위치한 관측소는 태풍의 회전 바람과 주변 대기 순환이 중첩되어 최대 순간 풍속이 훨씬 강하게 치솟으며 강수량이 집중되는 반면, 가항반원은 상대적으로 풍속이 완만하게 나타납니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 그래프 3: 풍향 분산형 산점도 및 16방위 화살표 스트립 -->
+        <div class="p-5 sm:p-6 rounded-3xl border border-slate-200/90 bg-white shadow-sm space-y-5 chart-container-box">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">
+                3) 풍향 방위각 분산형 산점도 ($0^\circ \sim 360^\circ$) &amp; 풍향 화살표 벡터 스트립
+              </h3>
+            </div>
+            <div class="text-xs text-slate-500 font-mono">
+              ※ Y축: 0°(북) $\rightarrow$ 90°(동) $\rightarrow$ 180°(남) $\rightarrow$ 270°(서) $\rightarrow$ 360°(북)
+            </div>
+          </div>
+
+          <!-- 풍향 산점도 차트 -->
+          <div class="relative h-64 sm:h-80 w-full">
+            <canvas id="windDirScatterChart"></canvas>
+          </div>
+
+          <!-- 화살표 시각화 스트립 (16방위 화살표 패널) -->
+          <div class="space-y-4 pt-2">
+            
+            <!-- 관측소 1 화살표 스트립 -->
+            <div class="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-rose-900 flex items-center gap-1.5" id="arrow-label-st1">
+                  <i data-lucide="compass" class="w-4 h-4 text-rose-600"></i>
+                  관측소 1 바람 방향 화살표 스트립
+                </span>
+                <span class="text-[11px] font-bold text-rose-700 bg-rose-200/60 px-2 py-0.5 rounded" id="arrow-st1-rot-text">
+                  입력된 데이터의 풍향 회전 관찰
+                </span>
+              </div>
+              <div class="overflow-x-auto pb-1">
+                <div class="flex items-center gap-3 min-w-max" id="arrow-strip-st1">
+                  <div class="text-xs text-slate-400 py-3 px-2">데이터를 입력하면 시간대별 회전 화살표가 표시됩니다.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 관측소 2 화살표 스트립 -->
+            <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-blue-900 flex items-center gap-1.5" id="arrow-label-st2">
+                  <i data-lucide="compass" class="w-4 h-4 text-blue-600"></i>
+                  관측소 2 바람 방향 화살표 스트립
+                </span>
+                <span class="text-[11px] font-bold text-blue-700 bg-blue-200/60 px-2 py-0.5 rounded" id="arrow-st2-rot-text">
+                  입력된 데이터의 풍향 회전 관찰
+                </span>
+              </div>
+              <div class="overflow-x-auto pb-1">
+                <div class="flex items-center gap-3 min-w-max" id="arrow-strip-st2">
+                  <div class="text-xs text-slate-400 py-3 px-2">데이터를 입력하면 시간대별 회전 화살표가 표시됩니다.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 해석 가이드 -->
+          <div class="p-3.5 rounded-xl bg-slate-900 text-white text-xs space-y-1.5">
+            <div class="font-bold flex items-center gap-1.5 text-cyan-300">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+              <span>풍향 회전과 반원 판별의 핵심 결론</span>
+            </div>
+            <p class="text-slate-300 leading-relaxed">
+              관측소의 풍향이 <strong>북동(NE) &rarr; 동(E) &rarr; 남동(SE) &rarr; 남(S)</strong>으로 <strong>시계 방향</strong>으로 변하면 관측소는 태풍 진행 방향의 <strong>오른쪽인 위험반원</strong>에 속합니다. 반대로 풍향이 <strong>동북동(ENE) &rarr; 북동(NE) &rarr; 북(N) &rarr; 북서(NW)</strong>로 <strong>반시계 방향</strong>으로 변하면 관측소는 태풍 진행 방향의 <strong>왼쪽인 가항반원</strong>에 속합니다.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5. 온라인 활동지 & 수행평가 보고서 작성 (A4 인쇄 대응, 완전 빈칸) -->
+    <!-- ============================================== -->
+    <section id="worksheet-section" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-md space-y-8">
+      
+      <!-- 보고서 헤더 -->
+      <div class="border-b-2 border-slate-900 pb-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-black tracking-widest text-cyan-600 uppercase font-mono">Earth Science Inquiry Report</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-0.5">
+              공공데이터를 활용한 태풍의 특징 분석 활동 보고서
+            </h2>
+          </div>
+          <!-- 조작 버튼 -->
+          <div class="flex items-center gap-2 no-print">
+            <button onclick="saveWorksheetDraft()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+              <i data-lucide="save" class="w-3.5 h-3.5"></i>
+              <span>작성 내용 임시저장</span>
+            </button>
+            <button onclick="clearWorksheetInputs()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 text-xs font-medium transition flex items-center gap-1.5">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              <span>내용 비우기</span>
+            </button>
+            <button onclick="window.print()" class="px-4 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+              <span>A4 보고서 인쇄</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 학생 인적사항 테이블 -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-2">
+          <div class="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-slate-600 shrink-0">학 년 / 반:</span>
+            <input type="text" id="report-grade-class" placeholder="예: 2학년 3반" class="w-full text-xs font-semibold bg-transparent focus:outline-none" />
+          </div>
+          <div class="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-slate-600 shrink-0">학 번:</span>
+            <input type="text" id="report-student-id" placeholder="예: 20315" class="w-full text-xs font-semibold bg-transparent focus:outline-none" />
+          </div>
+          <div class="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-slate-600 shrink-0">이 름:</span>
+            <input type="text" id="report-student-name" placeholder="성명 입력" class="w-full text-xs font-semibold bg-transparent focus:outline-none" />
+          </div>
+          <div class="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xs font-bold text-slate-600 shrink-0">활동 일시:</span>
+            <input type="text" id="report-date" placeholder="예: 2026. 09. 10." class="w-full text-xs font-semibold bg-transparent focus:outline-none" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 보고서 항목 1: 활동 1 태풍 궤적 데이터 분석 -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-cyan-600 text-white font-black text-xs flex items-center justify-center">1</span>
+          <h3 class="font-extrabold text-base text-slate-900">
+            활동 1. 태풍 힌남노(2022)와 카눈(2023)의 데이터를 해석하여 태풍의 운동 경로 알아보기
+          </h3>
+        </div>
+
+        <div class="space-y-4 pl-2">
+          <!-- 1-1 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [1-3] 태풍은 어떤 방향으로 이동했나요? 태풍의 이동 경로에 영향을 미친 요인은 무엇인지 대기 대순환 및 기압계 배치와 연관 지어 서술하시오.
+            </label>
+            <textarea id="ans-1-3" rows="3" placeholder="태풍의 발생 초기 무역풍대에서의 이동 방향과 중위도 편서풍대 진입 후 이동 방향, 전향점, 그리고 북태평양 고기압의 가장자리 배치와 연관 지어 서술하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-cyan-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+
+          <!-- 1-2 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [1-4] 관측 기간 중 태풍의 세력이 가장 강하게 발달했을 때는 언제인가요? 중심 기압과 최대 풍속 데이터를 바탕으로 그 이유를 설명하시오.
+            </label>
+            <textarea id="ans-1-4" rows="3" placeholder="태풍의 중심 기압(hPa)이 가장 낮고 최대 풍속(m/s)이 가장 강한 일시를 찾고, 중심 기압과 태풍 세력(에너지)의 물리적 관계를 바탕으로 설명하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-cyan-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 보고서 항목 2: 활동 2 힌남노 지상 관측 데이터 분석 -->
+      <div class="space-y-4 pt-4 border-t border-slate-200">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center">2</span>
+          <h3 class="font-extrabold text-base text-slate-900">
+            활동 2. 태풍 힌남노(2022)의 지상 관측 데이터 분석하기 (포항 vs 광주)
+          </h3>
+        </div>
+
+        <div class="space-y-4 pl-2">
+          <!-- 2-1 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [2-4] 시간에 따라서 두 관측소의 물리량(해면기압, 풍속, 강수량, 풍향)은 각각 어떻게 변하는지 비교하여 해석해보자.
+            </label>
+            <textarea id="ans-2-4" rows="4" placeholder="포항 관측소와 광주 관측소의 최저 기압 도달 시각, 최대 풍속 발생 시각, 강수량 집중 양상 및 풍향의 변화를 구체적인 수치를 인용하여 서술하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+
+          <!-- 2-2 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [2-5] 두 관측소의 풍속과 풍향 변화를 비교해보자. 이를 바탕으로 각 관측소를 가항반원과 위험반원으로 구분하고 그 과학적 근거를 제시해보자.
+            </label>
+            <textarea id="ans-2-5" rows="4" placeholder="포항과 광주 관측소가 각각 가항반원인지 위험반원인지 밝히고, 태풍 진행 경로와 관측소의 상대적 위치, 풍속의 세기 차이, 풍향 변화 방향(시계 방향 vs 반시계 방향)을 근거로 제시하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 보고서 항목 3: 활동 3 카눈 지상 관측 데이터 분석 -->
+      <div class="space-y-4 pt-4 border-t border-slate-200 print-break-page">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-rose-600 text-white font-black text-xs flex items-center justify-center">3</span>
+          <h3 class="font-extrabold text-base text-slate-900">
+            활동 3. 태풍 카눈(2023)의 지상 관측 데이터 분석하기 (통영 vs 서울)
+          </h3>
+        </div>
+
+        <div class="space-y-4 pl-2">
+          <!-- 3-1 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [3-4] 시간에 따라서 통영과 서울 관측소의 물리량(해면기압, 풍속, 강수량, 풍향)은 각각 어떻게 변하는지 해석해보자.
+            </label>
+            <textarea id="ans-3-4" rows="4" placeholder="한반도를 남북으로 종단한 태풍 카눈 통과 시 통영 관측소와 서울 관측소의 기압 극솟값, 최대 풍속 피크, 강수량 변화를 비교 분석하여 서술하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+
+          <!-- 3-2 문항 -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+              [3-5] 두 관측소의 풍속과 풍향 변화를 비교해보자. 이를 바탕으로 각 관측소를 가항반원과 위험반원으로 구분하고 그 근거를 제시해보자.
+            </label>
+            <textarea id="ans-3-5" rows="4" placeholder="통영과 서울 관측소의 반원 분류와 그 근거(풍향의 순행/역행 회전 여부, 진행 방향의 좌우 위치, 풍속 차이 등)를 논리적으로 서술하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 보고서 항목 4: 종합 정리 및 소감 -->
+      <div class="space-y-4 pt-4 border-t border-slate-200">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-slate-800 text-white font-black text-xs flex items-center justify-center">4</span>
+          <h3 class="font-extrabold text-base text-slate-900">
+            활동 4. 새롭게 알게 된 내용 및 종합 고찰 정리하기
+          </h3>
+        </div>
+
+        <div class="space-y-2 pl-2">
+          <label class="block text-xs font-bold text-slate-800">
+            공공데이터(기상자료개방포털)를 활용하여 태풍을 직접 분석하면서 새롭게 알게 된 점, 기상 관측 데이터 해석의 중요성, 또는 추가로 탐구해보고 싶은 점을 종합하여 서술하시오.
+          </label>
+          <textarea id="ans-summary" rows="5" placeholder="실제 기상 실측 데이터(기압, 풍속, 풍향, 강수량)를 시각화하여 분석하며 느낀 점과 이론으로 배운 위험반원/가항반원의 특징이 실제 기상 현상에 어떻게 나타나는지 정리하세요." class="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-slate-700 focus:outline-none leading-relaxed"></textarea>
+        </div>
+      </div>
+
+      <!-- 보고서 하단 안내문 -->
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <span>충북대학교사범대학부설고등학교 지구과학 탐구실험 · 담당교사 김호연</span>
+        <span>출처: 기상청 기상자료개방포털 (data.kma.go.kr) 종관기상관측(ASOS) 자료</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 6. 대형 전체화면 지도 확대 팝업 모달 -->
+  <!-- ============================================== -->
+  <div id="modal-fullscreen-map" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex flex-col p-4 sm:p-6 no-print">
+    <!-- 모달 상단 바 -->
+    <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-white">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-cyan-500 flex items-center justify-center text-slate-950 font-black">
+          <i data-lucide="map" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-sm sm:text-base">동아시아 태풍 궤적 백지도 대형 모달</h3>
+          <p class="text-xs text-slate-400">마우스 휠로 확대/축소하고 드래그하여 상세 지형 및 궤적을 확인하세요.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="zoomModalMap(1.2)" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition flex items-center gap-1">
+          <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i>
+          <span>확대</span>
+        </button>
+        <button onclick="zoomModalMap(0.8)" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition flex items-center gap-1">
+          <i data-lucide="zoom-out" class="w-3.5 h-3.5"></i>
+          <span>축소</span>
+        </button>
+        <button onclick="resetModalMap()" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-medium transition">
+          <span id="modal-zoom-text" class="font-mono text-[11px] font-bold">100%</span>
+        </button>
+        <button onclick="downloadMapImage()" class="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition flex items-center gap-1">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>PNG 저장</span>
+        </button>
+        <button onclick="closeFullscreenMapModal()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-white text-xs font-bold transition flex items-center gap-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          <span>닫기</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 모달 캔버스 영역 -->
+    <div class="flex-1 relative overflow-hidden bg-slate-900 rounded-2xl mt-3 flex items-center justify-center border border-slate-800 select-none">
+      <canvas id="modalTyphoonMapCanvas" width="1782" height="1594" class="w-full h-full object-contain canvas-grab"></canvas>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 푸터 -->
+  <!-- ============================================== -->
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-20 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div class="space-y-1 text-center sm:text-left">
+        <p class="font-bold text-white">충북대학교사범대학부설고등학교 지구과학 웹 교육 플랫폼</p>
+        <p class="text-slate-500">Copyright &copy; 2026 Hoyeon Kim. All Rights Reserved.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="hover:text-white transition">홈으로 돌아가기</a>
+        <a href="#overview-section" class="hover:text-white transition">맨 위로 이동</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- 자바스크립트 로직 (힌남노/카눈 표 복원 & 빈칸 시작 & 실시간 작도) -->
+  <!-- ============================================== -->
+  <script>
+    // ----------------------------------------------------
+    // 1. 태풍 궤적 데이터 셋 (일시는 프리셋, 물리량은 100% 빈칸)
+    // ----------------------------------------------------
+    
+    // 태풍 힌남노(2022) 궤적 테이블 (12개 시점, 빈칸)
+    const HINNAMNOR_DEFAULT_DATES = [
+      "08-30 09시", "08-31 09시", "09-02 09시", "09-03 09시",
+      "09-04 09시", "09-05 09시", "09-05 21시", "09-06 00시",
+      "09-06 06시", "09-06 08시", "09-06 12시", "09-06 21시"
+    ];
+    let trackHinnamnor = HINNAMNOR_DEFAULT_DATES.map(date => ({ date, lat: "", lon: "", pres: "", wind: "" }));
+
+    // 태풍 카눈(2023) 궤적 테이블 (12개 시점, 빈칸)
+    const KHANUN_DEFAULT_DATES = [
+      "08-01 09시", "08-03 09시", "08-05 09시", "08-07 09시",
+      "08-08 09시", "08-09 09시", "08-09 21시", "08-10 03시",
+      "08-10 09시", "08-10 15시", "08-10 21시", "08-11 06시"
+    ];
+    let trackKhanun = KHANUN_DEFAULT_DATES.map(date => ({ date, lat: "", lon: "", pres: "", wind: "" }));
+
+    // 나만의 태풍 조사 (초기 4개 빈 행)
+    let trackCustom = [
+      { date: "", lat: "", lon: "", pres: "", wind: "" },
+      { date: "", lat: "", lon: "", pres: "", wind: "" },
+      { date: "", lat: "", lon: "", pres: "", wind: "" },
+      { date: "", lat: "", lon: "", pres: "", wind: "" }
+    ];
+
+    let currentTrackTab = "hinnamnor"; // "hinnamnor", "khanun", "custom"
+
+    function getActiveTrackData() {
+      if (currentTrackTab === "hinnamnor") return trackHinnamnor;
+      if (currentTrackTab === "khanun") return trackKhanun;
+      return trackCustom;
+    }
+
+    // ----------------------------------------------------
+    // 2. 지상 관측소 데이터 셋 (일시는 프리셋, 물리량은 100% 빈칸)
+    // ----------------------------------------------------
+    let currentObsDataset = "hinnamnor"; // "hinnamnor" or "khanun"
+
+    // 활동 2: 태풍 힌남노 지상 관측 (포항 7개 시점, 광주 7개 시점, 빈칸)
+    const POHANG_TIMES = ["09-06 02시", "09-06 04시", "09-06 06시", "09-06 07시", "09-06 08시", "09-06 10시", "09-06 12시"];
+    const GWANGJU_TIMES = ["09-06 00시", "09-06 02시", "09-06 04시", "09-06 06시", "09-06 08시", "09-06 10시", "09-06 12시"];
+
+    let obsHinnamnor = {
+      name1: "포항 관측소",
+      role1: "위험반원 후보",
+      desc1: "태풍 힌남노 진행 방향의 오른쪽에 위치한 동해안 관측소입니다.",
+      st1: POHANG_TIMES.map(time => ({ time, pres: "", dirName: "", dirDeg: "", wind: "", rain: "" })),
+      name2: "광주 관측소",
+      role2: "가항반원 후보",
+      desc2: "태풍 힌남노 진행 방향의 왼쪽에 위치한 서남부 내륙 관측소입니다.",
+      st2: GWANGJU_TIMES.map(time => ({ time, pres: "", dirName: "", dirDeg: "", wind: "", rain: "" }))
+    };
+
+    // 활동 3: 태풍 카눈 지상 관측 (통영 8개 시점, 서울 8개 시점, 빈칸)
+    const TONGYEONG_TIMES = ["08-10 04시", "08-10 06시", "08-10 08시", "08-10 10시", "08-10 12시", "08-10 14시", "08-10 16시", "08-10 18시"];
+    const SEOUL_TIMES = ["08-10 06시", "08-10 09시", "08-10 12시", "08-10 15시", "08-10 18시", "08-10 21시", "08-10 23시", "08-11 02시"];
+
+    let obsKhanun = {
+      name1: "통영 관측소",
+      role1: "위험반원 후보",
+      desc1: "태풍 카눈이 상륙한 지점의 동쪽(오른쪽) 남해안 관측소입니다.",
+      st1: TONGYEONG_TIMES.map(time => ({ time, pres: "", dirName: "", dirDeg: "", wind: "", rain: "" })),
+      name2: "서울 관측소",
+      role2: "가항반원 후보",
+      desc2: "태풍 카눈이 내륙을 종단할 때 경로의 왼쪽에 위치한 수도권 관측소입니다.",
+      st2: SEOUL_TIMES.map(time => ({ time, pres: "", dirName: "", dirDeg: "", wind: "", rain: "" }))
+    };
+
+    function getActiveObsData() {
+      return currentObsDataset === "hinnamnor" ? obsHinnamnor : obsKhanun;
+    }
+
+    // ----------------------------------------------------
+    // 3. 지도 배경 이미지 및 줌/팬 상태
+    // ----------------------------------------------------
+    const mapImage = new Image();
+    mapImage.src = "../assets/inquiry/typhoon/east_asia_map.png";
+    let isMapLoaded = false;
+    mapImage.onload = () => {
+      isMapLoaded = true;
+      drawTrackCanvas();
+    };
+
+    // 메인 지도 줌/팬
+    let mapZoom = 1.0;
+    let mapPanX = 0;
+    let mapPanY = 0;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+
+    // 모달 지도 줌/팬
+    let modalMapZoom = 1.0;
+    let modalMapPanX = 0;
+    let modalMapPanY = 0;
+    let isModalDragging = false;
+    let modalDragStartX = 0;
+    let modalDragStartY = 0;
+
+    // ----------------------------------------------------
+    // 4. 동아시아 지도 투영 변환 (Calibrated Polynomial Fit)
+    // ----------------------------------------------------
+    function projectLatLonToCanvas(lat, lon) {
+      const u = (lat - 30.0) / 20.0;
+      const v = (lon - 130.0) / 30.0;
+      const cx = [971.1813, -30.3453, 790.0762, 0.2467, -230.5763, 25.1033, 1.7805, 29.2367, -21.1754, -36.5592];
+      const cy = [865.1835, -626.9469, -22.6674, 30.8948, 6.0069, -115.8444, -14.1287, -9.4511, 59.1313, -9.6259];
+      const terms = [1, u, v, u*u, u*v, v*v, u*u*u, u*u*v, u*v*v, v*v*v];
+      
+      let x = 0;
+      let y = 0;
+      for (let i = 0; i < terms.length; i++) {
+        x += cx[i] * terms[i];
+        y += cy[i] * terms[i];
+      }
+      return { x, y };
+    }
+
+    function getPressureColor(pres) {
+      if (isNaN(pres) || pres === null) return "#3b82f6";
+      if (pres < 930) return "#9333ea"; // 초강력 (보라)
+      if (pres < 950) return "#ef4444"; // 매우 강 (빨강)
+      if (pres < 970) return "#f59e0b"; // 강 (주황)
+      if (pres < 985) return "#06b6d4"; // 중 (청록)
+      return "#3b82f6";                 // 보통 (파랑)
+    }
+
+    // ----------------------------------------------------
+    // 5. 캔버스 지도 렌더러
+    // ----------------------------------------------------
+    function drawMapOnCanvas(canvasId, zoom, panX, panY) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.save();
+
+      // 줌 & 팬 중심 변환
+      ctx.translate(W / 2 + panX, H / 2 + panY);
+      ctx.scale(zoom, zoom);
+      ctx.translate(-W / 2, -H / 2);
+
+      // 1. 음영 지형 백지도 그리기
+      if (isMapLoaded) {
+        ctx.drawImage(mapImage, 0, 0, W, H);
+      } else {
+        ctx.fillStyle = "#e2e8f0";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#64748b";
+        ctx.font = "bold 32px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("지도를 로딩하고 있습니다...", W / 2, H / 2);
+        ctx.restore();
+        return;
+      }
+
+      const showPressure = document.getElementById("toggle-pressure-labels")?.checked ?? true;
+      const showDate = document.getElementById("toggle-date-labels")?.checked ?? true;
+      const currentData = getActiveTrackData();
+
+      // 2. 유효한 입력 좌표점 추출
+      const validPoints = [];
+      for (let i = 0; i < currentData.length; i++) {
+        const item = currentData[i];
+        const lat = parseFloat(item.lat);
+        const lon = parseFloat(item.lon);
+        const pres = parseFloat(item.pres);
+        const wind = parseFloat(item.wind);
+        if (!isNaN(lat) && !isNaN(lon) && lat >= 5 && lat <= 55 && lon >= 95 && lon <= 165) {
+          const pt = projectLatLonToCanvas(lat, lon);
+          validPoints.push({
+            idx: i,
+            date: item.date || `${i + 1}번`,
+            lat, lon,
+            pres: isNaN(pres) ? null : pres,
+            wind: isNaN(wind) ? 30 : wind,
+            x: pt.x,
+            y: pt.y,
+            color: getPressureColor(pres)
+          });
+        }
+      }
+
+      // 오버레이 안내문 토글
+      const overlayEl = document.getElementById("map-empty-overlay");
+      if (overlayEl) {
+        if (validPoints.length > 0) {
+          overlayEl.classList.add("hidden");
+        } else {
+          overlayEl.classList.remove("hidden");
+        }
+      }
+
+      if (validPoints.length === 0) {
+        ctx.restore();
+        return;
+      }
+
+      // 3. 궤적 연결선 (Path)
+      if (validPoints.length > 1) {
+        ctx.save();
+        ctx.strokeStyle = "rgba(15, 23, 42, 0.85)";
+        ctx.lineWidth = 6;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(validPoints[0].x, validPoints[0].y);
+        for (let i = 1; i < validPoints.length; i++) {
+          ctx.lineTo(validPoints[i].x, validPoints[i].y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.restore();
+
+        // 방향 화살표
+        for (let i = 0; i < validPoints.length - 1; i++) {
+          const p1 = validPoints[i];
+          const p2 = validPoints[i + 1];
+          const mx = (p1.x + p2.x) / 2;
+          const my = (p1.y + p2.y) / 2;
+          const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+
+          ctx.save();
+          ctx.translate(mx, my);
+          ctx.rotate(angle);
+          ctx.fillStyle = "#ffffff";
+          ctx.strokeStyle = "#0f172a";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(9, 0);
+          ctx.lineTo(-6, -6);
+          ctx.lineTo(-2, 0);
+          ctx.lineTo(-6, 6);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // 4. 관측점 (Points) 및 수치 라벨
+      validPoints.forEach((p, index) => {
+        const radius = Math.max(9, Math.min(18, 7 + (p.wind / 5)));
+        
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius + 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+        ctx.shadowBlur = 6;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 11px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(index + 1, p.x, p.y);
+        ctx.restore();
+
+        // 라벨
+        if (showPressure || showDate) {
+          ctx.save();
+          let labelText = "";
+          if (showPressure && showDate && p.pres !== null) {
+            labelText = `${p.date} (${p.pres}hPa)`;
+          } else if (showPressure && p.pres !== null) {
+            labelText = `${p.pres} hPa`;
+          } else {
+            labelText = p.date;
+          }
+
+          if (labelText.trim() !== "") {
+            ctx.font = "bold 15px sans-serif";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            const textX = p.x + radius + 7;
+            const textY = p.y - 2;
+
+            const metrics = ctx.measureText(labelText);
+            ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+            ctx.fillRect(textX - 4, textY - 11, metrics.width + 8, 22);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillText(labelText, textX, textY);
+          }
+          ctx.restore();
+        }
+      });
+
+      ctx.restore();
+    }
+
+    function drawTrackCanvas() {
+      drawMapOnCanvas("typhoonMapCanvas", mapZoom, mapPanX, mapPanY);
+      const modalCanvas = document.getElementById("modalTyphoonMapCanvas");
+      if (modalCanvas && !document.getElementById("modal-fullscreen-map").classList.contains("hidden")) {
+        drawMapOnCanvas("modalTyphoonMapCanvas", modalMapZoom, modalMapPanX, modalMapPanY);
+      }
+    }
+
+    // ----------------------------------------------------
+    // 6. 줌 / 팬 조작 핸들러
+    // ----------------------------------------------------
+    function zoomMap(factor) {
+      mapZoom = Math.min(3.5, Math.max(0.6, mapZoom * factor));
+      document.getElementById("zoom-level-text").innerText = `${Math.round(mapZoom * 100)}%`;
+      drawTrackCanvas();
+    }
+
+    function resetMapZoomPan() {
+      mapZoom = 1.0;
+      mapPanX = 0;
+      mapPanY = 0;
+      document.getElementById("zoom-level-text").innerText = "100%";
+      drawTrackCanvas();
+    }
+
+    function initMapInteractions() {
+      const container = document.getElementById("map-canvas-container");
+      const canvas = document.getElementById("typhoonMapCanvas");
+      const tooltip = document.getElementById("map-tooltip");
+      if (!canvas || !container) return;
+
+      container.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        zoomMap(factor);
+      }, { passive: false });
+
+      canvas.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        dragStartX = e.clientX - mapPanX;
+        dragStartY = e.clientY - mapPanY;
+        canvas.classList.remove("canvas-grab");
+        canvas.classList.add("canvas-grabbing");
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        mapPanX = e.clientX - dragStartX;
+        mapPanY = e.clientY - dragStartY;
+        drawTrackCanvas();
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+          canvas.classList.remove("canvas-grabbing");
+          canvas.classList.add("canvas-grab");
+        }
+      });
+
+      // 마우스 호버 시 툴팁
+      canvas.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+          tooltip.classList.add("hidden");
+          return;
+        }
+        const rect = canvas.getBoundingClientRect();
+        const mouseCanvasX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+        const mouseCanvasY = ((e.clientY - rect.top) / rect.height) * canvas.height;
+
+        const invX = (mouseCanvasX - (canvas.width / 2 + mapPanX)) / mapZoom + canvas.width / 2;
+        const invY = (mouseCanvasY - (canvas.height / 2 + mapPanY)) / mapZoom + canvas.height / 2;
+
+        const currentData = getActiveTrackData();
+        let hoveredPoint = null;
+        for (let i = 0; i < currentData.length; i++) {
+          const item = currentData[i];
+          const lat = parseFloat(item.lat);
+          const lon = parseFloat(item.lon);
+          if (!isNaN(lat) && !isNaN(lon)) {
+            const pt = projectLatLonToCanvas(lat, lon);
+            const dist = Math.hypot(pt.x - invX, pt.y - invY);
+            if (dist <= 25 / mapZoom) {
+              hoveredPoint = { idx: i, item, pt };
+              break;
+            }
+          }
+        }
+
+        if (hoveredPoint) {
+          const d = hoveredPoint.item;
+          tooltip.innerHTML = `
+            <div class="font-bold text-cyan-300">#${hoveredPoint.idx + 1} ${d.date || '관측점'}</div>
+            <div>위도: <strong class="text-white">${d.lat}°N</strong>, 경도: <strong class="text-white">${d.lon}°E</strong></div>
+            <div>중심기압: <strong class="text-amber-300">${d.pres || '-'} hPa</strong> | 풍속: <strong class="text-emerald-300">${d.wind || '-'} m/s</strong></div>
+          `;
+          tooltip.style.left = `${e.clientX - rect.left + 15}px`;
+          tooltip.style.top = `${e.clientY - rect.top - 15}px`;
+          tooltip.classList.remove("hidden");
+        } else {
+          tooltip.classList.add("hidden");
+        }
+      });
+
+      canvas.addEventListener("mouseleave", () => {
+        tooltip.classList.add("hidden");
+      });
+    }
+
+    // ----------------------------------------------------
+    // 7. 대형 전체화면 모달 지도 조작
+    // ----------------------------------------------------
+    function openFullscreenMapModal() {
+      const modal = document.getElementById("modal-fullscreen-map");
+      modal.classList.remove("hidden");
+      modalMapZoom = 1.0;
+      modalMapPanX = 0;
+      modalMapPanY = 0;
+      document.getElementById("modal-zoom-text").innerText = "100%";
+      initModalMapInteractions();
+      drawTrackCanvas();
+    }
+
+    function closeFullscreenMapModal() {
+      document.getElementById("modal-fullscreen-map").classList.add("hidden");
+    }
+
+    function zoomModalMap(factor) {
+      modalMapZoom = Math.min(4.0, Math.max(0.5, modalMapZoom * factor));
+      document.getElementById("modal-zoom-text").innerText = `${Math.round(modalMapZoom * 100)}%`;
+      drawTrackCanvas();
+    }
+
+    function resetModalMap() {
+      modalMapZoom = 1.0;
+      modalMapPanX = 0;
+      modalMapPanY = 0;
+      document.getElementById("modal-zoom-text").innerText = "100%";
+      drawTrackCanvas();
+    }
+
+    let isModalEventsBound = false;
+    function initModalMapInteractions() {
+      if (isModalEventsBound) return;
+      isModalEventsBound = true;
+      const canvas = document.getElementById("modalTyphoonMapCanvas");
+      if (!canvas) return;
+
+      canvas.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        zoomModalMap(factor);
+      }, { passive: false });
+
+      canvas.addEventListener("mousedown", (e) => {
+        isModalDragging = true;
+        modalDragStartX = e.clientX - modalMapPanX;
+        modalDragStartY = e.clientY - modalMapPanY;
+        canvas.classList.remove("canvas-grab");
+        canvas.classList.add("canvas-grabbing");
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isModalDragging) return;
+        modalMapPanX = e.clientX - modalDragStartX;
+        modalMapPanY = e.clientY - modalDragStartY;
+        drawTrackCanvas();
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (isModalDragging) {
+          isModalDragging = false;
+          canvas.classList.remove("canvas-grabbing");
+          canvas.classList.add("canvas-grab");
+        }
+      });
+    }
+
+    function downloadMapImage() {
+      const canvas = document.getElementById("typhoonMapCanvas");
+      if (!canvas) return;
+      const link = document.createElement("a");
+      link.download = `동아시아_태풍궤적_${currentTrackTab}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // ----------------------------------------------------
+    // 8. 힌남노 / 카눈 / 커스텀 궤적 탭 전환 & 테이블 렌더링
+    // ----------------------------------------------------
+    function switchTrackTab(tabName) {
+      currentTrackTab = tabName;
+      document.querySelectorAll(".track-tab-btn").forEach(btn => {
+        btn.classList.remove("active", "bg-cyan-600", "text-white");
+        btn.classList.add("text-slate-600");
+      });
+      const activeBtn = document.getElementById(`track-tab-${tabName}`);
+      if (activeBtn) {
+        activeBtn.classList.add("active", "bg-cyan-600", "text-white");
+        activeBtn.classList.remove("text-slate-600");
+      }
+
+      const heading = document.getElementById("track-table-heading");
+      if (tabName === "hinnamnor") {
+        heading.innerText = "태풍 힌남노(2022) 궤적 데이터 입력 (빈칸 채우기)";
+      } else if (tabName === "khanun") {
+        heading.innerText = "태풍 카눈(2023) 궤적 데이터 입력 (빈칸 채우기)";
+      } else {
+        heading.innerText = "나만의 태풍 궤적 데이터 직접 입력";
+      }
+
+      renderTrackTable();
+      drawTrackCanvas();
+    }
+
+    function renderTrackTable() {
+      const tbody = document.getElementById("track-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const currentData = getActiveTrackData();
+
+      currentData.forEach((row, i) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="p-2 text-center text-slate-400 font-mono">${i + 1}</td>
+          <td class="p-1.5">
+            <input type="text" placeholder="일시" value="${row.date || ''}" oninput="updateTrackItem(${i}, 'date', this.value)" class="w-full text-xs font-semibold text-center bg-slate-50/70 border border-slate-200 rounded px-1.5 py-1 focus:border-cyan-500 focus:bg-white focus:outline-none" />
+          </td>
+          <td class="p-1.5 text-center">
+            <input type="number" step="0.1" placeholder="예: 26.9" value="${row.lat !== '' ? row.lat : ''}" oninput="updateTrackItem(${i}, 'lat', this.value)" class="w-full text-center text-xs font-mono font-bold bg-slate-50/70 border border-slate-200 rounded px-1 py-1 focus:border-cyan-500 focus:bg-white focus:outline-none" />
+          </td>
+          <td class="p-1.5 text-center">
+            <input type="number" step="0.1" placeholder="예: 138.5" value="${row.lon !== '' ? row.lon : ''}" oninput="updateTrackItem(${i}, 'lon', this.value)" class="w-full text-center text-xs font-mono font-bold bg-slate-50/70 border border-slate-200 rounded px-1 py-1 focus:border-cyan-500 focus:bg-white focus:outline-none" />
+          </td>
+          <td class="p-1.5 text-center">
+            <input type="number" step="1" placeholder="예: 945" value="${row.pres !== '' ? row.pres : ''}" oninput="updateTrackItem(${i}, 'pres', this.value)" class="w-full text-center text-xs font-mono font-bold text-cyan-700 bg-slate-50/70 border border-slate-200 rounded px-1 py-1 focus:border-cyan-500 focus:bg-white focus:outline-none" />
+          </td>
+          <td class="p-1.5 text-center">
+            <input type="number" step="1" placeholder="예: 45" value="${row.wind !== '' ? row.wind : ''}" oninput="updateTrackItem(${i}, 'wind', this.value)" class="w-full text-center text-xs font-mono font-semibold bg-slate-50/70 border border-slate-200 rounded px-1 py-1 focus:border-cyan-500 focus:bg-white focus:outline-none" />
+          </td>
+          <td class="p-1.5 text-center">
+            <button onclick="deleteTrackRow(${i})" class="text-slate-400 hover:text-rose-600 transition" title="행 삭제">
+              <i data-lucide="trash" class="w-3.5 h-3.5 inline"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    function updateTrackItem(idx, field, value) {
+      const currentData = getActiveTrackData();
+      currentData[idx][field] = value;
+      drawTrackCanvas();
+    }
+
+    function addTrackRow() {
+      const currentData = getActiveTrackData();
+      currentData.push({ date: "", lat: "", lon: "", pres: "", wind: "" });
+      renderTrackTable();
+      drawTrackCanvas();
+    }
+
+    function deleteTrackRow(idx) {
+      const currentData = getActiveTrackData();
+      if (currentData.length <= 1) {
+        alert("최소 1개 이상의 행이 유지되어야 합니다.");
+        return;
+      }
+      currentData.splice(idx, 1);
+      renderTrackTable();
+      drawTrackCanvas();
+    }
+
+    function clearCurrentTrackData() {
+      if (!confirm("현재 태풍 표의 모든 입력값을 비우시겠습니까?")) return;
+      const currentData = getActiveTrackData();
+      currentData.forEach(row => {
+        row.lat = "";
+        row.lon = "";
+        row.pres = "";
+        row.wind = "";
+      });
+      renderTrackTable();
+      drawTrackCanvas();
+    }
+
+    // ----------------------------------------------------
+    // 9. 지상 관측 데이터 테이블 렌더링 & 행 제어
+    // ----------------------------------------------------
+    function renderObsTables() {
+      const data = getActiveObsData();
+      
+      document.getElementById("station1-name").innerText = data.name1;
+      document.getElementById("station1-desc").innerText = data.desc1;
+      document.getElementById("st1-tbl-header").innerText = `${data.name1} 실측 데이터 입력`;
+
+      document.getElementById("station2-name").innerText = data.name2;
+      document.getElementById("station2-desc").innerText = data.desc2;
+      document.getElementById("st2-tbl-header").innerText = `${data.name2} 실측 데이터 입력`;
+
+      document.getElementById("arrow-label-st1").innerHTML = `<i data-lucide="compass" class="w-4 h-4 text-rose-600"></i> ${data.name1} 바람 방향 화살표 스트립`;
+      document.getElementById("arrow-label-st2").innerHTML = `<i data-lucide="compass" class="w-4 h-4 text-blue-600"></i> ${data.name2} 바람 방향 화살표 스트립`;
+
+      // 관측소 1 테이블
+      const tbody1 = document.getElementById("tbody-station-1");
+      if (tbody1) {
+        tbody1.innerHTML = "";
+        data.st1.forEach((r, idx) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50";
+          tr.innerHTML = `
+            <td class="p-1"><input type="text" placeholder="일시" value="${r.time}" oninput="updateObsItem(1, ${idx}, 'time', this.value)" class="w-full text-center text-xs font-semibold bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="hPa" value="${r.pres}" oninput="updateObsItem(1, ${idx}, 'pres', this.value)" class="w-full text-center text-xs font-bold text-rose-700 bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="text" placeholder="방위" value="${r.dirName}" oninput="updateObsItem(1, ${idx}, 'dirName', this.value)" class="w-full text-center text-xs font-semibold bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.5" placeholder="도(°)" value="${r.dirDeg}" oninput="updateObsItem(1, ${idx}, 'dirDeg', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="m/s" value="${r.wind}" oninput="updateObsItem(1, ${idx}, 'wind', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="mm" value="${r.rain}" oninput="updateObsItem(1, ${idx}, 'rain', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1 text-center"><button onclick="deleteObsRow(1, ${idx})" class="text-slate-300 hover:text-rose-600 font-bold">&times;</button></td>
+          `;
+          tbody1.appendChild(tr);
+        });
+      }
+
+      // 관측소 2 테이블
+      const tbody2 = document.getElementById("tbody-station-2");
+      if (tbody2) {
+        tbody2.innerHTML = "";
+        data.st2.forEach((r, idx) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50";
+          tr.innerHTML = `
+            <td class="p-1"><input type="text" placeholder="일시" value="${r.time}" oninput="updateObsItem(2, ${idx}, 'time', this.value)" class="w-full text-center text-xs font-semibold bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="hPa" value="${r.pres}" oninput="updateObsItem(2, ${idx}, 'pres', this.value)" class="w-full text-center text-xs font-bold text-blue-700 bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="text" placeholder="방위" value="${r.dirName}" oninput="updateObsItem(2, ${idx}, 'dirName', this.value)" class="w-full text-center text-xs font-semibold bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.5" placeholder="도(°)" value="${r.dirDeg}" oninput="updateObsItem(2, ${idx}, 'dirDeg', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="m/s" value="${r.wind}" oninput="updateObsItem(2, ${idx}, 'wind', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1"><input type="number" step="0.1" placeholder="mm" value="${r.rain}" oninput="updateObsItem(2, ${idx}, 'rain', this.value)" class="w-full text-center text-xs bg-slate-50/70 border border-slate-200 rounded px-1 py-0.5 focus:border-indigo-500 focus:bg-white focus:outline-none" /></td>
+            <td class="p-1 text-center"><button onclick="deleteObsRow(2, ${idx})" class="text-slate-300 hover:text-rose-600 font-bold">&times;</button></td>
+          `;
+          tbody2.appendChild(tr);
+        });
+      }
+
+      lucide.createIcons();
+    }
+
+    function updateObsItem(stNum, idx, field, val) {
+      const data = getActiveObsData();
+      const arr = stNum === 1 ? data.st1 : data.st2;
+      arr[idx][field] = val;
+      updateCharts();
+    }
+
+    function addObsRow(stNum) {
+      const data = getActiveObsData();
+      const arr = stNum === 1 ? data.st1 : data.st2;
+      arr.push({ time: "", pres: "", dirName: "", dirDeg: "", wind: "", rain: "" });
+      renderObsTables();
+      updateCharts();
+    }
+
+    function deleteObsRow(stNum, idx) {
+      const data = getActiveObsData();
+      const arr = stNum === 1 ? data.st1 : data.st2;
+      if (arr.length <= 1) {
+        alert("최소 1개 이상의 행이 유지되어야 합니다.");
+        return;
+      }
+      arr.splice(idx, 1);
+      renderObsTables();
+      updateCharts();
+    }
+
+    function clearObsRows(stNum) {
+      const data = getActiveObsData();
+      const arr = stNum === 1 ? data.st1 : data.st2;
+      arr.forEach(row => {
+        row.pres = "";
+        row.dirName = "";
+        row.dirDeg = "";
+        row.wind = "";
+        row.rain = "";
+      });
+      renderObsTables();
+      updateCharts();
+    }
+
+    function selectObsDataset(datasetName) {
+      currentObsDataset = datasetName;
+      document.querySelectorAll(".obs-tab-btn").forEach(b => {
+        b.classList.remove("active", "bg-indigo-600", "text-white");
+        b.classList.add("text-slate-600");
+      });
+      const activeBtn = document.getElementById(`obs-tab-${datasetName}`);
+      if (activeBtn) {
+        activeBtn.classList.add("active", "bg-indigo-600", "text-white");
+        activeBtn.classList.remove("text-slate-600");
+      }
+      renderObsTables();
+      updateCharts();
+    }
+
+    // ----------------------------------------------------
+    // 10. 지상 관측 데이터 개별 차트 (Chart.js 인스턴스)
+    // ----------------------------------------------------
+    let pressureChartInstance = null;
+    let windRainChartInstance = null;
+    let windDirScatterInstance = null;
+
+    function getValidChartData() {
+      const data = getActiveObsData();
+
+      const validSt1 = data.st1.filter(d => d.time.trim() !== "");
+      const validSt2 = data.st2.filter(d => d.time.trim() !== "");
+
+      const labels = Array.from(new Set([...validSt1.map(d => d.time), ...validSt2.map(d => d.time)]));
+
+      return {
+        name1: data.name1,
+        name2: data.name2,
+        labels: labels.length > 0 ? labels : ["입력 대기"],
+        p1: labels.map(l => {
+          const item = validSt1.find(d => d.time === l);
+          return item && item.pres !== "" && !isNaN(parseFloat(item.pres)) ? parseFloat(item.pres) : null;
+        }),
+        p2: labels.map(l => {
+          const item = validSt2.find(d => d.time === l);
+          return item && item.pres !== "" && !isNaN(parseFloat(item.pres)) ? parseFloat(item.pres) : null;
+        }),
+        w1: labels.map(l => {
+          const item = validSt1.find(d => d.time === l);
+          return item && item.wind !== "" && !isNaN(parseFloat(item.wind)) ? parseFloat(item.wind) : null;
+        }),
+        w2: labels.map(l => {
+          const item = validSt2.find(d => d.time === l);
+          return item && item.wind !== "" && !isNaN(parseFloat(item.wind)) ? parseFloat(item.wind) : null;
+        }),
+        r1: labels.map(l => {
+          const item = validSt1.find(d => d.time === l);
+          return item && item.rain !== "" && !isNaN(parseFloat(item.rain)) ? parseFloat(item.rain) : null;
+        }),
+        r2: labels.map(l => {
+          const item = validSt2.find(d => d.time === l);
+          return item && item.rain !== "" && !isNaN(parseFloat(item.rain)) ? parseFloat(item.rain) : null;
+        }),
+        scatter1: validSt1.map((d, idx) => {
+          const deg = parseFloat(d.dirDeg);
+          return !isNaN(deg) ? { x: idx, y: deg, time: d.time, dirName: d.dirName } : null;
+        }).filter(Boolean),
+        scatter2: validSt2.map((d, idx) => {
+          const deg = parseFloat(d.dirDeg);
+          return !isNaN(deg) ? { x: idx, y: deg, time: d.time, dirName: d.dirName } : null;
+        }).filter(Boolean),
+        rawSt1: validSt1,
+        rawSt2: validSt2
+      };
+    }
+
+    function initCharts() {
+      const cd = getValidChartData();
+
+      // 1) 기압 차트
+      const ctxP = document.getElementById("pressureChart")?.getContext("2d");
+      if (ctxP) {
+        pressureChartInstance = new Chart(ctxP, {
+          type: "line",
+          data: {
+            labels: cd.labels,
+            datasets: [
+              {
+                label: cd.name1,
+                data: cd.p1,
+                borderColor: "#e11d48",
+                backgroundColor: "rgba(225, 29, 72, 0.08)",
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: "#e11d48",
+                tension: 0.35,
+                fill: true,
+                spanGaps: true
+              },
+              {
+                label: cd.name2,
+                data: cd.p2,
+                borderColor: "#2563eb",
+                backgroundColor: "rgba(37, 99, 235, 0.08)",
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: "#2563eb",
+                tension: 0.35,
+                fill: true,
+                spanGaps: true
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: { position: "top", labels: { font: { weight: "bold", size: 12 } } },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y + ' hPa' : '미입력'}`
+                }
+              }
+            },
+            scales: {
+              y: {
+                title: { display: true, text: "해면기압 (hPa)", font: { weight: "bold" } },
+                suggestedMin: 950,
+                suggestedMax: 1010
+              },
+              x: {
+                title: { display: true, text: "관측 일시", font: { weight: "bold" } }
+              }
+            }
+          }
+        });
+      }
+
+      // 2) 풍속 & 강수량 복합 차트
+      const ctxWR = document.getElementById("windRainChart")?.getContext("2d");
+      if (ctxWR) {
+        windRainChartInstance = new Chart(ctxWR, {
+          data: {
+            labels: cd.labels,
+            datasets: [
+              {
+                type: "line",
+                label: `풍속 - ${cd.name1} (m/s)`,
+                data: cd.w1,
+                borderColor: "#e11d48",
+                borderWidth: 3,
+                pointRadius: 5,
+                yAxisID: "yWind",
+                tension: 0.3,
+                spanGaps: true
+              },
+              {
+                type: "line",
+                label: `풍속 - ${cd.name2} (m/s)`,
+                data: cd.w2,
+                borderColor: "#2563eb",
+                borderWidth: 3,
+                pointRadius: 5,
+                yAxisID: "yWind",
+                tension: 0.3,
+                spanGaps: true
+              },
+              {
+                type: "bar",
+                label: `1시간 강수량 - ${cd.name1} (mm)`,
+                data: cd.r1,
+                backgroundColor: "rgba(244, 63, 94, 0.4)",
+                borderColor: "#f43f5e",
+                borderWidth: 1.5,
+                yAxisID: "yRain"
+              },
+              {
+                type: "bar",
+                label: `1시간 강수량 - ${cd.name2} (mm)`,
+                data: cd.r2,
+                backgroundColor: "rgba(59, 130, 246, 0.4)",
+                borderColor: "#3b82f6",
+                borderWidth: 1.5,
+                yAxisID: "yRain"
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: { position: "top", labels: { font: { weight: "bold", size: 11 } } }
+            },
+            scales: {
+              yWind: {
+                type: "linear",
+                position: "left",
+                title: { display: true, text: "풍속 (m/s)", font: { weight: "bold" } },
+                suggestedMin: 0,
+                suggestedMax: 30
+              },
+              yRain: {
+                type: "linear",
+                position: "right",
+                title: { display: true, text: "1시간 강수량 (mm)", font: { weight: "bold" } },
+                suggestedMin: 0,
+                suggestedMax: 80,
+                grid: { drawOnChartArea: false }
+              },
+              x: {
+                title: { display: true, text: "관측 일시", font: { weight: "bold" } }
+              }
+            }
+          }
+        });
+      }
+
+      // 3) 풍향 분산형 산점도 (Scatter Plot: 0°~360°)
+      const ctxDir = document.getElementById("windDirScatterChart")?.getContext("2d");
+      if (ctxDir) {
+        windDirScatterInstance = new Chart(ctxDir, {
+          type: "scatter",
+          data: {
+            datasets: [
+              {
+                label: cd.name1,
+                data: cd.scatter1,
+                backgroundColor: "#e11d48",
+                borderColor: "#ffffff",
+                borderWidth: 2,
+                pointRadius: 8,
+                pointHoverRadius: 10,
+                showLine: true,
+                borderDash: [5, 5],
+                tension: 0.1
+              },
+              {
+                label: cd.name2,
+                data: cd.scatter2,
+                backgroundColor: "#2563eb",
+                borderColor: "#ffffff",
+                borderWidth: 2,
+                pointRadius: 8,
+                pointHoverRadius: 10,
+                showLine: true,
+                borderDash: [5, 5],
+                tension: 0.1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: "top", labels: { font: { weight: "bold", size: 12 } } },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => {
+                    const raw = ctx.raw;
+                    return `${ctx.dataset.label}: ${raw.time} → ${raw.dirName || ''} (${raw.y}°)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                type: "linear",
+                ticks: {
+                  callback: (val) => {
+                    return cd.labels[val] || "";
+                  },
+                  stepSize: 1
+                },
+                title: { display: true, text: "시간 경과 순서", font: { weight: "bold" } }
+              },
+              y: {
+                min: 0,
+                max: 360,
+                ticks: {
+                  stepSize: 45,
+                  callback: (val) => {
+                    const compassMap = {
+                      0: "N (0°)",
+                      45: "NE (45°)",
+                      90: "E (90°)",
+                      135: "SE (135°)",
+                      180: "S (180°)",
+                      225: "SW (225°)",
+                      270: "W (270°)",
+                      315: "NW (315°)",
+                      360: "N (360°)"
+                    };
+                    return compassMap[val] || `${val}°`;
+                  }
+                },
+                title: { display: true, text: "풍향 각도 (0°~360°)", font: { weight: "bold" } }
+              }
+            }
+          }
+        });
+      }
+
+      renderArrowStrips();
+    }
+
+    function updateCharts() {
+      const cd = getValidChartData();
+
+      if (pressureChartInstance) {
+        pressureChartInstance.data.labels = cd.labels;
+        pressureChartInstance.data.datasets[0].label = cd.name1;
+        pressureChartInstance.data.datasets[0].data = cd.p1;
+        pressureChartInstance.data.datasets[1].label = cd.name2;
+        pressureChartInstance.data.datasets[1].data = cd.p2;
+        pressureChartInstance.update();
+      }
+
+      if (windRainChartInstance) {
+        windRainChartInstance.data.labels = cd.labels;
+        windRainChartInstance.data.datasets[0].label = `풍속 - ${cd.name1} (m/s)`;
+        windRainChartInstance.data.datasets[0].data = cd.w1;
+        windRainChartInstance.data.datasets[1].label = `풍속 - ${cd.name2} (m/s)`;
+        windRainChartInstance.data.datasets[1].data = cd.w2;
+        windRainChartInstance.data.datasets[2].label = `1시간 강수량 - ${cd.name1} (mm)`;
+        windRainChartInstance.data.datasets[2].data = cd.r1;
+        windRainChartInstance.data.datasets[3].label = `1시간 강수량 - ${cd.name2} (mm)`;
+        windRainChartInstance.data.datasets[3].data = cd.r2;
+        windRainChartInstance.update();
+      }
+
+      if (windDirScatterInstance) {
+        windDirScatterInstance.data.datasets[0].label = cd.name1;
+        windDirScatterInstance.data.datasets[0].data = cd.scatter1;
+        windDirScatterInstance.data.datasets[1].label = cd.name2;
+        windDirScatterInstance.data.datasets[1].data = cd.scatter2;
+        windDirScatterInstance.update();
+      }
+
+      renderArrowStrips();
+    }
+
+    // ----------------------------------------------------
+    // 11. 풍향 16방위 화살표 벡터 스트립 렌더링
+    // ----------------------------------------------------
+    function renderArrowStrips() {
+      const data = getActiveObsData();
+      const container1 = document.getElementById("arrow-strip-st1");
+      const container2 = document.getElementById("arrow-strip-st2");
+      if (!container1 || !container2) return;
+
+      const validSt1 = data.st1.filter(d => d.time.trim() !== "" && d.dirDeg !== "" && !isNaN(parseFloat(d.dirDeg)));
+      const validSt2 = data.st2.filter(d => d.time.trim() !== "" && d.dirDeg !== "" && !isNaN(parseFloat(d.dirDeg)));
+
+      if (validSt1.length === 0) {
+        container1.innerHTML = `<div class="text-xs text-slate-400 py-3 px-2">데이터를 입력하면 시간대별 회전 화살표가 표시됩니다.</div>`;
+      } else {
+        container1.innerHTML = "";
+        validSt1.forEach(d => {
+          const item = document.createElement("div");
+          item.className = "flex flex-col items-center p-2 rounded-xl bg-white border border-rose-200/80 shadow-2xs min-w-[70px]";
+          const deg = parseFloat(d.dirDeg);
+          const vectorAngle = (deg + 180) % 360;
+          item.innerHTML = `
+            <span class="text-[10px] text-slate-400 font-mono">${d.time.split(" ")[1] || d.time}</span>
+            <div class="my-1.5 w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span class="wind-arrow text-rose-600 font-black" style="transform: rotate(${vectorAngle}deg);">&#8593;</span>
+            </div>
+            <span class="text-xs font-black text-rose-950">${d.dirName || '-'}</span>
+            <span class="text-[10px] text-slate-500 font-mono">${deg}°</span>
+          `;
+          container1.appendChild(item);
+        });
+      }
+
+      if (validSt2.length === 0) {
+        container2.innerHTML = `<div class="text-xs text-slate-400 py-3 px-2">데이터를 입력하면 시간대별 회전 화살표가 표시됩니다.</div>`;
+      } else {
+        container2.innerHTML = "";
+        validSt2.forEach(d => {
+          const item = document.createElement("div");
+          item.className = "flex flex-col items-center p-2 rounded-xl bg-white border border-blue-200/80 shadow-2xs min-w-[70px]";
+          const deg = parseFloat(d.dirDeg);
+          const vectorAngle = (deg + 180) % 360;
+          item.innerHTML = `
+            <span class="text-[10px] text-slate-400 font-mono">${d.time.split(" ")[1] || d.time}</span>
+            <div class="my-1.5 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+              <span class="wind-arrow text-blue-600 font-black" style="transform: rotate(${vectorAngle}deg);">&#8593;</span>
+            </div>
+            <span class="text-xs font-black text-blue-950">${d.dirName || '-'}</span>
+            <span class="text-[10px] text-slate-500 font-mono">${deg}°</span>
+          `;
+          container2.appendChild(item);
+        });
+      }
+    }
+
+    // ----------------------------------------------------
+    // 12. 활동 보고서 임시저장 & 복원 (localStorage)
+    // ----------------------------------------------------
+    const STORAGE_KEY = "typhoon_worksheet_report_data_v3";
+
+    function saveWorksheetDraft() {
+      const data = {
+        gradeClass: document.getElementById("report-grade-class").value,
+        studentId: document.getElementById("report-student-id").value,
+        studentName: document.getElementById("report-student-name").value,
+        reportDate: document.getElementById("report-date").value,
+        ans1_3: document.getElementById("ans-1-3").value,
+        ans1_4: document.getElementById("ans-1-4").value,
+        ans2_4: document.getElementById("ans-2-4").value,
+        ans2_5: document.getElementById("ans-2-5").value,
+        ans3_4: document.getElementById("ans-3-4").value,
+        ans3_5: document.getElementById("ans-3-5").value,
+        ansSummary: document.getElementById("ans-summary").value,
+        trackHinnamnor: trackHinnamnor,
+        trackKhanun: trackKhanun,
+        trackCustom: trackCustom,
+        obsHinnamnor: obsHinnamnor,
+        obsKhanun: obsKhanun
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert("작성하신 보고서 내용 및 입력 데이터가 브라우저에 안전하게 저장되었습니다.");
+    }
+
+    function loadWorksheetDraft() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      try {
+        const data = JSON.parse(saved);
+        if (data.gradeClass) document.getElementById("report-grade-class").value = data.gradeClass;
+        if (data.studentId) document.getElementById("report-student-id").value = data.studentId;
+        if (data.studentName) document.getElementById("report-student-name").value = data.studentName;
+        if (data.reportDate) document.getElementById("report-date").value = data.reportDate;
+        if (data.ans1_3) document.getElementById("ans-1-3").value = data.ans1_3;
+        if (data.ans1_4) document.getElementById("ans-1-4").value = data.ans1_4;
+        if (data.ans2_4) document.getElementById("ans-2-4").value = data.ans2_4;
+        if (data.ans2_5) document.getElementById("ans-2-5").value = data.ans2_5;
+        if (data.ans3_4) document.getElementById("ans-3-4").value = data.ans3_4;
+        if (data.ans3_5) document.getElementById("ans-3-5").value = data.ans3_5;
+        if (data.ansSummary) document.getElementById("ans-summary").value = data.ansSummary;
+        
+        if (data.trackHinnamnor) trackHinnamnor = data.trackHinnamnor;
+        if (data.trackKhanun) trackKhanun = data.trackKhanun;
+        if (data.trackCustom) trackCustom = data.trackCustom;
+        if (data.obsHinnamnor) obsHinnamnor = data.obsHinnamnor;
+        if (data.obsKhanun) obsKhanun = data.obsKhanun;
+
+        renderTrackTable();
+        drawTrackCanvas();
+        renderObsTables();
+        updateCharts();
+      } catch (e) {
+        console.error("저장된 보고서 불러오기 실패:", e);
+      }
+    }
+
+    function clearWorksheetInputs() {
+      if (!confirm("작성 중인 모든 답안 내용을 초기화하시겠습니까?")) return;
+      document.getElementById("report-grade-class").value = "";
+      document.getElementById("report-student-id").value = "";
+      document.getElementById("report-student-name").value = "";
+      document.getElementById("report-date").value = "";
+      document.getElementById("ans-1-3").value = "";
+      document.getElementById("ans-1-4").value = "";
+      document.getElementById("ans-2-4").value = "";
+      document.getElementById("ans-2-5").value = "";
+      document.getElementById("ans-3-4").value = "";
+      document.getElementById("ans-3-5").value = "";
+      document.getElementById("ans-summary").value = "";
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    // ----------------------------------------------------
+    // 13. 초기화 실행
+    // ----------------------------------------------------
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderTrackTable();
+      renderObsTables();
+      initCharts();
+      initMapInteractions();
+      loadWorksheetDraft();
+    });
+  </script>
+</body>
+</html>
