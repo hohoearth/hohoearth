@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단진자의 등시성을 이용한 중력가속도 측정</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=STIX+Two+Math&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .math-font {
+            font-family: 'STIX Two Math', 'Times New Roman', serif;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #0284c7;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.35);
+            border: 2px solid #ffffff;
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+    <!-- Header -->
+        <header class="bg-white/95 border-b border-slate-200 backdrop-blur-md sticky top-0 z-30 px-4 lg:px-8 py-3.5 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex items-center gap-3">
+                <a href="../index.html#archive" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0" title="수업자료 아카이브로 돌아가기">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    <span>홈으로</span>
+                </a>
+                <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+                <div class="p-2.5 bg-sky-50 border border-sky-200 rounded-xl text-sky-600 shrink-0">
+                    <i data-lucide="gauge" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] font-bold tracking-wider text-sky-600 uppercase">Earth Science & Physics Lab</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-indigo-100 text-indigo-800">고등학교 지구과학 Ⅱ</span>
+                    </div>
+                    <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">단진자의 등시성을 이용한 중력가속도 측정</h1>
+                </div>
+            </div>
+
+            <!-- Planet / Environment Preset -->
+            <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 self-stretch md:self-auto shrink-0">
+                <span class="text-xs font-bold text-slate-600 px-2">측정 장소:</span>
+                <button onclick="setPlanet('standard', 9.80)" id="loc-standard" class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-sky-600 text-white shadow-sm">표준 지구 (9.80)</button>
+                <button onclick="setPlanet('equator', 9.78)" id="loc-equator" class="px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 hover:text-slate-900">적도 (9.78)</button>
+                <button onclick="setPlanet('poles', 9.83)" id="loc-poles" class="px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 hover:text-slate-900">극지방 (9.83)</button>
+                <button onclick="setPlanet('moon', 1.62)" id="loc-moon" class="px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 hover:text-slate-900">달 (1.62)</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 flex flex-col gap-6">
+
+        <!-- Formula & Theory Banner -->
+        <section class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            <div class="lg:col-span-6 flex flex-col sm:flex-row items-center gap-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0 lg:pr-4">
+                <!-- Period Formula Box -->
+                <div class="flex-1 w-full bg-sky-50/70 border border-sky-200 rounded-xl p-3.5 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-sky-700 block mb-1">단진자의 진동 주기 공식</span>
+                        <div class="text-xl sm:text-2xl font-bold text-slate-900 math-font flex items-center gap-1.5">
+                            <i>T</i> = 2<i>π</i>
+                            <span class="inline-flex items-center">
+                                <span class="text-2xl font-normal">√</span>
+                                <span class="inline-flex flex-col items-center text-base border-t-2 border-slate-800 px-1.5 leading-tight">
+                                    <i>l</i>
+                                    <span class="border-t border-slate-700 w-full text-center"><i>g</i></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs text-slate-600 space-y-0.5">
+                        <div><strong class="text-slate-800 math-font"><i>T</i></strong> : 진동 주기 (s)</div>
+                        <div><strong class="text-slate-800 math-font"><i>l</i></strong> : 실의 길이 (m)</div>
+                        <div><strong class="text-slate-800 math-font"><i>g</i></strong> : 중력가속도 (m/s²)</div>
+                    </div>
+                </div>
+
+                <!-- Gravity Formula Box -->
+                <div class="flex-1 w-full bg-amber-50/70 border border-amber-200 rounded-xl p-3.5 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-amber-800 block mb-1">중력가속도 산출식</span>
+                        <div class="text-xl sm:text-2xl font-bold text-slate-900 math-font flex items-center gap-1.5">
+                            <i>g</i> = 
+                            <span class="inline-flex flex-col items-center text-base px-1.5 leading-tight">
+                                <span>4<i>π</i><sup>2</sup><i>l</i></span>
+                                <span class="border-t border-slate-800 w-full text-center"><i>T</i><sup>2</sup></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs text-amber-900 font-medium">
+                        주기와 실의 길이를<br>측정하여 <b><i>g</i></b> 도출
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theory & Calculated Result Display -->
+            <div class="lg:col-span-6 flex flex-col sm:flex-row items-center justify-between gap-4 pl-0 lg:pl-2">
+                <div class="flex flex-col gap-1.5 w-full sm:w-auto">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-800 rounded-md">단진자의 등시성</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-700">진폭(작은 각도 <i>θ</i>)과 추의 질량(<i>m</i>)이 변해도 주기(<i>T</i>)는 일정합니다.</span>
+                    </div>
+                    <p class="text-xs text-slate-500">우측 하단 엑셀 시트에 측정값을 기록한 뒤 <b>[중력가속도 산출]</b> 버튼을 눌러 확인해보세요.</p>
+                </div>
+
+                <div class="flex items-center gap-3 self-end sm:self-center shrink-0 bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500 block font-medium">산출된 평균 중력가속도 (<i>g</i>)</span>
+                        <strong id="measured-g-value" class="text-xl sm:text-2xl font-extrabold text-slate-400">측정 전</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Workspace Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left Column: Interactive Pendulum Force Diagram Canvas (7 cols) -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-4 flex-1">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-ping"></span>
+                            <h2 class="text-base font-bold text-slate-900">단진자 운동 및 힘의 분해 모형</h2>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs">
+                            <label class="flex items-center gap-1.5 cursor-pointer select-none font-medium text-slate-700">
+                                <input type="checkbox" id="chk-vectors" checked onchange="drawPendulum()" class="rounded text-sky-600 focus:ring-sky-500 w-4 h-4">
+                                힘 벡터 표시 (<span class="math-font"><i>T</i>, <i>mg</i>, <i>mg</i>sin<i>θ</i>, <i>mg</i>cos<i>θ</i></span>)
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer select-none font-medium text-slate-700">
+                                <input type="checkbox" id="chk-approx" checked onchange="updatePhysicsParams()" class="rounded text-sky-600 focus:ring-sky-500 w-4 h-4">
+                                단진동 근사 (<span class="math-font">sin<i>θ</i> ≈ <i>θ</i></span>)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pendulum Canvas Container -->
+                    <div class="relative w-full h-[420px] sm:h-[460px] bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-inner">
+                        <canvas id="pendulumCanvas" class="cursor-grab active:cursor-grabbing touch-none"></canvas>
+
+                        <!-- Top-Left Live Angle & Displacement Overlay -->
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-sm text-xs space-y-1 pointer-events-none">
+                            <div class="font-bold text-slate-800 border-b border-slate-200 pb-1 mb-1">실시간 운동 상태</div>
+                            <div class="flex justify-between gap-4">
+                                <span class="text-slate-500">각도 (<i class="math-font">θ</i>):</span>
+                                <span id="hud-theta" class="font-mono font-bold text-slate-900">+15.0°</span>
+                            </div>
+                            <div class="flex justify-between gap-4">
+                                <span class="text-slate-500">수평 변위 (<i class="math-font">x</i>):</span>
+                                <span id="hud-x" class="font-mono font-bold text-slate-900">+0.26 m</span>
+                            </div>
+                            <div class="flex justify-between gap-4">
+                                <span class="text-slate-500">복원력 (<i class="math-font">mg</i>sin<i class="math-font">θ</i>):</span>
+                                <span id="hud-f-restore" class="font-mono font-bold text-slate-900">2.54 N</span>
+                            </div>
+                            <div class="flex justify-between gap-4">
+                                <span class="text-slate-500">중력 (<i class="math-font">mg</i>):</span>
+                                <span id="hud-mg" class="font-mono font-bold text-sky-600">9.80 N</span>
+                            </div>
+                        </div>
+
+                        <!-- Top-Right Stopwatch & 10-Swing Measurement Widget -->
+                        <div class="absolute top-3 right-3 bg-slate-900/95 text-white px-4 py-3 rounded-xl shadow-md text-xs flex flex-col gap-2 min-w-[185px]">
+                            <div class="flex items-center justify-between border-b border-slate-700 pb-1.5">
+                                <span class="text-[11px] font-bold text-sky-400 flex items-center gap-1">
+                                    <i data-lucide="timer" class="w-3.5 h-3.5"></i> 초시계 & 주기 측정기
+                                </span>
+                                <span id="sw-status" class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">측정중</span>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <span class="text-slate-400">경과 시간:</span>
+                                <span id="sw-time" class="font-mono text-lg font-extrabold text-amber-400">0.00 s</span>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <span class="text-slate-400">왕복 횟수:</span>
+                                <span id="sw-count" class="font-mono text-sm font-bold text-white">0 회</span>
+                            </div>
+                            <div class="flex items-baseline justify-between border-t border-slate-700 pt-1.5">
+                                <span class="text-slate-300 font-semibold">1회 주기 (<i class="math-font">T</i>):</span>
+                                <span id="sw-period" class="font-mono text-sm font-extrabold text-sky-300">2.01 s</span>
+                            </div>
+                            <div class="flex gap-1.5 mt-0.5">
+                                <button onclick="resetStopwatch()" class="flex-1 py-1 bg-slate-700 hover:bg-slate-600 rounded text-[11px] font-semibold transition">초시계 리셋</button>
+                                <button onclick="recordMeasurement()" class="flex-1 py-1 bg-sky-600 hover:bg-sky-500 rounded text-[11px] font-bold transition">측정값 기록</button>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Legend matching textbook image -->
+                        <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 bg-slate-50/95 backdrop-blur px-3 py-2 rounded-xl border border-slate-200 text-xs">
+                            <div class="flex flex-wrap items-center gap-4">
+                                <span class="flex items-center gap-1.5 font-semibold text-slate-700">
+                                    <span class="w-3 h-1 bg-red-600 inline-block"></span>
+                                    <span class="math-font text-red-600 font-bold"><i>T</i></span>: 실의 장력
+                                </span>
+                                <span class="flex items-center gap-1.5 font-semibold text-slate-700">
+                                    <span class="w-3 h-1 bg-sky-500 inline-block"></span>
+                                    <span class="math-font text-sky-600 font-bold"><i>mg</i></span>: 중력
+                                </span>
+                                <span class="flex items-center gap-1.5 font-semibold text-slate-700">
+                                    <span class="w-3 h-1 bg-slate-900 inline-block"></span>
+                                    <span class="math-font font-bold"><i>mg</i>sin<i>θ</i></span>: 복원력
+                                </span>
+                            </div>
+                            <span class="text-[11px] text-slate-500">💡 추를 마우스로 직접 끌어 원하는 각도에서 놓을 수 있습니다.</span>
+                        </div>
+                    </div>
+
+                    <!-- Play / Pause & Quick Controls -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                        <div class="flex items-center gap-2">
+                            <button id="btn-play" onclick="togglePlay()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm flex items-center gap-2 transition shadow-sm">
+                                <i data-lucide="pause" class="w-4 h-4 fill-current"></i>
+                                <span id="btn-play-text">일시 정지</span>
+                            </button>
+                            <button onclick="resetPendulumMotion()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm flex items-center gap-1.5 border border-slate-200 transition">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                처음 위치로
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-600">재생 속도:</span>
+                            <button onclick="setSimSpeed(1)" id="spd-1" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white">1.0x</button>
+                            <button onclick="setSimSpeed(0.5)" id="spd-05" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">0.5x (슬로모션)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Controls, Comparison Graphs & Data Log (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+
+                <!-- 1. Variable Sliders Card (Length l, Mass m, Initial Angle theta0) -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-4 h-4 text-sky-600"></i>
+                        변인 조작 패널 (실의 길이 · 추의 질량 · 초기 각도)
+                    </h3>
+
+                    <!-- Length Slider (l) -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <span class="px-1.5 py-0.5 bg-sky-100 text-sky-800 rounded font-mono math-font"><i>l</i></span>
+                                실의 길이 (주기 변화 요인)
+                            </span>
+                            <strong id="val-length" class="text-sm font-extrabold text-sky-600 font-mono">1.00 m</strong>
+                        </div>
+                        <input type="range" id="slider-length" min="0.20" max="2.00" step="0.05" value="1.00" oninput="onParamChange()">
+                        <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                            <span>0.20 m (주기 짧음)</span>
+                            <span>1.00 m</span>
+                            <span>2.00 m (주기 김)</span>
+                        </div>
+                    </div>
+
+                    <!-- Mass Slider (m) -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded font-mono math-font"><i>m</i></span>
+                                단진자 추의 질량 (주기와 무관)
+                            </span>
+                            <strong id="val-mass" class="text-sm font-extrabold text-emerald-600 font-mono">1.0 kg</strong>
+                        </div>
+                        <input type="range" id="slider-mass" min="0.2" max="5.0" step="0.2" value="1.0" oninput="onParamChange()">
+                        <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                            <span>0.2 kg (가벼움)</span>
+                            <span>2.5 kg</span>
+                            <span>5.0 kg (무거움, 힘 벡터 증가)</span>
+                        </div>
+                    </div>
+
+                    <!-- Initial Angle Slider (theta_0) -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <span class="px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded font-mono math-font"><i>θ</i><sub>0</sub></span>
+                                초기 진폭 각도
+                            </span>
+                            <strong id="val-angle" class="text-sm font-extrabold text-amber-600 font-mono">15.0°</strong>
+                        </div>
+                        <input type="range" id="slider-angle" min="5" max="45" step="1" value="15" oninput="onAngleSliderChange()">
+                        <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                            <span>5° (미소 진폭)</span>
+                            <span>15° (권장 실험각)</span>
+                            <span>45° (대진폭)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Period Comparison Graphs (T vs l and T vs m) -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-slate-900">실의 길이(<i>l</i>)와 질량(<i>m</i>)에 따른 주기(<i>T</i>) 비교 그래프</h3>
+                        <div class="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs">
+                            <button id="gtab-length" onclick="switchGraphTab('length')" class="px-2.5 py-1 rounded-md font-bold bg-sky-600 text-white transition">실의 길이 vs 주기</button>
+                            <button id="gtab-mass" onclick="switchGraphTab('mass')" class="px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition">질량 vs 주기</button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full h-[200px] bg-slate-50 rounded-xl border border-slate-200 p-2">
+                        <canvas id="relationGraphCanvas" class="cursor-ew-resize touch-none"></canvas>
+                    </div>
+                </div>
+
+                <!-- 3. Excel-Style Experimental Log & Gravity Calculator Sheet -->
+                <div class="bg-white border border-slate-300 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+                    <!-- Excel Ribbon / Header Bar -->
+                    <div class="bg-emerald-700 text-white px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="sheet" class="w-4 h-4 text-emerald-200"></i>
+                            <h3 class="text-xs sm:text-sm font-bold tracking-tight">중력가속도 측정 실험 시트 (Spreadsheet)</h3>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="recordMeasurement()" class="text-xs bg-white hover:bg-emerald-50 text-emerald-800 font-bold px-2.5 py-1 rounded shadow-sm transition flex items-center gap-1">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i> 현재 조건 기록
+                            </button>
+                            <button onclick="calculateAllGravity()" class="text-xs bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold px-3 py-1 rounded shadow-sm transition flex items-center gap-1">
+                                <i data-lucide="calculator" class="w-3.5 h-3.5"></i> 중력가속도(g) 산출
+                            </button>
+                            <button onclick="clearMeasurements()" class="text-xs bg-emerald-800 hover:bg-emerald-900 text-emerald-100 px-2 py-1 rounded transition" title="시트 초기화">
+                                초기화
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Excel Formula Bar -->
+                    <div class="bg-slate-100 border-b border-slate-300 px-3 py-1.5 flex items-center gap-2 text-xs font-mono">
+                        <span class="px-2 py-0.5 bg-white border border-slate-300 rounded text-slate-600 font-bold select-none">E열 수식</span>
+                        <span class="text-emerald-700 font-bold italic">fx</span>
+                        <span class="bg-white border border-slate-300 rounded px-2.5 py-0.5 flex-1 text-slate-700 overflow-x-auto whitespace-nowrap">
+                            = (4 * PI()^2 * B2) / (D2 ^ 2)
+                        </span>
+                    </div>
+
+                    <!-- Spreadsheet Grid Table -->
+                    <div class="overflow-x-auto max-h-[210px] overflow-y-auto bg-white">
+                        <table class="w-full text-xs border-collapse select-none">
+                            <thead class="sticky top-0 z-10">
+                                <!-- Excel Column Letters (A, B, C, D, E) -->
+                                <tr class="bg-slate-200 text-slate-600 font-mono text-[11px] border-b border-slate-300">
+                                    <th class="w-8 py-1 border-r border-slate-300 bg-slate-200"></th>
+                                    <th class="py-1 border-r border-slate-300 text-center">A</th>
+                                    <th class="py-1 border-r border-slate-300 text-center">B</th>
+                                    <th class="py-1 border-r border-slate-300 text-center">C</th>
+                                    <th class="py-1 border-r border-slate-300 text-center">D</th>
+                                    <th class="py-1 text-center bg-amber-100/70 text-amber-900">E</th>
+                                </tr>
+                                <!-- Column Titles (Row 1) -->
+                                <tr class="bg-slate-100 text-slate-800 font-bold border-b border-slate-300">
+                                    <td class="py-1.5 border-r border-slate-300 text-center font-mono text-[11px] text-slate-500 bg-slate-200">1</td>
+                                    <td class="py-1.5 px-2 border-r border-slate-300 text-center">실험 회차</td>
+                                    <td class="py-1.5 px-2 border-r border-slate-300 text-center">실의 길이 <i>l</i> (m)</td>
+                                    <td class="py-1.5 px-2 border-r border-slate-300 text-center">추 질량 <i>m</i> (kg)</td>
+                                    <td class="py-1.5 px-2 border-r border-slate-300 text-center">진동 주기 <i>T</i> (s)</td>
+                                    <td class="py-1.5 px-2 text-center bg-amber-50 text-amber-900">중력가속도 <i>g</i> (m/s²)</td>
+                                </tr>
+                            </thead>
+                            <tbody id="log-table-body" class="divide-y divide-slate-200">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Excel Status / Summary Footer -->
+                    <div class="bg-slate-50 border-t border-slate-200 px-3.5 py-2 flex items-center justify-between text-xs">
+                        <span id="sheet-status-msg" class="text-slate-500">
+                            💡 측정 조건을 기록한 뒤 상단의 <b class="text-slate-700">[중력가속도(g) 산출]</b> 버튼을 누르세요.
+                        </span>
+                        <div class="flex items-center gap-2 font-mono">
+                            <span class="text-slate-500">평균 <i>g</i>:</span>
+                            <strong id="sheet-avg-g" class="text-emerald-700 font-extrabold">-</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. 시뮬레이션 물리 상태 변수
+        // ==========================================
+        let lengthL = 1.00;         // 실의 길이 l (m), 0.2 ~ 2.0
+        let massM = 1.0;            // 추의 질량 m (kg), 0.2 ~ 5.0
+        let initialAngleDeg = 15.0; // 초기 각도 (도), 5 ~ 45
+        let gravityG = 9.80;        // 현재 중력가속도 (m/s^2)
+        let currentLocation = 'standard';
+
+        // 운동 상태 변수
+        let theta = 15.0 * Math.PI / 180; // 현재 각도 (rad), 오른쪽이 +
+        let omega = 0;                    // 각속도 (rad/s)
+        let alpha = 0;                    // 각가속도 (rad/s^2)
+        let simTime = 0;                  // 초시계 시간 (s)
+        let swingCount = 0;               // 왕복 진동 횟수
+        let prevTheta = theta;
+        let prevOmega = 0;
+
+        let isPlaying = true;
+        let isDraggingBob = false;
+        let simSpeed = 1.0;
+        let activeGraphTab = 'length'; // 'length' | 'mass'
+
+        // 실험 기록 배열
+        let experimentLogs = [];
+
+        // ==========================================
+        // 2. 주기 및 중력가속도 계산 함수
+        // ==========================================
+        function getTheoreticalPeriod(l, g, angleDeg) {
+            const baseT = 2 * Math.PI * Math.sqrt(l / g);
+            const useSmallAngleApprox = document.getElementById('chk-approx')?.checked ?? true;
+            if (useSmallAngleApprox) {
+                return baseT;
+            } else {
+                // 대진폭 보정 급수: T = T0 * (1 + (1/16)*theta0^2 + (11/3072)*theta0^4)
+                const rad = angleDeg * Math.PI / 180;
+                const correction = 1 + (1 / 16) * Math.pow(rad, 2) + (11 / 3072) * Math.pow(rad, 4);
+                return baseT * correction;
+            }
+        }
+
+        function setPlanet(locId, gVal) {
+            currentLocation = locId;
+            gravityG = gVal;
+
+            // 버튼 스타일 업데이트
+            const buttons = ['standard', 'equator', 'poles', 'moon'];
+            buttons.forEach(id => {
+                const btn = document.getElementById(`loc-${id}`);
+                if (!btn) return;
+                if (id === locId) {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition bg-sky-600 text-white shadow-sm";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 hover:text-slate-900";
+                }
+            });
+
+            resetStopwatch();
+            updatePhysicsParams();
+        }
+
+        function onParamChange() {
+            lengthL = parseFloat(document.getElementById('slider-length').value);
+            massM = parseFloat(document.getElementById('slider-mass').value);
+
+            document.getElementById('val-length').textContent = `${lengthL.toFixed(2)} m`;
+            document.getElementById('val-mass').textContent = `${massM.toFixed(1)} kg`;
+
+            resetStopwatch();
+            updatePhysicsParams();
+        }
+
+        function onAngleSliderChange() {
+            initialAngleDeg = parseFloat(document.getElementById('slider-angle').value);
+            document.getElementById('val-angle').textContent = `${initialAngleDeg.toFixed(1)}°`;
+            resetPendulumMotion();
+        }
+
+        function updatePhysicsParams() {
+            const periodT = getTheoreticalPeriod(lengthL, gravityG, initialAngleDeg);
+            document.getElementById('sw-period').textContent = `${periodT.toFixed(2)} s`;
+
+            drawPendulum();
+            drawRelationGraph();
+        }
+
+        function resetStopwatch() {
+            simTime = 0;
+            swingCount = 0;
+            document.getElementById('sw-time').textContent = `0.00 s`;
+            document.getElementById('sw-count').textContent = `0 회`;
+        }
+
+        function resetPendulumMotion() {
+            theta = initialAngleDeg * Math.PI / 180;
+            omega = 0;
+            prevTheta = theta;
+            prevOmega = 0;
+            resetStopwatch();
+            updatePhysicsParams();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btnText = document.getElementById('btn-play-text');
+            const btn = document.getElementById('btn-play');
+            const status = document.getElementById('sw-status');
+
+            if (isPlaying) {
+                btnText.textContent = '일시 정지';
+                btn.className = "px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm flex items-center gap-2 transition shadow-sm";
+                status.textContent = '측정중';
+                status.className = "text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold";
+            } else {
+                btnText.textContent = '운동 재생';
+                btn.className = "px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center gap-2 transition shadow-sm";
+                status.textContent = '일시정지';
+                status.className = "text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold";
+            }
+        }
+
+        function setSimSpeed(spd) {
+            simSpeed = spd;
+            document.getElementById('spd-1').className = spd === 1 
+                ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white" 
+                : "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
+            document.getElementById('spd-05').className = spd === 0.5 
+                ? "px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white" 
+                : "px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
+        }
+
+        // ==========================================
+        // 3. 단진자 캔버스 렌더링 (첨부 도해와 동일한 스타일 구현)
+        // ==========================================
+        function drawArrow(ctx, x1, y1, x2, y2, color, lineWidth = 2.2, headLength = 10) {
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const len = Math.hypot(dx, dy);
+            if (len < 2) return;
+            const angle = Math.atan2(dy, dx);
+
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = lineWidth;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headLength * Math.cos(angle - Math.PI / 7), y2 - headLength * Math.sin(angle - Math.PI / 7));
+            ctx.lineTo(x2 - headLength * Math.cos(angle + Math.PI / 7), y2 - headLength * Math.sin(angle + Math.PI / 7));
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawPendulum() {
+            const canvas = document.getElementById('pendulumCanvas');
+            if (!canvas) return;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            const width = rect.width;
+            const height = rect.height;
+            if (width <= 0 || height <= 0) return;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            ctx.clearRect(0, 0, width, height);
+
+            const pivotX = width * 0.5;
+            const pivotY = 44;
+
+            // 1. 상단 회색 천장 지지대 (첨부 이미지 스타일)
+            const ceilingW = Math.min(width * 0.72, 460);
+            ctx.fillStyle = '#c0c4cc';
+            ctx.fillRect(pivotX - ceilingW / 2, 14, ceilingW, 30);
+            ctx.beginPath();
+            ctx.moveTo(pivotX - ceilingW / 2, pivotY);
+            ctx.lineTo(pivotX + ceilingW / 2, pivotY);
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1.8;
+            ctx.stroke();
+
+            // 실의 화면상 픽셀 길이 (0.2m ~ 2.0m를 95px ~ 255px로 매핑)
+            const minPx = 95;
+            const maxPx = Math.min(height - 175, 255);
+            const pixelL = minPx + ((lengthL - 0.2) / 1.8) * (maxPx - minPx);
+
+            // 현재 추의 위치 (theta > 0 이면 오른쪽)
+            const bobX = pivotX + pixelL * Math.sin(theta);
+            const bobY = pivotY + pixelL * Math.cos(theta);
+
+            // 2. 중앙 연직 점선 (기준선)
+            const bottomRefY = pivotY + pixelL + 85;
+            ctx.save();
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            ctx.moveTo(pivotX, pivotY);
+            ctx.lineTo(pivotX, bottomRefY);
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1.3;
+            ctx.stroke();
+            ctx.restore();
+
+            // 3. 단진자 원호 궤적 점선
+            const maxThetaRad = Math.max(Math.abs(theta), initialAngleDeg * Math.PI / 180) + 0.15;
+            ctx.save();
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            // Canvas arc 각도는 +x축 기준 시계방향이므로 수직 아래는 Math.PI/2
+            ctx.arc(pivotX, pivotY, pixelL, Math.PI / 2 - maxThetaRad, Math.PI / 2 + maxThetaRad);
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 1.3;
+            ctx.stroke();
+            ctx.restore();
+
+            // 4. 각도 θ 호 및 라벨 표시
+            if (Math.abs(theta) > 0.03) {
+                const arcR = Math.min(54, pixelL * 0.35);
+                ctx.save();
+                ctx.beginPath();
+                const startA = Math.PI / 2;
+                const endA = Math.PI / 2 - theta;
+                ctx.arc(pivotX, pivotY, arcR, Math.min(startA, endA), Math.max(startA, endA));
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 1.2;
+                ctx.stroke();
+
+                // θ 텍스트
+                const midA = Math.PI / 2 - theta / 2;
+                const labelX = pivotX + (arcR + 16) * Math.cos(midA);
+                const labelY = pivotY + (arcR + 16) * Math.sin(midA);
+                ctx.font = 'italic 18px "STIX Two Math", "Times New Roman", serif';
+                ctx.fillStyle = '#0f172a';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('θ', labelX, labelY);
+                ctx.restore();
+            }
+
+            // 5. 실 (검은 실선) 및 길이 l 라벨
+            ctx.beginPath();
+            ctx.moveTo(pivotX, pivotY);
+            ctx.lineTo(bobX, bobY);
+            ctx.strokeStyle = '#0f172a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 실 중앙 옆에 l 표시
+            const midStrX = (pivotX + bobX) / 2 + (theta >= 0 ? 14 : -14);
+            const midStrY = (pivotY + bobY) / 2 - 6;
+            ctx.font = 'italic 20px "STIX Two Math", "Times New Roman", serif';
+            ctx.fillStyle = '#0f172a';
+            ctx.textAlign = 'center';
+            ctx.fillText('l', midStrX, midStrY);
+
+            // 6. 수평 변위 x 화살표 표시 (하단)
+            const xGuideY = pivotY + pixelL + 68;
+            if (Math.abs(bobX - pivotX) > 6) {
+                // 추에서 아래로 내리는 보조선
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(bobX, bobY + 18);
+                ctx.lineTo(bobX, xGuideY + 8);
+                ctx.strokeStyle = '#475569';
+                ctx.lineWidth = 1.1;
+                ctx.stroke();
+
+                // 중심선에서 추 위치까지 화살표
+                drawArrow(ctx, pivotX, xGuideY, bobX, xGuideY, '#0f172a', 1.4, 8);
+
+                ctx.font = 'italic 20px "STIX Two Math", "Times New Roman", serif';
+                ctx.fillStyle = '#0f172a';
+                ctx.textAlign = 'center';
+                ctx.fillText('x', (pivotX + bobX) / 2, xGuideY + 18);
+                ctx.restore();
+            }
+
+            // 7. 힘의 분해 벡터 표시 (체크박스 활성화 시 첨부 이미지와 동일하게 작도)
+            const showVectors = document.getElementById('chk-vectors')?.checked ?? true;
+            if (showVectors) {
+                // 질량에 따라 벡터 스케일 살짝 반영 (너무 크거나 작지 않도록 보정)
+                const baseVecLen = 68 + (massM - 1.0) * 6;
+
+                // 단위 벡터 정의
+                // 실의 바깥 방향 단위 벡터 (법선 방향: mg cos theta 방향)
+                const uRadX = Math.sin(theta);
+                const uRadY = Math.cos(theta);
+
+                // 접선 방향 단위 벡터 (중심 쪽으로 향하는 방향)
+                const uTanX = -Math.cos(theta);
+                const uTanY = Math.sin(theta);
+
+                // (1) 중력 mg (연직 아래 하늘색 벡터)
+                const mgEndX = bobX;
+                const mgEndY = bobY + baseVecLen;
+
+                // (2) mg cos θ (실의 연장선 방향 성분)
+                const cosLen = baseVecLen * Math.cos(theta);
+                const mgCosEndX = bobX + cosLen * uRadX;
+                const mgCosEndY = bobY + cosLen * uRadY;
+
+                // (3) 복원력 mg sin θ (접선 방향 성분)
+                const sinLen = baseVecLen * Math.sin(theta); // theta>0 이면 양수 -> uTan 방향으로 향함
+                const mgSinEndX = bobX + sinLen * uTanX;
+                const mgSinEndY = bobY + sinLen * uTanY;
+
+                // 직사각형 점선 보조선 (mg 끝점과 두 분력 끝점 연결)
+                if (Math.abs(theta) > 0.02) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.setLineDash([4, 3]);
+                    ctx.moveTo(mgSinEndX, mgSinEndY);
+                    ctx.lineTo(mgEndX, mgEndY);
+                    ctx.lineTo(mgCosEndX, mgCosEndY);
+                    ctx.strokeStyle = '#334155';
+                    ctx.lineWidth = 1.2;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // (4) 장력 T (실을 따라 고정점 방향으로 향하는 빨간색 화살표)
+                const tensionLen = cosLen + 10;
+                const tEndX = bobX - tensionLen * uRadX;
+                const tEndY = bobY - tensionLen * uRadY;
+                drawArrow(ctx, bobX, bobY, tEndX, tEndY, '#e11d48', 2.6, 11);
+
+                // 장력 T 라벨
+                ctx.font = 'italic bold 19px "STIX Two Math", "Times New Roman", serif';
+                ctx.fillStyle = '#e11d48';
+                ctx.textAlign = 'left';
+                ctx.fillText('T', (bobX + tEndX) / 2 + 8, (bobY + tEndY) / 2 - 4);
+
+                // 중력 mg 화살표 (하늘색)
+                drawArrow(ctx, bobX, bobY, mgEndX, mgEndY, '#0284c7', 2.6, 11);
+                ctx.font = 'italic bold 19px "STIX Two Math", "Times New Roman", serif';
+                ctx.fillStyle = '#0284c7';
+                ctx.textAlign = theta >= 0 ? 'right' : 'left';
+                ctx.fillText('mg', mgEndX + (theta >= 0 ? -6 : 6), mgEndY + 4);
+
+                // mg cos θ 화살표 (검은색)
+                if (Math.abs(theta) > 0.02) {
+                    drawArrow(ctx, bobX, bobY, mgCosEndX, mgCosEndY, '#0f172a', 2.2, 10);
+                    ctx.font = 'italic 16px "STIX Two Math", "Times New Roman", serif';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.textAlign = theta >= 0 ? 'left' : 'right';
+                    ctx.fillText('mg cos θ', mgCosEndX + (theta >= 0 ? 6 : -6), mgCosEndY);
+                }
+
+                // 복원력 mg sin θ 화살표 (검은색)
+                if (Math.abs(sinLen) > 4) {
+                    drawArrow(ctx, bobX, bobY, mgSinEndX, mgSinEndY, '#0f172a', 2.2, 9);
+                    ctx.font = 'italic 16px "STIX Two Math", "Times New Roman", serif';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.textAlign = theta >= 0 ? 'right' : 'left';
+                    ctx.fillText('mg sin θ', mgSinEndX + (theta >= 0 ? -6 : 6), mgSinEndY - 8);
+                }
+            }
+
+            // 8. 단진자 추 (구체 입체 그라데이션 표현, 질량에 따라 반지름 소폭 변화)
+            const bobRadius = 13 + (massM - 0.2) * 1.6;
+            ctx.save();
+            const grad = ctx.createRadialGradient(
+                bobX - bobRadius * 0.35, bobY - bobRadius * 0.35, bobRadius * 0.15,
+                bobX, bobY, bobRadius
+            );
+            grad.addColorStop(0, '#f8fafc');
+            grad.addColorStop(0.45, '#94a3b8');
+            grad.addColorStop(1, '#334155');
+
+            ctx.beginPath();
+            ctx.arc(bobX, bobY, bobRadius, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = '#1e293b';
+            ctx.stroke();
+            ctx.restore();
+
+            // 9. 좌측 상단 실시간 물리량 HUD 업데이트
+            const deg = theta * 180 / Math.PI;
+            const dispX = lengthL * Math.sin(theta);
+            const fRestore = Math.abs(massM * gravityG * Math.sin(theta));
+            const weightMg = massM * gravityG;
+
+            document.getElementById('hud-theta').textContent = `${deg >= 0 ? '+' : ''}${deg.toFixed(1)}°`;
+            document.getElementById('hud-x').textContent = `${dispX >= 0 ? '+' : ''}${dispX.toFixed(2)} m`;
+            document.getElementById('hud-f-restore').textContent = `${fRestore.toFixed(2)} N`;
+            document.getElementById('hud-mg').textContent = `${weightMg.toFixed(2)} N`;
+        }
+
+        // ==========================================
+        // 4. 우측 비교 그래프 (실의 길이 vs 주기 / 추의 질량 vs 주기)
+        // ==========================================
+        function switchGraphTab(tab) {
+            activeGraphTab = tab;
+            const btnLen = document.getElementById('gtab-length');
+            const btnMass = document.getElementById('gtab-mass');
+
+            if (tab === 'length') {
+                btnLen.className = "px-2.5 py-1 rounded-md font-bold bg-sky-600 text-white transition";
+                btnMass.className = "px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition";
+            } else {
+                btnMass.className = "px-2.5 py-1 rounded-md font-bold bg-emerald-600 text-white transition";
+                btnLen.className = "px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition";
+            }
+            drawRelationGraph();
+        }
+
+        function drawRelationGraph() {
+            const canvas = document.getElementById('relationGraphCanvas');
+            if (!canvas) return;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            const width = rect.width - 16;
+            const height = rect.height - 16;
+            if (width <= 0 || height <= 0) return;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padLeft = 44;
+            const padRight = 20;
+            const padTop = 18;
+            const padBottom = 30;
+            const plotW = width - padLeft - padRight;
+            const plotH = height - padTop - padBottom;
+
+            const maxT = 4.0; // Y축 최대 주기 (0 ~ 4.0s)
+
+            // Y축 격자
+            ctx.font = '10px Inter, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            [0, 1, 2, 3, 4].forEach(tVal => {
+                const y = padTop + plotH * (1 - tVal / maxT);
+                ctx.beginPath();
+                ctx.moveTo(padLeft, y);
+                ctx.lineTo(padLeft + plotW, y);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.stroke();
+
+                ctx.fillStyle = '#64748b';
+                ctx.fillText(`${tVal.toFixed(1)}s`, padLeft - 6, y);
+            });
+
+            if (activeGraphTab === 'length') {
+                // X축: 실의 길이 l (0.0m ~ 2.0m)
+                const maxL = 2.0;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                [0, 0.5, 1.0, 1.5, 2.0].forEach(lVal => {
+                    const x = padLeft + (lVal / maxL) * plotW;
+                    ctx.beginPath();
+                    ctx.moveTo(x, padTop);
+                    ctx.lineTo(x, padTop + plotH);
+                    ctx.strokeStyle = '#e2e8f0';
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#475569';
+                    ctx.fillText(`${lVal.toFixed(1)}m`, x, padTop + plotH + 6);
+                });
+
+                // 곡선 T = 2*pi*sqrt(l/g)
+                ctx.beginPath();
+                for (let i = 0; i <= 100; i++) {
+                    const lVal = (i / 100) * maxL;
+                    const tVal = getTheoreticalPeriod(lVal, gravityG, initialAngleDeg);
+                    const x = padLeft + (lVal / maxL) * plotW;
+                    const y = padTop + plotH * (1 - Math.min(maxT, tVal) / maxT);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = '#0284c7';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                // 현재 설정된 길이 마커
+                const curT = getTheoreticalPeriod(lengthL, gravityG, initialAngleDeg);
+                const curX = padLeft + (lengthL / maxL) * plotW;
+                const curY = padTop + plotH * (1 - Math.min(maxT, curT) / maxT);
+
+                ctx.beginPath();
+                ctx.arc(curX, curY, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#e11d48';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+
+                // 라벨 배지
+                const badgeText = `l = ${lengthL.toFixed(2)}m → T = ${curT.toFixed(2)}s`;
+                drawGraphBadge(ctx, curX, curY, badgeText, width, height, padRight, '#0284c7');
+
+            } else {
+                // X축: 추의 질량 m (0.0kg ~ 5.0kg) -> 주기는 질량과 무관하므로 수평 직선!
+                const maxM = 5.0;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                [0, 1, 2, 3, 4, 5].forEach(mVal => {
+                    const x = padLeft + (mVal / maxM) * plotW;
+                    ctx.beginPath();
+                    ctx.moveTo(x, padTop);
+                    ctx.lineTo(x, padTop + plotH);
+                    ctx.strokeStyle = '#e2e8f0';
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#475569';
+                    ctx.fillText(`${mVal}kg`, x, padTop + plotH + 6);
+                });
+
+                const curT = getTheoreticalPeriod(lengthL, gravityG, initialAngleDeg);
+                const lineY = padTop + plotH * (1 - Math.min(maxT, curT) / maxT);
+
+                ctx.beginPath();
+                ctx.moveTo(padLeft, lineY);
+                ctx.lineTo(padLeft + plotW, lineY);
+                ctx.strokeStyle = '#059669';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                const curX = padLeft + (massM / maxM) * plotW;
+                ctx.beginPath();
+                ctx.arc(curX, lineY, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#059669';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+
+                const badgeText = `m = ${massM.toFixed(1)}kg → T = ${curT.toFixed(2)}s (일정)`;
+                drawGraphBadge(ctx, curX, lineY, badgeText, width, height, padRight, '#059669');
+            }
+        }
+
+        function drawGraphBadge(ctx, x, y, text, width, height, padRight, borderColor) {
+            ctx.font = 'bold 11px "Noto Sans KR", Inter, sans-serif';
+            const boxW = ctx.measureText(text).width + 14;
+            const boxH = 22;
+            const placeLeft = (x + boxW + 12 > width - padRight);
+            const boxX = placeLeft ? (x - boxW - 10) : (x + 10);
+            const boxY = Math.max(6, Math.min(height - boxH - 28, y - boxH - 6));
+
+            ctx.save();
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.96)';
+            ctx.strokeStyle = borderColor;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.roundRect(boxX, boxY, boxW, boxH, 5);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#0f172a';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, boxX + boxW / 2, boxY + boxH / 2 + 0.5);
+            ctx.restore();
+        }
+
+        // ==========================================
+        // 5. 엑셀 스타일 실험 데이터 시트 & 중력가속도 산출 관리
+        // ==========================================
+        function recordMeasurement() {
+            const periodT = getTheoreticalPeriod(lengthL, gravityG, initialAngleDeg);
+            const measuredG = (4 * Math.PI * Math.PI * lengthL) / (periodT * periodT);
+
+            experimentLogs.push({
+                index: experimentLogs.length + 1,
+                l: lengthL.toFixed(2),
+                m: massM.toFixed(1),
+                T: periodT.toFixed(2),
+                g: measuredG.toFixed(2),
+                calculated: false // 버튼을 누르기 전에는 중력가속도를 숨김
+            });
+
+            document.getElementById('sheet-status-msg').innerHTML = 
+                `✅ ${experimentLogs.length}회차 측정값이 시트에 입력되었습니다. <b class="text-emerald-700">[중력가속도(g) 산출]</b>을 눌러보세요.`;
+            renderLogTable();
+        }
+
+        function calculateSingleRowGravity(idx) {
+            if (experimentLogs[idx]) {
+                experimentLogs[idx].calculated = true;
+                updateCalculatedSummary();
+                renderLogTable();
+            }
+        }
+
+        function calculateAllGravity() {
+            if (experimentLogs.length === 0) {
+                recordMeasurement();
+            }
+            experimentLogs.forEach(item => {
+                item.calculated = true;
+            });
+            updateCalculatedSummary();
+            renderLogTable();
+        }
+
+        function updateCalculatedSummary() {
+            const calcItems = experimentLogs.filter(item => item.calculated);
+            const headerG = document.getElementById('measured-g-value');
+            const sheetAvgG = document.getElementById('sheet-avg-g');
+            const statusMsg = document.getElementById('sheet-status-msg');
+
+            if (calcItems.length === 0) {
+                headerG.textContent = '측정 전';
+                headerG.className = 'text-xl sm:text-2xl font-extrabold text-slate-400';
+                sheetAvgG.textContent = '-';
+                return;
+            }
+
+            const sumG = calcItems.reduce((acc, cur) => acc + parseFloat(cur.g), 0);
+            const avgG = (sumG / calcItems.length).toFixed(2);
+
+            headerG.textContent = `${avgG} m/s²`;
+            headerG.className = 'text-xl sm:text-2xl font-extrabold text-sky-600';
+            sheetAvgG.textContent = `${avgG} m/s²`;
+            statusMsg.innerHTML = `🎉 수식 <code class="text-amber-700 font-bold">g = 4π²l / T²</code> 적용 완료! (${calcItems.length}개 데이터 평균 산출됨)`;
+        }
+
+        function clearMeasurements() {
+            experimentLogs = [];
+            updateCalculatedSummary();
+            document.getElementById('sheet-status-msg').innerHTML = 
+                `💡 측정 조건을 기록한 뒤 상단의 <b class="text-slate-700">[중력가속도(g) 산출]</b> 버튼을 누르세요.`;
+            renderLogTable();
+        }
+
+        function renderLogTable() {
+            const tbody = document.getElementById('log-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (experimentLogs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td class="py-3 border-r border-slate-200 text-center font-mono text-[11px] text-slate-400 bg-slate-100">2</td>
+                        <td colspan="5" class="py-3 px-3 text-slate-400 text-xs text-center">
+                            실의 길이(<i>l</i>)나 질량(<i>m</i>)을 바꾸며 <b>[+ 현재 조건 기록]</b> 버튼을 눌러 시트에 데이터를 추가하세요.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            experimentLogs.forEach((item, idx) => {
+                const rowNum = idx + 2; // Excel Row 2, 3, 4...
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-sky-50/40 transition font-mono text-xs";
+
+                const gCellContent = item.calculated
+                    ? `<span class="font-extrabold text-emerald-700">${item.g}</span>`
+                    : `<button onclick="calculateSingleRowGravity(${idx})" class="px-2 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-800 font-sans font-bold text-[11px] border border-amber-300 transition">수식 실행 (산출)</button>`;
+
+                tr.innerHTML = `
+                    <td class="py-1.5 border-r border-slate-300 text-center text-[11px] text-slate-500 bg-slate-100 font-bold">${rowNum}</td>
+                    <td class="py-1.5 px-2 border-r border-slate-200 text-center font-sans font-semibold text-slate-600">${item.index}회</td>
+                    <td class="py-1.5 px-2 border-r border-slate-200 text-right pr-4 text-slate-800">${item.l}</td>
+                    <td class="py-1.5 px-2 border-r border-slate-200 text-right pr-4 text-slate-800">${item.m}</td>
+                    <td class="py-1.5 px-2 border-r border-slate-200 text-right pr-4 font-bold text-sky-700">${item.T}</td>
+                    <td class="py-1.5 px-2 text-center bg-amber-50/40">${gCellContent}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ==========================================
+        // 6. 물리 엔진 루프 & 마우스 드래그 인터랙션
+        // ==========================================
+        let lastFrameTime = performance.now();
+
+        function physicsLoop(now) {
+            const dtRaw = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
+
+            if (isPlaying && !isDraggingBob) {
+                const dt = Math.min(dtRaw, 0.05) * simSpeed;
+                const useSmallAngleApprox = document.getElementById('chk-approx')?.checked ?? true;
+
+                // Velocity Verlet / RK2 수치 적분으로 에너지가 보존되는 정밀 진동 구현
+                const subSteps = 6;
+                const subDt = dt / subSteps;
+
+                for (let i = 0; i < subSteps; i++) {
+                    prevTheta = theta;
+                    prevOmega = omega;
+
+                    const accel1 = useSmallAngleApprox 
+                        ? -(gravityG / lengthL) * theta 
+                        : -(gravityG / lengthL) * Math.sin(theta);
+
+                    const midTheta = theta + omega * (subDt * 0.5);
+                    const midOmega = omega + accel1 * (subDt * 0.5);
+
+                    const accelMid = useSmallAngleApprox 
+                        ? -(gravityG / lengthL) * midTheta 
+                        : -(gravityG / lengthL) * Math.sin(midTheta);
+
+                    theta += midOmega * subDt;
+                    omega += accelMid * subDt;
+
+                    simTime += subDt;
+
+                    // 1회 왕복 완료 감지 (오른쪽 최대 진폭 부근에서 속도가 +에서 -로 바뀔 때)
+                    if (prevOmega > 0 && omega <= 0 && theta > 0) {
+                        swingCount++;
+                        document.getElementById('sw-count').textContent = `${swingCount} 회`;
+                    }
+                }
+
+                document.getElementById('sw-time').textContent = `${simTime.toFixed(2)} s`;
+                drawPendulum();
+            }
+
+            requestAnimationFrame(physicsLoop);
+        }
+
+        function setupInteractions() {
+            const pCanvas = document.getElementById('pendulumCanvas');
+            if (pCanvas) {
+                function setBobAngleFromPointer(clientX, clientY) {
+                    const rect = pCanvas.getBoundingClientRect();
+                    const x = clientX - rect.left;
+                    const y = clientY - rect.top;
+                    const pivotX = rect.width * 0.5;
+                    const pivotY = 44;
+
+                    let angle = Math.atan2(x - pivotX, Math.max(20, y - pivotY));
+                    const maxRad = 45 * Math.PI / 180;
+                    angle = Math.max(-maxRad, Math.min(maxRad, angle));
+
+                    theta = angle;
+                    omega = 0;
+                    initialAngleDeg = Math.max(5, Math.round(Math.abs(angle * 180 / Math.PI)));
+                    document.getElementById('slider-angle').value = initialAngleDeg;
+                    document.getElementById('val-angle').textContent = `${initialAngleDeg.toFixed(1)}°`;
+                    resetStopwatch();
+                    updatePhysicsParams();
+                }
+
+                pCanvas.addEventListener('mousedown', (e) => {
+                    isDraggingBob = true;
+                    setBobAngleFromPointer(e.clientX, e.clientY);
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDraggingBob) return;
+                    setBobAngleFromPointer(e.clientX, e.clientY);
+                });
+
+                window.addEventListener('mouseup', () => {
+                    isDraggingBob = false;
+                });
+
+                pCanvas.addEventListener('touchstart', (e) => {
+                    if (e.touches.length > 0) {
+                        isDraggingBob = true;
+                        setBobAngleFromPointer(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
+
+                window.addEventListener('touchmove', (e) => {
+                    if (!isDraggingBob || e.touches.length === 0) return;
+                    setBobAngleFromPointer(e.touches[0].clientX, e.touches[0].clientY);
+                }, { passive: true });
+
+                window.addEventListener('touchend', () => {
+                    isDraggingBob = false;
+                });
+            }
+
+            // 우측 관계 그래프 위에서도 드래그/휠 스크롤로 길이(l) 또는 질량(m) 조작 가능
+            const gCanvas = document.getElementById('relationGraphCanvas');
+            if (gCanvas) {
+                let isDraggingGraph = false;
+
+                function updateGraphFromX(clientX) {
+                    const rect = gCanvas.getBoundingClientRect();
+                    const x = clientX - rect.left;
+                    const padLeft = 44;
+                    const padRight = 20;
+                    const plotW = rect.width - padLeft - padRight;
+                    if (plotW <= 0) return;
+
+                    let ratio = Math.max(0, Math.min(1, (x - padLeft) / plotW));
+                    if (activeGraphTab === 'length') {
+                        lengthL = Math.max(0.20, Math.min(2.00, Math.round(ratio * 2.00 * 20) / 20));
+                        document.getElementById('slider-length').value = lengthL;
+                        document.getElementById('val-length').textContent = `${lengthL.toFixed(2)} m`;
+                    } else {
+                        massM = Math.max(0.2, Math.min(5.0, Math.round(ratio * 5.0 * 5) / 5));
+                        document.getElementById('slider-mass').value = massM;
+                        document.getElementById('val-mass').textContent = `${massM.toFixed(1)} kg`;
+                    }
+                    resetStopwatch();
+                    updatePhysicsParams();
+                }
+
+                gCanvas.addEventListener('mousedown', (e) => {
+                    isDraggingGraph = true;
+                    updateGraphFromX(e.clientX);
+                });
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDraggingGraph) return;
+                    updateGraphFromX(e.clientX);
+                });
+                window.addEventListener('mouseup', () => {
+                    isDraggingGraph = false;
+                });
+                gCanvas.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    if (activeGraphTab === 'length') {
+                        const delta = (e.deltaY > 0 || e.deltaX > 0) ? 0.05 : -0.05;
+                        lengthL = Math.max(0.20, Math.min(2.00, parseFloat((lengthL + delta).toFixed(2))));
+                        document.getElementById('slider-length').value = lengthL;
+                        document.getElementById('val-length').textContent = `${lengthL.toFixed(2)} m`;
+                    } else {
+                        const delta = (e.deltaY > 0 || e.deltaX > 0) ? 0.2 : -0.2;
+                        massM = Math.max(0.2, Math.min(5.0, parseFloat((massM + delta).toFixed(1))));
+                        document.getElementById('slider-mass').value = massM;
+                        document.getElementById('val-mass').textContent = `${massM.toFixed(1)} kg`;
+                    }
+                    resetStopwatch();
+                    updatePhysicsParams();
+                }, { passive: false });
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            drawPendulum();
+            drawRelationGraph();
+        });
+
+        window.onload = function() {
+            lucide.createIcons();
+            setupInteractions();
+            updatePhysicsParams();
+            // 기본 비교 예시 데이터 2개 자동 추가
+            recordMeasurement();
+            requestAnimationFrame(physicsLoop);
+        };
+    </script>
+</body>
+</html>
