@@ -206,7 +206,7 @@ const archiveItems = [
         "icon": "book-open"
       },
       {
-        "label": "⚛️ 방사성 동위원소 반감기 시뮬레이터 열기",
+        "label": "⚛️ 방사성 동위원소 반감기를 통해 절대연령 알아보기 열기",
         "url": "lessons/isotope-simulation.html",
         "icon": "sparkles"
       }
@@ -219,7 +219,7 @@ const archiveItems = [
     "unitMajor": "Ⅱ. 지구의 역사와 한반도의 암석",
     "unitSeq": "07/16 SIM",
     "lessonUrl": "lessons/isotope-simulation.html",
-    "title": "[수업 시뮬레이션] 방사성 동위원소 반감기 & 절대 연령 시뮬레이터",
+    "title": "[수업 시뮬레이션] 방사성 동위원소 반감기를 통해 절대연령 알아보기",
     "date": "수업 PPT (2-1-1) 완전 연계",
     "year": "2026",
     "summary": "암석 내 방사성 모원소와 자원소 원자의 붕괴 과정을 시각적 입자 애니메이션으로 관찰하고, 5대 주요 동위원소(U-235, U-238, K-40, Rb-87, C-14)의 반감기 지수 붕괴 곡선 비교 및 암석의 절대 연령을 직접 산출해볼 수 있는 인터랙티브 가상 실험실입니다.",
