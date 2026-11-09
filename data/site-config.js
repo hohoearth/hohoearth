@@ -20,7 +20,8 @@ const siteConfig = {
     title: "HoHo earth",                 // 웹사이트 로고/타이틀
     subtitle: "삶의 해상도를 높여주는 지구과학", // 히어로 큰 제목
     description: "교육활동에 대한 고민을 기록하는 공간입니다.", // 부제목 설명
-    badge: "Earth Science Education"    // 상단 반짝이는 뱃지 문구
+    badge: "Earth Science Education",   // 상단 반짝이는 뱃지 문구
+    ogImage: "assets/og-image.jpg"      // SNS 링크 공유 미리보기(OG) 이미지
   },
 
   // 3. 🎯 [탭 이름 수정하기]
