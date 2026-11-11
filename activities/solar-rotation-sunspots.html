@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>흑점 이동을 통한 태양의 자전 주기 및 각속도 측정 | 충북사대부고 지구과학</title>
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="흑점 이동을 통한 태양의 자전 주기 및 각속도 측정 | 충북사대부고 지구과학" />
+  <meta property="og:description" content="충북사대부고 옥상 천체관측대 실제 태양 관측 사진 기반 흑점 이동 궤적 및 차등 자전 온라인 탐구 활동" />
+  <meta property="og:image" content="https://hohoearth.github.io/assets/inquiry/sunspots/sunspot_rotation_thumb.png" />
+  <meta property="og:image:width" content="935" />
+  <meta property="og:image:height" content="517" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    
+    /* 인쇄 전용 A4 서식 */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm 12mm 10mm 12mm;
+      }
+      header, nav, #nav-actions, .no-print, button, .no-print-area {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9pt !important;
+        line-height: 1.35 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-border {
+        border: 1px solid #94a3b8 !important;
+      }
+      textarea, input {
+        border-color: #cbd5e1 !important;
+        background: #ffffff !important;
+        resize: none !important;
+      }
+      .page-break {
+        break-before: page;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- 1. 최상단 네비게이션 헤더 (인쇄 시 숨김) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs no-print">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html#showcase" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>탐구 활동으로</span>
+        </a>
+        <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-amber-100 text-amber-800 border border-amber-200">
+            행성우주과학 · 지구과학 탐구
+          </span>
+          <span class="text-xs font-semibold text-slate-500 hidden md:inline">충북대학교사범대학부설고등학교</span>
+        </div>
+      </div>
+
+      <!-- 상단 액션 버튼 -->
+      <div id="nav-actions" class="flex items-center gap-2">
+        <button onclick="saveStudentData()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+          <i data-lucide="save" class="w-3.5 h-3.5"></i>
+          <span>임시 저장</span>
+        </button>
+        <button onclick="resetData()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold transition" title="입력 데이터 초기화">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">초기화</span>
+        </button>
+        <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 transition">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>활동지 인쇄 / PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. 온라인 활동지 메인 본문 -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+    
+    <!-- 활동지 타이틀 & 학생 인적사항 카드 -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200/60">
+              고등학교 과학과 탐구활동지
+            </span>
+            <span class="text-xs text-slate-400 font-mono">Planet & Space Science Lab</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            흑점 이동을 통한 태양의 자전 주기 및 각속도 측정
+          </h1>
+        </div>
+
+        <!-- 학생 정보 입력란 -->
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 shrink-0">
+          <div class="flex items-center gap-2">
+            <label for="student-id" class="text-xs font-bold text-slate-600 shrink-0">학번:</label>
+            <input type="text" id="student-id" placeholder="예: 20101" class="w-24 px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-300 focus:outline-none focus:border-amber-500 bg-white">
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="student-name" class="text-xs font-bold text-slate-600 shrink-0">이름:</label>
+            <input type="text" id="student-name" placeholder="예: 홍길동" class="w-24 px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-300 focus:outline-none focus:border-amber-500 bg-white">
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="student-date" class="text-xs font-bold text-slate-600 shrink-0">일시:</label>
+            <input type="text" id="student-date" class="w-28 px-2 py-1.5 text-xs rounded-lg border border-slate-300 bg-white text-slate-700">
+          </div>
+        </div>
+      </div>
+
+      <!-- 탐구 목표 및 관련 개념 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 탐구 목표 -->
+        <div class="bg-amber-50/50 rounded-2xl p-5 border border-amber-200/70 space-y-3">
+          <h2 class="text-sm font-extrabold text-amber-900 flex items-center gap-2">
+            <i data-lucide="target" class="w-4 h-4 text-amber-600"></i>
+            <span>탐구 목표</span>
+          </h2>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">•</span>
+              <span>태양의 실제 관측 사진을 비교하여 흑점의 이동 궤적을 파악할 수 있다.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">•</span>
+              <span>2차원 평면에 투영된 흑점의 이동을 삼각함수를 적용해 3차원 구면 회전각으로 변환할 수 있다.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">•</span>
+              <span>흑점의 이동 각속도로부터 태양의 겉보기 자전 주기(회합 주기)와 지구 공전을 보정한 실제 자전 주기(항성 주기)를 구할 수 있다.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 관련 개념: 태양의 차등 자전 (수정 완료) -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <h2 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="book-open" class="w-4 h-4 text-indigo-600"></i>
+            <span>관련 개념: 태양의 차등 자전</span>
+          </h2>
+          <p>
+            태양은 단단한 고체가 아닌 고온의 플라스마 기체 상태로 이루어져 있어 위도에 따라 회전 속도가 달라지는 <strong>차등 자전(differential rotation)</strong>을 합니다. 적도 부근은 약 25일, 극 부근은 약 35일의 자전 주기를 갖습니다.
+          </p>
+          <p>
+            지구에 위치한 관측자가 태양 표면의 흑점 이동을 추적해 자전 주기를 측정할 경우, 지구가 태양 주위를 공전하는 효과가 더해져 실제 자전 주기보다 약 2일가량 긴 약 27일 내외의 회합 자전 주기로 관측됩니다. 따라서 2차원 투영 사진 속 흑점의 위치 변화를 3차원 구면 삼각비로 환산하여 중심 회전각을 구한 뒤, 지구의 공전 효과를 보정하면 태양의 실제 자전 주기와 물리적 특성을 정량적으로 도출할 수 있습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 관측 사진 뷰어 & 인터랙티브 디지털 측정 도구 -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-6 rounded-full bg-amber-500"></span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">
+              실제 태양 관측 사진 및 픽셀 거리 측정 도구
+            </h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">
+            사진 위를 클릭하면 <strong>세로 중심선(자오선)으로부터 떨어진 픽셀 거리($d$)</strong>가 자동으로 계산되어 표시됩니다.
+          </p>
+        </div>
+        
+        <!-- 측정 모드 선택 툴바 -->
+        <div class="flex flex-wrap items-center gap-2 no-print">
+          <button onclick="setMeasureMode('meridian')" id="btn-mode-meridian" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-600 text-white shadow-xs">
+            <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
+            <span>중심선 기준 측정</span>
+          </button>
+          <button onclick="setMeasureMode('ruler')" id="btn-mode-ruler" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            <i data-lucide="ruler" class="w-3.5 h-3.5"></i>
+            <span>두 점 사이 거리(자)</span>
+          </button>
+          <button onclick="clearCanvasMeasurements()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-600">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>측정 초기화</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 모드별 사용 팁 -->
+      <div id="measure-tip" class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl text-xs text-amber-900 flex items-center justify-between no-print">
+        <span class="flex items-center gap-1.5">
+          <i data-lucide="info" class="w-4 h-4 text-amber-600 shrink-0"></i>
+          <span id="measure-tip-text">사진 속 흑점을 클릭하면 태양 세로 중심선(파란선)으로부터의 수평 거리($d$)가 픽셀 단위로 측정됩니다.</span>
+        </span>
+        <span class="text-[11px] text-amber-700 font-mono hidden sm:inline">Left Center: (233.5, 256.8) | Right Center: (237.7, 256.3)</span>
+      </div>
+
+      <!-- 인터랙티브 캔버스 2장 나란히 배치 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1일차 관측 사진 및 캔버스 -->
+        <div class="bg-slate-900 rounded-2xl p-4 text-white flex flex-col justify-between space-y-3 relative overflow-hidden">
+          <div class="flex items-center justify-between text-xs pb-2 border-b border-slate-800">
+            <span class="font-bold text-amber-400 flex items-center gap-1.5">
+              <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+              1일차 관측 사진 ($t_1$)
+            </span>
+            <span class="text-slate-400 font-mono">2026.11.10 13:39 (사대부고)</span>
+          </div>
+
+          <div class="relative flex items-center justify-center bg-black rounded-xl overflow-hidden cursor-crosshair">
+            <!-- 배경 원본 이미지 -->
+            <img src="../assets/inquiry/sunspots/sun_day1.png" alt="1일차 태양" id="img-day1" class="w-full h-auto object-contain block select-none pointer-events-none">
+            <!-- 상단 측정 오버레이 캔버스 -->
+            <canvas id="canvas-day1" class="absolute inset-0 w-full h-full"></canvas>
+          </div>
+
+          <!-- 1일차 측정 결과 표시 바 -->
+          <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700/80 flex items-center justify-between text-xs">
+            <div class="space-y-0.5">
+              <span class="text-[11px] text-slate-400">1일차 흑점 측정 거리:</span>
+              <div class="font-mono text-amber-300 font-extrabold text-sm" id="label-measure-1">클릭하여 측정하세요</div>
+            </div>
+            <button onclick="applyMeasuredToInput(1)" class="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[11px] transition shadow-xs no-print">
+              $d_1$에 값 적용
+            </button>
+          </div>
+        </div>
+
+        <!-- 2일차 관측 사진 및 캔버스 -->
+        <div class="bg-slate-900 rounded-2xl p-4 text-white flex flex-col justify-between space-y-3 relative overflow-hidden">
+          <div class="flex items-center justify-between text-xs pb-2 border-b border-slate-800">
+            <span class="font-bold text-sky-400 flex items-center gap-1.5">
+              <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+              2일차 관측 사진 ($t_2$)
+            </span>
+            <span class="text-slate-400 font-mono">2026.11.11 14:43 (사대부고)</span>
+          </div>
+
+          <div class="relative flex items-center justify-center bg-black rounded-xl overflow-hidden cursor-crosshair">
+            <!-- 배경 원본 이미지 -->
+            <img src="../assets/inquiry/sunspots/sun_day2.png" alt="2일차 태양" id="img-day2" class="w-full h-auto object-contain block select-none pointer-events-none">
+            <!-- 상단 측정 오버레이 캔버스 -->
+            <canvas id="canvas-day2" class="absolute inset-0 w-full h-full"></canvas>
+          </div>
+
+          <!-- 2일차 측정 결과 표시 바 -->
+          <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700/80 flex items-center justify-between text-xs">
+            <div class="space-y-0.5">
+              <span class="text-[11px] text-slate-400">2일차 흑점 측정 거리:</span>
+              <div class="font-mono text-sky-300 font-extrabold text-sm" id="label-measure-2">클릭하여 측정하세요</div>
+            </div>
+            <button onclick="applyMeasuredToInput(2)" class="px-2.5 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-[11px] transition shadow-xs no-print">
+              $d_2$에 값 적용
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 관측 시간 간격 (Δt) 안내 -->
+      <div class="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-4 h-4 text-amber-600"></i>
+            <span>관측 시간 간격 ($\Delta t$) 산출</span>
+          </div>
+          <div class="text-xs sm:text-sm text-slate-700">
+            • 1일차 관측: 2026년 11월 10일 13시 39분<br>
+            • 2일차 관측: 2026년 11월 11일 14시 43분 (시간차: 24시간 + 1시간 4분 = 25시간 4분)
+          </div>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="bg-white px-4 py-2 rounded-xl border border-slate-300 text-center">
+            <div class="text-[10px] text-slate-400 font-semibold">경과 시간 ($\Delta t$)</div>
+            <div class="text-sm sm:text-base font-black text-amber-700 font-mono">25.067 시간</div>
+          </div>
+          <div class="bg-white px-4 py-2 rounded-xl border border-slate-300 text-center">
+            <div class="text-[10px] text-slate-400 font-semibold">일(day) 환산값</div>
+            <div class="text-sm sm:text-base font-black text-indigo-700 font-mono">1.044 일</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 사진 측정 데이터 입력 칸 (태양 원반 반지름 R, 흑점 위도 반지름 r, d1, d2 모두 빈칸!) -->
+      <div class="space-y-3 pt-2">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+          <span>📊 사진 측정 데이터 입력 (모니터 상의 픽셀(px) 또는 자로 잰 길이(mm))</span>
+        </h3>
+        <p class="text-xs text-slate-500">
+          위 측정 도구로 측정한 값이나 자로 직접 잰 수치를 아래 빈칸에 직접 기입하세요.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- 1. 태양 원반 반지름 (R) -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label for="val-R" class="text-xs font-bold text-slate-700">1. 태양 원반 반지름 ($R$)</label>
+            <div class="flex items-center gap-2">
+              <input type="number" step="0.1" id="val-R" placeholder="예: 213" value="" oninput="calculateAll()" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-mono font-bold text-slate-900 bg-white focus:outline-none focus:border-amber-500 text-sm">
+              <span class="text-xs text-slate-500 font-medium">px/mm</span>
+            </div>
+            <p class="text-[10px] text-slate-400">태양 중심에서 원반 가장자리까지의 반지름</p>
+          </div>
+
+          <!-- 2. 흑점 위도에서의 반지름 (r) - 신규 추가! -->
+          <div class="p-3.5 bg-amber-50/50 rounded-xl border border-amber-200 space-y-1">
+            <label for="val-r-lat" class="text-xs font-bold text-amber-900">2. 흑점 위도에서의 반지름 ($r$)</label>
+            <div class="flex items-center gap-2">
+              <input type="number" step="0.1" id="val-r-lat" placeholder="예: 206 또는 213" value="" oninput="calculateAll()" class="w-full px-3 py-1.5 rounded-lg border border-amber-300 font-mono font-bold text-amber-900 bg-white focus:outline-none focus:border-amber-500 text-sm">
+              <span class="text-xs text-amber-700 font-medium">px/mm</span>
+            </div>
+            <p class="text-[10px] text-amber-700">흑점이 위치한 위선에서의 수평 반지름 (미입력 시 $R$ 적용)</p>
+          </div>
+
+          <!-- 3. 1일차 흑점 거리 (d1) -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label for="val-d1" class="text-xs font-bold text-slate-700">3. 1일차 흑점 거리 ($d_1$)</label>
+            <div class="flex items-center gap-2">
+              <input type="number" step="0.1" id="val-d1" placeholder="예: 96.5" value="" oninput="calculateAll()" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-mono font-bold text-slate-900 bg-white focus:outline-none focus:border-amber-500 text-sm">
+              <span class="text-xs text-slate-500 font-medium">px/mm</span>
+            </div>
+            <p class="text-[10px] text-slate-400">중심 자오선에서 1일차 흑점까지의 수평 거리</p>
+          </div>
+
+          <!-- 4. 2일차 흑점 거리 (d2) -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label for="val-d2" class="text-xs font-bold text-slate-700">4. 2일차 흑점 거리 ($d_2$)</label>
+            <div class="flex items-center gap-2">
+              <input type="number" step="0.1" id="val-d2" placeholder="예: 129.3" value="" oninput="calculateAll()" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-mono font-bold text-slate-900 bg-white focus:outline-none focus:border-amber-500 text-sm">
+              <span class="text-xs text-slate-500 font-medium">px/mm</span>
+            </div>
+            <p class="text-[10px] text-slate-400">중심 자오선에서 2일차 흑점까지의 수평 거리</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <활동 1> 삼각비를 이용한 중심 회전각(Θ) 유도 -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+        <span class="px-2.5 py-1 rounded-lg bg-amber-600 text-white text-xs font-black">활동 1</span>
+        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          삼각비를 이용한 중심 회전각($\Theta$) 유도
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- 원본 수학 유도 다이어그램 -->
+        <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col items-center justify-center space-y-2">
+          <div class="text-xs font-bold text-slate-600 self-start flex items-center gap-1.5">
+            <i data-lucide="triangle" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span>수학적 회전각 유도 모형 (활동지 원본 다이어그램)</span>
+          </div>
+          <div class="relative bg-white rounded-xl p-2 border border-slate-200/80 shadow-xs w-full flex justify-center cursor-pointer group" onclick="openDiagramModal()">
+            <img src="../assets/inquiry/sunspots/diagram_math.png" alt="삼각비 회전각 유도 다이어그램" class="max-h-[380px] w-auto object-contain rounded-lg group-hover:scale-[1.01] transition-transform">
+            <div class="absolute bottom-4 right-4 bg-slate-900/80 text-white text-[11px] px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+              <i data-lucide="zoom-in" class="w-3 h-3"></i>
+              크게 보기
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-500 text-center">
+            태양 북극 상공에서 내려다본 투영 모형 : $\sin\theta = \frac{d}{r}$ (또는 $\frac{d}{R}$)
+          </p>
+        </div>
+
+        <!-- 설명 및 학생 작성 서술형 -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-200/80 space-y-2 text-xs sm:text-sm text-slate-700">
+            <h4 class="font-extrabold text-amber-900 flex items-center gap-1.5">
+              <i data-lucide="lightbulb" class="w-4 h-4 text-amber-600"></i>
+              <span>삼각비($\arcsin$)를 적용한 중심 회전각 유도 원리</span>
+            </h4>
+            <p class="leading-relaxed">
+              태양은 3차원 구형이므로, 2차원 평면 사진에 투영될 때 <strong>태양 가장자리(Limb)로 갈수록 원근 투영에 의해 거리가 압축</strong>되어 왜곡됩니다. 따라서 태양 중심으로부터 흑점의 겉보기 수평 거리 $d$와 반지름 $r$ 사이의 직각삼각형에서 $\sin\theta = \frac{d}{r}$ 관계를 유도한 뒤, 역삼각함수($\arcsin$)를 통해 실제 구면 중심각 $\theta$를 구합니다.
+            </p>
+          </div>
+
+          <!-- 실시간 각도 산출 결과 카드 (초기값은 - 로 표시) -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-center">
+              <div class="text-[11px] text-slate-500 font-semibold">1일차 중심각 ($\theta_1$)</div>
+              <div class="text-sm sm:text-base font-black text-amber-700 font-mono mt-0.5" id="calc-theta1">- °</div>
+              <div class="text-[10px] text-slate-400 font-mono">arcsin(d₁ / r)</div>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-center">
+              <div class="text-[11px] text-slate-500 font-semibold">2일차 중심각 ($\theta_2$)</div>
+              <div class="text-sm sm:text-base font-black text-sky-700 font-mono mt-0.5" id="calc-theta2">- °</div>
+              <div class="text-[10px] text-slate-400 font-mono">arcsin(d₂ / r)</div>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-300 text-center shadow-xs">
+              <div class="text-[11px] text-amber-900 font-bold">회전한 중심각 ($\Delta\Theta$)</div>
+              <div class="text-base sm:text-lg font-black text-rose-600 font-mono mt-0.5" id="calc-dtheta">- °</div>
+              <div class="text-[10px] text-amber-700 font-mono">|θ₂ - θ₁|</div>
+            </div>
+          </div>
+
+          <!-- 학생 서술 칸 (빈칸!) -->
+          <div class="space-y-1.5">
+            <label for="act1-ans" class="text-xs font-bold text-slate-700 flex items-center justify-between">
+              <span>✍️ 활동 1 과제 : 그림을 이용하여 회전한 각도($\Theta$)를 수학적으로 나타내보자.</span>
+              <span class="text-[11px] font-normal text-slate-400">수식과 전개 과정을 직접 서술하세요.</span>
+            </label>
+            <textarea id="act1-ans" rows="5" placeholder="여기에 회전한 각도(Θ)를 삼각비(sin, arcsin)를 이용하여 유도하는 과정과 수식을 직접 작성하세요." class="w-full p-3.5 text-xs sm:text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-amber-500 leading-relaxed font-mono bg-white"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <활동 2> 비례식을 이용한 태양의 자전 주기 계산하기 (빈칸 채우기 형태 개편 완료!) -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+        <span class="px-2.5 py-1 rounded-lg bg-sky-600 text-white text-xs font-black">활동 2</span>
+        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          비례식을 이용한 태양의 자전 주기 계산하기
+        </h2>
+      </div>
+
+      <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <strong>&lt;활동 1&gt;</strong>에서 구한 회전각과 관측 자료를 바탕으로 흑점이 한 바퀴($360^\circ$) 자전하는 데 걸리는 시간을 측정해 봅시다. 아래 과제의 <strong>각 단계별 빈칸을 직접 채워가며</strong> 태양의 겉보기 회합 자전 주기와 일일 각속도를 도출해 보세요.
+      </p>
+
+      <!-- 비례식 원리 수식 안내 -->
+      <div class="bg-sky-50/50 p-4 rounded-2xl border border-sky-200/70 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        <div class="space-y-1.5">
+          <div class="font-extrabold text-sky-950 flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-4 h-4 text-sky-600"></i>
+            <span>1. 비례식 원리 공식</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-sky-200 font-mono text-xs sm:text-sm text-center text-slate-800">
+            $$ \Delta\Theta : 360^\circ = \Delta t : T_{\text{syn}} $$
+            $$ T_{\text{syn}} = \frac{360^\circ}{\Delta\Theta} \times \Delta t $$
+          </div>
+        </div>
+        <div class="space-y-1.5">
+          <div class="font-extrabold text-sky-950 flex items-center gap-1.5">
+            <i data-lucide="gauge" class="w-4 h-4 text-sky-600"></i>
+            <span>2. 하루당 회전 각속도 ($\omega$)</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-sky-200 font-mono text-xs sm:text-sm text-center text-slate-800">
+            $$ \omega = \frac{\Delta\Theta}{\Delta t} \quad (^\circ/\text{일}) $$
+            $$ \omega = \frac{360^\circ}{T_{\text{syn}}} \quad (^\circ/\text{일}) $$
+          </div>
+        </div>
+      </div>
+
+      <!-- 과제 탭 : 단계별 빈칸 채우기 폼 (요청하신 핵심 개편!) -->
+      <div class="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200 space-y-5">
+        <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+          <span>✍️ [과제] 관측 자료 기반 단계별 빈칸 채우기</span>
+        </h3>
+
+        <div class="space-y-4 text-xs sm:text-sm text-slate-800">
+          
+          <!-- 1단계: 관측 시간 간격 빈칸 -->
+          <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs font-black inline-flex items-center justify-center">1</span>
+              <span>관측 시간 간격 ($\Delta t$) 산출</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 leading-relaxed">
+              <span>2026년 11월 10일 13시 39분부터 11월 11일 14시 43분까지 경과 시간:</span>
+              <div class="flex items-center gap-1">
+                <input type="text" id="blank-dt-h" placeholder="시간" class="w-16 px-2 py-1 border border-slate-300 rounded text-center font-mono font-bold text-sky-700">
+                <span>시간</span>
+                <input type="text" id="blank-dt-m" placeholder="분" class="w-14 px-2 py-1 border border-slate-300 rounded text-center font-mono font-bold text-sky-700">
+                <span>분</span>
+                <span>=</span>
+                <input type="text" id="blank-dt-total-h" placeholder="총 시간" class="w-20 px-2 py-1 border border-slate-300 rounded text-center font-mono font-bold text-sky-700">
+                <span>시간</span>
+                <span>=</span>
+                <input type="text" id="blank-dt-days" placeholder="일수" class="w-20 px-2 py-1 border border-sky-400 bg-sky-50 rounded text-center font-mono font-bold text-sky-800">
+                <span>일 ($\Delta t$)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2단계: 회전한 중심각 빈칸 -->
+          <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs font-black inline-flex items-center justify-center">2</span>
+              <span>회전한 중심각 ($\Delta\Theta$) 산출</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 leading-relaxed">
+              <span>$\Delta\Theta = |\theta_2 - \theta_1| = $</span>
+              <span>$|$</span>
+              <input type="text" id="blank-theta2" placeholder="θ₂" class="w-16 px-2 py-1 border border-slate-300 rounded text-center font-mono font-bold">
+              <span>$^\circ$</span>
+              <span>$-$</span>
+              <input type="text" id="blank-theta1" placeholder="θ₁" class="w-16 px-2 py-1 border border-slate-300 rounded text-center font-mono font-bold">
+              <span>$^\circ$</span>
+              <span>$| = $</span>
+              <input type="text" id="blank-dtheta" placeholder="ΔΘ" class="w-20 px-2 py-1 border border-amber-400 bg-amber-50 rounded text-center font-mono font-bold text-amber-800">
+              <span>$^\circ$</span>
+            </div>
+          </div>
+
+          <!-- 3단계: 비례식 세우기 빈칸 -->
+          <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs font-black inline-flex items-center justify-center">3</span>
+              <span>비례식 세우기 및 회합 자전 주기 ($T_{\text{syn}}$) 계산</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2 leading-relaxed font-mono">
+                <span>(비례식)</span>
+                <input type="text" id="blank-prop-dtheta" placeholder="회전각(°)" class="w-24 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+                <span>: 360° =</span>
+                <input type="text" id="blank-prop-dt" placeholder="경과일수(일)" class="w-24 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+                <span>: T_syn</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 leading-relaxed font-mono">
+                <span>T_syn = ( 360° /</span>
+                <input type="text" id="blank-prop-denom" placeholder="분모" class="w-20 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+                <span>) ×</span>
+                <input type="text" id="blank-prop-time" placeholder="시간" class="w-20 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+                <span>=</span>
+                <input type="text" id="blank-prop-res" placeholder="결과(일)" class="w-24 px-2 py-1 border border-indigo-400 bg-indigo-50 text-indigo-700 rounded text-center font-black">
+                <span>일</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4단계: 일일 각속도 빈칸 -->
+          <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2">
+            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs font-black inline-flex items-center justify-center">4</span>
+              <span>일일 회전 각속도 ($\omega$) 계산</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 leading-relaxed font-mono">
+              <span>$\omega = \frac{\Delta\Theta}{\Delta t} = $</span>
+              <span>(</span>
+              <input type="text" id="blank-omega-ang" placeholder="회전각(°)" class="w-20 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+              <span>/</span>
+              <input type="text" id="blank-omega-dt" placeholder="경과일수(일)" class="w-20 px-2 py-1 border border-slate-300 rounded text-center font-bold">
+              <span>) =</span>
+              <input type="text" id="blank-omega-res" placeholder="각속도" class="w-24 px-2 py-1 border border-emerald-400 bg-emerald-50 text-emerald-800 rounded text-center font-black">
+              <span>°/일</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 추가 서술 칸 (빈칸!) -->
+        <div class="space-y-1.5 pt-2">
+          <label for="act2-ans" class="text-xs font-bold text-slate-700">
+            <span>📝 추가 풀이 과정 및 고찰 서술:</span>
+          </label>
+          <textarea id="act2-ans" rows="3" placeholder="비례식 유도 과정이나 추가 설명이 필요한 내용을 자유롭게 서술하세요." class="w-full p-3.5 text-xs sm:text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-sky-500 leading-relaxed font-mono bg-white"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- <활동 3> 태양의 자전 주기는 실제 자전주기일까? 실제 태양의 자전 주기를 구해보자. -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+        <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black">활동 3</span>
+        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          태양의 자전 주기는 실제 자전주기일까? 실제 태양의 자전 주기를 구해보자
+        </h2>
+      </div>
+
+      <!-- 탐구 안내문 -->
+      <div class="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-200/70 space-y-3 text-xs sm:text-sm text-slate-700">
+        <h4 class="font-extrabold text-indigo-950 flex items-center gap-1.5">
+          <i data-lucide="help-circle" class="w-4 h-4 text-indigo-600"></i>
+          <span>&lt;활동 2&gt;에서 구한 태양의 자전 주기는 실제와 어떤 차이가 있을까? (Hint. 지구의 공전, 회합주기)</span>
+        </h4>
+        <div class="space-y-2 leading-relaxed">
+          <p>
+            태양이 자전하는 동안 <strong>지구 역시 태양 주위를 하루에 약 $0.986^\circ$ ($360^\circ / 365.25\text{일}$)씩 태양 자전과 같은 방향(반시계 방향)으로 공전</strong>합니다.
+          </p>
+          <p>
+            따라서 지구에서 흑점이 원래 위치에 다시 오기 위해서는 태양이 실제 1회 자전($360^\circ$)을 마친 후, <strong>지구가 공전해간 각도만큼 추가로 더 자전해야만 합니다.</strong> 
+            그 결과 지구에서 관측한 회합 자전 주기($S$)는 실제 태양의 항성 자전 주기($P$)보다 약 2일가량 길게 관측됩니다.
+          </p>
+        </div>
+
+        <!-- 수식 관계 박스 -->
+        <div class="bg-white p-3.5 rounded-xl border border-indigo-200 font-mono text-center space-y-1">
+          <div class="text-xs sm:text-sm text-slate-800">
+            $$ \frac{1}{P} = \frac{1}{S} + \frac{1}{E} \quad (E = 365.25\text{일, 지구 공전 주기}) $$
+          </div>
+          <div class="text-indigo-700 font-bold text-sm sm:text-base">
+            $$ P = \frac{S \times E}{S + E} $$
+          </div>
+        </div>
+      </div>
+
+      <!-- 실제 항성 주기 자동 연산 결과 (초기값 - 표시) -->
+      <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs text-indigo-600 font-bold uppercase tracking-wider">지구 공전 보정 연산</span>
+          <h4 class="text-base sm:text-lg font-black text-slate-900">태양의 실제 항성 자전 주기 ($P$)</h4>
+          <p class="text-xs text-slate-500 mt-0.5">회합 주기 $S$, 지구 공전 주기 $E = 365.25$일 적용 계산 결과</p>
+        </div>
+        <div class="bg-white px-5 py-3 rounded-xl border border-indigo-300 shadow-xs text-right">
+          <div class="text-[11px] text-slate-500 font-semibold">실제 자전 주기 (항성 주기, $P$)</div>
+          <div class="text-xl sm:text-2xl font-black text-indigo-600 font-mono" id="disp-Psid">- 일</div>
+        </div>
+      </div>
+
+      <!-- 학생 서술 칸 (빈칸!) -->
+      <div class="space-y-1.5">
+        <label for="act3-ans" class="text-xs font-bold text-slate-700 flex items-center justify-between">
+          <span>✍️ 활동 3 과제 : 지구 공전 효과를 고려하여 실제 태양의 자전 주기($P$)를 구하는 식을 유도하고 값을 구해보자.</span>
+        </label>
+        <textarea id="act3-ans" rows="4" placeholder="지구의 공전 방향과 태양 자전 방향의 관계, 그리고 회합 주기(S)와 항성 주기(P)의 수식 관계를 직접 서술하세요." class="w-full p-3.5 text-xs sm:text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 leading-relaxed font-mono bg-white"></textarea>
+      </div>
+    </div>
+
+    <!-- <활동 4> 우리가 구한 태양의 자전 주기와 실제 태양의 자전주기 데이터를 비교해보자. -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+        <span class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-black">활동 4</span>
+        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          우리가 구한 태양의 자전 주기와 실제 태양의 자전주기 데이터 비교 및 오차 분석
+        </h2>
+      </div>
+
+      <!-- 데이터 비교 테이블 (모두 빈칸으로 초기화!) -->
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-xs sm:text-sm text-slate-800">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 border-y border-slate-200">
+              <th class="py-3 px-4 text-left font-extrabold w-12">번호</th>
+              <th class="py-3 px-4 text-left font-extrabold">비교 및 분석 항목</th>
+              <th class="py-3 px-4 text-center font-extrabold w-48 sm:w-56">값 (수치 / 결과)</th>
+              <th class="py-3 px-4 text-left font-extrabold text-slate-500 hidden sm:table-cell">비고 / 이론적 근거</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr>
+              <td class="py-3 px-4 font-bold text-slate-500">1</td>
+              <td class="py-3 px-4 font-bold text-slate-900">태양 흑점 사진을 통해 구한 태양의 자전 주기(일)</td>
+              <td class="py-3 px-4 text-center">
+                <input type="number" step="0.01" id="act4-val-calc" placeholder="직접 입력" value="" oninput="calculateError()" class="w-32 px-3 py-1.5 rounded-lg border border-slate-300 font-mono font-bold text-indigo-700 text-center bg-white focus:outline-none focus:border-emerald-500">
+                <span class="text-xs text-slate-500 ml-1">일</span>
+              </td>
+              <td class="py-3 px-4 text-xs text-slate-500 hidden sm:table-cell">활동 3에서 도출된 실제 항성 자전 주기($P$)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-bold text-slate-500">2</td>
+              <td class="py-3 px-4 font-bold text-slate-900">
+                태양의 실제 자전 주기(일)
+                <span class="block text-[11px] font-normal text-slate-500">천문학 공인 이론값 (적도 부근 약 25.0일, 위도 15° 약 25.4일)</span>
+              </td>
+              <td class="py-3 px-4 text-center">
+                <input type="number" step="0.1" id="act4-val-true" placeholder="예: 25.0" value="" oninput="calculateError()" class="w-32 px-3 py-1.5 rounded-lg border border-slate-300 font-mono font-bold text-slate-900 text-center bg-white focus:outline-none focus:border-emerald-500">
+                <span class="text-xs text-slate-500 ml-1">일</span>
+              </td>
+              <td class="py-3 px-4 text-xs text-slate-500 hidden sm:table-cell">태양 적도 기준 표준 항성 자전 주기 ($T_0 \approx 25.05$일)</td>
+            </tr>
+            <tr class="bg-emerald-50/40">
+              <td class="py-3 px-4 font-bold text-emerald-700">3</td>
+              <td class="py-3 px-4 font-bold text-emerald-950">
+                오차율 (%)
+                <span class="block text-[11px] font-mono text-emerald-700">$$\text{오차율} = \frac{|\text{측정값} - \text{실제값}|}{\text{실제값}} \times 100\%$$</span>
+              </td>
+              <td class="py-3 px-4 text-center">
+                <div class="text-base sm:text-lg font-black text-emerald-700 font-mono" id="act4-val-error">
+                  - %
+                </div>
+              </td>
+              <td class="py-3 px-4 text-xs text-emerald-800 font-medium hidden sm:table-cell" id="act4-val-grade">
+                수치를 입력하면 오차율이 자동 계산됩니다.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4. 오차가 발생한 원인 고찰 (빈칸!) -->
+      <div class="space-y-2 pt-2">
+        <label for="act4-ans-cause" class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center justify-between">
+          <span>4. 오차가 발생한 원인 고찰</span>
+          <span class="text-[11px] font-normal text-slate-400">관측 및 수식 유도 과정에서 발생 가능한 오차 요인을 직접 서술하세요.</span>
+        </label>
+        <textarea id="act4-ans-cause" rows="6" placeholder="여기에 오차가 발생한 물리적, 관측적 원인(예: 태양의 위도별 차등 자전, 2차원 평면 투영 측정 한계, 흑점 자체의 고유 운동, 태양 자전축의 기울기 7.25° 등)을 자세히 서술하세요." class="w-full p-4 text-xs sm:text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-emerald-500 leading-relaxed font-mono bg-white"></textarea>
+      </div>
+    </div>
+
+    <!-- 하단 보고서 제출 및 완료 안내 카드 -->
+    <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl no-print">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+          <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+          <span>탐구 활동 완료</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black text-white">활동지 작성을 모두 마치셨나요?</h3>
+        <p class="text-slate-300 text-xs sm:text-sm max-w-xl">
+          학번과 이름을 다시 한번 확인하신 후 <strong>[활동지 인쇄 / PDF 저장]</strong> 버튼을 눌러 인쇄하거나 PDF 파일로 저장하여 선생님께 제출하세요.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <button onclick="saveStudentData()" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border border-slate-700 transition">
+          임시 저장하기
+        </button>
+        <button onclick="window.print()" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all">
+          활동지 인쇄 / PDF 저장
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 다이어그램 확대 모달 (no-print) -->
+  <div id="modal-diagram" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 no-print" onclick="closeDiagramModal()">
+    <div class="bg-white rounded-3xl p-4 sm:p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto space-y-4" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="triangle" class="w-4 h-4 text-amber-600"></i>
+          <span>수학적 회전각 유도 모형 원본</span>
+        </h3>
+        <button onclick="closeDiagramModal()" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="flex justify-center bg-slate-50 rounded-2xl p-2 border border-slate-200">
+        <img src="../assets/inquiry/sunspots/diagram_math.png" alt="삼각비 회전각 유도 다이어그램 원본" class="max-h-[75vh] w-auto object-contain">
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 (인쇄 시 숨김) -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 no-print">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>충북대학교사범대학부설고등학교 행성우주과학 · 지구과학 탐구활동</p>
+      <p class="text-slate-400 mt-1">© 2026 HoHo earth. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 3. 대화형 캔버스 측정 & 자동 연산 스크립트 -->
+  <script>
+    // 오늘 날짜 자동 기입
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+    document.getElementById('student-date').value = dateStr;
+
+    // 관측 시간 간격 상수
+    const DT_HOURS = 25.0667;
+    const DT_DAYS = 1.0444;
+
+    // 태양 중심 좌표 (이미지 원본 기준 467x517)
+    const SUN_CONFIG = {
+      1: { cx: 233.5, cy: 256.8, R: 212.5 },
+      2: { cx: 237.7, cy: 256.3, R: 213.1 }
+    };
+
+    // 측정 상태 변수
+    let currentMode = 'meridian'; // 'meridian' 또는 'ruler'
+    let measuredD1 = null;
+    let measuredD2 = null;
+
+    // 두 점 거리 측정 모드 변수
+    let rulerPoints = {
+      1: [],
+      2: []
+    };
+
+    // 캔버스 초기화 및 리사이징
+    function setupCanvas(dayNum) {
+      const canvas = document.getElementById(`canvas-day${dayNum}`);
+      const img = document.getElementById(`img-day${dayNum}`);
+      if (!canvas || !img) return;
+
+      const rect = img.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      drawCanvas(dayNum);
+    }
+
+    function setMeasureMode(mode) {
+      currentMode = mode;
+      const bM = document.getElementById('btn-mode-meridian');
+      const bR = document.getElementById('btn-mode-ruler');
+      const tipText = document.getElementById('measure-tip-text');
+
+      if (mode === 'meridian') {
+        bM.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-600 text-white shadow-xs';
+        bR.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-700 hover:bg-slate-200';
+        tipText.textContent = '사진 속 흑점을 클릭하면 태양 세로 중심선(파란선)으로부터의 수평 거리(d)가 픽셀 단위로 측정됩니다.';
+      } else {
+        bR.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-xs';
+        bM.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-700 hover:bg-slate-200';
+        tipText.textContent = '사진 위에서 임의의 두 점을 차례로 클릭하면 두 점 사이의 픽셀 거리(반지름, 지름, 위도선 길이 등)가 측정됩니다.';
+      }
+      clearCanvasMeasurements();
+    }
+
+    function clearCanvasMeasurements() {
+      rulerPoints[1] = [];
+      rulerPoints[2] = [];
+      measuredD1 = null;
+      measuredD2 = null;
+      document.getElementById('label-measure-1').textContent = '클릭하여 측정하세요';
+      document.getElementById('label-measure-2').textContent = '클릭하여 측정하세요';
+      drawCanvas(1);
+      drawCanvas(2);
+    }
+
+    // 캔버스 그리기 함수
+    function drawCanvas(dayNum) {
+      const canvas = document.getElementById(`canvas-day${dayNum}`);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const cfg = SUN_CONFIG[dayNum];
+      const scaleX = canvas.width / 467.0;
+      const scaleY = canvas.height / 517.0;
+
+      const scx = cfg.cx * scaleX;
+      const scy = cfg.cy * scaleY;
+      const sR = cfg.R * ((scaleX + scaleY) / 2);
+
+      // 1. 태양 가이드 중심선 및 원반 테두리
+      ctx.save();
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)'; // Sky blue
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+
+      // 가로 적도선
+      ctx.beginPath();
+      ctx.moveTo(scx - sR, scy);
+      ctx.lineTo(scx + sR, scy);
+      ctx.stroke();
+
+      // 세로 자오선 (중심선)
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(scx, scy - sR);
+      ctx.lineTo(scx, scy + sR);
+      ctx.stroke();
+
+      // 태양 원반 테두리
+      ctx.setLineDash([]);
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)'; // Amber
+      ctx.beginPath();
+      ctx.arc(scx, scy, sR, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.restore();
+
+      // 2. 모드별 측정 표시
+      if (currentMode === 'meridian') {
+        const val = dayNum === 1 ? measuredD1 : measuredD2;
+        if (val !== null) {
+          const pt = dayNum === 1 ? clickPoint1 : clickPoint2;
+          if (pt) {
+            // 중심선에서 흑점까지 수평 측정선
+            ctx.save();
+            ctx.strokeStyle = '#ef4444'; // Red
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(scx, pt.y);
+            ctx.lineTo(pt.x, pt.y);
+            ctx.stroke();
+
+            // 흑점 위치 십자선 마커
+            ctx.strokeStyle = '#facc15'; // Yellow
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+            ctx.moveTo(pt.x - 10, pt.y);
+            ctx.lineTo(pt.x + 10, pt.y);
+            ctx.moveTo(pt.x, pt.y - 10);
+            ctx.lineTo(pt.x, pt.y + 10);
+            ctx.stroke();
+
+            // 거리 텍스트 박스
+            const midX = (scx + pt.x) / 2;
+            ctx.fillStyle = '#b91c1c';
+            ctx.font = 'bold 12px Pretendard, sans-serif';
+            ctx.fillText(`d = ${val.toFixed(1)} px`, midX - 25, pt.y - 8);
+            ctx.restore();
+          }
+        }
+      } else {
+        // Ruler Mode (두 점 간 거리)
+        const pts = rulerPoints[dayNum];
+        ctx.save();
+        pts.forEach((p, idx) => {
+          ctx.fillStyle = idx === 0 ? '#38bdf8' : '#f59e0b';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 5, 0, 2 * Math.PI);
+          ctx.fill();
+        });
+
+        if (pts.length === 2) {
+          ctx.strokeStyle = '#818cf8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(pts[0].x, pts[0].y);
+          ctx.lineTo(pts[1].x, pts[1].y);
+          ctx.stroke();
+
+          const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) / scaleX;
+          const midX = (pts[0].x + pts[1].x) / 2;
+          const midY = (pts[0].y + pts[1].y) / 2;
+
+          ctx.fillStyle = '#4338ca';
+          ctx.font = 'bold 12px Pretendard, sans-serif';
+          ctx.fillText(`L = ${dist.toFixed(1)} px`, midX + 8, midY);
+        }
+        ctx.restore();
+      }
+    }
+
+    let clickPoint1 = null;
+    let clickPoint2 = null;
+
+    // 캔버스 클릭 이벤트 핸들러
+    function handleCanvasClick(e, dayNum) {
+      const canvas = document.getElementById(`canvas-day${dayNum}`);
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const scaleX = canvas.width / 467.0;
+      const cfg = SUN_CONFIG[dayNum];
+      const scx = cfg.cx * scaleX;
+
+      if (currentMode === 'meridian') {
+        const rawDist = Math.abs(x - scx) / scaleX;
+        if (dayNum === 1) {
+          measuredD1 = rawDist;
+          clickPoint1 = { x, y };
+          document.getElementById('label-measure-1').textContent = `d₁ = ${rawDist.toFixed(1)} px`;
+        } else {
+          measuredD2 = rawDist;
+          clickPoint2 = { x, y };
+          document.getElementById('label-measure-2').textContent = `d₂ = ${rawDist.toFixed(1)} px`;
+        }
+        drawCanvas(dayNum);
+      } else {
+        // Ruler Mode
+        const pts = rulerPoints[dayNum];
+        if (pts.length >= 2) {
+          pts.length = 0;
+        }
+        pts.push({ x, y });
+
+        if (pts.length === 2) {
+          const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) / scaleX;
+          const label = document.getElementById(`label-measure-${dayNum}`);
+          label.textContent = `두 점 간 거리: ${dist.toFixed(1)} px`;
+        } else {
+          document.getElementById(`label-measure-${dayNum}`).textContent = `첫 번째 점 지정됨 (두 번째 점 클릭)`;
+        }
+        drawCanvas(dayNum);
+      }
+    }
+
+    function applyMeasuredToInput(dayNum) {
+      if (currentMode === 'meridian') {
+        const val = dayNum === 1 ? measuredD1 : measuredD2;
+        if (val !== null) {
+          document.getElementById(`val-d${dayNum}`).value = val.toFixed(1);
+          calculateAll();
+        } else {
+          alert(`${dayNum}일차 사진에서 흑점 위치를 먼저 클릭해 주세요.`);
+        }
+      } else {
+        // Ruler mode: apply measured distance to R or r
+        const pts = rulerPoints[dayNum];
+        if (pts.length === 2) {
+          const canvas = document.getElementById(`canvas-day${dayNum}`);
+          const scaleX = canvas.width / 467.0;
+          const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) / scaleX;
+          const target = prompt(`측정된 거리 ${dist.toFixed(1)} px를 어디에 입력하시겠습니까?\n1: 태양 반지름(R)\n2: 흑점 위도 반지름(r)`, '1');
+          if (target === '1') {
+            document.getElementById('val-R').value = dist.toFixed(1);
+          } else if (target === '2') {
+            document.getElementById('val-r-lat').value = dist.toFixed(1);
+          }
+          calculateAll();
+        } else {
+          alert('두 점을 먼저 클릭하여 거리를 측정해 주세요.');
+        }
+      }
+    }
+
+    // 전체 수식 실시간 계산 함수 (입력값이 있을 때만 계산, 초기에는 - 표시)
+    function calculateAll() {
+      const valR = parseFloat(document.getElementById('val-R').value);
+      const valRLat = parseFloat(document.getElementById('val-r-lat').value);
+      const vald1 = parseFloat(document.getElementById('val-d1').value);
+      const vald2 = parseFloat(document.getElementById('val-d2').value);
+
+      // 반지름 결정: 흑점 위도 반지름 r이 입력되었으면 r 사용, 없으면 원반 반지름 R 사용
+      const r = (!isNaN(valRLat) && valRLat > 0) ? valRLat : valR;
+
+      if (!isNaN(r) && r > 0 && !isNaN(vald1) && !isNaN(vald2)) {
+        // 1. 삼각비 arcsin 계산 (라디안 -> 도)
+        const ratio1 = Math.min(Math.max(vald1 / r, -1.0), 1.0);
+        const ratio2 = Math.min(Math.max(vald2 / r, -1.0), 1.0);
+
+        const rad1 = Math.asin(ratio1);
+        const rad2 = Math.asin(ratio2);
+
+        const deg1 = rad1 * (180.0 / Math.PI);
+        const deg2 = rad2 * (180.0 / Math.PI);
+
+        const dtheta = Math.abs(deg2 - deg1);
+
+        document.getElementById('calc-theta1').textContent = `${deg1.toFixed(2)}°`;
+        document.getElementById('calc-theta2').textContent = `${deg2.toFixed(2)}°`;
+        document.getElementById('calc-dtheta').textContent = `${dtheta.toFixed(2)}°`;
+
+        // 활동 2 빈칸 일부 자동 연동 보조 (학생이 비우거나 입력할 수 있음)
+        if (!document.getElementById('blank-theta1').value) document.getElementById('blank-theta1').value = deg1.toFixed(2);
+        if (!document.getElementById('blank-theta2').value) document.getElementById('blank-theta2').value = deg2.toFixed(2);
+        if (!document.getElementById('blank-dtheta').value) document.getElementById('blank-dtheta').value = dtheta.toFixed(2);
+        if (!document.getElementById('blank-prop-dtheta').value) document.getElementById('blank-prop-dtheta').value = dtheta.toFixed(2);
+        if (!document.getElementById('blank-prop-denom').value) document.getElementById('blank-prop-denom').value = dtheta.toFixed(2);
+        if (!document.getElementById('blank-omega-ang').value) document.getElementById('blank-omega-ang').value = dtheta.toFixed(2);
+
+        // 시간 빈칸 보조
+        if (!document.getElementById('blank-dt-h').value) document.getElementById('blank-dt-h').value = "25";
+        if (!document.getElementById('blank-dt-m').value) document.getElementById('blank-dt-m').value = "4";
+        if (!document.getElementById('blank-dt-total-h').value) document.getElementById('blank-dt-total-h').value = DT_HOURS.toFixed(3);
+        if (!document.getElementById('blank-dt-days').value) document.getElementById('blank-dt-days').value = DT_DAYS.toFixed(3);
+        if (!document.getElementById('blank-prop-dt').value) document.getElementById('blank-prop-dt').value = DT_DAYS.toFixed(3);
+        if (!document.getElementById('blank-prop-time').value) document.getElementById('blank-prop-time').value = DT_DAYS.toFixed(3);
+        if (!document.getElementById('blank-omega-dt').value) document.getElementById('blank-omega-dt').value = DT_DAYS.toFixed(3);
+
+        if (dtheta > 0) {
+          const omega = dtheta / DT_DAYS;
+          const Tsyn = (360.0 / dtheta) * DT_DAYS;
+
+          if (!document.getElementById('blank-prop-res').value) document.getElementById('blank-prop-res').value = Tsyn.toFixed(2);
+          if (!document.getElementById('blank-omega-res').value) document.getElementById('blank-omega-res').value = omega.toFixed(2);
+
+          // 3. 지구 공전 보정 (항성 주기 P)
+          const E = 365.256;
+          const Psid = (Tsyn * E) / (Tsyn + E);
+
+          document.getElementById('disp-Psid').textContent = `${Psid.toFixed(2)} 일`;
+          if (!document.getElementById('act4-val-calc').value) {
+            document.getElementById('act4-val-calc').value = Psid.toFixed(2);
+          }
+        }
+      } else {
+        document.getElementById('calc-theta1').textContent = `- °`;
+        document.getElementById('calc-theta2').textContent = `- °`;
+        document.getElementById('calc-dtheta').textContent = `- °`;
+        document.getElementById('disp-Psid').textContent = `- 일`;
+      }
+
+      calculateError();
+    }
+
+    // 오차율 계산 함수
+    function calculateError() {
+      const calcVal = parseFloat(document.getElementById('act4-val-calc').value);
+      const trueVal = parseFloat(document.getElementById('act4-val-true').value);
+
+      if (!isNaN(calcVal) && !isNaN(trueVal) && trueVal > 0) {
+        const err = (Math.abs(calcVal - trueVal) / trueVal) * 100.0;
+        document.getElementById('act4-val-error').textContent = `${err.toFixed(2)} %`;
+        
+        const grade = document.getElementById('act4-val-grade');
+        if (err <= 5.0) {
+          grade.textContent = `✅ 매우 높은 정밀도 (오차율 5% 이내)`;
+          grade.className = 'py-3 px-4 text-xs text-emerald-800 font-bold hidden sm:table-cell';
+        } else if (err <= 10.0) {
+          grade.textContent = `👍 양호한 측정치 (오차율 10% 이내)`;
+          grade.className = 'py-3 px-4 text-xs text-blue-800 font-bold hidden sm:table-cell';
+        } else {
+          grade.textContent = `⚠️ 오차가 다소 큼 (측정치 재검토 권장)`;
+          grade.className = 'py-3 px-4 text-xs text-amber-800 font-medium hidden sm:table-cell';
+        }
+      } else {
+        document.getElementById('act4-val-error').textContent = `- %`;
+        document.getElementById('act4-val-grade').textContent = `수치를 입력하면 오차율이 자동 계산됩니다.`;
+        document.getElementById('act4-val-grade').className = 'py-3 px-4 text-xs text-slate-500 hidden sm:table-cell';
+      }
+    }
+
+    // 다이어그램 모달 열기/닫기
+    function openDiagramModal() {
+      document.getElementById('modal-diagram').classList.remove('hidden');
+      document.getElementById('modal-diagram').classList.add('flex');
+    }
+    function closeDiagramModal() {
+      document.getElementById('modal-diagram').classList.add('hidden');
+      document.getElementById('modal-diagram').classList.remove('flex');
+    }
+
+    // localStorage 자동 저장 / 불러오기
+    const STORAGE_KEY = 'hohoearth_sunspot_worksheet_data_v2';
+    function saveStudentData() {
+      const data = {
+        studentId: document.getElementById('student-id').value,
+        studentName: document.getElementById('student-name').value,
+        studentDate: document.getElementById('student-date').value,
+        valR: document.getElementById('val-R').value,
+        valrLat: document.getElementById('val-r-lat').value,
+        vald1: document.getElementById('val-d1').value,
+        vald2: document.getElementById('val-d2').value,
+        act1Ans: document.getElementById('act1-ans').value,
+        blankDtH: document.getElementById('blank-dt-h').value,
+        blankDtM: document.getElementById('blank-dt-m').value,
+        blankDtTotalH: document.getElementById('blank-dt-total-h').value,
+        blankDtDays: document.getElementById('blank-dt-days').value,
+        blankTheta1: document.getElementById('blank-theta1').value,
+        blankTheta2: document.getElementById('blank-theta2').value,
+        blankDtheta: document.getElementById('blank-dtheta').value,
+        blankPropDtheta: document.getElementById('blank-prop-dtheta').value,
+        blankPropDt: document.getElementById('blank-prop-dt').value,
+        blankPropDenom: document.getElementById('blank-prop-denom').value,
+        blankPropTime: document.getElementById('blank-prop-time').value,
+        blankPropRes: document.getElementById('blank-prop-res').value,
+        blankOmegaAng: document.getElementById('blank-omega-ang').value,
+        blankOmegaDt: document.getElementById('blank-omega-dt').value,
+        blankOmegaRes: document.getElementById('blank-omega-res').value,
+        act2Ans: document.getElementById('act2-ans').value,
+        act3Ans: document.getElementById('act3-ans').value,
+        act4Calc: document.getElementById('act4-val-calc').value,
+        act4True: document.getElementById('act4-val-true').value,
+        act4Cause: document.getElementById('act4-ans-cause').value
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert('활동지 작성 내용이 브라우저에 임시 저장되었습니다!');
+    }
+
+    function loadStudentData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        if (data.studentId) document.getElementById('student-id').value = data.studentId;
+        if (data.studentName) document.getElementById('student-name').value = data.studentName;
+        if (data.studentDate) document.getElementById('student-date').value = data.studentDate;
+        if (data.valR) document.getElementById('val-R').value = data.valR;
+        if (data.valrLat) document.getElementById('val-r-lat').value = data.valrLat;
+        if (data.vald1) document.getElementById('val-d1').value = data.vald1;
+        if (data.vald2) document.getElementById('val-d2').value = data.vald2;
+        if (data.act1Ans) document.getElementById('act1-ans').value = data.act1Ans;
+        if (data.blankDtH) document.getElementById('blank-dt-h').value = data.blankDtH;
+        if (data.blankDtM) document.getElementById('blank-dt-m').value = data.blankDtM;
+        if (data.blankDtTotalH) document.getElementById('blank-dt-total-h').value = data.blankDtTotalH;
+        if (data.blankDtDays) document.getElementById('blank-dt-days').value = data.blankDtDays;
+        if (data.blankTheta1) document.getElementById('blank-theta1').value = data.blankTheta1;
+        if (data.blankTheta2) document.getElementById('blank-theta2').value = data.blankTheta2;
+        if (data.blankDtheta) document.getElementById('blank-dtheta').value = data.blankDtheta;
+        if (data.blankPropDtheta) document.getElementById('blank-prop-dtheta').value = data.blankPropDtheta;
+        if (data.blankPropDt) document.getElementById('blank-prop-dt').value = data.blankPropDt;
+        if (data.blankPropDenom) document.getElementById('blank-prop-denom').value = data.blankPropDenom;
+        if (data.blankPropTime) document.getElementById('blank-prop-time').value = data.blankPropTime;
+        if (data.blankPropRes) document.getElementById('blank-prop-res').value = data.blankPropRes;
+        if (data.blankOmegaAng) document.getElementById('blank-omega-ang').value = data.blankOmegaAng;
+        if (data.blankOmegaDt) document.getElementById('blank-omega-dt').value = data.blankOmegaDt;
+        if (data.blankOmegaRes) document.getElementById('blank-omega-res').value = data.blankOmegaRes;
+        if (data.act2Ans) document.getElementById('act2-ans').value = data.act2Ans;
+        if (data.act3Ans) document.getElementById('act3-ans').value = data.act3Ans;
+        if (data.act4Calc) document.getElementById('act4-val-calc').value = data.act4Calc;
+        if (data.act4True) document.getElementById('act4-val-true').value = data.act4True;
+        if (data.act4Cause) document.getElementById('act4-ans-cause').value = data.act4Cause;
+        calculateAll();
+      } catch (e) {
+        console.error('Failed to load saved data:', e);
+      }
+    }
+
+    function resetData() {
+      if (confirm('작성하신 모든 내용을 초기화하시겠습니까?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+        inputs.forEach(inp => {
+          if (inp.id !== 'student-date') inp.value = '';
+        });
+        clearCanvasMeasurements();
+        calculateAll();
+      }
+    }
+
+    window.addEventListener('load', function() {
+      lucide.createIcons();
+
+      // KaTeX 수식 자동 렌더링 호출
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+
+      // 캔버스 클릭 이벤트 리스너 등록
+      const c1 = document.getElementById('canvas-day1');
+      const c2 = document.getElementById('canvas-day2');
+      if (c1) c1.addEventListener('click', (e) => handleCanvasClick(e, 1));
+      if (c2) c2.addEventListener('click', (e) => handleCanvasClick(e, 2));
+
+      // 이미지 로드 후 캔버스 초기화
+      const img1 = document.getElementById('img-day1');
+      const img2 = document.getElementById('img-day2');
+      if (img1.complete) setupCanvas(1); else img1.onload = () => setupCanvas(1);
+      if (img2.complete) setupCanvas(2); else img2.onload = () => setupCanvas(2);
+
+      loadStudentData();
+      calculateAll();
+    });
+
+    window.addEventListener('resize', () => {
+      setupCanvas(1);
+      setupCanvas(2);
+    });
+  </script>
+</body>
+</html>

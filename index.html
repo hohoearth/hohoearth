@@ -161,7 +161,7 @@
           <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">수업자료</div>
         </div>
         <div onclick="filterAndScrollTo('project')" class="cursor-pointer group p-3 rounded-2xl hover:bg-slate-100/80 transition-all">
-          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">4</div>
+          <div class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:scale-105 transition-transform" id="stat-projects">5</div>
           <div class="text-[11px] font-bold tracking-wider uppercase text-slate-500 group-hover:text-black mt-1">탐구 활동</div>
         </div>
         <div onclick="filterAndScrollTo('tools')" class="cursor-pointer group p-3 rounded-2xl hover:bg-emerald-50/80 transition-all">
@@ -476,6 +476,71 @@
           <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
             <span>KMA Open Data · Track &amp; Semicircle Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쇼케이스 5: [행성우주과학 탐구] 흑점 이동을 통한 태양의 자전 주기 및 각속도 측정 -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+        <!-- 좌측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10">
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-amber-50 text-amber-700 border border-amber-200/60">
+                행성우주과학 탐구 활동
+              </span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                정밀 픽셀 실측 캔버스
+              </span>
+              <span class="text-xs font-mono text-slate-500 font-semibold">2027 탐구활동</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              흑점 이동을 통한 태양의 자전 주기 및 각속도 측정
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              시간 간격을 두고 관측된 태양 투영 관측 사진에서 동일한 <strong>흑점의 위치 변화를 정밀 픽셀 캔버스로 실측</strong>하고, 삼각함수와 기하학적 투영 관계를 적용하여 흑점의 실제 이동 중심각(&Delta;&Theta;)을 산출합니다. 이를 통해 <strong>태양의 항성 자전 주기(<em>T<sub>sid</sub></em>)와 일일 각속도(&omega;)</strong>를 계산하고 기체 상태인 <strong>태양의 위도별 차등 자전(Differential Rotation)</strong> 특성을 탐구합니다.
+            </p>
+          </div>
+
+          <!-- 하단 링크 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="grid grid-cols-3 gap-3 text-xs text-slate-500">
+              <div><strong class="text-slate-900 block text-sm font-bold">인터랙티브</strong> 마우스 픽셀 실측 도구</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">단계별 빈칸</strong> 비례식 &amp; 각속도 계산</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">차등 자전</strong> 유체 태양 물리 분석</div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <a 
+                href="activities/solar-rotation-sunspots.html" 
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase font-bold inline-flex items-center gap-2 shadow-md shadow-indigo-100"
+              >
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>탐구 가이드 &amp; 온라인 활동지 시작</span>
+              </a>
+              <a 
+                href="downloads/흑점을_이용한_태양_자전_주기_측정_탐구.hwpx" 
+                download
+                class="px-4 py-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors inline-flex items-center gap-2 border border-slate-200/80"
+              >
+                <i data-lucide="file-text" class="w-4 h-4 text-amber-600"></i>
+                <span>활동지 양식 (.hwpx)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto bg-slate-950 flex items-center justify-center p-6">
+          <img 
+            src="assets/inquiry/sunspots/sunspot_rotation_thumb.png" 
+            alt="Solar Rotation Sunspots Thumbnail" 
+            class="w-full h-full object-cover rounded-2xl border border-slate-800 shadow-2xl group-hover:scale-[1.02] transition-transform duration-700"
+          />
+          <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>Pixel Measurement &amp; Differential Rotation</span>
           </div>
         </div>
       </div>
