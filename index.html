@@ -670,6 +670,87 @@
         </div>
       </div>
 
+      <!-- 🧪 교사 직접 개발 웹앱: 과학실 시약 관리 프로그램 -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-xl space-y-8 relative overflow-hidden">
+        <div class="absolute -right-24 -top-24 w-80 h-80 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="space-y-4 max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white tracking-wider">교사 직접 개발 · 무료 웹앱</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">설치 · 로그인 없이 바로</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">휴대폰 · 태블릿 · PC</span>
+            </div>
+
+            <div class="flex items-center gap-4 pt-1">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                <i data-lucide="flask-conical" class="w-7 h-7"></i>
+              </div>
+              <div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight break-keep">과학실 시약 관리 프로그램</h3>
+                <p class="text-xs sm:text-sm text-slate-500 font-mono mt-0.5">MSDS Search · Waste Sorting · Chemical Ledger</p>
+              </div>
+            </div>
+
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed pt-1 break-keep">
+              시약의 <strong class="text-slate-900">MSDS 검색</strong>, 실험 뒤 <strong class="text-slate-900">폐수를 어느 통에 버릴지</strong> 판정, 매년 손으로 쓰던 <strong class="text-slate-900">약품 출납대장</strong>까지 휴대폰 하나로 해결하는 과학실 안전 웹앱입니다. 구글 시트를 연결하면 우리 학교 선생님들과 같은 대장을 함께 기록할 수 있어요.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-rose-600">시약 MSDS 검색</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">256종 · GHS · 응급조치</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-amber-600">폐수 처리</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">폐액통 자동 판정</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-indigo-600">약품 대장</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">출납 기록 · 인쇄 · 공유</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-3">
+              <a href="https://chemicalmanagementapp.netlify.app/" target="_blank" rel="noopener"
+                class="px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm tracking-wide transition shadow-lg shadow-emerald-600/25 flex items-center gap-2.5">
+                <i data-lucide="external-link" class="w-5 h-5"></i>
+                <span>앱 바로 사용하기</span>
+              </a>
+              <a href="tools/msds-guide.html"
+                class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>자세한 사용 가이드</span>
+              </a>
+            </div>
+            <div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 pt-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>기록은 내 기기 또는 우리 학교 구글 시트에만 저장됩니다.</span>
+            </div>
+          </div>
+
+          <div class="lg:w-96 shrink-0 space-y-3">
+            <a href="tools/msds-guide.html" class="block rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-[#f7f7f4] group relative">
+              <img src="assets/programs/msds/screen_waste.jpg" alt="과학실 시약 관리 프로그램 폐수 처리 화면" class="w-full h-56 object-cover object-top group-hover:scale-105 transition duration-500" loading="lazy" />
+              <div class="absolute bottom-3 left-3 bg-slate-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                <i data-lucide="smartphone" class="w-3.5 h-3.5 text-emerald-400"></i> 실제 앱 화면
+              </div>
+            </a>
+            <div class="grid grid-cols-3 gap-2">
+              <a href="tools/msds-guide.html#search" class="rounded-xl overflow-hidden border border-slate-200 bg-[#f7f7f4]" title="시약 MSDS 검색">
+                <img src="assets/programs/msds/screen_detail.jpg" alt="MSDS 상세 화면" class="w-full h-14 object-cover object-top hover:scale-110 transition" loading="lazy" />
+              </a>
+              <a href="tools/msds-guide.html#ledger" class="rounded-xl overflow-hidden border border-slate-200 bg-[#f7f7f4]" title="약품 대장 관리">
+                <img src="assets/programs/msds/screen_inventory.jpg" alt="약품 대장 화면" class="w-full h-14 object-cover object-top hover:scale-110 transition" loading="lazy" />
+              </a>
+              <a href="tools/msds-guide.html#ledger" class="rounded-xl overflow-hidden border border-slate-200 bg-[#f7f7f4]" title="출납 기록">
+                <img src="assets/programs/msds/screen_ledger.jpg" alt="출납 기록 화면" class="w-full h-14 object-cover object-top hover:scale-110 transition" loading="lazy" />
+              </a>
+            </div>
+            <div class="text-[10px] text-center text-slate-400">▲ 좌측부터 MSDS 상세 / 약품 대장 / 출납 기록</div>
+          </div>
+        </div>
+      </div>
+
       <!-- 도구 2종 카드 그리드 (간편 웹 유틸리티) -->
       <div class="space-y-4">
         <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>과학실 시약 관리 프로그램 사용 가이드 | HoHo earth</title>
+  <meta name="description" content="학교 과학실 시약의 MSDS 검색, 폐수 처리 분류, 약품 출납대장 관리를 돕는 무료 웹앱 사용 가이드" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="과학실 시약 관리 프로그램 사용 가이드" />
+  <meta property="og:description" content="MSDS 검색 · 폐수 처리 분류 · 약품 출납대장 관리를 휴대폰으로. 전국 과학 선생님을 위한 무료 웹앱" />
+  <meta property="og:image" content="https://hohoearth.github.io/hohoearth/assets/programs/msds/thumb.jpg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .kbd { display:inline-block; padding:1px 8px; margin:0 1px; border:1px solid #cbd5e1; border-bottom-width:2px; border-radius:6px; background:#fff; font-size:.85em; font-weight:700; color:#334155; white-space:nowrap; }
+    .shot { border:1px solid #e2e8f0; border-radius:18px; box-shadow:0 10px 30px -12px rgba(15,23,42,.25); cursor:zoom-in; background:#f7f7f4; width:100%; }
+    .step-num { flex-shrink:0; width:28px; height:28px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; }
+    .toc a.active { color:#047857; background:#ecfdf5; }
+    section[id] { scroll-margin-top: 84px; }
+    @media print { header, .toc-col, .no-print { display:none !important; } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <!-- 상단 바 -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <a href="../index.html#lab" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i><span>AI활용 도구로</span>
+      </a>
+      <div class="text-sm font-bold text-slate-700 truncate hidden sm:block">과학실 시약 관리 프로그램 · 사용 가이드</div>
+      <a href="https://chemicalmanagementapp.netlify.app/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shrink-0">
+        <i data-lucide="external-link" class="w-4 h-4"></i><span>앱 열기</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+      <div class="space-y-5">
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-500 text-slate-950">교사 직접 개발 · 무료</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">설치 없이 웹에서 바로</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">휴대폰 · 태블릿 · PC</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight break-keep">과학실 시약 관리 프로그램<br><span class="text-emerald-300">사용 가이드</span></h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed break-keep max-w-2xl">
+          시약의 <b class="text-white">MSDS 검색</b>, 실험 뒤 <b class="text-white">폐수를 어느 통에 버릴지</b>, 그리고 매년 손으로 쓰던 <b class="text-white">약품 출납대장</b>까지.
+          과학실 안전 업무를 휴대폰 하나로 해결하도록 만든 무료 웹앱입니다. 회원가입이나 로그인 없이 주소만 열면 바로 쓸 수 있어요.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="https://chemicalmanagementapp.netlify.app/" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition shadow-lg shadow-emerald-500/30 inline-flex items-center gap-2">
+            <i data-lucide="flask-conical" class="w-5 h-5"></i>앱 바로 사용하기
+          </a>
+          <a href="#start" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
+            <i data-lucide="book-open" class="w-4 h-4"></i>처음이세요? 시작하기
+          </a>
+          <button type="button" id="copyLink" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
+            <i data-lucide="link" class="w-4 h-4"></i><span>앱 주소 복사</span>
+          </button>
+        </div>
+        <p class="text-xs text-slate-400 font-mono pt-1">https://chemicalmanagementapp.netlify.app</p>
+      </div>
+      <div class="bg-white rounded-3xl p-5 text-center shadow-2xl w-[220px] mx-auto">
+        <div id="qr" class="mx-auto w-[180px] h-[180px]"></div>
+        <div class="text-slate-900 font-black text-sm mt-3">휴대폰 카메라로 찍으면<br>바로 열려요</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+
+    <!-- 목차 -->
+    <aside class="toc-col hidden lg:block">
+      <nav class="toc sticky top-24 space-y-1 text-sm">
+        <div class="text-[11px] font-black tracking-wider text-slate-400 uppercase px-3 pb-2">목차</div>
+        <a href="#overview" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">한눈에 보기</a>
+        <a href="#start" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">1. 시작하기 · 설치</a>
+        <a href="#search" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">2. 시약 MSDS 검색</a>
+        <a href="#waste" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">3. 폐수 처리</a>
+        <a href="#ledger" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">4. 약품 대장 관리</a>
+        <a href="#school" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 학교 선생님과 함께 쓰기</a>
+        <a href="#more" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">6. 더보기 · 백업</a>
+        <a href="#faq" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">7. 자주 묻는 질문</a>
+        <a href="#notice" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">유의사항</a>
+      </nav>
+    </aside>
+
+    <main class="space-y-20 min-w-0">
+
+      <!-- 한눈에 보기 -->
+      <section id="overview" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Overview</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">한눈에 보기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">앱은 위쪽의 <b>탭 3개</b>와 오른쪽 위 <span class="kbd">☰</span> <b>더보기</b> 메뉴로 이루어져 있습니다.</p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <a href="#search" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition">
+            <div class="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="search" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">시약 MSDS 검색</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">기본 약품 256종. 이름·화학식·CAS 번호로 찾고, GHS 그림문자·유해 문구·응급조치·보관법·MSDS 원문까지 확인.</p>
+          </a>
+          <a href="#waste" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="beaker" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">폐수 처리</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">비커에 섞인 약품을 담으면 산·알칼리·무기계·유기계·할로겐·고체 중 어느 통인지와 판정 근거, 혼합 위험을 알려 줍니다.</p>
+          </a>
+          <a href="#ledger" class="block bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition">
+            <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">약품 대장 관리</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">입고·사용·재고 실사를 기록하면 재고가 자동 계산되고, 학년도별 출납대장을 그대로 인쇄(PDF)할 수 있습니다.</p>
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-3 text-sm">
+          <div class="flex gap-3 items-start bg-emerald-50 border border-emerald-100 rounded-2xl p-4"><i data-lucide="users" class="w-5 h-5 text-emerald-600 shrink-0"></i><span class="break-keep"><b>학교 공유</b> — 구글 시트 하나로 우리 학교 선생님들이 같은 대장을 함께 기록</span></div>
+          <div class="flex gap-3 items-start bg-emerald-50 border border-emerald-100 rounded-2xl p-4"><i data-lucide="wifi-off" class="w-5 h-5 text-emerald-600 shrink-0"></i><span class="break-keep"><b>오프라인</b> — 홈 화면에 설치하면 인터넷이 없어도 검색·폐수 분류 가능</span></div>
+          <div class="flex gap-3 items-start bg-emerald-50 border border-emerald-100 rounded-2xl p-4"><i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 shrink-0"></i><span class="break-keep"><b>로그인 없음</b> — 기록은 내 기기 또는 우리 학교 구글 시트에만 저장</span></div>
+        </div>
+      </section>
+
+      <!-- 1. 시작하기 -->
+      <section id="start" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 1</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">시작하기 · 휴대폰에 설치하기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">따로 설치 파일을 받을 필요가 없습니다. 아래 주소를 열면 바로 사용할 수 있고, <b>홈 화면에 추가</b>하면 일반 앱처럼 아이콘이 생깁니다.</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center gap-3 justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-500">앱 주소</div>
+            <a href="https://chemicalmanagementapp.netlify.app/" target="_blank" rel="noopener" class="font-mono font-bold text-emerald-700 break-all">https://chemicalmanagementapp.netlify.app</a>
+          </div>
+          <button type="button" data-copy-app class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold transition">주소 복사</button>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5">
+            <div class="font-black text-slate-900 flex items-center gap-2"><i data-lucide="smartphone" class="w-5 h-5 text-slate-500"></i>아이폰 (사파리)</div>
+            <ol class="mt-3 space-y-2 text-sm text-slate-700 list-decimal pl-5 break-keep">
+              <li><b>사파리</b>로 앱 주소를 엽니다. (카카오톡 안의 브라우저가 아니라 사파리에서)</li>
+              <li>아래쪽 <b>공유 버튼</b>(네모에 위쪽 화살표)을 누릅니다.</li>
+              <li><b>"홈 화면에 추가"</b> → <b>추가</b></li>
+            </ol>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5">
+            <div class="font-black text-slate-900 flex items-center gap-2"><i data-lucide="smartphone" class="w-5 h-5 text-slate-500"></i>안드로이드 (크롬)</div>
+            <ol class="mt-3 space-y-2 text-sm text-slate-700 list-decimal pl-5 break-keep">
+              <li><b>크롬</b>으로 앱 주소를 엽니다.</li>
+              <li>오른쪽 위 메뉴 <span class="kbd">⋮</span> 를 누릅니다.</li>
+              <li><b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 누릅니다.</li>
+            </ol>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5">
+            <div class="font-black text-slate-900 flex items-center gap-2"><i data-lucide="monitor" class="w-5 h-5 text-slate-500"></i>컴퓨터 (크롬·엣지)</div>
+            <ol class="mt-3 space-y-2 text-sm text-slate-700 list-decimal pl-5 break-keep">
+              <li>앱 주소를 엽니다. 이대로 써도 됩니다.</li>
+              <li>주소창 오른쪽의 <b>설치 아이콘</b>을 누르면 바탕화면 앱처럼 따로 열 수 있어요.</li>
+              <li>대장 인쇄·엑셀 불러오기는 컴퓨터가 더 편합니다.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-sm text-sky-900 flex gap-3 break-keep">
+          <i data-lucide="info" class="w-5 h-5 shrink-0"></i>
+          <span>한 번 설치하면 <b>인터넷이 없는 실험실에서도</b> 시약 검색과 폐수 분류를 쓸 수 있습니다. 단, MSDS PDF 원문 보기와 학교 대장 동기화는 인터넷이 필요합니다.</span>
+        </div>
+      </section>
+
+      <!-- 2. MSDS 검색 -->
+      <section id="search" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 2 · 탭 ①</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">시약 MSDS 검색</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">실험 준비 중 "이 약품 위험한가?", "눈에 들어가면 어떻게 하지?" 싶을 때 가장 먼저 여는 화면입니다.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>검색창</b>에 한글 이름, 화학식, CAS 번호 중 아무거나 입력합니다.<br><span class="text-slate-500">예: 염산, HCl, 7647-01-0, NaOH</span></div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">버튼으로 범위를 좁힐 수 있어요.<br>· <b>학교급</b>: 중학교 / 고등학교 / 대학교<br>· <b>폐액 분류</b>: 산, 알칼리, 무기계, 유기계, 할로겐, 고체 …</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">목록에서는 약품마다 <b>GHS 그림문자</b>, 오른쪽에 <b>폐액통 색 배지</b>와 학교급이 보입니다. 약품을 누르면 상세 화면으로 갑니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">+</div><div class="text-sm text-slate-700 leading-relaxed break-keep">찾는 약품이 없으면 결과 아래 <span class="kbd">＋ 약품 직접 추가하기</span>로 우리 학교 약품을 등록할 수 있습니다. (<a href="#more" class="text-emerald-700 font-bold underline">6. 더보기</a> 참고)</div></div>
+          </div>
+          <figure><img src="../assets/programs/msds/screen_search.jpg" alt="시약 MSDS 검색 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">시약 MSDS 검색 화면</figcaption></figure>
+        </div>
+
+        <h3 class="text-lg font-black text-slate-900 pt-4">약품 상세 화면에서 볼 수 있는 것</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <figure class="md:order-2"><img src="../assets/programs/msds/screen_detail.jpg" alt="염산 상세 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">예시: 염산 상세 화면</figcaption></figure>
+          <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white md:order-1">
+            <table class="w-full text-sm">
+              <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">기본 정보</td><td class="p-3 text-slate-600 break-keep">화학식, 영문명, CAS 번호, 학교급, 신호어(위험/경고), GHS 그림문자</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">📄 MSDS 원문</td><td class="p-3 text-slate-600 break-keep">안전보건공단 MSDS <b>PDF 열기</b>와 공단 페이지 바로가기 (인터넷 필요)</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">⚠️ 유해·위험 문구</td><td class="p-3 text-slate-600 break-keep">H 코드 문구와 과학실 취급 주의</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">🗑️ 폐기 방법</td><td class="p-3 text-slate-600 break-keep">이 약품이 들어가는 폐액통과 주의사항</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">🚫 섞으면 안 되는 것</td><td class="p-3 text-slate-600 break-keep">함께 두거나 섞으면 위험한 조합(빨강=위험, 노랑=주의)과 해당 약품 예시</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">🩹 응급조치</td><td class="p-3 text-slate-600 break-keep">눈·피부·흡입·섭취 시 조치</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">🗄️ 보관</td><td class="p-3 text-slate-600 break-keep">권장 보관 장소(산 보관장, 인화성 보관장 등)</td></tr>
+                <tr><td class="p-3 font-bold whitespace-nowrap align-top">📚 MSDS 전체 항목</td><td class="p-3 text-slate-600 break-keep">공단 MSDS 16개 항목을 펼쳐서 확인</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-sm text-amber-900 flex gap-3 break-keep">
+          <i data-lucide="lightbulb" class="w-5 h-5 shrink-0"></i>
+          <span><b>수업 활용 팁</b> — 실험 전에 사용할 약품의 상세 화면을 전자칠판에 띄워 GHS 그림문자와 응급조치를 함께 읽으면 짧고 확실한 안전교육이 됩니다.</span>
+        </div>
+      </section>
+
+      <!-- 3. 폐수 처리 -->
+      <section id="waste" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 3 · 탭 ②</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">폐수 처리 — 이 폐수, 어느 통에?</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">실험이 끝난 비커에 무엇이 섞여 있는지만 고르면, 버릴 폐액통과 그렇게 판단한 이유를 알려 줍니다. 학생들에게 직접 맡겨도 좋아요.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>약품 담기</b> — 검색창에 이름·화학식을 입력하고 결과를 눌러 담습니다. 한 비커에 섞인 약품은 <b>모두</b> 담아 주세요. 잘못 담았으면 이름 옆 <span class="kbd">✕</span>.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>자주 하는 실험에서 고르기</b>를 펼치면 산·염기 중화, 염화 이온 검출, 아이오딘화 납 앙금, 금속과 산, 다니엘 전지, 불꽃 반응, 에스터 합성, 은거울 반응 등 <b>17가지 실험</b>을 한 번에 담을 수 있고, 실험별 처리 요령도 함께 나옵니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>결과 확인</b><br>· <b>🚫 혼합 위험</b>: 섞으면 위험한 조합이 있으면 맨 먼저 경고합니다.<br>· <b>판정</b>: 버릴 폐액통. 산과 염기만 섞인 경우엔 <b>pH 시험지로 잰 결과</b>(산성/중성/염기성)를 누르면 최종 판정이 나옵니다.<br>· <b>🔎 판정 근거</b>: 아래 7가지 질문을 위에서부터 차례로 확인해, 처음 "예"가 나온 단계에서 폐액통이 정해집니다.</div></div>
+          </div>
+          <figure><img src="../assets/programs/msds/screen_waste.jpg" alt="폐수 처리 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">예시: 염산 + 수산화나트륨 + 페놀프탈레인</figcaption></figure>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5">
+          <div class="font-black text-slate-900 mb-3">판정 순서 (위에서부터)</div>
+          <ol class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700 list-decimal pl-5 break-keep">
+            <li>섞으면 위험한 조합이 있나요?</li>
+            <li>할로겐 유기 용매(클로로폼 등)가 있나요? → <b>할로겐</b></li>
+            <li>유기 용매·유기물이 있나요? → <b>유기계</b></li>
+            <li>중금속·금속 이온이 있나요? → <b>무기계</b></li>
+            <li>산 또는 염기가 있나요? → pH로 <b>산 / 알칼리</b></li>
+            <li>지시약·염색약(몇 방울)만 들어 있나요?</li>
+            <li>유해성이 낮은 물질만 남았나요? → <b>저위험</b></li>
+          </ol>
+          <p class="text-xs text-slate-500 mt-3 break-keep">앙금·금속 조각처럼 고체가 생기면 "고체는 걸러서 따로" 안내가, 폐액통에 바로 넣으면 안 되는 약품은 별도 경고가 함께 표시됩니다.</p>
+        </div>
+      </section>
+
+      <!-- 4. 약품 대장 -->
+      <section id="ledger" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 4 · 탭 ③</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">약품 대장 관리 — 출납대장을 휴대폰으로</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">약품을 한 번 등록해 두면, 쓸 때마다 사용량만 적으면 됩니다. 재고량은 자동으로 계산되고, 학교 출납대장 양식 그대로 인쇄됩니다.</p>
+        </div>
+
+        <h3 class="text-lg font-black text-slate-900">① 대장 첫 화면</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-3 text-sm text-slate-700 leading-relaxed break-keep">
+            <p>맨 위 숫자 4개로 <b>등록 약품 · 재고 없음 · 유효기간 지남 · 60일 내 만료</b>를 한눈에 확인합니다. 유효기간이 지난 약품은 빨간색, 곧 만료될 약품은 주황색으로 표시돼요.</p>
+            <ul class="space-y-2">
+              <li class="flex gap-2"><span class="kbd shrink-0">＋ 약품 등록</span><span>새 약품을 대장에 올립니다.</span></li>
+              <li class="flex gap-2"><span class="kbd shrink-0">🖨 출납대장 인쇄</span><span>전체 약품의 출납대장을 PDF로 저장하거나 인쇄합니다.</span></li>
+              <li class="flex gap-2"><span class="kbd shrink-0">📥 대장 불러오기</span><span>기존 대장 파일(<b>한글 hwpx · 엑셀 · CSV</b>)을 읽어 한 번에 등록합니다.</span></li>
+              <li class="flex gap-2"><span class="kbd shrink-0">📤 엑셀 내보내기</span><span>현재 대장을 CSV(엑셀) 파일로 받습니다.</span></li>
+              <li class="flex gap-2"><span class="kbd shrink-0">양식 받기</span><span>불러오기용 빈 양식(CSV)을 받습니다.</span></li>
+            </ul>
+            <p>검색창과 <b>이름순 · 보관 위치순 · 재고 적은 순 · 유효기간순</b> 정렬로 원하는 약품을 빨리 찾고, 체크해서 여러 개를 한 번에 지울 수도 있습니다.</p>
+            <div class="bg-rose-50 border border-rose-100 rounded-xl p-3 text-rose-900"><b>🚫 같은 보관 위치 경고</b> — 보관 위치를 '산 보관장', '인화성 보관장'처럼 칸 단위로 적어 두면, 한 칸에 함께 두면 위험한 약품 조합을 자동으로 찾아 알려 줍니다.</div>
+          </div>
+          <figure><img src="../assets/programs/msds/screen_inventory.jpg" alt="약품 대장 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">약품 대장 첫 화면 (예시 데이터)</figcaption></figure>
+        </div>
+
+        <h3 class="text-lg font-black text-slate-900 pt-4">② 약품 등록하기</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <figure class="md:order-2"><img src="../assets/programs/msds/screen_inv_new.jpg" alt="약품 등록 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">약품 등록 화면</figcaption></figure>
+          <div class="space-y-4 md:order-1">
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>연결 약품</b>을 고릅니다. 고르면 품명·CAS 번호가 자동으로 채워지고, 독성 약품은 독극물 표시도 자동으로 O가 됩니다. 아래에 <b>권장 보관 장소</b>도 안내됩니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>품명</b>은 대장에 적힐 이름입니다. "묽은 염산"처럼 바꿔도 MSDS는 연결된 약품 것으로 보여요. <b>단위</b>(mL, g 등)를 확인합니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>처음 재고량</b>과 일자를 넣고, 처음 기록의 내용을 <b>전년도 이월량</b> 또는 <b>입고(구입)</b> 중에서 고릅니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>보관위치 · 개봉일 · 유효기간 · 메모</b>(농도, 제조사 등)를 적고 <span class="kbd">저장</span>.</div></div>
+          </div>
+        </div>
+
+        <h3 class="text-lg font-black text-slate-900 pt-4">③ 출납 기록하기 (사용 · 입고 · 재고 실사)</h3>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-4">
+            <p class="text-sm text-slate-700 leading-relaxed break-keep">대장 목록에서 <b>약품 이름을 누르면</b> 그 약품의 출납 화면이 열립니다. 위쪽에 총 입고 · 총 사용 · 현재 재고가 보여요.</p>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep">종류를 고릅니다.<br>· <b>사용</b>: 실험에 쓴 양<br>· <b>입고(구입)</b>: 새로 산 양<br>· <b>재고 확인(실사)</b>: 학기말 등에 실제로 남은 양을 재서 넣으면 장부를 맞춰 줍니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>일자 · 수량 · 내용</b>(예: 2학년 산·염기 중화 실험) · <b>비고(사용 교사)</b>를 넣고 <span class="kbd">기록하기</span>. 한 번 쓴 내용과 교사 이름은 다음부터 자동 완성됩니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">아래 표는 <b>학년도(3월 1일 ~ 다음 해 2월 말)</b> 출납대장 양식 그대로입니다. 줄마다 <span class="kbd">수정</span> <span class="kbd">삭제</span>로 고칠 수 있어요.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">🖨</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">이 약품 인쇄</span> 또는 대장 첫 화면의 <span class="kbd">출납대장 인쇄 (PDF)</span>에서 기간을 정하고 <b>인쇄</b>를 누르면, 결재란이 있는 출납대장이 나옵니다. 인쇄 창에서 "PDF로 저장"을 고르면 파일로 보관할 수 있어요.</div></div>
+          </div>
+          <figure><img src="../assets/programs/msds/screen_ledger.jpg" alt="출납 기록 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">약품별 출납 기록 화면</figcaption></figure>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-2">
+          <div class="font-black text-slate-900 flex items-center gap-2"><i data-lucide="file-up" class="w-5 h-5 text-emerald-600"></i>작년 대장이 이미 있다면 — 대장 불러오기</div>
+          <ol class="text-sm text-slate-700 list-decimal pl-5 space-y-1 break-keep">
+            <li>대장 첫 화면의 <span class="kbd">📥 대장 불러오기</span>를 누르고 한글(hwpx)·엑셀(xlsx)·CSV 파일을 고릅니다.</li>
+            <li>미리보기 화면에서 각 줄이 어떤 약품과 연결됐는지 확인하고, 잘못 연결된 줄은 직접 고릅니다.</li>
+            <li>기존 대장에 <b>추가</b>할지 <b>바꿀지</b> 고른 뒤 불러오기를 누릅니다.</li>
+          </ol>
+          <p class="text-xs text-slate-500 break-keep">파일 형식이 맞지 않으면 <span class="kbd">양식 받기</span>로 받은 CSV 양식에 옮겨 적은 뒤 불러오세요. 한글 파일은 .hwp가 아니라 <b>.hwpx</b>로 저장해야 읽을 수 있어요.</p>
+        </div>
+      </section>
+
+      <!-- 5. 학교 공유 -->
+      <section id="school" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 5 · 선택</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">우리 학교 선생님들과 대장 함께 쓰기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">
+            기본적으로 대장은 <b>내 기기의 브라우저에만</b> 저장됩니다. 여러 선생님이 같은 대장에 기록하려면, <b>담당 선생님 한 분이 처음 한 번(약 15분)</b> 학교용 구글 시트를 만들어 연결하면 됩니다.
+            기록은 각 학교의 구글 시트에 따로 저장되어 다른 학교와 섞이지 않아요.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+            <div class="font-black text-emerald-900">👩‍🔬 담당 선생님 (처음 한 번)</div>
+            <p class="text-sm text-emerald-900/80 mt-1 break-keep">구글 계정 · <b>컴퓨터</b> · 15분이면 됩니다. 아래 1~7단계를 따라 하세요. 앱 안에도 같은 안내와 코드 복사 버튼이 있습니다.</p>
+            <a href="https://chemicalmanagementapp.netlify.app/#guide" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-3 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition"><i data-lucide="external-link" class="w-4 h-4"></i>앱 안의 설정 안내 열기</a>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
+            <div class="font-black text-indigo-900">🧑‍🏫 다른 선생님들</div>
+            <p class="text-sm text-indigo-900/80 mt-1 break-keep">담당 선생님께 받은 <b>초대 링크를 누르거나 초대 QR을 찍고</b> <span class="kbd">연결하기</span>만 누르면 끝입니다. 구글 로그인도 필요 없어요.</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-[1fr_320px] gap-8 items-start">
+          <ol class="space-y-5">
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>구글 시트 만들기</b><br>컴퓨터에서 <a href="https://sheets.new" target="_blank" rel="noopener" class="text-emerald-700 font-bold underline">sheets.new</a> 를 열면 새 스프레드시트가 만들어집니다. 왼쪽 위 제목을 <b>○○학교 과학실 약품 대장</b>으로 바꿉니다. (이 이름이 앱에 학교 이름으로 표시돼요)</div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>Apps Script 열기</b><br>시트 위쪽 메뉴 <span class="kbd">확장 프로그램</span> → <span class="kbd">Apps Script</span> 를 누르면 새 탭이 열립니다.</div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>코드 붙여 넣고 저장</b><br>앱의 <span class="kbd">☰</span> → 우리 학교 연결 → "학교 대장 처음 만드는 방법"에서 <span class="kbd">📋 시트 코드 복사</span>를 누릅니다.
+              Apps Script 편집 칸을 클릭 → <span class="kbd">Ctrl+A</span> → <span class="kbd">Delete</span>로 원래 내용을 지우고 → <span class="kbd">Ctrl+V</span> 붙여 넣기 → <span class="kbd">Ctrl+S</span> 저장.</div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>처음 설정 실행</b><br>시트 탭으로 돌아와 <span class="kbd">F5</span>(새로고침) → 메뉴 끝에 생긴 <span class="kbd">과학실 대장</span> → <span class="kbd">① 처음 설정하기</span>.<br>
+              권한 요청이 나오면 [계속] → 내 계정 선택 → "Google에서 확인하지 않은 앱" 화면에서 왼쪽 아래 <span class="kbd">고급</span> → <span class="kbd">(프로젝트 이름)(으)로 이동</span> → <span class="kbd">허용</span>.
+              <span class="block text-slate-500 text-xs mt-1">직접 붙여 넣은 코드라서 나오는 안내이며, 이 코드는 이 시트 안의 내용만 읽고 씁니다.</span>
+              <span class="block mt-2 bg-amber-50 border border-amber-100 rounded-lg p-2 text-amber-900 text-xs">⚠ 허용한 뒤 아무 창도 안 뜨면 <b>① 처음 설정하기를 한 번 더</b> 누르세요. 처음엔 권한만 받고 끝나는 경우가 많아요.</span>
+              <span class="block mt-2">"설정 완료" 창에 <b>연결 암호</b>가 나오고 아래쪽에 <code class="text-xs bg-slate-100 px-1 rounded">설정 · 약품대장 · 출납기록 · 추가약품 · 보관장소</code> 탭이 생기면 성공입니다. 암호는 언제든 <b>설정 탭 B2 칸</b>에서 볼 수 있어요.</span></div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">5</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>웹 앱으로 배포</b><br>Apps Script 오른쪽 위 파란 <span class="kbd">배포</span> → <span class="kbd">새 배포</span> → "유형 선택" 옆 <span class="kbd">⚙</span> → <span class="kbd">웹 앱</span>.<br>
+              다음 사용자 인증 정보로 실행: <b>나</b> · 액세스 권한이 있는 사용자: <b>모든 사용자</b> → <span class="kbd">배포</span>.<br>
+              나오는 <b>웹 앱 URL</b>을 복사합니다. 주소가 <code class="text-xs bg-slate-100 px-1 rounded">https://script.google.com/macros/s/…/exec</code> 로 끝나야 해요.
+              <span class="block text-slate-500 text-xs mt-1">'모든 사용자'로 해도 연결 암호를 모르면 아무도 읽거나 쓸 수 없습니다. 선생님들이 구글 로그인 없이 연결하기 위한 설정이에요.</span></div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">6</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>앱에 연결</b><br>앱 <span class="kbd">☰</span> → 우리 학교 연결에서 <b>학교 대장 주소</b>에 웹 앱 URL, <b>연결 암호</b>에 B2 칸의 암호를 넣고 <span class="kbd">연결하기</span>. 이 기기에 이미 적어 둔 대장이 있으면 "학교 대장에 합쳐서 올리기"를 고르세요. 오른쪽 위에 초록색 <b>☁ 학교 이름</b>이 보이면 연결된 것입니다.</div></li>
+            <li class="flex gap-3"><div class="step-num bg-emerald-600 text-white">7</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>선생님 초대</b><br>연결된 화면의 <span class="kbd">선생님 초대 링크 복사</span>로 메신저에 보내거나, <span class="kbd">초대 QR 코드</span>를 인쇄해 과학실에 붙여 두세요.
+              <span class="block text-rose-700 text-xs mt-1">링크·QR에는 연결 암호가 들어 있으니 우리 학교 선생님들께만 전달하세요.</span></div></li>
+          </ol>
+          <figure><img src="../assets/programs/msds/screen_more.jpg" alt="우리 학교 연결 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">☰ 더보기 → 우리 학교 연결</figcaption></figure>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-700 space-y-2 break-keep">
+          <div class="font-black text-slate-900">연결 후에는 이렇게 동작해요</div>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>약품 대장 · 출납 기록 · 직접 추가한 약품 · 보관 장소 이름이 학교 선생님들과 함께 공유됩니다.</li>
+            <li>인터넷이 끊겨도 기록은 휴대폰에 보관됐다가 연결되면 자동으로 올라갑니다. 위쪽에 "⚠ 연결 안 됨 · N건 보관 중"이 보이면 아직 안 올라간 것입니다.</li>
+            <li>구글 시트에서 품명·보관위치·수량 등을 직접 고쳐도 다음 동기화 때 앱에 반영됩니다. 단, 숨겨진 <b>ID 열(A열)</b>은 지우거나 바꾸지 마세요.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 6. 더보기 -->
+      <section id="more" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">Step 6</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">더보기 메뉴 (☰)</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">➕ 약품 직접 추가</div><p class="text-slate-600 mt-1">기본 256종에 없는 약품을 이름·화학식·CAS·폐액 분류·보관 그룹과 함께 추가합니다. 추가한 약품도 검색·폐수 처리·대장에서 똑같이 쓸 수 있어요.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">🗄️ 보관 장소 수정</div><p class="text-slate-600 mt-1">"산 보관장", "인화성 보관장" 같은 보관 장소의 이름과 설명을 우리 학교 과학실에 맞게 바꿀 수 있습니다.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">💾 백업 · 복원</div><p class="text-slate-600 mt-1">학교 연결을 하지 않았다면 기록은 이 기기의 브라우저에만 있습니다. 기기를 바꾸거나 브라우저 기록을 지우기 전에 <b>백업 파일 저장</b>을 꼭 해 두세요.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">📣 다른 학교에 소개하기</div><p class="text-slate-600 mt-1">우리 학교 연결 칸의 <span class="kbd">다른 학교에 소개 문구 복사</span>를 누르면 앱 주소와 사용법이 담긴 소개글이 복사됩니다. 메신저에 그대로 붙여 넣으세요.</p></div>
+        </div>
+      </section>
+
+      <!-- 7. FAQ -->
+      <section id="faq" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-emerald-600 uppercase">FAQ</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">자주 묻는 질문 · 문제 해결</h2>
+        </div>
+        <div class="space-y-3">
+          <details class="bg-white border border-slate-200 rounded-2xl p-5 group"><summary class="font-bold text-slate-900 cursor-pointer">돈이 드나요? 회원가입이 필요한가요?</summary><p class="text-sm text-slate-600 mt-3 break-keep">무료이며 회원가입·로그인이 없습니다. 학교 공유 기능을 쓸 때만 담당 선생님의 구글 계정(개인 계정 가능)이 필요합니다.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">휴대폰을 바꿨더니 대장이 사라졌어요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">학교 연결 없이 쓰면 기록은 그 기기의 브라우저에만 저장됩니다. 예전 기기에서 <b>☰ → 백업 파일 저장</b>을 한 뒤 새 기기에서 <b>백업 불러오기</b>를 하세요. 여러 기기·여러 선생님이 쓴다면 <a href="#school" class="text-emerald-700 font-bold underline">학교 공유</a>를 추천합니다.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">"연결 암호가 맞지 않습니다"라고 나와요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">구글 시트 <b>설정 탭 B2 칸</b>의 글자를 대·소문자까지 그대로 넣었는지 확인하세요.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">"주소 형식이 맞지 않습니다"라고 나와요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">브라우저 주소창의 시트 주소(<code>…/edit</code>)가 아니라, 배포할 때 나온 <b>웹 앱 URL</b>(<code>…/exec</code>)을 넣어야 합니다.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">"학교 대장 주소가 올바르지 않습니다"라고 나와요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">배포할 때 액세스 권한이 <b>모든 사용자</b>인지 확인하세요. Apps Script의 <span class="kbd">배포</span> → <span class="kbd">배포 관리</span> → ✏️ 에서 바꿀 수 있습니다.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">"시트가 아직 설정되지 않았습니다"라고 나와요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">시트 메뉴 <span class="kbd">과학실 대장</span> → <span class="kbd">① 처음 설정하기</span>를 다시 실행하세요.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">연결 암호가 밖으로 새어 나갔어요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">시트 메뉴 <span class="kbd">과학실 대장</span> → <span class="kbd">② 연결 암호 바꾸기</span> 후, 앱에서 [연결 끊기] → 새 암호로 다시 연결하고 선생님들께 새 초대 링크를 보내세요.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">시트 코드를 새로 붙여 넣었는데 주소가 바뀌었어요.</summary><p class="text-sm text-slate-600 mt-3 break-keep">코드를 고친 뒤에는 "새 배포"가 아니라 <span class="kbd">배포</span> → <span class="kbd">배포 관리</span> → ✏️ → 버전: <b>새 버전</b> → <span class="kbd">배포</span>를 해야 웹 앱 주소가 그대로 유지됩니다.</p></details>
+          <details class="bg-white border border-slate-200 rounded-2xl p-5"><summary class="font-bold text-slate-900 cursor-pointer">다른 학교에도 시트를 쉽게 나눠 줄 수 있나요?</summary><p class="text-sm text-slate-600 mt-3 break-keep">빈 시트 사본을 하나 만들어 공유 → 일반 액세스를 <b>링크가 있는 모든 사용자 · 뷰어</b>로 바꾼 뒤, 시트 주소 끝의 <code>/edit…</code>를 <code>/copy</code>로 바꾼 링크를 보내세요. 받은 학교는 [사본 만들기] 후 <b>4단계(처음 설정 실행)</b>부터 하면 됩니다. 기록이 담긴 원본 시트는 공유하지 마세요.</p></details>
+        </div>
+      </section>
+
+      <!-- 유의사항 -->
+      <section id="notice" class="space-y-4">
+        <h2 class="text-xl font-black text-slate-900">사용 시 유의사항</h2>
+        <ul class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-600 space-y-2 list-disc pl-9 break-keep">
+          <li>이 앱의 정보는 학교 과학실 업무를 돕기 위한 <b>요약본</b>입니다. 농도와 제조사에 따라 MSDS가 다를 수 있으니 반드시 보유 제품의 공식 MSDS를 함께 확인하세요.</li>
+          <li>그림문자·신호어·유해위험문구·16개 항목은 <b>안전보건공단 화학물질정보(msds.kosha.or.kr)</b>의 MSDS를 바탕으로 합니다. 공단 MSDS는 순수 물질 기준의 참고 자료이며, 법적으로 유효한 MSDS는 약품 공급자에게 받아야 합니다.</li>
+          <li>폐액 분류는 일반적인 기준이며, <b>학교·교육청·수거 업체의 지침이 우선</b>합니다.</li>
+          <li>학교급(중·고·대) 구분은 참고용입니다.</li>
+        </ul>
+        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div>
+            <div class="text-xs text-slate-400 font-bold">만든이</div>
+            <div class="font-black text-lg mt-1">충북사대부고 지구과학 교사 김호연</div>
+            <p class="text-sm text-slate-400 mt-1 break-keep">사용하시다 불편한 점이나 추가했으면 하는 약품·실험이 있으면 언제든 알려 주세요.</p>
+          </div>
+          <a href="https://chemicalmanagementapp.netlify.app/" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition inline-flex items-center gap-2 shrink-0">
+            <i data-lucide="flask-conical" class="w-5 h-5"></i>앱 바로 사용하기
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-400">
+    <a href="../index.html" class="hover:text-slate-700 font-bold">HoHo earth</a> · 교실을 바꾸는 AI활용 도구
+  </footer>
+
+  <!-- 이미지 확대 -->
+  <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/85 hidden items-start justify-center overflow-auto p-4 sm:p-10 cursor-zoom-out">
+    <img id="lightboxImg" alt="" class="max-w-full sm:max-w-3xl rounded-2xl shadow-2xl bg-white">
+  </div>
+
+  <script>
+    var APP_URL = 'https://chemicalmanagementapp.netlify.app/';
+    if (window.lucide) lucide.createIcons();
+
+    // QR 코드
+    try { new QRCode(document.getElementById('qr'), { text: APP_URL, width: 180, height: 180, colorDark: '#0f172a', colorLight: '#ffffff' }); } catch (e) {}
+
+    // 주소 복사
+    function copyApp(btn) {
+      var label = btn.querySelector('span') || btn;
+      var old = label.textContent;
+      var done = function () { label.textContent = '복사했어요!'; setTimeout(function () { label.textContent = old; }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(APP_URL).then(done, function () { prompt('아래 주소를 복사하세요', APP_URL); });
+      else prompt('아래 주소를 복사하세요', APP_URL);
+    }
+    document.getElementById('copyLink').addEventListener('click', function () { copyApp(this); });
+    document.querySelectorAll('[data-copy-app]').forEach(function (b) { b.addEventListener('click', function () { copyApp(b); }); });
+
+    // 스크린샷 확대
+    var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('img.shot').forEach(function (img) {
+      img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.remove('hidden'); lb.classList.add('flex'); });
+    });
+    lb.addEventListener('click', function () { lb.classList.add('hidden'); lb.classList.remove('flex'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.click(); });
+
+    // 목차 현재 위치 표시
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+    }
+  </script>
+</body>
+</html>

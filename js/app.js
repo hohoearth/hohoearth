@@ -212,7 +212,7 @@ function renderItems() {
           <!-- 상단 뱃지 -->
           <div class="absolute top-4 left-4 flex items-center gap-2">
             <span class="px-3 py-1 text-[11px] font-bold tracking-wider uppercase rounded-full bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200 shadow-sm">
-              ${item.unitMajor ? item.unitMajor.split('.')[0] + '단원' : catObj.name}
+              ${item.unitMajor && item.category !== 'tools' ? item.unitMajor.split('.')[0] + '단원' : catObj.name}
             </span>
             ${item.featured ? '<span class="px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full bg-indigo-600 text-white shadow-sm">핵심단원</span>' : ''}
           </div>
