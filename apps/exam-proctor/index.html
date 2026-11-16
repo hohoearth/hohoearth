@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko" data-app="exam">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정기고사 감독 배정</title>
+<link rel="icon" href="img/school-logo.jpg">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="logo" src="img/school-logo.jpg" alt="학교 마크">
+    <div>
+      <div class="school">충북대학교사범대학부설고등학교 <span class="pill-badge">정기고사 감독 배정</span></div>
+      <div class="sub">학급 · 복도 · 특별실 감독 자동 배정 시스템</div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="accent" data-act="ex-export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>엑셀로 내보내기</button>
+    <button data-act="go-tab" data-to="backup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>백업 · 복원</button>
+  </div>
+</header>
+<nav id="tabs" class="tabbar">
+  <button data-tab="teachers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>교사 명단</button>
+  <button data-tab="exam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>감독 배정</button>
+  <button data-tab="backup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>백업 · 복원</button>
+</nav>
+<main id="app"></main>
+<footer class="credit">만든이: 충북사대부고 교사 김호연</footer>
+<div id="modal" class="modal hidden"><div class="modal-box" id="modalBox"></div></div>
+<div id="toast"></div>
+<script src="js/common.js"></script>
+<script src="js/teacher-import.js"></script>
+<script src="js/teachers.js"></script>
+<script src="js/exam.js"></script>
+<script src="js/exam-export.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

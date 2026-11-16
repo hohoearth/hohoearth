@@ -1,2 +1,4 @@
 downloads/CLEA_Vireo.zip
 *.zip
+# 홈페이지에서 내려받는 감독 배정 프로그램 zip은 업로드 대상
+!downloads/proctor/*.zip

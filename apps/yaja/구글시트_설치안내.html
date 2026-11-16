@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>구글 시트 설치 안내</title>
+<style>
+  body{margin:0;background:#f4f6f9;color:#1f2933;font-family:"Malgun Gothic","맑은 고딕",sans-serif;font-size:15px;line-height:1.7}
+  main{max-width:860px;margin:0 auto;padding:24px 16px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  .lead{color:#6b7785;margin:0 0 20px}
+  .step{background:#fff;border:1px solid #d9dee5;border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .step h2{font-size:16px;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+  .num{display:inline-flex;width:28px;height:28px;border-radius:50%;background:#2457c5;color:#fff;align-items:center;justify-content:center;font-size:14px;flex:none}
+  b.ui{background:#eef1f6;border:1px solid #d9dee5;border-radius:5px;padding:0 6px;font-weight:normal;white-space:nowrap}
+  textarea{width:100%;height:150px;font-family:Consolas,monospace;font-size:12px;border:1px solid #d9dee5;border-radius:8px;padding:8px;background:#fafbfc}
+  button{font:inherit;cursor:pointer;background:#1d7a46;color:#fff;border:0;border-radius:8px;padding:8px 16px;margin:6px 0}
+  .warn{background:#fff6e0;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;font-size:14px}
+  .tip{background:#e9f1ff;border:1px solid #b9cdf5;border-radius:8px;padding:10px 12px;font-size:14px}
+  ol,ul{margin:6px 0;padding-left:22px}
+</style>
+</head>
+<body>
+<main>
+  <h1>야자 감독 온라인 공유 — 구글 시트 설치 안내</h1>
+  <p class="lead">담당 선생님이 <b>처음 한 번만</b> 하면 됩니다. 약 10분 걸립니다. 다른 선생님들은 링크만 받으면 됩니다.</p>
+
+  <div class="warn">학교 구글 계정(Google Workspace)은 외부 공개 설정이 막혀 있는 경우가 많습니다.
+  아래 7단계에서 <b>[모든 사용자]</b>를 고를 수 없다면 <b>개인 Gmail 계정</b>으로 처음부터 다시 만들어 주세요.</div>
+
+  <div class="step"><h2><span class="num">1</span>새 스프레드시트 만들기</h2>
+    구글 드라이브에서 <b class="ui">+ 새로 만들기</b> → <b class="ui">Google 스프레드시트</b>를 누르고, 이름을 <b>야자 감독 공유</b>처럼 정합니다.
+    <br>이 시트는 <b>다른 선생님과 공유하지 마세요.</b> 선생님들은 시트가 아니라 웹페이지 링크로 들어옵니다.</div>
+
+  <div class="step"><h2><span class="num">2</span>Apps Script 열기</h2>
+    스프레드시트 메뉴에서 <b class="ui">확장 프로그램</b> → <b class="ui">Apps Script</b>를 누릅니다. 새 탭에 코드 편집기가 열립니다.</div>
+
+  <div class="step"><h2><span class="num">3</span>Code.gs 붙여넣기</h2>
+    왼쪽 파일 목록의 <b class="ui">Code.gs</b>(또는 코드.gs)를 누르고, 안에 있는 내용을 <b>모두 지운 뒤</b> 아래 코드를 붙여넣습니다.
+    <br><button onclick="copy('c1',this)">Code.gs 코드 복사</button>
+    <textarea id="c1" readonly>/**
+ * 야자 감독 공유 — 구글 시트 서버 (Google Apps Script)
+ *
+ * - 선생님용 웹페이지(Teacher.html)를 제공하고, 교체 요청 · 수락을 처리합니다.
+ * - 담당 선생님의 &#x27;야자 감독 배정&#x27; 프로그램이 감독표를 올리고(upload) 변경 내용을 가져갑니다(pull).
+ * - 데이터는 이 스프레드시트의 시트(설정 · 교사 · 배정 · 교체요청 · 변경기록)에 저장됩니다.
+ */
+const SH = { conf: &#x27;설정&#x27;, teachers: &#x27;교사&#x27;, assign: &#x27;배정&#x27;, req: &#x27;교체요청&#x27;, log: &#x27;변경기록&#x27; };
+const TZ = &#x27;Asia/Seoul&#x27;;
+const DOW_KO = [&#x27;일&#x27;, &#x27;월&#x27;, &#x27;화&#x27;, &#x27;수&#x27;, &#x27;목&#x27;, &#x27;금&#x27;, &#x27;토&#x27;];
+const TEACHER_H = [&#x27;이름&#x27;, &#x27;PIN(암호화)&#x27;, &#x27;마지막 접속&#x27;];
+const ASSIGN_H = [&#x27;날짜&#x27;, &#x27;요일&#x27;, &#x27;감독&#x27;, &#x27;비고(교체 내역)&#x27;];
+const REQ_H = [&#x27;번호&#x27;, &#x27;요청 시각&#x27;, &#x27;요청자&#x27;, &#x27;요청자 날짜&#x27;, &#x27;상대&#x27;, &#x27;상대 날짜&#x27;, &#x27;메시지&#x27;, &#x27;상태&#x27;, &#x27;처리 시각&#x27;];
+const LOG_H = [&#x27;시각&#x27;, &#x27;내용&#x27;];
+
+/* ================= 스프레드시트 메뉴 ================= */
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu(&#x27;야자 감독&#x27;)
+    .addItem(&#x27;초기 설정 · 관리자 키 보기&#x27;, &#x27;showSetup&#x27;)
+    .addItem(&#x27;선생님 PIN 초기화&#x27;, &#x27;resetPinPrompt&#x27;)
+    .addToUi();
+}
+function showSetup() {
+  const c = ensureSetup_();
+  SpreadsheetApp.getUi().alert(&#x27;야자 감독 공유 — 관리자 키&#x27;,
+    &#x27;야자 감독 배정 프로그램의 [온라인 공유] 칸에 아래 관리자 키를 붙여넣으세요.\n(다른 사람에게 알려 주지 마세요)\n\n&#x27; + c.adminKey,
+    SpreadsheetApp.getUi().ButtonSet.OK);
+}
+function resetPinPrompt() {
+  const ui = SpreadsheetApp.getUi();
+  const r = ui.prompt(&#x27;PIN 초기화&#x27;, &#x27;PIN을 초기화할 선생님 이름을 입력하세요.&#x27;, ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const n = r.getResponseText().trim();
+  withLock_(() =&gt; {
+    const T = readTeachers_();
+    if (!T[n]) { ui.alert(&#x27;명단에 없는 이름입니다.&#x27;); return; }
+    T[n].pin = &#x27;&#x27;; writeTeachers_(T); log_(`${n} 선생님 PIN 초기화`);
+    ui.alert(n + &#x27; 선생님의 PIN을 초기화했습니다. 다음에 접속할 때 새 PIN을 정하게 됩니다.&#x27;);
+  });
+}
+
+/* ================= 웹앱 진입점 ================= */
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile(&#x27;Teacher&#x27;)
+    .setTitle(&#x27;야자 감독&#x27;)
+    .addMetaTag(&#x27;viewport&#x27;, &#x27;width=device-width, initial-scale=1&#x27;);
+}
+
+/* 담당 선생님 프로그램(관리자)용: 관리자 키로 확인 */
+function doPost(e) {
+  let res;
+  try {
+    const b = JSON.parse(e.postData.contents);
+    const c = ensureSetup_();
+    if (!b.key || b.key !== c.adminKey) res = { ok: false, code: &#x27;key&#x27;, msg: &#x27;관리자 키가 맞지 않습니다. 시트 메뉴 [야자 감독 → 관리자 키 보기]에서 확인하세요.&#x27; };
+    else if (b.action === &#x27;ping&#x27;) res = adminPing_();
+    else if (b.action === &#x27;upload&#x27;) res = withLock_(() =&gt; adminUpload_(b));
+    else if (b.action === &#x27;pull&#x27;) res = adminPull_();
+    else res = { ok: false, msg: &#x27;알 수 없는 요청입니다.&#x27; };
+  } catch (err) {
+    res = { ok: false, msg: String((err &amp;&amp; err.message) || err) };
+  }
+  return ContentService.createTextOutput(JSON.stringify(res)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function adminPing_() {
+  const c = conf_();
+  return {
+    ok: true, title: c.title, assignVersion: c.assignVersion, updated: c.updated || &#x27;&#x27;,
+    teachers: Object.keys(readTeachers_()).length,
+    pending: readReqs_().filter(r =&gt; r.status === &#x27;대기&#x27;).length,
+  };
+}
+
+function adminUpload_(b) {
+  const c = conf_(), d = b.data || {};
+  if (!b.force &amp;&amp; String(b.baseVersion || &#x27;&#x27;) !== String(c.assignVersion))
+    return { ok: false, code: &#x27;conflict&#x27;, assignVersion: c.assignVersion, msg: &#x27;온라인에서 감독표가 바뀌었습니다(선생님 간 교체 등). 먼저 [온라인 변경 내용 가져오기]를 하세요.&#x27; };
+  // 교사: 남아 있는 선생님의 PIN은 유지
+  const T = readTeachers_(), NT = {};
+  (d.teachers || []).forEach((n, i) =&gt; { n = String(n).trim(); if (n) NT[n] = T[n] ? Object.assign(T[n], { order: i }) : { pin: &#x27;&#x27;, last: &#x27;&#x27;, order: i }; });
+  writeTeachers_(NT);
+  // 배정: 이름이 그대로인 날은 교체 내역(비고) 유지
+  const old = readAssign_(), a = {}, note = {};
+  Object.keys(d.assign || {}).forEach(k =&gt; {
+    const v = (d.assign[k] || []).map(String).filter(Boolean);
+    if (!isIso_(k) || !v.length) return;
+    a[k] = v;
+    if (old.note[k] &amp;&amp; (old.a[k] || []).join() === v.join()) note[k] = old.note[k];
+  });
+  writeAssign_(a, note);
+  c.title = d.title || c.title;
+  c.notes = d.notes || &#x27;&#x27;;
+  c.perDow = JSON.stringify(d.perDow || []);
+  c.holidays = JSON.stringify(d.holidays || {});
+  saveConf_(c);
+  // 더 이상 맞지 않는 대기 요청은 무효 처리
+  const R = readReqs_(); let inval = 0;
+  R.forEach(x =&gt; { if (x.status === &#x27;대기&#x27; &amp;&amp; checkSwap_(a, NT, x.from, x.fromDate, x.to, x.toDate, true)) { x.status = &#x27;무효&#x27;; x.doneAt = now_(); inval++; } });
+  writeReqs_(R);
+  bump_(true);
+  log_(&#x27;담당 선생님이 감독표를 새로 올렸습니다.&#x27;);
+  return { ok: true, assignVersion: conf_().assignVersion, invalidated: inval };
+}
+
+function adminPull_() {
+  const c = conf_(), as = readAssign_();
+  return {
+    ok: true, assignVersion: c.assignVersion, assign: as.a, note: as.note,
+    log: readRows_(SH.log).slice(-50).reverse(),
+    pending: readReqs_().filter(r =&gt; r.status === &#x27;대기&#x27;).length,
+  };
+}
+
+/* ================= 선생님 웹페이지용 함수 (google.script.run) ================= */
+function apiNames() {
+  const c = ensureSetup_();
+  return { title: c.title, names: orderedNames_() };
+}
+
+function apiLogin(name, pin) {
+  pin = String(pin || &#x27;&#x27;).trim();
+  if (!/^\d{4,6}$/.test(pin)) return { ok: false, msg: &#x27;PIN은 숫자 4~6자리입니다.&#x27; };
+  return withLock_(() =&gt; {
+    const c = conf_(), T = readTeachers_(), t = T[name];
+    if (!t) return { ok: false, msg: &#x27;명단에 없는 이름입니다.&#x27; };
+    const h = pinHash_(c, name, pin);
+    let first = false;
+    if (!t.pin) { t.pin = h; first = true; }
+    else if (t.pin !== h) return { ok: false, msg: &#x27;PIN이 맞지 않습니다. 잊으셨다면 담당 선생님께 PIN 초기화를 요청하세요.&#x27; };
+    t.last = now_();
+    writeTeachers_(T);
+    return { ok: true, token: token_(c, name, t.pin), first };
+  });
+}
+
+function apiChangePin(name, token, newPin) {
+  newPin = String(newPin || &#x27;&#x27;).trim();
+  if (!/^\d{4,6}$/.test(newPin)) return { ok: false, msg: &#x27;PIN은 숫자 4~6자리입니다.&#x27; };
+  auth_(name, token);
+  return withLock_(() =&gt; {
+    const c = conf_(), T = readTeachers_();
+    T[name].pin = pinHash_(c, name, newPin);
+    writeTeachers_(T);
+    return { ok: true, token: token_(c, name, T[name].pin) };
+  });
+}
+
+function apiState(name, token, since) {
+  const c = auth_(name, token);
+  if (since &amp;&amp; String(since) === String(c.version)) return { same: true };
+  const as = readAssign_();
+  return {
+    version: c.version, title: c.title, notes: c.notes || &#x27;&#x27;, today: today_(),
+    perDow: safeJson_(c.perDow, [0, 1, 1, 1, 1, 1, 0]),
+    holidays: safeJson_(c.holidays, {}),
+    assign: as.a, note: as.note,
+    names: orderedNames_(),
+    reqs: readReqs_().filter(r =&gt; r.from === name || r.to === name).slice(-60),
+    log: readRows_(SH.log).slice(-30).reverse(),
+  };
+}
+
+function apiRequest(name, token, fromDate, to, toDate, msg) {
+  auth_(name, token);
+  return withLock_(() =&gt; {
+    const a = readAssign_().a, T = readTeachers_();
+    const err = checkSwap_(a, T, name, fromDate, to, toDate);
+    if (err) return { ok: false, msg: err };
+    const R = readReqs_();
+    if (R.some(r =&gt; r.status === &#x27;대기&#x27; &amp;&amp; r.from === name &amp;&amp; r.fromDate === fromDate))
+      return { ok: false, msg: &#x27;이 날짜로 보낸 요청이 이미 대기 중입니다. 먼저 취소해 주세요.&#x27; };
+    const id = String(R.reduce((m, r) =&gt; Math.max(m, Number(r.id) || 0), 0) + 1);
+    R.push({ id, at: now_(), from: name, fromDate, to, toDate: toDate || &#x27;&#x27;, msg: String(msg || &#x27;&#x27;).slice(0, 100), status: &#x27;대기&#x27;, doneAt: &#x27;&#x27; });
+    writeReqs_(R);
+    bump_(false);
+    log_(`[요청] ${name} → ${to}: ${reqText_({ from: name, fromDate, to, toDate })}`);
+    return { ok: true };
+  });
+}
+
+function apiRespond(name, token, id, accept) {
+  auth_(name, token);
+  return withLock_(() =&gt; {
+    const R = readReqs_(), r = R.find(x =&gt; x.id === String(id));
+    if (!r || r.to !== name || r.status !== &#x27;대기&#x27;) return { ok: false, msg: &#x27;이미 처리되었거나 처리할 수 없는 요청입니다.&#x27; };
+    if (!accept) {
+      r.status = &#x27;거절&#x27;; r.doneAt = now_();
+      writeReqs_(R); bump_(false);
+      log_(`[거절] ${name} 선생님이 ${r.from} 선생님의 요청을 거절: ${reqText_(r)}`);
+      return { ok: true };
+    }
+    const as = readAssign_(), a = as.a, note = as.note, T = readTeachers_();
+    const err = checkSwap_(a, T, r.from, r.fromDate, r.to, r.toDate);
+    if (err) {
+      r.status = &#x27;무효&#x27;; r.doneAt = now_(); writeReqs_(R); bump_(false);
+      return { ok: false, msg: &#x27;감독표가 바뀌어 이 요청을 처리할 수 없습니다. (&#x27; + err + &#x27;)&#x27; };
+    }
+    a[r.fromDate] = a[r.fromDate].map(n =&gt; n === r.from ? r.to : n);
+    note[r.fromDate] = addNote_(note[r.fromDate], `${r.from}→${r.to}`);
+    if (r.toDate) {
+      a[r.toDate] = a[r.toDate].map(n =&gt; n === r.to ? r.from : n);
+      note[r.toDate] = addNote_(note[r.toDate], `${r.to}→${r.from}`);
+    }
+    r.status = &#x27;수락&#x27;; r.doneAt = now_();
+    // 이번 교체로 맞지 않게 된 다른 대기 요청은 무효
+    R.forEach(x =&gt; { if (x.status === &#x27;대기&#x27; &amp;&amp; checkSwap_(a, T, x.from, x.fromDate, x.to, x.toDate, true)) { x.status = &#x27;무효&#x27;; x.doneAt = now_(); } });
+    writeAssign_(a, note); writeReqs_(R); bump_(true);
+    log_(`[교체] ${reqText_(r)} (${r.from} ↔ ${r.to})`);
+    return { ok: true };
+  });
+}
+
+function apiCancel(name, token, id) {
+  auth_(name, token);
+  return withLock_(() =&gt; {
+    const R = readReqs_(), r = R.find(x =&gt; x.id === String(id));
+    if (!r || r.from !== name || r.status !== &#x27;대기&#x27;) return { ok: false, msg: &#x27;취소할 수 없는 요청입니다.&#x27; };
+    r.status = &#x27;취소&#x27;; r.doneAt = now_();
+    writeReqs_(R); bump_(false);
+    return { ok: true };
+  });
+}
+
+/* ================= 규칙 ================= */
+function checkSwap_(a, T, from, fromDate, to, toDate, skipPast) {
+  const today = today_();
+  if (!isIso_(fromDate) || !(a[fromDate] || []).includes(from)) return `${md_(fromDate)}은(는) ${from} 선생님의 감독일이 아닙니다.`;
+  if (!skipPast &amp;&amp; fromDate &lt; today) return &#x27;지난 날짜는 교체할 수 없습니다.&#x27;;
+  if (from === to) return &#x27;본인에게는 요청할 수 없습니다.&#x27;;
+  if (!T[to]) return &#x27;명단에 없는 선생님입니다.&#x27;;
+  if ((a[fromDate] || []).includes(to)) return `${to} 선생님은 ${md_(fromDate)}에 이미 감독입니다.`;
+  if (toDate) {
+    if (!isIso_(toDate) || !(a[toDate] || []).includes(to)) return `${md_(toDate)}은(는) ${to} 선생님의 감독일이 아닙니다.`;
+    if (!skipPast &amp;&amp; toDate &lt; today) return &#x27;지난 날짜와는 바꿀 수 없습니다.&#x27;;
+    if ((a[toDate] || []).includes(from)) return `${from} 선생님은 ${md_(toDate)}에 이미 감독입니다.`;
+  }
+  return &#x27;&#x27;;
+}
+function reqText_(r) {
+  return r.toDate ? `${md_(r.fromDate)}(${r.from}) ↔ ${md_(r.toDate)}(${r.to})` : `${md_(r.fromDate)} ${r.from} 대신 ${r.to}`;
+}
+function addNote_(old, s) { return old ? old + &#x27;, &#x27; + s : s; }
+
+/* ================= 저장소 (시트) ================= */
+function ss_() {
+  const p = PropertiesService.getScriptProperties();
+  const id = p.getProperty(&#x27;SSID&#x27;);
+  if (id) return SpreadsheetApp.openById(id);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  p.setProperty(&#x27;SSID&#x27;, ss.getId());
+  return ss;
+}
+function sheet_(name, header) {
+  const ss = ss_();
+  let sh = ss.getSheetByName(name);
+  if (!sh) {
+    sh = ss.insertSheet(name);
+    if (header) { sh.getRange(1, 1, 1, header.length).setValues([header]); sh.setFrozenRows(1); }
+  }
+  return sh;
+}
+function readRows_(name) {
+  const v = sheet_(name).getDataRange().getDisplayValues();
+  return v.slice(1).filter(r =&gt; r.some(x =&gt; x !== &#x27;&#x27;));
+}
+function writeRows_(name, header, rows) {
+  const sh = sheet_(name, header), w = header.length;
+  const all = [header].concat(rows).map(r =&gt; { const a = r.slice(0, w); while (a.length &lt; w) a.push(&#x27;&#x27;); return a.map(x =&gt; String(x == null ? &#x27;&#x27; : x)); });
+  sh.clearContents();
+  sh.getRange(1, 1, all.length, w).setNumberFormat(&#x27;@&#x27;).setValues(all);
+  sh.setFrozenRows(1);
+}
+function conf_() { const o = {}; readRows_(SH.conf).forEach(r =&gt; { o[r[0]] = r[1]; }); return o; }
+function saveConf_(o) { writeRows_(SH.conf, [&#x27;항목&#x27;, &#x27;값&#x27;], Object.keys(o).map(k =&gt; [k, o[k]])); }
+function ensureSetup_() {
+  ss_();
+  const c = conf_();
+  let dirty = false;
+  if (!c.adminKey) { c.adminKey = Utilities.getUuid().replace(/-/g, &#x27;&#x27;).slice(0, 20); dirty = true; }
+  if (!c.secret) { c.secret = Utilities.getUuid() + Utilities.getUuid(); dirty = true; }
+  if (!c.version) { c.version = &#x27;1&#x27;; dirty = true; }
+  if (!c.assignVersion) { c.assignVersion = &#x27;1&#x27;; dirty = true; }
+  if (!c.title) { c.title = &#x27;야간자율학습 감독&#x27;; dirty = true; }
+  if (dirty) saveConf_(c);
+  sheet_(SH.teachers, TEACHER_H); sheet_(SH.assign, ASSIGN_H); sheet_(SH.req, REQ_H); sheet_(SH.log, LOG_H);
+  return c;
+}
+function bump_(assignChanged) {
+  const c = conf_();
+  c.version = String((Number(c.version) || 0) + 1);
+  if (assignChanged) c.assignVersion = String((Number(c.assignVersion) || 0) + 1);
+  c.updated = now_();
+  saveConf_(c);
+}
+function log_(text) { sheet_(SH.log, LOG_H).appendRow([now_(), text]); }
+
+function readTeachers_() {
+  const o = {};
+  readRows_(SH.teachers).forEach((r, i) =&gt; { if (r[0]) o[r[0]] = { pin: r[1] || &#x27;&#x27;, last: r[2] || &#x27;&#x27;, order: i }; });
+  return o;
+}
+function writeTeachers_(o) {
+  writeRows_(SH.teachers, TEACHER_H, Object.keys(o).sort((a, b) =&gt; o[a].order - o[b].order).map(n =&gt; [n, o[n].pin, o[n].last]));
+}
+function orderedNames_() { const T = readTeachers_(); return Object.keys(T).sort((a, b) =&gt; T[a].order - T[b].order); }
+
+function readAssign_() {
+  const a = {}, note = {};
+  readRows_(SH.assign).forEach(r =&gt; {
+    if (!isIso_(r[0])) return;
+    a[r[0]] = r[2] ? r[2].split(&#x27;,&#x27;).map(s =&gt; s.trim()).filter(Boolean) : [];
+    if (r[3]) note[r[0]] = r[3];
+  });
+  return { a, note };
+}
+function writeAssign_(a, note) {
+  writeRows_(SH.assign, ASSIGN_H, Object.keys(a).sort().map(d =&gt; [d, DOW_KO[dow_(d)], a[d].join(&#x27;, &#x27;), note[d] || &#x27;&#x27;]));
+}
+
+function readReqs_() {
+  return readRows_(SH.req).map(r =&gt; ({ id: r[0], at: r[1], from: r[2], fromDate: r[3], to: r[4], toDate: r[5], msg: r[6], status: r[7], doneAt: r[8] }));
+}
+function writeReqs_(R) {
+  writeRows_(SH.req, REQ_H, R.map(r =&gt; [r.id, r.at, r.from, r.fromDate, r.to, r.toDate, r.msg, r.status, r.doneAt]));
+}
+
+/* ================= 인증 · 유틸 ================= */
+function hex_(bytes) { return bytes.map(b =&gt; ((b + 256) % 256).toString(16).padStart(2, &#x27;0&#x27;)).join(&#x27;&#x27;); }
+function pinHash_(c, name, pin) {
+  return hex_(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, c.secret + &#x27;|&#x27; + name + &#x27;|&#x27; + pin, Utilities.Charset.UTF_8));
+}
+function token_(c, name, pinHash) {
+  return hex_(Utilities.computeHmacSha256Signature(name + &#x27;|&#x27; + pinHash, c.secret, Utilities.Charset.UTF_8)).slice(0, 40);
+}
+function auth_(name, token) {
+  const c = conf_(), t = readTeachers_()[name];
+  if (!t || !t.pin || token_(c, name, t.pin) !== token) throw new Error(&#x27;AUTH&#x27;);
+  return c;
+}
+function withLock_(fn) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try { return fn(); } finally { lock.releaseLock(); }
+}
+function isIso_(s) { return /^\d{4}-\d{2}-\d{2}$/.test(String(s || &#x27;&#x27;)); }
+function dow_(iso) { const p = iso.split(&#x27;-&#x27;).map(Number); return new Date(Date.UTC(p[0], p[1] - 1, p[2])).getUTCDay(); }
+function md_(iso) { if (!isIso_(iso)) return String(iso || &#x27;&#x27;); const p = iso.split(&#x27;-&#x27;).map(Number); return `${p[1]}/${p[2]}(${DOW_KO[dow_(iso)]})`; }
+function today_() { return Utilities.formatDate(new Date(), TZ, &#x27;yyyy-MM-dd&#x27;); }
+function now_() { return Utilities.formatDate(new Date(), TZ, &#x27;yyyy-MM-dd HH:mm&#x27;); }
+function safeJson_(s, d) { try { return s ? JSON.parse(s) : d; } catch (e) { return d; } }
+</textarea></div>
+
+  <div class="step"><h2><span class="num">4</span>Teacher 파일 만들기</h2>
+    <ol>
+      <li>왼쪽 <b class="ui">파일</b> 옆의 <b class="ui">+</b> → <b class="ui">HTML</b>을 누릅니다.</li>
+      <li>이름을 정확히 <b>Teacher</b> 로 입력합니다. (대문자 T, ".html"은 자동으로 붙습니다)</li>
+      <li>안에 있는 내용을 모두 지우고 아래 코드를 붙여넣습니다.</li>
+    </ol>
+    <button onclick="copy('c2',this)">Teacher.html 코드 복사</button>
+    <textarea id="c2" readonly>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;base target=&quot;_top&quot;&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;style&gt;
+  @import url(&quot;https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css&quot;);
+  :root{--bg:#f4f6fa;--card:#fff;--ink:#1e293b;--ink2:#334155;--muted:#64748b;--line:#e5e9f0;--line2:#d6dce6;--pri:#2563eb;--pri-50:#eef4ff;--pri-100:#dbe7ff;--me:#fff1c2;--me-ink:#92400e;--danger:#dc2626;--danger-50:#fef2f2;--ok:#15803d;--ok-50:#ecfdf3;--shadow:0 1px 2px rgba(15,23,42,.04),0 4px 14px rgba(15,23,42,.05)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:&quot;Pretendard&quot;,&quot;Malgun Gothic&quot;,&quot;맑은 고딕&quot;,&quot;Apple SD Gothic Neo&quot;,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+  header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}
+  header .logo{width:38px;height:38px;border-radius:50%;object-fit:contain;flex:none}
+  header .ttl{flex:1;min-width:0}
+  header .school{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header h1{font-size:16px;font-weight:800;letter-spacing:-.3px;margin:1px 0 0;white-space:nowrap;display:flex;align-items:center;gap:6px;min-width:0}
+  #title{overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .who{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--pri-50);color:var(--pri);border:1px solid var(--pri-100);flex:none}
+  #hdr{display:flex;gap:6px;flex:none}
+  header button{background:#fff;color:var(--ink2);border:1px solid var(--line2);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:600}
+  nav{display:flex;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:59px;z-index:4;padding:0 6px}
+  nav button{flex:1;border:0;background:none;padding:10px 2px 9px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;position:relative;display:flex;flex-direction:column;align-items:center;gap:3px}
+  nav button svg{width:19px;height:19px}
+  nav button.on{color:var(--pri);border-bottom-color:var(--pri)}
+  .badge{position:absolute;top:4px;left:calc(50% + 6px);min-width:17px;padding:0 5px;border-radius:9px;background:var(--danger);color:#fff;font-size:10.5px;line-height:17px;font-weight:700}
+  main{max-width:760px;margin:0 auto;padding:14px 12px 40px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+  .card h2{font-size:16px;font-weight:800;letter-spacing:-.3px;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+  .muted{color:var(--muted);font-size:13px}
+  button{font:inherit;cursor:pointer}
+  .btn{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:8px 14px;font-weight:600;color:var(--ink2)}
+  .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .btn.no{color:var(--danger);border-color:#fbd5d5;background:#fff}
+  .btn.sm{padding:5px 11px;font-size:13px;border-radius:999px}
+  .btn:disabled{opacity:.45}
+  input,select,textarea{font:inherit;width:100%;padding:11px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-100)}
+  label{display:block;margin:12px 0 5px;font-weight:700;font-size:13.5px;color:var(--ink2)}
+  .item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .item:last-child{border-bottom:0}
+  .date{min-width:94px;font-weight:800;font-size:15.5px;letter-spacing:-.2px}
+  .date.soon{color:var(--danger)}
+  .grow{flex:1;min-width:0}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:#f1f4f8;color:var(--ink2);margin-top:3px}
+  .tag.wait{background:#fff6dd;color:#92400e}.tag.acc{background:var(--ok-50);color:var(--ok)}.tag.rej{background:var(--danger-50);color:var(--danger)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .calhead b{font-size:16px}
+  table.cal{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;border:1px solid #dbe1ea;border-radius:12px;overflow:hidden}
+  table.cal th{font-size:12px;color:var(--muted);padding:6px 0;background:#f4f6fa;border-bottom:1px solid #dbe1ea}
+  table.cal td{border-right:1px solid #eef1f5;border-bottom:1px solid #eef1f5;vertical-align:top;height:66px;padding:3px;font-size:11.5px;background:#fff}
+  table.cal td:last-child{border-right:0}
+  table.cal tr:last-child td{border-bottom:0}
+  table.cal td.out{background:#f7f8fa}
+  table.cal td.hol{background:#fff5f5}
+  table.cal td.today{box-shadow:inset 0 0 0 2px var(--pri)}
+  table.cal .d{font-weight:700;font-size:12px}
+  table.cal .n{display:block;border-radius:5px;padding:1px 3px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#f1f4f8;color:var(--ink2)}
+  table.cal .n.me{background:var(--me);color:var(--me-ink);font-weight:800}
+  table.cal .sw{color:#c2410c;font-weight:700}
+  table.cal td.tap{cursor:pointer}
+  table.cal td.tap:active{background:var(--pri-50)}
+  table.cal td.past{opacity:.5}
+  table.cal td.mine{background:#fffcf0}
+  table.cal .wt{display:block;font-size:10.5px;color:#92400e;font-weight:700}
+  .howto .n.me{background:var(--me);color:var(--me-ink);font-weight:800;padding:0 6px;border-radius:5px}
+  .howto{background:var(--pri-50);border:1px solid var(--pri-100);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.75;margin-top:12px;color:var(--ink2)}
+  .pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:6px}
+  .pick button{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:10px 4px;font-size:14px;font-weight:600;color:var(--ink2)}
+  .pick button.on{background:var(--pri-50);border-color:var(--pri);color:var(--pri)}
+  .pick button small{display:block;font-size:10.5px;color:var(--muted);font-weight:500}
+  table.cnt{width:100%;border-collapse:collapse;font-size:14px}
+  table.cnt th{font-size:12.5px;color:var(--muted);font-weight:600;background:#f7f9fc}
+  table.cnt th,table.cnt td{border-bottom:1px solid var(--line);padding:9px 4px;text-align:center}
+  table.cnt td:first-child,table.cnt th:first-child{text-align:left;padding-left:8px}
+  table.cnt tr.me td{background:var(--me);font-weight:800}
+  .modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+  .modal.hidden{display:none}
+  .sheet{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px 20px}
+  .sheet h2{font-size:18px;font-weight:800}
+  @media(min-width:600px){.modal{align-items:center}.sheet{border-radius:20px}}
+  .seg{display:flex;gap:6px;background:#f1f4f8;padding:4px;border-radius:12px}
+  .seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 4px;font-size:14px;font-weight:600;color:var(--muted)}
+  .seg button.on{background:#fff;color:var(--pri);box-shadow:0 1px 3px rgba(15,23,42,.12)}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:11px 18px;border-radius:12px;opacity:0;transition:.25s;pointer-events:none;z-index:30;max-width:90vw;box-shadow:0 8px 24px rgba(15,23,42,.25)}
+  #toast.show{opacity:1}
+  .center{text-align:center;padding:30px 10px}
+  .warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:9px 11px;font-size:13px;margin-top:8px}
+  .login-head{text-align:center;margin:8px 0 6px}
+  .login-head img{width:72px;height:72px;border-radius:50%;object-fit:contain}
+  .login-head .s{font-size:13px;color:var(--muted);margin-top:6px}
+  .login-head .t{font-size:19px;font-weight:800;margin-top:2px}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;img class=&quot;logo&quot; id=&quot;logo&quot; alt=&quot;학교 마크&quot; src=&quot;data:image/jpeg;base64,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&quot;&gt;
+  &lt;div class=&quot;ttl&quot;&gt;
+    &lt;div class=&quot;school&quot;&gt;충북대학교사범대학부설고등학교&lt;/div&gt;
+    &lt;h1&gt;&lt;span id=&quot;title&quot;&gt;야자 감독&lt;/span&gt;&lt;span class=&quot;who&quot; id=&quot;who&quot; style=&quot;display:none&quot;&gt;&lt;/span&gt;&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;span id=&quot;hdr&quot;&gt;&lt;/span&gt;
+&lt;/header&gt;
+&lt;nav id=&quot;nav&quot; style=&quot;display:none&quot;&gt;
+  &lt;button data-v=&quot;mine&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1&quot;/&gt;&lt;/svg&gt;내 일정&lt;/button&gt;
+  &lt;button data-v=&quot;cal&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;4&quot; width=&quot;18&quot; height=&quot;18&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M16 2v4M8 2v4M3 10h18&quot;/&gt;&lt;/svg&gt;전체 달력&lt;/button&gt;
+  &lt;button data-v=&quot;req&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;m17 2 4 4-4 4&quot;/&gt;&lt;path d=&quot;M3 11v-1a4 4 0 0 1 4-4h14&quot;/&gt;&lt;path d=&quot;m7 22-4-4 4-4&quot;/&gt;&lt;path d=&quot;M21 13v1a4 4 0 0 1-4 4H3&quot;/&gt;&lt;/svg&gt;교체 요청&lt;span class=&quot;badge&quot; id=&quot;rqb&quot; style=&quot;display:none&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;button data-v=&quot;cnt&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M3 3v18h18&quot;/&gt;&lt;path d=&quot;M7 16v-4M12 16V8M17 16v-7&quot;/&gt;&lt;/svg&gt;횟수&lt;/button&gt;
+&lt;/nav&gt;
+&lt;main id=&quot;app&quot;&gt;&lt;div class=&quot;center muted&quot;&gt;불러오는 중…&lt;/div&gt;&lt;/main&gt;
+&lt;div id=&quot;modal&quot; class=&quot;modal hidden&quot;&gt;&lt;div class=&quot;sheet&quot; id=&quot;sheet&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div id=&quot;toast&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+const DOW = [&#x27;일&#x27;,&#x27;월&#x27;,&#x27;화&#x27;,&#x27;수&#x27;,&#x27;목&#x27;,&#x27;금&#x27;,&#x27;토&#x27;];
+const CATS = [{k:&#x27;wk&#x27;,label:&#x27;월~목&#x27;,d:[1,2,3,4]},{k:&#x27;fri&#x27;,label:&#x27;금&#x27;,d:[5]},{k:&#x27;sat&#x27;,label:&#x27;토&#x27;,d:[6]},{k:&#x27;sun&#x27;,label:&#x27;일&#x27;,d:[0]}];
+let ME = null, D = null, VIEW = &#x27;mine&#x27;, CALM = null, timer = null;
+try { ME = JSON.parse(localStorage.getItem(&#x27;yaja-me&#x27;) || &#x27;null&#x27;); } catch (e) {}
+
+/* ---------- 서버 호출 ---------- */
+function run(fn, ...args) {
+  return new Promise((res, rej) =&gt; google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+}
+async function call(fn, ...args) {
+  try { return await run(fn, ME.name, ME.token, ...args); }
+  catch (e) {
+    if (String(e &amp;&amp; e.message || e).includes(&#x27;AUTH&#x27;)) { logout(&#x27;다시 로그인해 주세요.&#x27;); throw e; }
+    toast(&#x27;서버 연결에 실패했습니다. 잠시 후 다시 시도하세요.&#x27;); throw e;
+  }
+}
+
+/* ---------- 유틸 ---------- */
+const esc = s =&gt; String(s ?? &#x27;&#x27;).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, c =&gt; ({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;,&quot;&#x27;&quot;:&#x27;&amp;#39;&#x27;}[c]));
+const dowOf = iso =&gt; { const p = iso.split(&#x27;-&#x27;).map(Number); return new Date(Date.UTC(p[0], p[1]-1, p[2])).getUTCDay(); };
+const md = iso =&gt; { const p = iso.split(&#x27;-&#x27;).map(Number); return `${p[1]}/${p[2]}(${DOW[dowOf(iso)]})`; };
+const catOf = iso =&gt; { const d = dowOf(iso); return d===0?&#x27;sun&#x27;:d===5?&#x27;fri&#x27;:d===6?&#x27;sat&#x27;:&#x27;wk&#x27;; };
+const days = (a, b) =&gt; Math.round((Date.UTC(...b.split(&#x27;-&#x27;).map((x,i)=&gt;i===1?x-1:+x)) - Date.UTC(...a.split(&#x27;-&#x27;).map((x,i)=&gt;i===1?x-1:+x))) / 86400000);
+function toast(m) { const t = document.getElementById(&#x27;toast&#x27;); t.textContent = m; t.classList.add(&#x27;show&#x27;); clearTimeout(t._h); t._h = setTimeout(() =&gt; t.classList.remove(&#x27;show&#x27;), 2800); }
+function openSheet(html) { document.getElementById(&#x27;sheet&#x27;).innerHTML = html; document.getElementById(&#x27;modal&#x27;).classList.remove(&#x27;hidden&#x27;); }
+function closeSheet() { document.getElementById(&#x27;modal&#x27;).classList.add(&#x27;hidden&#x27;); }
+document.getElementById(&#x27;modal&#x27;).addEventListener(&#x27;click&#x27;, e =&gt; { if (e.target.id === &#x27;modal&#x27;) closeSheet(); });
+function myDates() { return Object.keys(D.assign).filter(d =&gt; D.assign[d].includes(ME.name)).sort(); }
+function pendingIn() { return D.reqs.filter(r =&gt; r.status === &#x27;대기&#x27; &amp;&amp; r.to === ME.name); }
+
+/* ---------- 로그인 ---------- */
+async function showLogin(msg) {
+  document.getElementById(&#x27;nav&#x27;).style.display = &#x27;none&#x27;;
+  document.getElementById(&#x27;hdr&#x27;).innerHTML = &#x27;&#x27;;
+  const app = document.getElementById(&#x27;app&#x27;);
+  app.innerHTML = &#x27;&lt;div class=&quot;center muted&quot;&gt;불러오는 중…&lt;/div&gt;&#x27;;
+  let info;
+  try { info = await run(&#x27;apiNames&#x27;); } catch (e) { app.innerHTML = &#x27;&lt;div class=&quot;card center&quot;&gt;서버에 연결할 수 없습니다. 잠시 후 새로고침해 주세요.&lt;/div&gt;&#x27;; return; }
+  document.getElementById(&#x27;title&#x27;).textContent = info.title;
+  document.getElementById(&#x27;who&#x27;).style.display = &#x27;none&#x27;;
+  app.innerHTML = `&lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;login-head&quot;&gt;&lt;img src=&quot;${document.getElementById(&#x27;logo&#x27;).src}&quot; alt=&quot;&quot;&gt;&lt;div class=&quot;s&quot;&gt;충북대학교사범대학부설고등학교&lt;/div&gt;&lt;div class=&quot;t&quot;&gt;${esc(info.title)}&lt;/div&gt;&lt;/div&gt;
+    &lt;h2&gt;로그인&lt;/h2&gt;
+    ${msg ? `&lt;div class=&quot;warn&quot;&gt;${esc(msg)}&lt;/div&gt;` : &#x27;&#x27;}
+    &lt;label&gt;이름&lt;/label&gt;
+    &lt;select id=&quot;lname&quot;&gt;&lt;option value=&quot;&quot;&gt;이름을 선택하세요&lt;/option&gt;${info.names.map(n =&gt; `&lt;option&gt;${esc(n)}&lt;/option&gt;`).join(&#x27;&#x27;)}&lt;/select&gt;
+    &lt;label&gt;PIN (숫자 4~6자리)&lt;/label&gt;
+    &lt;input id=&quot;lpin&quot; type=&quot;password&quot; inputmode=&quot;numeric&quot; maxlength=&quot;6&quot; autocomplete=&quot;off&quot;&gt;
+    &lt;p class=&quot;muted&quot;&gt;처음 접속하시면 지금 입력한 숫자가 내 PIN으로 정해집니다. 잊으면 담당 선생님께 초기화를 요청하세요.&lt;/p&gt;
+    &lt;button class=&quot;btn pri&quot; id=&quot;lgo&quot; style=&quot;width:100%&quot;&gt;로그인&lt;/button&gt;
+  &lt;/div&gt;`;
+  document.getElementById(&#x27;lgo&#x27;).onclick = async () =&gt; {
+    const name = document.getElementById(&#x27;lname&#x27;).value, pin = document.getElementById(&#x27;lpin&#x27;).value;
+    if (!name) { toast(&#x27;이름을 선택하세요.&#x27;); return; }
+    const b = document.getElementById(&#x27;lgo&#x27;); b.disabled = true;
+    try {
+      const r = await run(&#x27;apiLogin&#x27;, name, pin);
+      if (!r.ok) { toast(r.msg); b.disabled = false; return; }
+      ME = { name, token: r.token };
+      try { localStorage.setItem(&#x27;yaja-me&#x27;, JSON.stringify(ME)); } catch (e) {}
+      if (r.first) toast(&#x27;PIN이 등록되었습니다. 잊지 않도록 기억해 두세요.&#x27;);
+      start();
+    } catch (e) { toast(&#x27;로그인에 실패했습니다.&#x27;); b.disabled = false; }
+  };
+}
+function logout(msg) {
+  ME = null; D = null; clearInterval(timer);
+  try { localStorage.removeItem(&#x27;yaja-me&#x27;); } catch (e) {}
+  showLogin(msg);
+}
+
+/* ---------- 데이터 ---------- */
+async function refresh(force) {
+  const r = await call(&#x27;apiState&#x27;, force ? &#x27;&#x27; : (D &amp;&amp; D.version));
+  if (r.same) return false;
+  const before = D ? pendingIn().length : -1;
+  D = r;
+  if (before &gt;= 0 &amp;&amp; pendingIn().length &gt; before) toast(&#x27;새 교체 요청이 도착했습니다.&#x27;);
+  render();
+  return true;
+}
+async function start() {
+  document.getElementById(&#x27;nav&#x27;).style.display = &#x27;flex&#x27;;
+  document.getElementById(&#x27;hdr&#x27;).innerHTML = `&lt;button id=&quot;hpin&quot; title=&quot;PIN 변경&quot;&gt;PIN&lt;/button&gt;&lt;button id=&quot;hout&quot;&gt;로그아웃&lt;/button&gt;`;
+  document.getElementById(&#x27;hout&#x27;).onclick = () =&gt; logout();
+  document.getElementById(&#x27;hpin&#x27;).onclick = changePin;
+  try { await refresh(true); } catch (e) { return; }
+  clearInterval(timer);
+  timer = setInterval(() =&gt; { if (!document.hidden &amp;&amp; ME) refresh().catch(() =&gt; {}); }, 20000);
+}
+document.addEventListener(&#x27;visibilitychange&#x27;, () =&gt; { if (!document.hidden &amp;&amp; ME &amp;&amp; D) refresh().catch(() =&gt; {}); });
+document.getElementById(&#x27;nav&#x27;).addEventListener(&#x27;click&#x27;, e =&gt; { const b = e.target.closest(&#x27;button&#x27;); if (b) { VIEW = b.dataset.v; render(); window.scrollTo(0, 0); } });
+
+/* ---------- 화면 ---------- */
+function render() {
+  document.getElementById(&#x27;title&#x27;).textContent = D.title;
+  const who = document.getElementById(&#x27;who&#x27;); who.textContent = ME.name; who.style.display = &#x27;&#x27;;
+  document.querySelectorAll(&#x27;#nav button&#x27;).forEach(b =&gt; b.classList.toggle(&#x27;on&#x27;, b.dataset.v === VIEW));
+  const n = pendingIn().length, rqb = document.getElementById(&#x27;rqb&#x27;);
+  rqb.textContent = n; rqb.style.display = n ? &#x27;&#x27; : &#x27;none&#x27;;
+  const app = document.getElementById(&#x27;app&#x27;);
+  app.innerHTML = VIEW === &#x27;cal&#x27; ? viewCal() : VIEW === &#x27;req&#x27; ? viewReq() : VIEW === &#x27;cnt&#x27; ? viewCnt() : viewMine();
+}
+
+function reqLabel(r) {
+  return r.toDate ? `내 ${md(r.from === ME.name ? r.fromDate : r.toDate)} ↔ ${esc(r.from === ME.name ? r.to : r.from)} 선생님 ${md(r.from === ME.name ? r.toDate : r.fromDate)}`
+                  : (r.from === ME.name ? `내 ${md(r.fromDate)} → ${esc(r.to)} 선생님이 대신` : `${esc(r.from)} 선생님 ${md(r.fromDate)} → 내가 대신`);
+}
+
+function viewMine() {
+  const mine = myDates(), up = mine.filter(d =&gt; d &gt;= D.today), past = mine.length - up.length;
+  const sent = D.reqs.filter(r =&gt; r.status === &#x27;대기&#x27; &amp;&amp; r.from === ME.name);
+  const inc = pendingIn();
+  let h = &#x27;&#x27;;
+  if (inc.length) h += `&lt;div class=&quot;card&quot; style=&quot;border-color:#f0c36d&quot;&gt;&lt;b&gt;받은 교체 요청 ${inc.length}건&lt;/b&gt; &lt;button class=&quot;btn sm pri&quot; onclick=&quot;VIEW=&#x27;req&#x27;;render()&quot;&gt;확인하기&lt;/button&gt;&lt;/div&gt;`;
+  h += `&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;다가오는 내 감독 &lt;span class=&quot;muted&quot;&gt;${up.length}회&lt;/span&gt;&lt;/h2&gt;`;
+  if (!up.length) h += &#x27;&lt;p class=&quot;muted&quot;&gt;예정된 감독이 없습니다.&lt;/p&gt;&#x27;;
+  up.forEach(d =&gt; {
+    const others = D.assign[d].filter(n =&gt; n !== ME.name);
+    const waiting = sent.find(r =&gt; r.fromDate === d);
+    const dd = days(D.today, d);
+    h += `&lt;div class=&quot;item&quot;&gt;&lt;span class=&quot;date ${dd &lt;= 2 ? &#x27;soon&#x27; : &#x27;&#x27;}&quot;&gt;${md(d)}&lt;/span&gt;
+      &lt;span class=&quot;grow&quot;&gt;${dd === 0 ? &#x27;&lt;b&gt;오늘&lt;/b&gt; &#x27; : dd === 1 ? &#x27;&lt;b&gt;내일&lt;/b&gt; &#x27; : &#x27;&#x27;}${others.length ? &#x27;&lt;span class=&quot;muted&quot;&gt;함께: &#x27; + esc(others.join(&#x27;, &#x27;)) + &#x27;&lt;/span&gt;&#x27; : &#x27;&#x27;}
+        ${D.note[d] ? `&lt;br&gt;&lt;span class=&quot;tag&quot;&gt;교체됨&lt;/span&gt;` : &#x27;&#x27;} ${waiting ? `&lt;br&gt;&lt;span class=&quot;tag wait&quot;&gt;${esc(waiting.to)} 선생님께 요청 중&lt;/span&gt;` : &#x27;&#x27;}&lt;/span&gt;
+      ${waiting ? &#x27;&#x27; : `&lt;button class=&quot;btn sm&quot; onclick=&quot;openSwap(&#x27;${d}&#x27;)&quot;&gt;교체 요청&lt;/button&gt;`}&lt;/div&gt;`;
+  });
+  h += `${past ? `&lt;p class=&quot;muted&quot;&gt;지난 감독 ${past}회&lt;/p&gt;` : &#x27;&#x27;}&lt;/div&gt;`;
+  if (D.notes) h += `&lt;p class=&quot;muted&quot;&gt;${esc(D.notes)}&lt;/p&gt;`;
+  return h;
+}
+
+function viewReq() {
+  const inc = pendingIn(), sent = D.reqs.filter(r =&gt; r.status === &#x27;대기&#x27; &amp;&amp; r.from === ME.name);
+  const done = D.reqs.filter(r =&gt; r.status !== &#x27;대기&#x27;).slice().reverse().slice(0, 20);
+  const tagCls = s =&gt; s === &#x27;수락&#x27; ? &#x27;acc&#x27; : (s === &#x27;거절&#x27; || s === &#x27;무효&#x27;) ? &#x27;rej&#x27; : &#x27;&#x27;;
+  let h = `&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;받은 요청&lt;/h2&gt;`;
+  if (!inc.length) h += &#x27;&lt;p class=&quot;muted&quot;&gt;대기 중인 요청이 없습니다.&lt;/p&gt;&#x27;;
+  inc.forEach(r =&gt; {
+    h += `&lt;div class=&quot;item&quot;&gt;&lt;span class=&quot;grow&quot;&gt;&lt;b&gt;${esc(r.from)}&lt;/b&gt; 선생님의 요청&lt;br&gt;${reqLabel(r)}${r.msg ? `&lt;br&gt;&lt;span class=&quot;muted&quot;&gt;“${esc(r.msg)}”&lt;/span&gt;` : &#x27;&#x27;}&lt;/span&gt;
+      &lt;span class=&quot;row&quot; style=&quot;flex-direction:column&quot;&gt;&lt;button class=&quot;btn sm ok&quot; onclick=&quot;respond(&#x27;${r.id}&#x27;,true)&quot;&gt;수락&lt;/button&gt;&lt;button class=&quot;btn sm no&quot; onclick=&quot;respond(&#x27;${r.id}&#x27;,false)&quot;&gt;거절&lt;/button&gt;&lt;/span&gt;&lt;/div&gt;`;
+  });
+  h += `&lt;/div&gt;&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;보낸 요청&lt;/h2&gt;`;
+  if (!sent.length) h += &#x27;&lt;p class=&quot;muted&quot;&gt;대기 중인 요청이 없습니다. [내 일정]에서 교체를 요청할 수 있습니다.&lt;/p&gt;&#x27;;
+  sent.forEach(r =&gt; {
+    h += `&lt;div class=&quot;item&quot;&gt;&lt;span class=&quot;grow&quot;&gt;${reqLabel(r)}&lt;br&gt;&lt;span class=&quot;tag wait&quot;&gt;${esc(r.to)} 선생님 응답 대기&lt;/span&gt;&lt;/span&gt;
+      &lt;button class=&quot;btn sm no&quot; onclick=&quot;cancelReq(&#x27;${r.id}&#x27;)&quot;&gt;취소&lt;/button&gt;&lt;/div&gt;`;
+  });
+  h += `&lt;/div&gt;&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;처리된 요청&lt;/h2&gt;`;
+  if (!done.length) h += &#x27;&lt;p class=&quot;muted&quot;&gt;없음&lt;/p&gt;&#x27;;
+  done.forEach(r =&gt; { h += `&lt;div class=&quot;item&quot;&gt;&lt;span class=&quot;grow&quot;&gt;${reqLabel(r)}&lt;br&gt;&lt;span class=&quot;muted&quot;&gt;${esc(r.doneAt)}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag ${tagCls(r.status)}&quot;&gt;${esc(r.status)}&lt;/span&gt;&lt;/div&gt;`; });
+  h += `&lt;/div&gt;&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;최근 변경 기록&lt;/h2&gt;${D.log.length ? D.log.slice(0, 15).map(l =&gt; `&lt;div class=&quot;item&quot;&gt;&lt;span class=&quot;muted&quot; style=&quot;min-width:110px&quot;&gt;${esc(l[0])}&lt;/span&gt;&lt;span class=&quot;grow&quot;&gt;${esc(l[1])}&lt;/span&gt;&lt;/div&gt;`).join(&#x27;&#x27;) : &#x27;&lt;p class=&quot;muted&quot;&gt;없음&lt;/p&gt;&#x27;}&lt;/div&gt;`;
+  return h;
+}
+
+function viewCal() {
+  const months = [...new Set(Object.keys(D.assign).concat(Object.keys(D.holidays)).map(d =&gt; d.slice(0, 7)))].sort();
+  if (!months.length) return &#x27;&lt;div class=&quot;card muted&quot;&gt;아직 올라온 감독표가 없습니다.&lt;/div&gt;&#x27;;
+  if (!CALM || !months.includes(CALM)) CALM = months.includes(D.today.slice(0, 7)) ? D.today.slice(0, 7) : months[months.length - 1];
+  const idx = months.indexOf(CALM);
+  const wk = (D.perDow[0] &gt; 0 || D.perDow[6] &gt; 0) ? [1,2,3,4,5,6,0] : [1,2,3,4,5];
+  const [y, m] = CALM.split(&#x27;-&#x27;).map(Number);
+  const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  let first = new Date(Date.UTC(y, m - 1, 1)), start = 1 - ((first.getUTCDay() - wk[0] + 7) % 7);
+  let h = `&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;calhead&quot;&gt;
+    &lt;button class=&quot;btn sm&quot; ${idx &lt;= 0 ? &#x27;disabled&#x27; : &#x27;&#x27;} onclick=&quot;CALM=&#x27;${months[idx - 1]}&#x27;;render()&quot;&gt;◀&lt;/button&gt;
+    &lt;b&gt;${y}년 ${m}월&lt;/b&gt;
+    &lt;button class=&quot;btn sm&quot; ${idx &gt;= months.length - 1 ? &#x27;disabled&#x27; : &#x27;&#x27;} onclick=&quot;CALM=&#x27;${months[idx + 1]}&#x27;;render()&quot;&gt;▶&lt;/button&gt;&lt;/div&gt;
+    &lt;table class=&quot;cal&quot;&gt;&lt;thead&gt;&lt;tr&gt;${wk.map(d =&gt; `&lt;th&gt;${DOW[d]}&lt;/th&gt;`).join(&#x27;&#x27;)}&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;`;
+  for (let s = start; s &lt;= last; s += 7) {
+    // 표시하는 요일 중 이 달 날짜가 하나도 없는 주(예: 1일이 일요일)는 건너뜀
+    let any = false;
+    for (let i = 0; i &lt; 7; i++) { const day = s + i; if (day &gt;= 1 &amp;&amp; day &lt;= last &amp;&amp; wk.includes(new Date(Date.UTC(y, m - 1, day)).getUTCDay())) any = true; }
+    if (!any) continue;
+    h += &#x27;&lt;tr&gt;&#x27;;
+    for (let i = 0; i &lt; 7; i++) {
+      const day = s + i, dt = new Date(Date.UTC(y, m - 1, day));
+      if (!wk.includes(dt.getUTCDay())) continue;
+      if (day &lt; 1 || day &gt; last) { h += &#x27;&lt;td class=&quot;out&quot;&gt;&lt;/td&gt;&#x27;; continue; }
+      const iso = `${y}-${String(m).padStart(2,&#x27;0&#x27;)}-${String(day).padStart(2,&#x27;0&#x27;)}`;
+      const hol = D.holidays[iso], a = D.assign[iso] || [];
+      const tap = hol === undefined &amp;&amp; a.length &amp;&amp; iso &gt;= D.today;
+      const mine = a.includes(ME.name), waiting = mine &amp;&amp; sentWaiting(iso);
+      h += `&lt;td class=&quot;${hol !== undefined ? &#x27;hol&#x27; : &#x27;&#x27;} ${iso === D.today ? &#x27;today&#x27; : &#x27;&#x27;} ${tap ? &#x27;tap&#x27; : &#x27;past&#x27;} ${mine ? &#x27;mine&#x27; : &#x27;&#x27;}&quot; ${tap ? `onclick=&quot;calTap(&#x27;${iso}&#x27;)&quot;` : &#x27;&#x27;}&gt;
+        &lt;span class=&quot;d&quot;&gt;${day}&lt;/span&gt;${D.note[iso] ? &#x27; &lt;span class=&quot;sw&quot; title=&quot;교체됨&quot;&gt;⇄&lt;/span&gt;&#x27; : &#x27;&#x27;}
+        ${hol !== undefined ? `&lt;span class=&quot;n&quot; style=&quot;color:#c0392b&quot;&gt;${esc(hol || &#x27;야자 없음&#x27;)}&lt;/span&gt;` : a.map(n =&gt; `&lt;span class=&quot;n ${n === ME.name ? &#x27;me&#x27; : &#x27;&#x27;}&quot;&gt;${esc(n)}&lt;/span&gt;`).join(&#x27;&#x27;)}
+        ${waiting ? &#x27;&lt;span class=&quot;wt&quot;&gt;요청 중&lt;/span&gt;&#x27; : &#x27;&#x27;}&lt;/td&gt;`;
+    }
+    h += &#x27;&lt;/tr&gt;&#x27;;
+  }
+  return h + `&lt;/tbody&gt;&lt;/table&gt;
+    &lt;div class=&quot;howto&quot;&gt;&lt;b&gt;달력에서 바로 교체하기&lt;/b&gt;&lt;br&gt;
+      · &lt;span class=&quot;n me&quot; style=&quot;display:inline&quot;&gt;내 날짜&lt;/span&gt;를 누르면 → 그 날을 맞바꾸거나 대신 서 달라고 요청&lt;br&gt;
+      · &lt;b&gt;다른 선생님 날짜&lt;/b&gt;를 누르면 → 내 날짜 중 하나와 그 날을 맞바꾸자고 요청&lt;/div&gt;
+    &lt;p class=&quot;muted&quot;&gt;⇄ = 교체된 날 · 지난 날짜는 바꿀 수 없습니다&lt;/p&gt;&lt;/div&gt;`;
+}
+function sentWaiting(iso) { return D.reqs.find(r =&gt; r.status === &#x27;대기&#x27; &amp;&amp; r.from === ME.name &amp;&amp; r.fromDate === iso); }
+
+/* 달력에서 날짜를 눌렀을 때 */
+function calTap(iso) {
+  const a = D.assign[iso] || [];
+  if (a.includes(ME.name)) {
+    const w = sentWaiting(iso);
+    if (w) { toast(`이 날은 이미 ${w.to} 선생님께 요청 중입니다. [교체 요청] 탭에서 취소할 수 있습니다.`); return; }
+    openSwap(iso);
+  } else openSwapTo(iso);
+}
+
+/* 다른 선생님 날짜 → 내 날짜와 맞바꾸기 요청 */
+let SW2 = null;
+function openSwapTo(iso) {
+  const others = (D.assign[iso] || []).filter(n =&gt; n !== ME.name);
+  SW2 = { iso, to: others.length === 1 ? others[0] : &#x27;&#x27;, mine: &#x27;&#x27; };
+  drawSwapTo();
+}
+function drawSwapTo() {
+  const iso = SW2.iso, others = (D.assign[iso] || []).filter(n =&gt; n !== ME.name);
+  const myFuture = myDates().filter(d =&gt; d &gt;= D.today &amp;&amp; !sentWaiting(d) &amp;&amp; (!SW2.to || !D.assign[d].includes(SW2.to)));
+  const same = myFuture.filter(d =&gt; catOf(d) === catOf(iso));
+  openSheet(`&lt;h2 style=&quot;margin:0 0 6px&quot;&gt;${md(iso)}과 맞바꾸기&lt;/h2&gt;
+    &lt;p class=&quot;muted&quot;&gt;이 날 감독: ${others.map(esc).join(&#x27;, &#x27;)}&lt;br&gt;내 감독일 하나를 주고, 이 날을 대신 맡습니다.&lt;/p&gt;
+    &lt;label&gt;바꿀 선생님&lt;/label&gt;
+    ${others.length &gt; 1
+      ? `&lt;div class=&quot;seg&quot;&gt;${others.map(n =&gt; `&lt;button class=&quot;${n === SW2.to ? &#x27;on&#x27; : &#x27;&#x27;}&quot; onclick=&quot;SW2.to=&#x27;${esc(n)}&#x27;;SW2.mine=&#x27;&#x27;;drawSwapTo()&quot;&gt;${esc(n)}&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;`
+      : `&lt;div&gt;&lt;b&gt;${esc(others[0])}&lt;/b&gt; 선생님&lt;/div&gt;`}
+    ${SW2.to ? `&lt;label&gt;내가 줄 날짜&lt;/label&gt;
+      ${myFuture.length ? `&lt;div class=&quot;pick&quot;&gt;${myFuture.map(d =&gt; `&lt;button class=&quot;${d === SW2.mine ? &#x27;on&#x27; : &#x27;&#x27;}&quot; onclick=&quot;SW2.mine=&#x27;${d}&#x27;;drawSwapTo()&quot;&gt;${md(d)}${catOf(d) === catOf(iso) ? &#x27;&#x27; : &#x27;&lt;small&gt;구분 다름&lt;/small&gt;&#x27;}&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
+        ${same.length ? &#x27;&#x27; : &#x27;&lt;div class=&quot;warn&quot;&gt;같은 요일 구분(월~목 / 금 / 토)의 내 날짜가 없습니다. 다른 구분과 바꾸면 요일별 횟수가 달라집니다.&lt;/div&gt;&#x27;}`
+        : &#x27;&lt;div class=&quot;warn&quot;&gt;맞바꿀 수 있는 내 예정 감독일이 없습니다.&lt;/div&gt;&#x27;}` : &#x27;&#x27;}
+    &lt;label&gt;메시지 (선택)&lt;/label&gt;
+    &lt;input id=&quot;sw2msg&quot; maxlength=&quot;100&quot; placeholder=&quot;예: 이 날로 바꿔 주실 수 있을까요?&quot;&gt;
+    &lt;div class=&quot;row&quot; style=&quot;margin-top:14px&quot;&gt;&lt;button class=&quot;btn pri&quot; style=&quot;flex:1&quot; onclick=&quot;sendSwapTo()&quot; ${SW2.to &amp;&amp; SW2.mine ? &#x27;&#x27; : &#x27;disabled&#x27;}&gt;요청 보내기&lt;/button&gt;
+      &lt;button class=&quot;btn&quot; onclick=&quot;closeSheet()&quot;&gt;닫기&lt;/button&gt;&lt;/div&gt;`);
+}
+async function sendSwapTo() {
+  const msg = document.getElementById(&#x27;sw2msg&#x27;).value;
+  const r = await call(&#x27;apiRequest&#x27;, SW2.mine, SW2.to, SW2.iso, msg);
+  if (!r.ok) { toast(r.msg); return; }
+  closeSheet(); toast(`${SW2.to} 선생님께 ${md(SW2.mine)} ↔ ${md(SW2.iso)} 교체를 요청했습니다.`); await refresh(true);
+}
+
+function viewCnt() {
+  const st = {}; D.names.forEach(n =&gt; st[n] = { wk:0, fri:0, sat:0, sun:0, tot:0, done:0 });
+  Object.entries(D.assign).forEach(([d, a]) =&gt; a.forEach(n =&gt; { const x = st[n] || (st[n] = { wk:0, fri:0, sat:0, sun:0, tot:0, done:0 }); x[catOf(d)]++; x.tot++; if (d &lt; D.today) x.done++; }));
+  const cats = CATS.filter(c =&gt; c.d.some(d =&gt; D.perDow[d] &gt; 0) || Object.values(st).some(x =&gt; x[c.k]));
+  return `&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;선생님별 감독 횟수 &lt;span class=&quot;muted&quot;&gt;(예정 포함 전체)&lt;/span&gt;&lt;/h2&gt;
+    &lt;table class=&quot;cnt&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;이름&lt;/th&gt;${cats.map(c =&gt; `&lt;th&gt;${c.label}&lt;/th&gt;`).join(&#x27;&#x27;)}&lt;th&gt;계&lt;/th&gt;&lt;th&gt;완료&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+    ${Object.keys(st).map(n =&gt; `&lt;tr class=&quot;${n === ME.name ? &#x27;me&#x27; : &#x27;&#x27;}&quot;&gt;&lt;td&gt;${esc(n)}&lt;/td&gt;${cats.map(c =&gt; `&lt;td&gt;${st[n][c.k]}&lt;/td&gt;`).join(&#x27;&#x27;)}&lt;td&gt;&lt;b&gt;${st[n].tot}&lt;/b&gt;&lt;/td&gt;&lt;td class=&quot;muted&quot;&gt;${st[n].done}&lt;/td&gt;&lt;/tr&gt;`).join(&#x27;&#x27;)}
+    &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`;
+}
+
+/* ---------- 교체 요청 ---------- */
+let SW = null;
+function openSwap(d) { SW = { d, type: &#x27;swap&#x27;, to: &#x27;&#x27;, toDate: &#x27;&#x27; }; drawSwap(); }
+function drawSwap() {
+  const d = SW.d, onDay = D.assign[d];
+  const cands = D.names.filter(n =&gt; n !== ME.name &amp;&amp; !onDay.includes(n));
+  const theirs = SW.to ? Object.keys(D.assign).filter(x =&gt; x &gt;= D.today &amp;&amp; D.assign[x].includes(SW.to) &amp;&amp; !D.assign[x].includes(ME.name)).sort() : [];
+  const sameCat = theirs.filter(x =&gt; catOf(x) === catOf(d));
+  openSheet(`&lt;h2 style=&quot;margin:0 0 6px&quot;&gt;${md(d)} 교체 요청&lt;/h2&gt;
+    &lt;div class=&quot;seg&quot;&gt;&lt;button class=&quot;${SW.type === &#x27;swap&#x27; ? &#x27;on&#x27; : &#x27;&#x27;}&quot; onclick=&quot;SW.type=&#x27;swap&#x27;;drawSwap()&quot;&gt;날짜 맞바꾸기&lt;/button&gt;
+      &lt;button class=&quot;${SW.type === &#x27;cover&#x27; ? &#x27;on&#x27; : &#x27;&#x27;}&quot; onclick=&quot;SW.type=&#x27;cover&#x27;;SW.toDate=&#x27;&#x27;;drawSwap()&quot;&gt;대신 서 주기&lt;/button&gt;&lt;/div&gt;
+    &lt;p class=&quot;muted&quot;&gt;${SW.type === &#x27;swap&#x27; ? &#x27;상대 선생님의 감독일과 서로 바꿉니다.&#x27; : &#x27;상대 선생님이 이 날을 대신 맡습니다. (상대의 횟수가 1회 늘어납니다)&#x27;}&lt;/p&gt;
+    &lt;label&gt;상대 선생님&lt;/label&gt;
+    &lt;select onchange=&quot;SW.to=this.value;SW.toDate=&#x27;&#x27;;drawSwap()&quot;&gt;&lt;option value=&quot;&quot;&gt;선택하세요&lt;/option&gt;${cands.map(n =&gt; `&lt;option ${n === SW.to ? &#x27;selected&#x27; : &#x27;&#x27;}&gt;${esc(n)}&lt;/option&gt;`).join(&#x27;&#x27;)}&lt;/select&gt;
+    ${SW.type === &#x27;swap&#x27; &amp;&amp; SW.to ? `&lt;label&gt;바꿀 상대의 날짜&lt;/label&gt;
+      ${theirs.length ? `&lt;div class=&quot;pick&quot;&gt;${theirs.map(x =&gt; `&lt;button class=&quot;${x === SW.toDate ? &#x27;on&#x27; : &#x27;&#x27;}&quot; onclick=&quot;SW.toDate=&#x27;${x}&#x27;;drawSwap()&quot;&gt;${md(x)}${catOf(x) === catOf(d) ? &#x27;&#x27; : &#x27;&lt;small&gt;구분 다름&lt;/small&gt;&#x27;}&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
+        ${sameCat.length ? &#x27;&#x27; : &#x27;&lt;div class=&quot;warn&quot;&gt;같은 요일 구분(월~목 / 금 / 토)의 날짜가 없습니다. 다른 구분과 바꾸면 요일별 횟수가 달라집니다.&lt;/div&gt;&#x27;}`
+        : &#x27;&lt;div class=&quot;warn&quot;&gt;이 선생님은 맞바꿀 수 있는 예정 감독일이 없습니다. [대신 서 주기]를 이용하세요.&lt;/div&gt;&#x27;}` : &#x27;&#x27;}
+    &lt;label&gt;메시지 (선택)&lt;/label&gt;
+    &lt;input id=&quot;swmsg&quot; maxlength=&quot;100&quot; placeholder=&quot;예: 출장이 있어서요. 부탁드립니다!&quot;&gt;
+    &lt;div class=&quot;row&quot; style=&quot;margin-top:14px&quot;&gt;&lt;button class=&quot;btn pri&quot; style=&quot;flex:1&quot; onclick=&quot;sendSwap()&quot; ${SW.to &amp;&amp; (SW.type === &#x27;cover&#x27; || SW.toDate) ? &#x27;&#x27; : &#x27;disabled&#x27;}&gt;요청 보내기&lt;/button&gt;
+      &lt;button class=&quot;btn&quot; onclick=&quot;closeSheet()&quot;&gt;닫기&lt;/button&gt;&lt;/div&gt;`);
+}
+async function sendSwap() {
+  const msg = document.getElementById(&#x27;swmsg&#x27;).value;
+  const r = await call(&#x27;apiRequest&#x27;, SW.d, SW.to, SW.type === &#x27;swap&#x27; ? SW.toDate : &#x27;&#x27;, msg);
+  if (!r.ok) { toast(r.msg); return; }
+  closeSheet(); toast(`${SW.to} 선생님께 요청을 보냈습니다.`); await refresh(true);
+}
+async function respond(id, accept) {
+  const r = D.reqs.find(x =&gt; x.id === id);
+  if (accept &amp;&amp; !confirm(`수락하면 감독표가 바로 바뀝니다.\n${reqLabel(r).replace(/&lt;[^&gt;]+&gt;/g, &#x27;&#x27;)}`)) return;
+  const res = await call(&#x27;apiRespond&#x27;, id, accept);
+  toast(res.ok ? (accept ? &#x27;교체가 반영되었습니다.&#x27; : &#x27;거절했습니다.&#x27;) : res.msg);
+  await refresh(true);
+}
+async function cancelReq(id) {
+  const res = await call(&#x27;apiCancel&#x27;, id);
+  toast(res.ok ? &#x27;요청을 취소했습니다.&#x27; : res.msg); await refresh(true);
+}
+async function changePin() {
+  const p = prompt(&#x27;새 PIN (숫자 4~6자리)&#x27;);
+  if (p === null) return;
+  const r = await call(&#x27;apiChangePin&#x27;, p);
+  if (!r.ok) { toast(r.msg); return; }
+  ME.token = r.token; try { localStorage.setItem(&#x27;yaja-me&#x27;, JSON.stringify(ME)); } catch (e) {}
+  toast(&#x27;PIN을 변경했습니다.&#x27;);
+}
+
+if (ME) start(); else showLogin();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+    <p>위쪽의 <b class="ui">💾 저장</b>(Ctrl+S)을 누릅니다.</p></div>
+
+  <div class="step"><h2><span class="num">5</span>초기 설정 · 관리자 키 확인</h2>
+    <ol>
+      <li>스프레드시트 탭으로 돌아가 <b>새로고침(F5)</b>합니다. 잠시 후 메뉴에 <b class="ui">야자 감독</b>이 생깁니다.</li>
+      <li><b class="ui">야자 감독</b> → <b class="ui">초기 설정 · 관리자 키 보기</b>를 누릅니다.</li>
+      <li>처음에는 권한 승인 창이 뜹니다: <b class="ui">계속</b> → 내 계정 선택 → "확인되지 않은 앱" 화면이 나오면 <b class="ui">고급</b> → <b class="ui">(안전하지 않음)으로 이동</b> → <b class="ui">허용</b>.
+        <br><span style="color:#6b7785;font-size:13px">직접 만든 스크립트라서 나오는 정상적인 안내입니다.</span></li>
+      <li>다시 <b class="ui">야자 감독</b> → <b class="ui">초기 설정 · 관리자 키 보기</b>를 누르면 <b>관리자 키</b>가 보입니다. 복사해 둡니다.</li>
+    </ol>
+    시트 아래에 <b>설정 · 교사 · 배정 · 교체요청 · 변경기록</b> 탭이 생겼으면 성공입니다.</div>
+
+  <div class="step"><h2><span class="num">6</span>웹 앱으로 배포</h2>
+    Apps Script 탭에서 오른쪽 위 <b class="ui">배포</b> → <b class="ui">새 배포</b>를 누릅니다.
+    <ol>
+      <li><b class="ui">유형 선택</b> 옆 ⚙ 톱니 → <b class="ui">웹 앱</b></li>
+      <li>설명: <b>야자 감독</b> (아무거나)</li>
+      <li>다음 사용자 인증 정보로 실행: <b class="ui">나</b></li>
+      <li>액세스 권한이 있는 사용자: <b class="ui">모든 사용자</b> ← 꼭 이것으로!</li>
+      <li><b class="ui">배포</b>를 누르고, 나오는 <b>웹 앱 URL</b>(https://script.google.com/macros/s/…/exec)을 복사합니다.</li>
+    </ol>
+    <div class="tip">"모든 사용자"여도 이름과 PIN으로 로그인해야 일정을 볼 수 있습니다. 시트 자체는 공개되지 않습니다.</div></div>
+
+  <div class="step"><h2><span class="num">7</span>야자 감독 배정 프로그램과 연결</h2>
+    <ol>
+      <li>야자 감독 배정 프로그램 맨 아래 <b>5. 온라인 공유</b>에 <b>웹 앱 URL</b>과 <b>관리자 키</b>를 붙여넣습니다.</li>
+      <li><b class="ui">연결 확인</b> → "연결됨"이 나오면 <b class="ui">감독표 올리기</b>를 누릅니다.</li>
+    </ol></div>
+
+  <div class="step"><h2><span class="num">8</span>선생님들께 링크 보내기</h2>
+    웹 앱 URL을 메신저로 보내 주세요. 선생님들은 <b>이름 선택 + PIN(처음 접속 때 직접 정함)</b>으로 들어와서
+    <ul>
+      <li>내 감독 일정 확인, 전체 달력 보기</li>
+      <li><b>교체 요청</b> (날짜 맞바꾸기 / 대신 서 주기) → 상대 선생님이 <b>수락</b>하면 즉시 반영</li>
+      <li>월~목 · 금 · 토 횟수 확인</li>
+    </ul>
+    을 할 수 있습니다. 휴대폰에서 <b>홈 화면에 추가</b>해 두면 앱처럼 쓸 수 있습니다.</div>
+
+  <div class="step"><h2><span class="num">✓</span>매달 쓰는 방법</h2>
+    <ol>
+      <li>야자 프로그램에서 <b class="ui">온라인 변경 내용 가져오기</b> — 선생님들끼리 바꾼 내용이 들어오고, 바뀐 날은 🔒 잠금됩니다.</li>
+      <li>다음 달로 기간 설정 → <b class="ui">자동 배정 실행</b> (누적 횟수 반영)</li>
+      <li><b class="ui">감독표 올리기</b></li>
+    </ol>
+    <ul>
+      <li><b>PIN을 잊은 선생님</b>: 스프레드시트 메뉴 <b class="ui">야자 감독</b> → <b class="ui">선생님 PIN 초기화</b></li>
+      <li><b>교체 기록</b>: 스프레드시트의 <b>교체요청 · 변경기록</b> 탭에서 언제든 볼 수 있습니다.</li>
+      <li><b>코드를 새 버전으로 바꿀 때</b>: 코드를 붙여넣고 저장한 뒤 <b class="ui">배포</b> → <b class="ui">배포 관리</b> → ✏ 수정 → 버전 <b class="ui">새 버전</b> → <b class="ui">배포</b>. (이렇게 하면 URL이 바뀌지 않습니다)</li>
+    </ul></div>
+</main>
+<script>
+function copy(id, btn) {
+  const t = document.getElementById(id);
+  const done = () => { const o = btn.textContent; btn.textContent = '✓ 복사되었습니다'; setTimeout(() => btn.textContent = o, 2000); };
+  if (navigator.clipboard) navigator.clipboard.writeText(t.value).then(done, () => { t.select(); document.execCommand('copy'); done(); });
+  else { t.select(); document.execCommand('copy'); done(); }
+}
+</script>
+</body>
+</html>

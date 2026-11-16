@@ -943,6 +943,120 @@ const archiveItems = [
     "content": "### 💡 프로그램 소개\n학생이 **희망 진로 · 희망 학과 · 주제 키워드**를 입력하면, 물리·화학·생명과학·지구과학·정보를 아우르는 융합 탐구 주제를 추천하는 웹 프로그램입니다. 설치나 로그인 없이 브라우저에서 바로 사용할 수 있습니다.\n\n[🔬 탐구 주제 추천 프로그램 열기](apps/science-topic/index.html)\n\n![탐구 조건 입력 화면](assets/programs/science-topic/screen_input.jpg)\n\n### 🌟 주요 기능\n1. **맞춤 조건 입력** — 학년, 탐구 기간, 예산, 연구 방법(실험 / 데이터 분석 / 아두이노 활용 / 첨단 기자재 활용), 희망 융합 과목, 이수 과목을 고르면 수준에 맞는 주제를 골라 줍니다.\n2. **탐구계획서 수준의 추천 결과** — 내장 주제 109개에서 조건에 맞는 주제를 찾아 연구 동향, 탐구 질문, 가설, 변인, 준비물과 예상 비용, 아두이노 회로·코드, 연구 프로토콜, 데이터 분석 방법, 예상 결론, 진로 연계까지 보여 줍니다.\n3. **과학전람회 선행 연구** — 전국과학전람회 수상작 목록에서 입력한 키워드와 관련된 선행 연구를 함께 찾아 줍니다.\n4. **최신 연구 동향 반영(선택)** — Claude·ChatGPT·Gemini API 키를 연결하면 웹 검색으로 수상작·논문·뉴스를 찾아 새 주제 3개를 만들어 줍니다. 키는 학생 브라우저에서 해당 AI 회사로만 직접 전송됩니다.\n5. **PDF 저장 · 문서 내려받기** — 주제 카드마다 탐구계획서를 PDF나 .md 문서로 저장할 수 있습니다.\n\n![추천 결과 화면](assets/programs/science-topic/screen_result.jpg)\n\n### ⚠️ 사용 안내\n- 추천 결과는 **탐구의 출발점**입니다. 선행연구를 직접 찾아 읽고, 선생님과 상의해 가설과 변인을 다듬으세요.\n- 제시된 참고문헌은 반드시 링크를 열어 실제로 존재하는지, 내용이 맞는지 확인한 뒤 인용하세요.\n"
   },
   {
+    "id": "tool-gongga-app",
+    "category": "tools",
+    "unitMajor": "교실을 바꾸는 AI활용 도구",
+    "unitSeq": "APP",
+    "lessonUrl": "tools/gongga-guide.html",
+    "title": "[교사 직접 개발] 공가대장 작성프로그램 (출석인정 학생 대장)",
+    "date": "2026.11 배포",
+    "year": "2026",
+    "summary": "담임선생님들이 각자 학생의 공가(출석인정) 내용을 입력하면 한곳에 모이고, 학년별·월별·학급별 공가대장을 결재칸과 함께 인쇄(PDF)하거나 한글(.hwpx) 파일로 내려받는 구글 시트 기반 무료 프로그램입니다. 체험판으로 미리 써 볼 수 있습니다.",
+    "tags": [
+      "AI활용도구",
+      "공가대장",
+      "출석인정",
+      "학급경영",
+      "구글시트",
+      "NEIS연동",
+      "업무경감"
+    ],
+    "thumbnail": "assets/programs/gongga/thumb.jpg",
+    "featured": true,
+    "links": [
+      {
+        "label": "📘 사용 가이드 · 설치 방법",
+        "url": "tools/gongga-guide.html",
+        "icon": "book-open"
+      },
+      {
+        "label": "▶ 체험판 열어 보기",
+        "url": "apps/gongga/index.html",
+        "icon": "play"
+      }
+    ],
+    "content": "### 💡 프로그램 소개\n담임선생님들이 각자 학생의 **공가(출석인정)** 내용을 입력하면 한곳에 모이고, **학년별·월별·학급별 공가대장**을 인쇄하거나 **한글(.hwpx)** 파일로 내려받아 결재를 받는 프로그램입니다. 구글 계정만 있으면 어느 학교에서나 무료로 쓸 수 있고, 설치는 학교에서 관리 선생님 한 분만 하면 됩니다.\n\n[📘 사용 가이드 · 설치 방법](tools/gongga-guide.html) · [▶ 체험판 열어 보기](apps/gongga/index.html)\n\n### 🌟 주요 기능\n1. **공가 입력** — 학생을 고르고 기간(시작일~종료일) 또는 날짜+교시와 사유만 입력. 날짜가 겹치는 기록은 저장 전에 알려 줍니다.\n![공가 입력 화면](assets/programs/gongga/screen_input.jpg)\n2. **대장 출력** — 학년별·월별 / 학년별 누적 / 학급별 공가대장을 A4 가로로 인쇄·PDF 저장하거나 한글(.hwpx)로 내려받습니다. 쪽마다 결재칸(담임·부장·교감)이 들어갑니다.\n![대장 출력 화면](assets/programs/gongga/screen_print.jpg)\n3. **NEIS 명단 연동** — NEIS 학적 현황 엑셀을 그대로 올리면 학년·반·번호·이름만 읽어 학번을 만듭니다. 주소 등 다른 정보는 저장하지 않습니다.\n4. **학교별 독립 저장** — 기록은 각 학교의 구글 스프레드시트에만 저장되고, 접속코드로 보호됩니다.\n\n---\n체험판의 학생과 기록은 모두 가상의 예시이며, 체험판에 입력한 내용은 사용하는 브라우저에만 저장됩니다.\n"
+  },
+  {
+    "id": "tool-yaja-duty",
+    "category": "tools",
+    "unitMajor": "교실을 바꾸는 AI활용 도구",
+    "unitSeq": "APP",
+    "lessonUrl": "tools/yaja-guide.html",
+    "title": "[교사 직접 개발] 야자 감독 배정 프로그램",
+    "date": "2026.11 웹앱 배포",
+    "year": "2026",
+    "summary": "야간자율학습 감독을 요일별 인원, 선생님별 불가 요일·날짜, 같은 교사 최소 간격, 연간 누적 횟수(월~목·금·토)를 고려해 자동 배정하고 엑셀로 내보냅니다. 구글 시트를 연결하면 선생님들이 휴대폰으로 일정을 확인하고 서로 교체를 요청할 수 있습니다.",
+    "tags": [
+      "AI활용도구",
+      "야자감독",
+      "감독배정",
+      "학년부업무",
+      "업무경감",
+      "구글시트",
+      "웹앱"
+    ],
+    "thumbnail": "assets/programs/yaja/screen_calendar.jpg",
+    "featured": true,
+    "links": [
+      {
+        "label": "📘 사용 가이드 열기",
+        "url": "tools/yaja-guide.html",
+        "icon": "book-open"
+      },
+      {
+        "label": "▶ 야자 감독 배정 프로그램 열기",
+        "url": "apps/yaja/index.html",
+        "icon": "external-link"
+      },
+      {
+        "label": "💾 전체 파일 받기 (zip · 100KB)",
+        "url": "downloads/proctor/%EC%95%BC%EC%9E%90_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip",
+        "icon": "download"
+      }
+    ],
+    "content": "### 💡 프로그램 소개\n야간자율학습 감독을 한 달 단위로 **공평하게 자동 배정**하는 웹 프로그램입니다. 설치 없이 브라우저에서 바로 쓰고, 입력한 내용은 사용하는 컴퓨터의 브라우저에 저장됩니다.\n\n[▶ 프로그램 열기](apps/yaja/index.html) · [📘 사용 가이드](tools/yaja-guide.html)\n\n![배정 달력](assets/programs/yaja/screen_calendar.jpg)\n\n### 🌟 주요 기능\n1. **조건 설정** — 기간, 요일별 감독 인원, 야자 없는 날(공휴일·시험기간), 같은 교사 최소 간격을 정합니다.\n2. **감독 교사 관리** — 학년부 명단 엑셀을 불러오고, 선생님별 불가 요일·불가 날짜를 지정합니다.\n3. **자동 배정 · 달력 수정** — 월~목·금·토 횟수를 연간 누적으로 맞춰 배정하고, 달력에서 직접 고친 날은 🔒 잠금됩니다.\n4. **월별·누적 횟수 표와 엑셀 내보내기**\n5. **온라인 공유(선택)** — 구글 시트를 연결하면 선생님들이 이름+PIN으로 들어와 내 일정 확인, 날짜 맞바꾸기·대신 서 주기 요청을 할 수 있습니다.\n"
+  },
+  {
+    "id": "tool-exam-proctor",
+    "category": "tools",
+    "unitMajor": "교실을 바꾸는 AI활용 도구",
+    "unitSeq": "APP",
+    "lessonUrl": "tools/exam-proctor-guide.html",
+    "title": "[교사 직접 개발] 정기고사 감독 배정 프로그램",
+    "date": "2026.11 웹앱 배포",
+    "year": "2026",
+    "summary": "시험 일정과 과목만 넣으면 학급·복도·특별실 감독을 자동 배정합니다. 담임은 자기 반, 출제교사는 해당 학년, 출장·연가 교사는 해당 교시에서 자동으로 빠지고, 감독 횟수를 고르게 맞춘 감독 시간표를 엑셀로 내보냅니다.",
+    "tags": [
+      "AI활용도구",
+      "정기고사",
+      "시험감독",
+      "감독배정",
+      "업무경감",
+      "웹앱"
+    ],
+    "thumbnail": "assets/programs/exam-proctor/screen_result.jpg",
+    "featured": true,
+    "links": [
+      {
+        "label": "📘 사용 가이드 열기",
+        "url": "tools/exam-proctor-guide.html",
+        "icon": "book-open"
+      },
+      {
+        "label": "▶ 정기고사 감독 배정 프로그램 열기",
+        "url": "apps/exam-proctor/index.html",
+        "icon": "external-link"
+      },
+      {
+        "label": "💾 전체 파일 받기 (zip · 43KB)",
+        "url": "downloads/proctor/%EC%A0%95%EA%B8%B0%EA%B3%A0%EC%82%AC_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip",
+        "icon": "download"
+      }
+    ],
+    "content": "### 💡 프로그램 소개\n정기고사 **학급·복도·특별실 감독**을 자동으로 배정하고 감독 시간표를 엑셀로 만들어 주는 웹 프로그램입니다. 설치 없이 브라우저에서 바로 쓰고, 입력한 내용은 사용하는 컴퓨터의 브라우저에 저장됩니다.\n\n[▶ 프로그램 열기](apps/exam-proctor/index.html) · [📘 사용 가이드](tools/exam-proctor-guide.html)\n\n![배정 결과](assets/programs/exam-proctor/screen_result.jpg)\n\n### 🌟 주요 기능\n1. **교사 명단** — 교원 명단 엑셀을 불러오고, 교장·교감 등은 감독 제외로 표시합니다.\n2. **고사실 · 담임** — 학년별 고사실과 담임, 특별실(온누리교실·학습도움실 등)을 설정합니다.\n3. **시험 일정** — 시험일·교시별 과목, 출제교사, 부감독·복도 인원, 사용 고사실, 동시 과목, 복무(출장·연가)를 입력합니다.\n4. **자동 배정** — 담임·출제교사·복무 교사를 자동으로 빼고 감독 횟수를 고르게 맞춥니다. 칸을 눌러 바꾸면 🔒 잠금되어 유지됩니다.\n5. **엑셀 감독 시간표 내보내기 · 백업/복원**\n"
+  },
+  {
     "id": "tool-random-picker",
     "category": "tools",
     "title": "학생 랜덤 추첨기",

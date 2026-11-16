@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>정기고사 감독 배정 프로그램 사용 가이드 | HoHo earth</title>
+  <meta name="description" content="정기고사 학급·복도·특별실 감독을 담임·출제교사·복무를 고려해 자동 배정하고 엑셀 감독 시간표로 내보내는 무료 웹 프로그램" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="정기고사 감독 배정 프로그램 사용 가이드" />
+  <meta property="og:description" content="학급 · 복도 · 특별실 감독 자동 배정 · 담임/출제교사/복무 자동 제외 · 엑셀 감독 시간표" />
+  <meta property="og:image" content="https://hohoearth.github.io/hohoearth/assets/programs/exam-proctor/screen_result.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .kbd { display:inline-block; padding:1px 8px; margin:0 1px; border:1px solid #cbd5e1; border-bottom-width:2px; border-radius:6px; background:#fff; font-size:.85em; font-weight:700; color:#334155; white-space:nowrap; }
+    .shot { border:1px solid #e2e8f0; border-radius:16px; box-shadow:0 10px 30px -12px rgba(15,23,42,.25); cursor:zoom-in; background:#fff; width:100%; }
+    .step-num { flex-shrink:0; width:28px; height:28px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; }
+    .toc a.active { color:#c2410c; background:#fff7ed; }
+    section[id] { scroll-margin-top: 84px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <a href="../index.html#lab" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i><span>AI활용 도구로</span>
+      </a>
+      <div class="text-sm font-bold text-slate-700 truncate hidden sm:block">정기고사 감독 배정 · 사용 가이드</div>
+      <a href="../apps/exam-proctor/index.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition shrink-0">
+        <i data-lucide="external-link" class="w-4 h-4"></i><span>프로그램 열기</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-orange-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[1fr_460px] gap-10 items-center">
+      <div class="space-y-5">
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-orange-500 text-white">교사 직접 개발 · 무료</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">설치 없이 웹에서 바로</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">엑셀 감독 시간표</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight break-keep">정기고사 감독 배정<br><span class="text-orange-300">사용 가이드</span></h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed break-keep max-w-2xl">
+          시험 일정과 과목만 넣으면 <b class="text-white">학급 · 복도 · 특별실 감독</b>을 자동으로 배정합니다.
+          <b class="text-white">담임은 자기 반, 출제교사는 해당 학년, 출장·연가 교사는 해당 교시</b>에서 알아서 빠지고, 감독 횟수는 고르게 나눠져요.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="../apps/exam-proctor/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-orange-500 hover:bg-orange-400 text-white font-black text-sm transition shadow-lg shadow-orange-500/30 inline-flex items-center gap-2">
+            <i data-lucide="play" class="w-5 h-5"></i>프로그램 바로 열기
+          </a>
+          <a href="../downloads/proctor/%EC%A0%95%EA%B8%B0%EA%B3%A0%EC%82%AC_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip" download="정기고사_감독배정.zip" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i>전체 파일 받기 (zip · 43KB)
+          </a>
+        </div>
+      </div>
+      <img src="../assets/programs/exam-proctor/screen_result.jpg" alt="감독 배정 결과" class="shot hidden lg:block" />
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+    <aside class="hidden lg:block">
+      <nav class="toc sticky top-24 space-y-1 text-sm">
+        <div class="text-[11px] font-black tracking-wider text-slate-400 uppercase px-3 pb-2">목차</div>
+        <a href="#overview" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">한눈에 보기</a>
+        <a href="#teachers" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">1. 교사 명단</a>
+        <a href="#setup" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">2. 기본 설정 · 고사실 · 담임</a>
+        <a href="#schedule" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">3. 시험 일정 · 출제 · 복무</a>
+        <a href="#result" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">4. 자동 배정 · 수정</a>
+        <a href="#export" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 엑셀 · 백업</a>
+        <a href="#rules" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">배정 규칙 정리</a>
+      </nav>
+    </aside>
+
+    <main class="space-y-20 min-w-0">
+
+      <section id="overview" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Overview</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">한눈에 보기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">위쪽 탭 <span class="kbd">교사 명단</span> → <span class="kbd">감독 배정</span> 순서로 채우고, <span class="kbd">자동 배정 실행</span> → <span class="kbd">엑셀로 내보내기</span>를 누르면 감독 시간표가 완성됩니다.</p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">학급 · 복도 · 특별실</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">교시마다 반별 정감독, 필요하면 부감독, 학년별 복도 감독까지. 온누리교실·학습도움실 같은 특별실도 교시별로 켤 수 있어요.</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="user-x" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">자동 제외</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">담임은 자기 반에서, 출제교사는 그 학년 고사실에서, 복무(출장·연가) 교사는 체크한 교시에서 빠집니다.</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center"><i data-lucide="scale" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">횟수 균등 · 직접 수정</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">교사별 감독 횟수를 고르게 맞추고, 칸을 눌러 바꾸면 🔒 잠금되어 다시 배정해도 유지됩니다.</p>
+          </div>
+        </div>
+        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-sm text-sky-900 flex gap-3 break-keep">
+          <i data-lucide="info" class="w-5 h-5 shrink-0"></i>
+          <span>입력한 내용은 <b>지금 쓰는 컴퓨터의 브라우저에 자동 저장</b>되고 서버로 보내지 않습니다. 같은 컴퓨터·같은 브라우저에서 이어서 작업하고, 끝나면 <span class="kbd">백업 · 복원</span>에서 파일로 저장해 두세요. 다음 시험 때 그 파일을 불러오면 명단과 고사실 설정을 다시 쓸 수 있어요.</span>
+        </div>
+      </section>
+
+      <section id="teachers" class="space-y-4">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Step 1 · 교사 명단 탭</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">교사 명단 등록</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>📂 엑셀 파일로 불러오기</b>: 교원 명단 엑셀(.xlsx)이나 CSV를 고르면 "성명/이름" 열을 자동으로 찾아 넣습니다.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">또는 이름을 줄바꿈·쉼표·탭으로 구분해 붙여 넣고 <span class="kbd">추가</span>. 엑셀의 이름 열을 그대로 복사해도 돼요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">교장·교감처럼 감독을 하지 않는 분은 <b>정기고사 감독 제외</b>에 체크하고, 메모 칸에 "교감, 시간강사" 등을 적어 둘 수 있어요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">이름 변경</span>을 쓰면 담임·출제·복무·배정 결과에 들어간 이름까지 한 번에 바뀝니다.</div></div>
+        </div>
+      </section>
+
+      <section id="setup" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Step 2 · 감독 배정 탭</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">기본 설정 · 학년 · 고사실 · 담임</h2>
+        </div>
+        <figure><img src="../assets/programs/exam-proctor/screen_setup.jpg" alt="기본 설정과 고사실" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">1. 기본 설정 · 2. 학년 · 고사실 · 담임 (가상의 선생님 이름)</figcaption></figure>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>시간표 제목 · 학교명 · 하단 안내 문구</b>를 적습니다. 엑셀 시간표의 제목과 아래쪽 안내에 그대로 들어가요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>출제교사 복도대기</b>에 체크하면 출제교사를 해당 학년 복도 감독에 우선 배정합니다.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">학년마다 고사실(1반~6반)을 추가·삭제·순서 변경하고 <b>담임</b>을 고릅니다. 담임은 자기 반 감독에서 자동으로 빠져요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep">온누리교실·학습도움실 같은 곳은 <b>특별실</b>에 체크합니다. 특별실은 기본으로 꺼져 있고, 시험 일정에서 필요한 교시에만 켭니다.</div></div>
+        </div>
+      </section>
+
+      <section id="schedule" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Step 3</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">시험 일정 · 출제교사 · 복무</h2>
+        </div>
+        <div class="grid md:grid-cols-[1fr_1.2fr] gap-8 items-start">
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">+ 시험일 추가</span> → 날짜를 고릅니다. 교시는 <span class="kbd">+ 교시 추가</span>로 늘리고, 비슷한 날은 <span class="kbd">이 날 복제</span>로 빠르게 만들어요.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">교시마다 시간(예비령·준비령·시험시간)을 적고, 학년별로 <b>과목</b>과 <b>출제교사</b>(쉼표로 구분)를 넣습니다. 과목을 비워 두면 <b>자습</b>으로 처리되어 학급 감독을 배정하지 않아요.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>부감독</b>이 필요한 과목은 체크, <b>복도</b> 감독 인원은 숫자로 정합니다. <b>사용 고사실</b> 칩을 눌러 그 교시에 쓰는 교실을 켜고 끕니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep">같은 시간에 반마다 다른 과목을 치르면(예: 1~6반 통합사회, 특별실 지구과학) <span class="kbd">+ 동시 과목</span>으로 과목2와 출제교사를 넣고, 고사실 칩을 눌러 ①과목1 → ②과목2 → ①②동시 → 끔 순서로 바꿉니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">5</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>복무</b>(출장·연가·특별휴가·비출근일 등)는 <span class="kbd">+ 복무 교사 추가</span>로 선생님과 교시를 체크합니다. 체크한 교시에서는 감독을 맡지 않아요.</div></div>
+          </div>
+          <figure><img src="../assets/programs/exam-proctor/screen_schedule.jpg" alt="시험 일정 입력" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">3. 시험 일정 · 출제교사 · 복무 (1일차 예시)</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="result" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Step 4</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">자동 배정 · 결과 고치기</h2>
+        </div>
+        <figure><img src="../assets/programs/exam-proctor/screen_result.jpg" alt="배정 결과" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">4. 배정 결과 — 교시별 정·부·복도 감독과 출제교사</figcaption></figure>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-orange-600 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">자동 배정 실행</span>을 누르면 모든 시험일·교시가 채워집니다. 위쪽 초록 상자에 감독 칸 수, 감독 가능 교사 수, 1인 평균 횟수가 나와요. 입력이 빠진 곳이 있으면 경고로 알려 줍니다.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-orange-600 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">바꾸고 싶은 칸을 누르면 감독 횟수가 적은 순으로 선생님 목록이 나옵니다. 같은 교시에 이미 배정된 선생님을 고르면 <b>두 칸이 서로 맞바뀌어요</b>.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-orange-600 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">직접 바꾼 칸은 <b>🔒 잠금</b>되어 다시 자동 배정해도 그대로 유지됩니다. <span class="kbd">잠금 모두 해제</span>로 풀 수 있어요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-orange-600 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep">맨 아래 <b>교사별 감독 횟수</b> 막대그래프로 평균·최소·최대를 확인합니다.</div></div>
+        </div>
+        <figure><img src="../assets/programs/exam-proctor/screen_stats.jpg" alt="교사별 감독 횟수" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">교사별 감독 횟수</figcaption></figure>
+      </section>
+
+      <section id="export" class="space-y-4">
+        <div>
+          <div class="text-xs font-black tracking-widest text-orange-600 uppercase">Step 5</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">엑셀로 내보내기 · 백업</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">📥 엑셀로 내보내기</div><p class="text-slate-600 mt-1">오른쪽 위 <span class="kbd">엑셀로 내보내기</span>를 누르면 제목·학교명·안내 문구가 들어간 감독 시간표가 <b>.xlsx</b>로 저장됩니다. 인쇄하거나 메신저로 공지하세요. (인터넷 연결 필요)</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">💾 백업 · 복원</div><p class="text-slate-600 mt-1">작업 내용은 이 브라우저에만 저장됩니다. 다른 컴퓨터에서 이어 하거나 다음 시험에 다시 쓰려면 백업 파일을 저장해 두고 불러오세요.</p></div>
+        </div>
+        <p class="text-sm text-slate-600 break-keep">학교 PC에서 따로 쓰고 싶다면 <a href="../downloads/proctor/%EC%A0%95%EA%B8%B0%EA%B3%A0%EC%82%AC_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip" download="정기고사_감독배정.zip" class="text-orange-700 font-bold underline">전체 파일(zip)</a>을 받아 압축을 풀고 <code>index.html</code>을 열면 됩니다.</p>
+      </section>
+
+      <section id="rules" class="space-y-4">
+        <h2 class="text-2xl font-black text-slate-900">배정 규칙 정리</h2>
+        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-slate-100">
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">담임</td><td class="p-3 text-slate-600 break-keep">자기 반 고사실 감독에서 제외</td></tr>
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">출제교사</td><td class="p-3 text-slate-600 break-keep">해당 교시 그 학년 고사실 감독에서 제외 (동시 과목이면 두 과목 출제교사 모두). 옵션을 켜면 해당 학년 복도 감독에 우선 배정</td></tr>
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">복무 교사</td><td class="p-3 text-slate-600 break-keep">체크한 교시에서 제외</td></tr>
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">감독 제외 교사</td><td class="p-3 text-slate-600 break-keep">교사 명단에서 체크한 분(교장·교감 등)은 배정하지 않음</td></tr>
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">자습</td><td class="p-3 text-slate-600 break-keep">과목을 비운 학년·교시는 학급 감독을 배정하지 않음</td></tr>
+              <tr><td class="p-3 font-bold whitespace-nowrap align-top">잠금 칸</td><td class="p-3 text-slate-600 break-keep">직접 고친 칸은 다시 자동 배정해도 유지</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div>
+            <div class="text-xs text-slate-400 font-bold">만든이</div>
+            <div class="font-black text-lg mt-1">충북사대부고 지구과학 교사 김호연</div>
+            <p class="text-sm text-slate-400 mt-1 break-keep">야간자율학습 감독 배정 프로그램도 함께 쓰실 수 있어요.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="yaja-guide.html" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">야자 감독 배정 보기</a>
+            <a href="../apps/exam-proctor/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-orange-500 hover:bg-orange-400 text-white font-black text-sm transition inline-flex items-center gap-2"><i data-lucide="play" class="w-5 h-5"></i>프로그램 열기</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-400">
+    <a href="../index.html" class="hover:text-slate-700 font-bold">HoHo earth</a> · 교실을 바꾸는 AI활용 도구
+  </footer>
+
+  <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/85 hidden items-start justify-center overflow-auto p-4 sm:p-10 cursor-zoom-out">
+    <img id="lightboxImg" alt="" class="max-w-full rounded-2xl shadow-2xl bg-white">
+  </div>
+  <script>
+    if (window.lucide) lucide.createIcons();
+    var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('img.shot').forEach(function (img) {
+      img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.remove('hidden'); lb.classList.add('flex'); });
+    });
+    lb.addEventListener('click', function () { lb.classList.add('hidden'); lb.classList.remove('flex'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.click(); });
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+    }
+  </script>
+</body>
+</html>

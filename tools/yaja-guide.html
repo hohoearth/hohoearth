@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>야자 감독 배정 프로그램 사용 가이드 | HoHo earth</title>
+  <meta name="description" content="야간자율학습 감독을 요일별 인원·불가일·누적 횟수를 고려해 자동 배정하고, 구글 시트로 선생님들이 휴대폰에서 일정 확인·교체까지 하는 무료 웹 프로그램" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="야자 감독 배정 프로그램 사용 가이드" />
+  <meta property="og:description" content="야간자율학습 감독 자동 배정 · 누적 횟수 균등화 · 휴대폰으로 일정 확인과 교체" />
+  <meta property="og:image" content="https://hohoearth.github.io/hohoearth/assets/programs/yaja/screen_calendar.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .kbd { display:inline-block; padding:1px 8px; margin:0 1px; border:1px solid #cbd5e1; border-bottom-width:2px; border-radius:6px; background:#fff; font-size:.85em; font-weight:700; color:#334155; white-space:nowrap; }
+    .shot { border:1px solid #e2e8f0; border-radius:16px; box-shadow:0 10px 30px -12px rgba(15,23,42,.25); cursor:zoom-in; background:#fff; width:100%; }
+    .step-num { flex-shrink:0; width:28px; height:28px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; }
+    .toc a.active { color:#7c3aed; background:#f5f3ff; }
+    section[id] { scroll-margin-top: 84px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <a href="../index.html#lab" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i><span>AI활용 도구로</span>
+      </a>
+      <div class="text-sm font-bold text-slate-700 truncate hidden sm:block">야자 감독 배정 · 사용 가이드</div>
+      <a href="../apps/yaja/index.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition shrink-0">
+        <i data-lucide="external-link" class="w-4 h-4"></i><span>프로그램 열기</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-violet-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[1fr_440px] gap-10 items-center">
+      <div class="space-y-5">
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-violet-500 text-white">교사 직접 개발 · 무료</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">설치 없이 웹에서 바로</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">구글 시트 공유 (선택)</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight break-keep">야자 감독 배정<br><span class="text-violet-300">사용 가이드</span></h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed break-keep max-w-2xl">
+          야간자율학습 감독을 <b class="text-white">요일별 인원 · 선생님별 불가 요일과 날짜 · 연간 누적 횟수</b>를 고려해 한 번에 자동 배정합니다.
+          구글 시트를 연결하면 선생님들이 <b class="text-white">휴대폰으로 내 일정을 보고 서로 교체 요청</b>까지 할 수 있어요.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="../apps/yaja/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-violet-500 hover:bg-violet-400 text-white font-black text-sm transition shadow-lg shadow-violet-500/30 inline-flex items-center gap-2">
+            <i data-lucide="play" class="w-5 h-5"></i>프로그램 바로 열기
+          </a>
+          <a href="../downloads/proctor/%EC%95%BC%EC%9E%90_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip" download="야자_감독배정.zip" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i>전체 파일 받기 (zip · 100KB)
+          </a>
+        </div>
+      </div>
+      <img src="../assets/programs/yaja/screen_calendar.jpg" alt="야자 감독 배정 달력" class="shot hidden lg:block" />
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+    <aside class="hidden lg:block">
+      <nav class="toc sticky top-24 space-y-1 text-sm">
+        <div class="text-[11px] font-black tracking-wider text-slate-400 uppercase px-3 pb-2">목차</div>
+        <a href="#overview" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">한눈에 보기</a>
+        <a href="#s1" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">1. 기간 · 요일별 인원</a>
+        <a href="#s2" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">2. 감독 교사 등록</a>
+        <a href="#s3" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">3. 자동 배정 · 달력</a>
+        <a href="#s4" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">4. 횟수 확인 · 엑셀</a>
+        <a href="#s5" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 온라인 공유 (선택)</a>
+        <a href="#monthly" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">매달 쓰는 순서</a>
+        <a href="#faq" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">저장 · 백업 · 유의사항</a>
+      </nav>
+    </aside>
+
+    <main class="space-y-20 min-w-0">
+
+      <section id="overview" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Overview</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">한눈에 보기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">프로그램은 위에서부터 <b>1 → 5 순서의 카드</b>로 되어 있어요. 1~2번에서 조건을 넣고, 3번에서 <span class="kbd">자동 배정 실행</span>을 누르면 끝입니다.</p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center"><i data-lucide="wand-sparkles" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">공평한 자동 배정</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">불가 요일·날짜는 피하고, 같은 선생님이 며칠 안에 다시 걸리지 않게 하며, <b>월~목 · 금 · 토 횟수를 연간 누적으로</b> 맞춥니다.</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">달력에서 바로 수정</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">날짜를 눌러 감독을 바꾸면 🔒 잠금되어 다시 배정해도 그대로 유지됩니다. 결과는 <b>엑셀로 내보내기</b>.</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="smartphone" class="w-5 h-5"></i></div>
+            <h3 class="font-black text-slate-900 mt-3">휴대폰으로 교체</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed break-keep">구글 시트를 연결하면 선생님들이 이름+PIN으로 들어와 내 일정 확인, <b>날짜 맞바꾸기·대신 서 주기</b> 요청을 합니다.</p>
+          </div>
+        </div>
+        <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-sm text-sky-900 flex gap-3 break-keep">
+          <i data-lucide="info" class="w-5 h-5 shrink-0"></i>
+          <span>입력한 내용은 <b>지금 쓰는 컴퓨터의 브라우저에 자동 저장</b>됩니다. 서버로 보내지 않아요. 담당 선생님 한 분이 같은 컴퓨터·같은 브라우저에서 관리하는 것을 권장하고, 가끔 <span class="kbd">백업 · 복원</span> 탭에서 파일로 저장해 두세요.</span>
+        </div>
+      </section>
+
+      <section id="s1" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Step 1</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">기간 · 요일별 인원 정하기</h2>
+        </div>
+        <figure><img src="../assets/programs/yaja/screen_setup.jpg" alt="기간과 요일별 인원 설정" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">1. 기간 · 요일별 인원 (예시 데이터)</figcaption></figure>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep">달을 고르고 <span class="kbd">이 달로 기간 설정</span>을 누르거나, 시작일·종료일을 직접 넣습니다. <b>한 달씩</b> 배정하는 것을 권장해요. 이전 달 결과는 그대로 저장됩니다.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">배정표 <b>제목</b>과 아래쪽 <b>안내 문구</b>를 학교에 맞게 고칩니다. 엑셀로 내보낼 때 그대로 들어가요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>요일별 감독 인원</b>을 정합니다. 0이면 야자가 없는 요일이에요. (예: 월~금 1명, 토·일 0명)</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>같은 교사 최소 간격</b>(기본 3일)과 <b>다른 달의 누적 횟수 반영</b>을 확인합니다. 누적 반영을 켜 두면 3월부터의 횟수를 보고 적게 한 선생님을 먼저 배정해요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">5</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>야자 없는 날</b>(공휴일·시험기간·행사)을 사유와 함께 추가합니다. 아래 달력의 <span class="kbd">야자 없는 날 지정</span> 모드에서 날짜를 눌러도 돼요.</div></div>
+        </div>
+      </section>
+
+      <section id="s2" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Step 2</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">감독 교사 등록</h2>
+        </div>
+        <figure><img src="../assets/programs/yaja/screen_teachers.jpg" alt="감독 교사 목록" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">2. 감독 교사 (가상의 선생님 이름)</figcaption></figure>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">엑셀 파일로 불러오기 → 파일 선택</span>: 학년부 명단 엑셀(.xlsx)이나 CSV에서 "성명/이름" 열을 자동으로 찾아 넣습니다. <span class="kbd">이름 직접 입력</span>으로 붙여 넣어도 돼요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>불가 요일</b>: 매주 반복해서 안 되는 요일을 눌러 빨갛게 표시합니다. (예: 금요일마다 출강)</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>불가 날짜</b>: 특정한 날을 넣습니다. 달력의 <span class="kbd">교사 불가일 지정</span> 모드에서 선생님을 고르고 날짜를 누르면 더 편해요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep">오른쪽 <b>누적 횟수</b>에서 선생님별로 지금까지 몇 번(월~목·금·토 구분) 했는지 바로 보입니다.</div></div>
+        </div>
+      </section>
+
+      <section id="s3" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Step 3</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">자동 배정 실행 · 달력에서 고치기</h2>
+        </div>
+        <figure><img src="../assets/programs/yaja/screen_calendar.jpg" alt="배정 달력" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">3. 배정 달력 — 빨간 날은 야자 없는 날</figcaption></figure>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-violet-600 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">자동 배정 실행</span>을 누르면 기간 전체가 한 번에 채워집니다. 위쪽 초록 상자에 운영일·감독 자리·1인 평균 횟수가 나와요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-violet-600 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep">바꾸고 싶은 날은 <span class="kbd">감독 직접 수정</span> 모드에서 날짜를 누르고 선생님을 체크합니다. 숫자로 누적 횟수가 함께 보이고, 불가일인 선생님은 빨간 배경으로 표시돼요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-violet-600 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">직접 고친 날은 <b>🔒 잠금</b>됩니다. 다시 자동 배정해도 잠긴 날은 그대로 두고 나머지만 새로 채워요. 모두 풀려면 <span class="kbd">잠금 모두 해제</span>.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-violet-600 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">이 기간 결과 지우기</span>는 지금 기간만 지웁니다. 다른 달의 결과는 남아 있어요.</div></div>
+        </div>
+      </section>
+
+      <section id="s4" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Step 4</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">월별 · 누적 횟수 확인과 엑셀 내보내기</h2>
+        </div>
+        <div class="grid md:grid-cols-[1.4fr_1fr] gap-8 items-start">
+          <figure><img src="../assets/programs/yaja/screen_stats.jpg" alt="월별 누적 횟수" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">4. 월별 · 누적 횟수</figcaption></figure>
+          <div class="space-y-3 text-sm text-slate-700 leading-relaxed break-keep">
+            <p>기준 월을 고르면 <b>그 달 횟수</b>와 <b>3월부터 그 달까지의 누적</b>이 월~목 · 금 · 토 구분별로 나옵니다. 많은 편은 빨강, 적은 편은 파랑으로 칠해져 한눈에 비교돼요.</p>
+            <p>오른쪽 위 <span class="kbd">엑셀로 내보내기</span>를 누르면 배정표가 <b>엑셀(.xlsx)</b> 파일로 저장됩니다. 그대로 인쇄하거나 메신저로 보내세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="s5" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-violet-600 uppercase">Step 5 · 선택</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">온라인 공유 — 선생님들이 휴대폰으로 확인·교체</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">엑셀 배정표만 쓰신다면 이 단계는 건너뛰어도 됩니다. 처음 한 번 구글 시트를 설치하면(약 15분), 선생님들이 웹 링크로 들어와 아래 일을 할 수 있어요.</p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-3 text-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><b>📅 내 일정 · 전체 달력</b><p class="text-slate-600 mt-1">이름을 고르고 PIN(처음 접속 때 직접 정함)으로 들어와 내 감독 일정을 봅니다.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><b>🔄 교체 요청</b><p class="text-slate-600 mt-1">날짜 맞바꾸기 / 대신 서 주기를 요청하고, 상대 선생님이 수락하면 바로 반영됩니다.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><b>📊 횟수 확인</b><p class="text-slate-600 mt-1">월~목 · 금 · 토 횟수를 확인합니다. 휴대폰 홈 화면에 추가하면 앱처럼 쓸 수 있어요.</p></div>
+        </div>
+        <div class="grid md:grid-cols-[1fr_1fr] gap-8 items-start">
+          <ol class="space-y-3 text-sm text-slate-700 list-decimal pl-5 break-keep">
+            <li>새 구글 스프레드시트 → <span class="kbd">확장 프로그램</span> → <span class="kbd">Apps Script</span></li>
+            <li><code>Code.gs</code> 붙여 넣기, <b>HTML 파일 Teacher</b>를 만들어 <code>Teacher.html</code> 붙여 넣기 → 저장</li>
+            <li>시트 새로고침 → 메뉴 <span class="kbd">야자 감독</span> → <span class="kbd">초기 설정 · 관리자 키 보기</span> → 권한 허용 → <b>관리자 키</b> 복사</li>
+            <li><span class="kbd">배포</span> → <span class="kbd">새 배포</span> → 웹 앱, 실행: <b>나</b>, 액세스: <b>모든 사용자</b> → <b>웹 앱 URL</b> 복사</li>
+            <li>프로그램 <b>5. 온라인 공유</b>에 웹 앱 URL과 관리자 키를 넣고 <span class="kbd">연결 확인</span> → <span class="kbd">감독표 올리기</span></li>
+            <li>웹 앱 URL을 선생님들께 메신저로 보냅니다.</li>
+          </ol>
+          <figure><img src="../assets/programs/yaja/screen_cloud.jpg" alt="온라인 공유 카드" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">5. 온라인 공유 카드</figcaption></figure>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="../apps/yaja/%EA%B5%AC%EA%B8%80%EC%8B%9C%ED%8A%B8_%EC%84%A4%EC%B9%98%EC%95%88%EB%82%B4.html" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-bold transition inline-flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4"></i>그림으로 보는 구글 시트 설치 안내 (8단계)</a>
+          <a href="../apps/yaja/%EA%B5%AC%EA%B8%80%EC%8B%9C%ED%8A%B8/Code.gs" download="Code.gs" class="px-5 py-3 rounded-xl bg-white border border-slate-200 hover:border-violet-300 text-slate-800 text-sm font-bold transition inline-flex items-center gap-2"><i data-lucide="file-code" class="w-4 h-4 text-violet-600"></i>Code.gs 받기</a>
+          <a href="../apps/yaja/%EA%B5%AC%EA%B8%80%EC%8B%9C%ED%8A%B8/Teacher.html" download="Teacher.html" class="px-5 py-3 rounded-xl bg-white border border-slate-200 hover:border-violet-300 text-slate-800 text-sm font-bold transition inline-flex items-center gap-2"><i data-lucide="file-code-2" class="w-4 h-4 text-violet-600"></i>Teacher.html 받기</a>
+        </div>
+        <p class="text-xs text-slate-500 break-keep">액세스를 "모든 사용자"로 해도 이름과 PIN으로 로그인해야 일정을 볼 수 있고, 시트 자체는 공개되지 않습니다. PIN을 잊은 선생님은 시트 메뉴 <b>야자 감독 → 선생님 PIN 초기화</b>로 풀어 주세요.</p>
+      </section>
+
+      <section id="monthly" class="space-y-4">
+        <h2 class="text-2xl font-black text-slate-900">매달 쓰는 순서</h2>
+        <ol class="grid sm:grid-cols-4 gap-3 text-sm">
+          <li class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><div class="font-black text-violet-600">①</div><b>온라인 변경 내용 가져오기</b><p class="text-slate-600 mt-1">선생님들끼리 바꾼 내용이 들어오고, 바뀐 날은 🔒 잠금 (공유를 쓸 때만)</p></li>
+          <li class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><div class="font-black text-violet-600">②</div><b>다음 달로 기간 설정</b><p class="text-slate-600 mt-1">야자 없는 날과 불가일을 확인</p></li>
+          <li class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><div class="font-black text-violet-600">③</div><b>자동 배정 실행</b><p class="text-slate-600 mt-1">누적 횟수가 반영되어 공평하게 배정</p></li>
+          <li class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><div class="font-black text-violet-600">④</div><b>엑셀 내보내기 · 감독표 올리기</b><p class="text-slate-600 mt-1">인쇄·메신저 공지 또는 온라인 공유</p></li>
+        </ol>
+      </section>
+
+      <section id="faq" class="space-y-4">
+        <h2 class="text-2xl font-black text-slate-900">저장 · 백업 · 유의사항</h2>
+        <ul class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-600 space-y-2 list-disc pl-9 break-keep">
+          <li>입력한 내용은 <b>이 브라우저에만</b> 저장됩니다. 브라우저 기록을 지우거나 다른 컴퓨터에서 열면 보이지 않으니, <span class="kbd">백업 · 복원</span> 탭에서 백업 파일을 저장해 두세요. 다른 컴퓨터에서는 그 파일을 불러오면 됩니다.</li>
+          <li>인터넷이 막힌 환경이나 학교 PC에서 따로 쓰고 싶다면 <a href="../downloads/proctor/%EC%95%BC%EC%9E%90_%EA%B0%90%EB%8F%85%EB%B0%B0%EC%A0%95.zip" download="야자_감독배정.zip" class="text-violet-700 font-bold underline">전체 파일(zip)</a>을 받아 압축을 풀고 <code>index.html</code>을 열어 쓰세요. (엑셀 내보내기는 인터넷이 필요합니다)</li>
+          <li>화면 위쪽의 학교 이름과 로고는 만든 학교 기준입니다. 배정표 제목과 안내 문구는 프로그램 안에서 자유롭게 바꿀 수 있어요.</li>
+        </ul>
+        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div>
+            <div class="text-xs text-slate-400 font-bold">만든이</div>
+            <div class="font-black text-lg mt-1">충북사대부고 지구과학 교사 김호연</div>
+            <p class="text-sm text-slate-400 mt-1 break-keep">정기고사 감독 배정 프로그램도 함께 쓰실 수 있어요.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="exam-proctor-guide.html" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">정기고사 감독 배정 보기</a>
+            <a href="../apps/yaja/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-violet-500 hover:bg-violet-400 text-white font-black text-sm transition inline-flex items-center gap-2"><i data-lucide="play" class="w-5 h-5"></i>프로그램 열기</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-400">
+    <a href="../index.html" class="hover:text-slate-700 font-bold">HoHo earth</a> · 교실을 바꾸는 AI활용 도구
+  </footer>
+
+  <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/85 hidden items-start justify-center overflow-auto p-4 sm:p-10 cursor-zoom-out">
+    <img id="lightboxImg" alt="" class="max-w-full rounded-2xl shadow-2xl bg-white">
+  </div>
+  <script>
+    if (window.lucide) lucide.createIcons();
+    var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('img.shot').forEach(function (img) {
+      img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.remove('hidden'); lb.classList.add('flex'); });
+    });
+    lb.addEventListener('click', function () { lb.classList.add('hidden'); lb.classList.remove('flex'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.click(); });
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+    }
+  </script>
+</body>
+</html>

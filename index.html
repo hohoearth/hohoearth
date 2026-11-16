@@ -830,6 +830,150 @@
         </div>
       </div>
 
+      <!-- 📋 교사 직접 개발: 공가대장 작성프로그램 (구글 시트 기반) -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-xl space-y-8 relative overflow-hidden">
+        <div class="absolute -right-24 -bottom-24 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="space-y-4 max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-black bg-blue-600 text-white tracking-wider">교사 직접 개발 · 학교 업무</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">구글 시트 기반 · 무료</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">설치는 학교에 한 분만</span>
+            </div>
+
+            <div class="flex items-center gap-4 pt-1">
+              <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                <i data-lucide="clipboard-check" class="w-7 h-7"></i>
+              </div>
+              <div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight break-keep">공가대장 작성프로그램</h3>
+                <p class="text-xs sm:text-sm text-slate-500 font-mono mt-0.5">Excused Absence Ledger · Google Sheets Web App</p>
+              </div>
+            </div>
+
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed pt-1 break-keep">
+              담임선생님들이 각자 학생의 <strong class="text-slate-900">공가(출석인정)</strong> 내용을 입력하면 한곳에 모이고,
+              <strong class="text-slate-900">학년별·월별·학급별 공가대장</strong>을 결재칸과 함께 인쇄하거나 <strong class="text-slate-900">한글(.hwpx)</strong>로 내려받습니다. 매달 대장을 손으로 모으던 일을 없애 줘요.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-blue-600">담임선생님</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">링크 열고 입력만</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-emerald-600">대장 출력</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">PDF · 한글(.hwpx)</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-amber-600">학생 명단</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">NEIS 엑셀 그대로</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-3">
+              <a href="apps/gongga/index.html" target="_blank" rel="noopener"
+                class="px-6 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-sm tracking-wide transition shadow-lg shadow-blue-600/25 flex items-center gap-2.5">
+                <i data-lucide="play" class="w-5 h-5"></i>
+                <span>체험판 열어 보기</span>
+              </a>
+              <a href="tools/gongga-guide.html"
+                class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>사용 가이드 · 설치 방법</span>
+              </a>
+            </div>
+            <div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 pt-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span>학생 정보는 각 학교의 구글 스프레드시트에만 저장되며 접속코드로 보호됩니다.</span>
+            </div>
+          </div>
+
+          <div class="lg:w-96 shrink-0 space-y-3">
+            <a href="tools/gongga-guide.html#print" class="block rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white group relative">
+              <img src="assets/programs/gongga/thumb.jpg" alt="공가대장 출력 미리보기" class="w-full h-56 object-cover object-top group-hover:scale-105 transition duration-500" loading="lazy" />
+              <div class="absolute bottom-3 left-3 bg-slate-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                <i data-lucide="printer" class="w-3.5 h-3.5 text-blue-400"></i> 출력되는 공가대장
+              </div>
+            </a>
+            <div class="grid grid-cols-2 gap-2">
+              <a href="tools/gongga-guide.html#input" class="rounded-xl overflow-hidden border border-slate-200 bg-white" title="공가 입력">
+                <img src="assets/programs/gongga/screen_input.jpg" alt="공가 입력 화면" class="w-full h-16 object-cover object-left-top hover:scale-110 transition" loading="lazy" />
+              </a>
+              <a href="tools/gongga-guide.html#roster" class="rounded-xl overflow-hidden border border-slate-200 bg-white" title="학생 명단">
+                <img src="assets/programs/gongga/screen_roster.jpg" alt="학생 명단 화면" class="w-full h-16 object-cover object-left-top hover:scale-110 transition" loading="lazy" />
+              </a>
+            </div>
+            <div class="text-[10px] text-center text-slate-400">▲ 공가 입력 / 학생 명단 (체험판 · 가상 학생)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🗓️ 교사 직접 개발: 감독 배정 프로그램 2종 -->
+      <div class="space-y-4">
+        <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+          <i data-lucide="calendar-clock" class="w-4 h-4 text-violet-600"></i>
+          <span>학교 업무 자동화 · 감독 배정 프로그램 (설치 없이 웹에서 바로)</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          <div class="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col">
+            <a href="tools/yaja-guide.html" class="block h-48 overflow-hidden bg-slate-50 border-b border-slate-100">
+              <img src="assets/programs/yaja/screen_calendar.jpg" alt="야자 감독 배정 달력" class="w-full h-full object-cover object-left-top hover:scale-105 transition duration-500" loading="lazy" />
+            </a>
+            <div class="p-7 space-y-4 flex-1 flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-violet-600 text-white">교사 직접 개발</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">구글 시트 공유 (선택)</span>
+                </div>
+                <h3 class="text-xl font-black text-slate-900">야자 감독 배정</h3>
+                <p class="text-slate-600 text-sm leading-relaxed break-keep">
+                  요일별 인원·불가 요일과 날짜·<b>연간 누적 횟수</b>를 고려해 야간자율학습 감독을 한 달씩 자동 배정하고 엑셀로 내보냅니다.
+                  구글 시트를 연결하면 선생님들이 <b>휴대폰으로 일정 확인·교체 요청</b>까지 할 수 있어요.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-2 pt-2">
+                <a href="apps/yaja/index.html" target="_blank" rel="noopener" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+                  <i data-lucide="play" class="w-4 h-4"></i> 프로그램 열기
+                </a>
+                <a href="tools/yaja-guide.html" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+                  <i data-lucide="book-open" class="w-4 h-4"></i> 사용 가이드
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col">
+            <a href="tools/exam-proctor-guide.html" class="block h-48 overflow-hidden bg-slate-50 border-b border-slate-100">
+              <img src="assets/programs/exam-proctor/screen_result.jpg" alt="정기고사 감독 배정 결과" class="w-full h-full object-cover object-left-top hover:scale-105 transition duration-500" loading="lazy" />
+            </a>
+            <div class="p-7 space-y-4 flex-1 flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-orange-600 text-white">교사 직접 개발</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">엑셀 감독 시간표</span>
+                </div>
+                <h3 class="text-xl font-black text-slate-900">정기고사 감독 배정</h3>
+                <p class="text-slate-600 text-sm leading-relaxed break-keep">
+                  시험 일정과 과목만 넣으면 <b>학급·복도·특별실 감독</b>을 자동 배정합니다.
+                  담임·출제교사·출장 교사는 알아서 빠지고, 감독 횟수를 고르게 맞춘 시간표를 엑셀로 내보내요.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-2 pt-2">
+                <a href="apps/exam-proctor/index.html" target="_blank" rel="noopener" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+                  <i data-lucide="play" class="w-4 h-4"></i> 프로그램 열기
+                </a>
+                <a href="tools/exam-proctor-guide.html" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+                  <i data-lucide="book-open" class="w-4 h-4"></i> 사용 가이드
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- 도구 2종 카드 그리드 (간편 웹 유틸리티) -->
       <div class="space-y-4">
         <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">

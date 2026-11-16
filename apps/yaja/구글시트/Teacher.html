@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+  :root{--bg:#f4f6fa;--card:#fff;--ink:#1e293b;--ink2:#334155;--muted:#64748b;--line:#e5e9f0;--line2:#d6dce6;--pri:#2563eb;--pri-50:#eef4ff;--pri-100:#dbe7ff;--me:#fff1c2;--me-ink:#92400e;--danger:#dc2626;--danger-50:#fef2f2;--ok:#15803d;--ok-50:#ecfdf3;--shadow:0 1px 2px rgba(15,23,42,.04),0 4px 14px rgba(15,23,42,.05)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+  header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}
+  header .logo{width:38px;height:38px;border-radius:50%;object-fit:contain;flex:none}
+  header .ttl{flex:1;min-width:0}
+  header .school{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header h1{font-size:16px;font-weight:800;letter-spacing:-.3px;margin:1px 0 0;white-space:nowrap;display:flex;align-items:center;gap:6px;min-width:0}
+  #title{overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .who{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--pri-50);color:var(--pri);border:1px solid var(--pri-100);flex:none}
+  #hdr{display:flex;gap:6px;flex:none}
+  header button{background:#fff;color:var(--ink2);border:1px solid var(--line2);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:600}
+  nav{display:flex;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:59px;z-index:4;padding:0 6px}
+  nav button{flex:1;border:0;background:none;padding:10px 2px 9px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;position:relative;display:flex;flex-direction:column;align-items:center;gap:3px}
+  nav button svg{width:19px;height:19px}
+  nav button.on{color:var(--pri);border-bottom-color:var(--pri)}
+  .badge{position:absolute;top:4px;left:calc(50% + 6px);min-width:17px;padding:0 5px;border-radius:9px;background:var(--danger);color:#fff;font-size:10.5px;line-height:17px;font-weight:700}
+  main{max-width:760px;margin:0 auto;padding:14px 12px 40px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+  .card h2{font-size:16px;font-weight:800;letter-spacing:-.3px;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+  .muted{color:var(--muted);font-size:13px}
+  button{font:inherit;cursor:pointer}
+  .btn{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:8px 14px;font-weight:600;color:var(--ink2)}
+  .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .btn.no{color:var(--danger);border-color:#fbd5d5;background:#fff}
+  .btn.sm{padding:5px 11px;font-size:13px;border-radius:999px}
+  .btn:disabled{opacity:.45}
+  input,select,textarea{font:inherit;width:100%;padding:11px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-100)}
+  label{display:block;margin:12px 0 5px;font-weight:700;font-size:13.5px;color:var(--ink2)}
+  .item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .item:last-child{border-bottom:0}
+  .date{min-width:94px;font-weight:800;font-size:15.5px;letter-spacing:-.2px}
+  .date.soon{color:var(--danger)}
+  .grow{flex:1;min-width:0}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:#f1f4f8;color:var(--ink2);margin-top:3px}
+  .tag.wait{background:#fff6dd;color:#92400e}.tag.acc{background:var(--ok-50);color:var(--ok)}.tag.rej{background:var(--danger-50);color:var(--danger)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .calhead b{font-size:16px}
+  table.cal{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;border:1px solid #dbe1ea;border-radius:12px;overflow:hidden}
+  table.cal th{font-size:12px;color:var(--muted);padding:6px 0;background:#f4f6fa;border-bottom:1px solid #dbe1ea}
+  table.cal td{border-right:1px solid #eef1f5;border-bottom:1px solid #eef1f5;vertical-align:top;height:66px;padding:3px;font-size:11.5px;background:#fff}
+  table.cal td:last-child{border-right:0}
+  table.cal tr:last-child td{border-bottom:0}
+  table.cal td.out{background:#f7f8fa}
+  table.cal td.hol{background:#fff5f5}
+  table.cal td.today{box-shadow:inset 0 0 0 2px var(--pri)}
+  table.cal .d{font-weight:700;font-size:12px}
+  table.cal .n{display:block;border-radius:5px;padding:1px 3px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#f1f4f8;color:var(--ink2)}
+  table.cal .n.me{background:var(--me);color:var(--me-ink);font-weight:800}
+  table.cal .sw{color:#c2410c;font-weight:700}
+  table.cal td.tap{cursor:pointer}
+  table.cal td.tap:active{background:var(--pri-50)}
+  table.cal td.past{opacity:.5}
+  table.cal td.mine{background:#fffcf0}
+  table.cal .wt{display:block;font-size:10.5px;color:#92400e;font-weight:700}
+  .howto .n.me{background:var(--me);color:var(--me-ink);font-weight:800;padding:0 6px;border-radius:5px}
+  .howto{background:var(--pri-50);border:1px solid var(--pri-100);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.75;margin-top:12px;color:var(--ink2)}
+  .pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:6px}
+  .pick button{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:10px 4px;font-size:14px;font-weight:600;color:var(--ink2)}
+  .pick button.on{background:var(--pri-50);border-color:var(--pri);color:var(--pri)}
+  .pick button small{display:block;font-size:10.5px;color:var(--muted);font-weight:500}
+  table.cnt{width:100%;border-collapse:collapse;font-size:14px}
+  table.cnt th{font-size:12.5px;color:var(--muted);font-weight:600;background:#f7f9fc}
+  table.cnt th,table.cnt td{border-bottom:1px solid var(--line);padding:9px 4px;text-align:center}
+  table.cnt td:first-child,table.cnt th:first-child{text-align:left;padding-left:8px}
+  table.cnt tr.me td{background:var(--me);font-weight:800}
+  .modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+  .modal.hidden{display:none}
+  .sheet{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px 20px}
+  .sheet h2{font-size:18px;font-weight:800}
+  @media(min-width:600px){.modal{align-items:center}.sheet{border-radius:20px}}
+  .seg{display:flex;gap:6px;background:#f1f4f8;padding:4px;border-radius:12px}
+  .seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 4px;font-size:14px;font-weight:600;color:var(--muted)}
+  .seg button.on{background:#fff;color:var(--pri);box-shadow:0 1px 3px rgba(15,23,42,.12)}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:11px 18px;border-radius:12px;opacity:0;transition:.25s;pointer-events:none;z-index:30;max-width:90vw;box-shadow:0 8px 24px rgba(15,23,42,.25)}
+  #toast.show{opacity:1}
+  .center{text-align:center;padding:30px 10px}
+  .warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:9px 11px;font-size:13px;margin-top:8px}
+  .login-head{text-align:center;margin:8px 0 6px}
+  .login-head img{width:72px;height:72px;border-radius:50%;object-fit:contain}
+  .login-head .s{font-size:13px;color:var(--muted);margin-top:6px}
+  .login-head .t{font-size:19px;font-weight:800;margin-top:2px}
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" id="logo" alt="학교 마크" src="data:image/jpeg;base64,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">
+  <div class="ttl">
+    <div class="school">충북대학교사범대학부설고등학교</div>
+    <h1><span id="title">야자 감독</span><span class="who" id="who" style="display:none"></span></h1>
+  </div>
+  <span id="hdr"></span>
+</header>
+<nav id="nav" style="display:none">
+  <button data-v="mine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>내 일정</button>
+  <button data-v="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>전체 달력</button>
+  <button data-v="req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>교체 요청<span class="badge" id="rqb" style="display:none"></span></button>
+  <button data-v="cnt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16v-4M12 16V8M17 16v-7"/></svg>횟수</button>
+</nav>
+<main id="app"><div class="center muted">불러오는 중…</div></main>
+<div id="modal" class="modal hidden"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+<script>
+const DOW = ['일','월','화','수','목','금','토'];
+const CATS = [{k:'wk',label:'월~목',d:[1,2,3,4]},{k:'fri',label:'금',d:[5]},{k:'sat',label:'토',d:[6]},{k:'sun',label:'일',d:[0]}];
+let ME = null, D = null, VIEW = 'mine', CALM = null, timer = null;
+try { ME = JSON.parse(localStorage.getItem('yaja-me') || 'null'); } catch (e) {}
+
+/* ---------- 서버 호출 ---------- */
+function run(fn, ...args) {
+  return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+}
+async function call(fn, ...args) {
+  try { return await run(fn, ME.name, ME.token, ...args); }
+  catch (e) {
+    if (String(e && e.message || e).includes('AUTH')) { logout('다시 로그인해 주세요.'); throw e; }
+    toast('서버 연결에 실패했습니다. 잠시 후 다시 시도하세요.'); throw e;
+  }
+}
+
+/* ---------- 유틸 ---------- */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dowOf = iso => { const p = iso.split('-').map(Number); return new Date(Date.UTC(p[0], p[1]-1, p[2])).getUTCDay(); };
+const md = iso => { const p = iso.split('-').map(Number); return `${p[1]}/${p[2]}(${DOW[dowOf(iso)]})`; };
+const catOf = iso => { const d = dowOf(iso); return d===0?'sun':d===5?'fri':d===6?'sat':'wk'; };
+const days = (a, b) => Math.round((Date.UTC(...b.split('-').map((x,i)=>i===1?x-1:+x)) - Date.UTC(...a.split('-').map((x,i)=>i===1?x-1:+x))) / 86400000);
+function toast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2800); }
+function openSheet(html) { document.getElementById('sheet').innerHTML = html; document.getElementById('modal').classList.remove('hidden'); }
+function closeSheet() { document.getElementById('modal').classList.add('hidden'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeSheet(); });
+function myDates() { return Object.keys(D.assign).filter(d => D.assign[d].includes(ME.name)).sort(); }
+function pendingIn() { return D.reqs.filter(r => r.status === '대기' && r.to === ME.name); }
+
+/* ---------- 로그인 ---------- */
+async function showLogin(msg) {
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('hdr').innerHTML = '';
+  const app = document.getElementById('app');
+  app.innerHTML = '<div class="center muted">불러오는 중…</div>';
+  let info;
+  try { info = await run('apiNames'); } catch (e) { app.innerHTML = '<div class="card center">서버에 연결할 수 없습니다. 잠시 후 새로고침해 주세요.</div>'; return; }
+  document.getElementById('title').textContent = info.title;
+  document.getElementById('who').style.display = 'none';
+  app.innerHTML = `<div class="card">
+    <div class="login-head"><img src="${document.getElementById('logo').src}" alt=""><div class="s">충북대학교사범대학부설고등학교</div><div class="t">${esc(info.title)}</div></div>
+    <h2>로그인</h2>
+    ${msg ? `<div class="warn">${esc(msg)}</div>` : ''}
+    <label>이름</label>
+    <select id="lname"><option value="">이름을 선택하세요</option>${info.names.map(n => `<option>${esc(n)}</option>`).join('')}</select>
+    <label>PIN (숫자 4~6자리)</label>
+    <input id="lpin" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+    <p class="muted">처음 접속하시면 지금 입력한 숫자가 내 PIN으로 정해집니다. 잊으면 담당 선생님께 초기화를 요청하세요.</p>
+    <button class="btn pri" id="lgo" style="width:100%">로그인</button>
+  </div>`;
+  document.getElementById('lgo').onclick = async () => {
+    const name = document.getElementById('lname').value, pin = document.getElementById('lpin').value;
+    if (!name) { toast('이름을 선택하세요.'); return; }
+    const b = document.getElementById('lgo'); b.disabled = true;
+    try {
+      const r = await run('apiLogin', name, pin);
+      if (!r.ok) { toast(r.msg); b.disabled = false; return; }
+      ME = { name, token: r.token };
+      try { localStorage.setItem('yaja-me', JSON.stringify(ME)); } catch (e) {}
+      if (r.first) toast('PIN이 등록되었습니다. 잊지 않도록 기억해 두세요.');
+      start();
+    } catch (e) { toast('로그인에 실패했습니다.'); b.disabled = false; }
+  };
+}
+function logout(msg) {
+  ME = null; D = null; clearInterval(timer);
+  try { localStorage.removeItem('yaja-me'); } catch (e) {}
+  showLogin(msg);
+}
+
+/* ---------- 데이터 ---------- */
+async function refresh(force) {
+  const r = await call('apiState', force ? '' : (D && D.version));
+  if (r.same) return false;
+  const before = D ? pendingIn().length : -1;
+  D = r;
+  if (before >= 0 && pendingIn().length > before) toast('새 교체 요청이 도착했습니다.');
+  render();
+  return true;
+}
+async function start() {
+  document.getElementById('nav').style.display = 'flex';
+  document.getElementById('hdr').innerHTML = `<button id="hpin" title="PIN 변경">PIN</button><button id="hout">로그아웃</button>`;
+  document.getElementById('hout').onclick = () => logout();
+  document.getElementById('hpin').onclick = changePin;
+  try { await refresh(true); } catch (e) { return; }
+  clearInterval(timer);
+  timer = setInterval(() => { if (!document.hidden && ME) refresh().catch(() => {}); }, 20000);
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && ME && D) refresh().catch(() => {}); });
+document.getElementById('nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { VIEW = b.dataset.v; render(); window.scrollTo(0, 0); } });
+
+/* ---------- 화면 ---------- */
+function render() {
+  document.getElementById('title').textContent = D.title;
+  const who = document.getElementById('who'); who.textContent = ME.name; who.style.display = '';
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === VIEW));
+  const n = pendingIn().length, rqb = document.getElementById('rqb');
+  rqb.textContent = n; rqb.style.display = n ? '' : 'none';
+  const app = document.getElementById('app');
+  app.innerHTML = VIEW === 'cal' ? viewCal() : VIEW === 'req' ? viewReq() : VIEW === 'cnt' ? viewCnt() : viewMine();
+}
+
+function reqLabel(r) {
+  return r.toDate ? `내 ${md(r.from === ME.name ? r.fromDate : r.toDate)} ↔ ${esc(r.from === ME.name ? r.to : r.from)} 선생님 ${md(r.from === ME.name ? r.toDate : r.fromDate)}`
+                  : (r.from === ME.name ? `내 ${md(r.fromDate)} → ${esc(r.to)} 선생님이 대신` : `${esc(r.from)} 선생님 ${md(r.fromDate)} → 내가 대신`);
+}
+
+function viewMine() {
+  const mine = myDates(), up = mine.filter(d => d >= D.today), past = mine.length - up.length;
+  const sent = D.reqs.filter(r => r.status === '대기' && r.from === ME.name);
+  const inc = pendingIn();
+  let h = '';
+  if (inc.length) h += `<div class="card" style="border-color:#f0c36d"><b>받은 교체 요청 ${inc.length}건</b> <button class="btn sm pri" onclick="VIEW='req';render()">확인하기</button></div>`;
+  h += `<div class="card"><h2>다가오는 내 감독 <span class="muted">${up.length}회</span></h2>`;
+  if (!up.length) h += '<p class="muted">예정된 감독이 없습니다.</p>';
+  up.forEach(d => {
+    const others = D.assign[d].filter(n => n !== ME.name);
+    const waiting = sent.find(r => r.fromDate === d);
+    const dd = days(D.today, d);
+    h += `<div class="item"><span class="date ${dd <= 2 ? 'soon' : ''}">${md(d)}</span>
+      <span class="grow">${dd === 0 ? '<b>오늘</b> ' : dd === 1 ? '<b>내일</b> ' : ''}${others.length ? '<span class="muted">함께: ' + esc(others.join(', ')) + '</span>' : ''}
+        ${D.note[d] ? `<br><span class="tag">교체됨</span>` : ''} ${waiting ? `<br><span class="tag wait">${esc(waiting.to)} 선생님께 요청 중</span>` : ''}</span>
+      ${waiting ? '' : `<button class="btn sm" onclick="openSwap('${d}')">교체 요청</button>`}</div>`;
+  });
+  h += `${past ? `<p class="muted">지난 감독 ${past}회</p>` : ''}</div>`;
+  if (D.notes) h += `<p class="muted">${esc(D.notes)}</p>`;
+  return h;
+}
+
+function viewReq() {
+  const inc = pendingIn(), sent = D.reqs.filter(r => r.status === '대기' && r.from === ME.name);
+  const done = D.reqs.filter(r => r.status !== '대기').slice().reverse().slice(0, 20);
+  const tagCls = s => s === '수락' ? 'acc' : (s === '거절' || s === '무효') ? 'rej' : '';
+  let h = `<div class="card"><h2>받은 요청</h2>`;
+  if (!inc.length) h += '<p class="muted">대기 중인 요청이 없습니다.</p>';
+  inc.forEach(r => {
+    h += `<div class="item"><span class="grow"><b>${esc(r.from)}</b> 선생님의 요청<br>${reqLabel(r)}${r.msg ? `<br><span class="muted">“${esc(r.msg)}”</span>` : ''}</span>
+      <span class="row" style="flex-direction:column"><button class="btn sm ok" onclick="respond('${r.id}',true)">수락</button><button class="btn sm no" onclick="respond('${r.id}',false)">거절</button></span></div>`;
+  });
+  h += `</div><div class="card"><h2>보낸 요청</h2>`;
+  if (!sent.length) h += '<p class="muted">대기 중인 요청이 없습니다. [내 일정]에서 교체를 요청할 수 있습니다.</p>';
+  sent.forEach(r => {
+    h += `<div class="item"><span class="grow">${reqLabel(r)}<br><span class="tag wait">${esc(r.to)} 선생님 응답 대기</span></span>
+      <button class="btn sm no" onclick="cancelReq('${r.id}')">취소</button></div>`;
+  });
+  h += `</div><div class="card"><h2>처리된 요청</h2>`;
+  if (!done.length) h += '<p class="muted">없음</p>';
+  done.forEach(r => { h += `<div class="item"><span class="grow">${reqLabel(r)}<br><span class="muted">${esc(r.doneAt)}</span></span><span class="tag ${tagCls(r.status)}">${esc(r.status)}</span></div>`; });
+  h += `</div><div class="card"><h2>최근 변경 기록</h2>${D.log.length ? D.log.slice(0, 15).map(l => `<div class="item"><span class="muted" style="min-width:110px">${esc(l[0])}</span><span class="grow">${esc(l[1])}</span></div>`).join('') : '<p class="muted">없음</p>'}</div>`;
+  return h;
+}
+
+function viewCal() {
+  const months = [...new Set(Object.keys(D.assign).concat(Object.keys(D.holidays)).map(d => d.slice(0, 7)))].sort();
+  if (!months.length) return '<div class="card muted">아직 올라온 감독표가 없습니다.</div>';
+  if (!CALM || !months.includes(CALM)) CALM = months.includes(D.today.slice(0, 7)) ? D.today.slice(0, 7) : months[months.length - 1];
+  const idx = months.indexOf(CALM);
+  const wk = (D.perDow[0] > 0 || D.perDow[6] > 0) ? [1,2,3,4,5,6,0] : [1,2,3,4,5];
+  const [y, m] = CALM.split('-').map(Number);
+  const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  let first = new Date(Date.UTC(y, m - 1, 1)), start = 1 - ((first.getUTCDay() - wk[0] + 7) % 7);
+  let h = `<div class="card"><div class="calhead">
+    <button class="btn sm" ${idx <= 0 ? 'disabled' : ''} onclick="CALM='${months[idx - 1]}';render()">◀</button>
+    <b>${y}년 ${m}월</b>
+    <button class="btn sm" ${idx >= months.length - 1 ? 'disabled' : ''} onclick="CALM='${months[idx + 1]}';render()">▶</button></div>
+    <table class="cal"><thead><tr>${wk.map(d => `<th>${DOW[d]}</th>`).join('')}</tr></thead><tbody>`;
+  for (let s = start; s <= last; s += 7) {
+    // 표시하는 요일 중 이 달 날짜가 하나도 없는 주(예: 1일이 일요일)는 건너뜀
+    let any = false;
+    for (let i = 0; i < 7; i++) { const day = s + i; if (day >= 1 && day <= last && wk.includes(new Date(Date.UTC(y, m - 1, day)).getUTCDay())) any = true; }
+    if (!any) continue;
+    h += '<tr>';
+    for (let i = 0; i < 7; i++) {
+      const day = s + i, dt = new Date(Date.UTC(y, m - 1, day));
+      if (!wk.includes(dt.getUTCDay())) continue;
+      if (day < 1 || day > last) { h += '<td class="out"></td>'; continue; }
+      const iso = `${y}-${String(m).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const hol = D.holidays[iso], a = D.assign[iso] || [];
+      const tap = hol === undefined && a.length && iso >= D.today;
+      const mine = a.includes(ME.name), waiting = mine && sentWaiting(iso);
+      h += `<td class="${hol !== undefined ? 'hol' : ''} ${iso === D.today ? 'today' : ''} ${tap ? 'tap' : 'past'} ${mine ? 'mine' : ''}" ${tap ? `onclick="calTap('${iso}')"` : ''}>
+        <span class="d">${day}</span>${D.note[iso] ? ' <span class="sw" title="교체됨">⇄</span>' : ''}
+        ${hol !== undefined ? `<span class="n" style="color:#c0392b">${esc(hol || '야자 없음')}</span>` : a.map(n => `<span class="n ${n === ME.name ? 'me' : ''}">${esc(n)}</span>`).join('')}
+        ${waiting ? '<span class="wt">요청 중</span>' : ''}</td>`;
+    }
+    h += '</tr>';
+  }
+  return h + `</tbody></table>
+    <div class="howto"><b>달력에서 바로 교체하기</b><br>
+      · <span class="n me" style="display:inline">내 날짜</span>를 누르면 → 그 날을 맞바꾸거나 대신 서 달라고 요청<br>
+      · <b>다른 선생님 날짜</b>를 누르면 → 내 날짜 중 하나와 그 날을 맞바꾸자고 요청</div>
+    <p class="muted">⇄ = 교체된 날 · 지난 날짜는 바꿀 수 없습니다</p></div>`;
+}
+function sentWaiting(iso) { return D.reqs.find(r => r.status === '대기' && r.from === ME.name && r.fromDate === iso); }
+
+/* 달력에서 날짜를 눌렀을 때 */
+function calTap(iso) {
+  const a = D.assign[iso] || [];
+  if (a.includes(ME.name)) {
+    const w = sentWaiting(iso);
+    if (w) { toast(`이 날은 이미 ${w.to} 선생님께 요청 중입니다. [교체 요청] 탭에서 취소할 수 있습니다.`); return; }
+    openSwap(iso);
+  } else openSwapTo(iso);
+}
+
+/* 다른 선생님 날짜 → 내 날짜와 맞바꾸기 요청 */
+let SW2 = null;
+function openSwapTo(iso) {
+  const others = (D.assign[iso] || []).filter(n => n !== ME.name);
+  SW2 = { iso, to: others.length === 1 ? others[0] : '', mine: '' };
+  drawSwapTo();
+}
+function drawSwapTo() {
+  const iso = SW2.iso, others = (D.assign[iso] || []).filter(n => n !== ME.name);
+  const myFuture = myDates().filter(d => d >= D.today && !sentWaiting(d) && (!SW2.to || !D.assign[d].includes(SW2.to)));
+  const same = myFuture.filter(d => catOf(d) === catOf(iso));
+  openSheet(`<h2 style="margin:0 0 6px">${md(iso)}과 맞바꾸기</h2>
+    <p class="muted">이 날 감독: ${others.map(esc).join(', ')}<br>내 감독일 하나를 주고, 이 날을 대신 맡습니다.</p>
+    <label>바꿀 선생님</label>
+    ${others.length > 1
+      ? `<div class="seg">${others.map(n => `<button class="${n === SW2.to ? 'on' : ''}" onclick="SW2.to='${esc(n)}';SW2.mine='';drawSwapTo()">${esc(n)}</button>`).join('')}</div>`
+      : `<div><b>${esc(others[0])}</b> 선생님</div>`}
+    ${SW2.to ? `<label>내가 줄 날짜</label>
+      ${myFuture.length ? `<div class="pick">${myFuture.map(d => `<button class="${d === SW2.mine ? 'on' : ''}" onclick="SW2.mine='${d}';drawSwapTo()">${md(d)}${catOf(d) === catOf(iso) ? '' : '<small>구분 다름</small>'}</button>`).join('')}</div>
+        ${same.length ? '' : '<div class="warn">같은 요일 구분(월~목 / 금 / 토)의 내 날짜가 없습니다. 다른 구분과 바꾸면 요일별 횟수가 달라집니다.</div>'}`
+        : '<div class="warn">맞바꿀 수 있는 내 예정 감독일이 없습니다.</div>'}` : ''}
+    <label>메시지 (선택)</label>
+    <input id="sw2msg" maxlength="100" placeholder="예: 이 날로 바꿔 주실 수 있을까요?">
+    <div class="row" style="margin-top:14px"><button class="btn pri" style="flex:1" onclick="sendSwapTo()" ${SW2.to && SW2.mine ? '' : 'disabled'}>요청 보내기</button>
+      <button class="btn" onclick="closeSheet()">닫기</button></div>`);
+}
+async function sendSwapTo() {
+  const msg = document.getElementById('sw2msg').value;
+  const r = await call('apiRequest', SW2.mine, SW2.to, SW2.iso, msg);
+  if (!r.ok) { toast(r.msg); return; }
+  closeSheet(); toast(`${SW2.to} 선생님께 ${md(SW2.mine)} ↔ ${md(SW2.iso)} 교체를 요청했습니다.`); await refresh(true);
+}
+
+function viewCnt() {
+  const st = {}; D.names.forEach(n => st[n] = { wk:0, fri:0, sat:0, sun:0, tot:0, done:0 });
+  Object.entries(D.assign).forEach(([d, a]) => a.forEach(n => { const x = st[n] || (st[n] = { wk:0, fri:0, sat:0, sun:0, tot:0, done:0 }); x[catOf(d)]++; x.tot++; if (d < D.today) x.done++; }));
+  const cats = CATS.filter(c => c.d.some(d => D.perDow[d] > 0) || Object.values(st).some(x => x[c.k]));
+  return `<div class="card"><h2>선생님별 감독 횟수 <span class="muted">(예정 포함 전체)</span></h2>
+    <table class="cnt"><thead><tr><th>이름</th>${cats.map(c => `<th>${c.label}</th>`).join('')}<th>계</th><th>완료</th></tr></thead><tbody>
+    ${Object.keys(st).map(n => `<tr class="${n === ME.name ? 'me' : ''}"><td>${esc(n)}</td>${cats.map(c => `<td>${st[n][c.k]}</td>`).join('')}<td><b>${st[n].tot}</b></td><td class="muted">${st[n].done}</td></tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+/* ---------- 교체 요청 ---------- */
+let SW = null;
+function openSwap(d) { SW = { d, type: 'swap', to: '', toDate: '' }; drawSwap(); }
+function drawSwap() {
+  const d = SW.d, onDay = D.assign[d];
+  const cands = D.names.filter(n => n !== ME.name && !onDay.includes(n));
+  const theirs = SW.to ? Object.keys(D.assign).filter(x => x >= D.today && D.assign[x].includes(SW.to) && !D.assign[x].includes(ME.name)).sort() : [];
+  const sameCat = theirs.filter(x => catOf(x) === catOf(d));
+  openSheet(`<h2 style="margin:0 0 6px">${md(d)} 교체 요청</h2>
+    <div class="seg"><button class="${SW.type === 'swap' ? 'on' : ''}" onclick="SW.type='swap';drawSwap()">날짜 맞바꾸기</button>
+      <button class="${SW.type === 'cover' ? 'on' : ''}" onclick="SW.type='cover';SW.toDate='';drawSwap()">대신 서 주기</button></div>
+    <p class="muted">${SW.type === 'swap' ? '상대 선생님의 감독일과 서로 바꿉니다.' : '상대 선생님이 이 날을 대신 맡습니다. (상대의 횟수가 1회 늘어납니다)'}</p>
+    <label>상대 선생님</label>
+    <select onchange="SW.to=this.value;SW.toDate='';drawSwap()"><option value="">선택하세요</option>${cands.map(n => `<option ${n === SW.to ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>
+    ${SW.type === 'swap' && SW.to ? `<label>바꿀 상대의 날짜</label>
+      ${theirs.length ? `<div class="pick">${theirs.map(x => `<button class="${x === SW.toDate ? 'on' : ''}" onclick="SW.toDate='${x}';drawSwap()">${md(x)}${catOf(x) === catOf(d) ? '' : '<small>구분 다름</small>'}</button>`).join('')}</div>
+        ${sameCat.length ? '' : '<div class="warn">같은 요일 구분(월~목 / 금 / 토)의 날짜가 없습니다. 다른 구분과 바꾸면 요일별 횟수가 달라집니다.</div>'}`
+        : '<div class="warn">이 선생님은 맞바꿀 수 있는 예정 감독일이 없습니다. [대신 서 주기]를 이용하세요.</div>'}` : ''}
+    <label>메시지 (선택)</label>
+    <input id="swmsg" maxlength="100" placeholder="예: 출장이 있어서요. 부탁드립니다!">
+    <div class="row" style="margin-top:14px"><button class="btn pri" style="flex:1" onclick="sendSwap()" ${SW.to && (SW.type === 'cover' || SW.toDate) ? '' : 'disabled'}>요청 보내기</button>
+      <button class="btn" onclick="closeSheet()">닫기</button></div>`);
+}
+async function sendSwap() {
+  const msg = document.getElementById('swmsg').value;
+  const r = await call('apiRequest', SW.d, SW.to, SW.type === 'swap' ? SW.toDate : '', msg);
+  if (!r.ok) { toast(r.msg); return; }
+  closeSheet(); toast(`${SW.to} 선생님께 요청을 보냈습니다.`); await refresh(true);
+}
+async function respond(id, accept) {
+  const r = D.reqs.find(x => x.id === id);
+  if (accept && !confirm(`수락하면 감독표가 바로 바뀝니다.\n${reqLabel(r).replace(/<[^>]+>/g, '')}`)) return;
+  const res = await call('apiRespond', id, accept);
+  toast(res.ok ? (accept ? '교체가 반영되었습니다.' : '거절했습니다.') : res.msg);
+  await refresh(true);
+}
+async function cancelReq(id) {
+  const res = await call('apiCancel', id);
+  toast(res.ok ? '요청을 취소했습니다.' : res.msg); await refresh(true);
+}
+async function changePin() {
+  const p = prompt('새 PIN (숫자 4~6자리)');
+  if (p === null) return;
+  const r = await call('apiChangePin', p);
+  if (!r.ok) { toast(r.msg); return; }
+  ME.token = r.token; try { localStorage.setItem('yaja-me', JSON.stringify(ME)); } catch (e) {}
+  toast('PIN을 변경했습니다.');
+}
+
+if (ME) start(); else showLogin();
+</script>
+</body>
+</html>
