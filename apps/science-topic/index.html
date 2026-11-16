@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>고등학교 과학 탐구 주제 추천 프로그램</title>
+  <meta name="description" content="희망 진로·학과·키워드로 아두이노 기반 융합 과학 탐구 주제, 준비물, 연구 프로토콜, 예상 결론을 추천합니다." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=11" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>고등학교 과학 탐구 주제 추천 프로그램</h1>
+      <p class="byline">만든이: 충북사대부고 교사 김호연</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- 1. 학생 정보 입력 -->
+    <section class="card" id="input-card">
+      <h2><span class="step">1.</span> 탐구 조건 입력</h2>
+      <form id="topic-form" autocomplete="off">
+        <div class="grid two">
+          <label>희망 진로 <span class="req">*</span>
+            <input id="career" type="text" placeholder="예: 환경공학자, 의사, 데이터 과학자" required />
+          </label>
+          <label>희망 학과 <span class="req">*</span>
+            <input id="major" type="text" placeholder="예: 환경공학과, 의예과, 컴퓨터공학과" required />
+          </label>
+        </div>
+        <label>희망 주제 키워드 <span class="req">*</span>
+          <input id="keywords" type="text" placeholder="쉼표로 구분 — 예: 미세먼지, 기후변화, 센서" required />
+        </label>
+
+        <div class="grid three">
+          <label>학년
+            <select id="grade">
+              <option value="1">1학년</option>
+              <option value="2" selected>2학년</option>
+              <option value="3">3학년</option>
+            </select>
+          </label>
+          <label>탐구 기간
+            <select id="duration">
+              <option value="4주 이내">4주 이내</option>
+              <option value="1~2개월">1~2개월</option>
+              <option value="3~4개월" selected>3~4개월</option>
+              <option value="6개월 이상">6개월 이상</option>
+            </select>
+          </label>
+          <label>예산
+            <select id="budget">
+              <option value="30000">3만원 이하</option>
+              <option value="50000">5만원 이하</option>
+              <option value="100000" selected>10만원 이하</option>
+              <option value="150000">15만원 이하</option>
+              <option value="200000">20만원 이하</option>
+              <option value="300000">30만원 이하</option>
+              <option value="500000">50만원 이하</option>
+              <option value="700000">70만원 이하</option>
+              <option value="1000000">100만원 이하</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>연구 방법 <small>(여러 개 선택 가능 · 선택하지 않으면 모든 방법에서 추천)</small></legend>
+          <div class="chips" id="methods">
+            <label class="chip"><input type="checkbox" value="실험" /> 실험</label>
+            <label class="chip"><input type="checkbox" value="데이터 분석" /> 데이터 분석</label>
+            <label class="chip"><input type="checkbox" value="아두이노 활용" /> 아두이노 활용</label>
+            <label class="chip"><input type="checkbox" value="첨단 기자재 활용" /> 첨단 기자재 활용</label>
+          </div>
+          <p class="hint small" id="method-help">실험: 학교 실험실 기구와 시약 · 데이터 분석: 기상청·NASA·NCBI 등 공공 데이터와 파이썬 · 아두이노 활용: 센서로 직접 측정 · 첨단 기자재 활용: 분광광도계·PCR·현미경·열화상 카메라 등(학교·과학교육원·대학 연계)</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>희망 융합 과목 <small>(2개 이상 선택하면 융합 주제를 우선 추천)</small></legend>
+          <div class="chips" id="fusion-subjects">
+            <label class="chip"><input type="checkbox" value="물리" checked /> 물리</label>
+            <label class="chip"><input type="checkbox" value="화학" /> 화학</label>
+            <label class="chip"><input type="checkbox" value="생명과학" /> 생명과학</label>
+            <label class="chip"><input type="checkbox" value="지구과학" /> 지구과학</label>
+            <label class="chip"><input type="checkbox" value="정보" checked /> 정보</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>이수(예정) 과목 <small>(선택 — 수준 조절에 사용)</small></legend>
+          <div class="chips small" id="taken-subjects">
+            <label class="chip"><input type="checkbox" value="통합과학" checked /> 통합과학</label>
+            <label class="chip"><input type="checkbox" value="과학탐구실험" checked /> 과학탐구실험</label>
+            <label class="chip"><input type="checkbox" value="물리학" /> 물리학</label>
+            <label class="chip"><input type="checkbox" value="화학" /> 화학</label>
+            <label class="chip"><input type="checkbox" value="생명과학" /> 생명과학</label>
+            <label class="chip"><input type="checkbox" value="지구과학" /> 지구과학</label>
+            <label class="chip"><input type="checkbox" value="역학과 에너지" /> 역학과 에너지</label>
+            <label class="chip"><input type="checkbox" value="전자기와 양자" /> 전자기와 양자</label>
+            <label class="chip"><input type="checkbox" value="물질과 에너지" /> 물질과 에너지</label>
+            <label class="chip"><input type="checkbox" value="화학 반응의 세계" /> 화학 반응의 세계</label>
+            <label class="chip"><input type="checkbox" value="세포와 물질대사" /> 세포와 물질대사</label>
+            <label class="chip"><input type="checkbox" value="생물의 유전" /> 생물의 유전</label>
+            <label class="chip"><input type="checkbox" value="지구시스템과학" /> 지구시스템과학</label>
+            <label class="chip"><input type="checkbox" value="행성우주과학" /> 행성우주과학</label>
+            <label class="chip"><input type="checkbox" value="정보" /> 정보</label>
+            <label class="chip"><input type="checkbox" value="인공지능 기초" /> 인공지능 기초</label>
+            <label class="chip"><input type="checkbox" value="데이터 과학" /> 데이터 과학</label>
+            <label class="chip"><input type="checkbox" value="고급 물리학" /> 고급 물리학</label>
+            <label class="chip"><input type="checkbox" value="고급 화학" /> 고급 화학</label>
+            <label class="chip"><input type="checkbox" value="고급 생명과학" /> 고급 생명과학</label>
+            <label class="chip"><input type="checkbox" value="고급 지구과학" /> 고급 지구과학</label>
+            <label class="chip"><input type="checkbox" value="물리학 실험" /> 물리학 실험</label>
+            <label class="chip"><input type="checkbox" value="화학 실험" /> 화학 실험</label>
+            <label class="chip"><input type="checkbox" value="생명과학 실험" /> 생명과학 실험</label>
+            <label class="chip"><input type="checkbox" value="지구과학 실험" /> 지구과학 실험</label>
+            <label class="chip"><input type="checkbox" value="과학과제 연구" /> 과학과제 연구</label>
+          </div>
+        </fieldset>
+
+        <!-- AI 설정 -->
+        <details class="ai-box" id="ai-box">
+          <summary>
+            <span>최신 연구 동향 반영 <small>(선택 · API 키 연결)</small></span>
+            <span class="ai-status" id="ai-status">연결 안 됨 · 기본 주제만 추천</span>
+          </summary>
+          <p class="hint">API 키를 연결하면 전국과학전람회 수상작, SCI·KCI 논문, 최근 뉴스를 검색해 조건에 맞는 주제를 새로 구성합니다.
+            키는 이 브라우저에서 해당 회사 서버로만 직접 전송되며, 다른 곳에 저장되지 않습니다.</p>
+          <div class="grid two">
+            <label>사용할 서비스
+              <select id="provider">
+                <option value="claude">Claude (Anthropic)</option>
+                <option value="openai">ChatGPT (OpenAI)</option>
+                <option value="gemini">Gemini (Google)</option>
+              </select>
+            </label>
+            <label>모델
+              <span class="row">
+                <select id="model-select"></select>
+                <button type="button" class="btn ghost small" id="load-models" title="내 API 키로 사용 가능한 모든 모델을 불러옵니다">전체 모델 불러오기</button>
+              </span>
+              <input id="model" type="text" placeholder="모델 이름을 정확히 입력 (예: gpt-5.5)" hidden />
+            </label>
+          </div>
+          <label>API 키
+            <span class="row">
+              <input id="api-key" type="password" placeholder="선택한 AI의 API 키를 붙여넣으세요" />
+              <button type="button" class="btn ghost small" id="toggle-key">보기</button>
+            </span>
+          </label>
+          <div class="row wrap-row">
+            <label class="inline"><input type="checkbox" id="remember-key" /> 이 기기에 키 저장 <small>(공용 PC에서는 체크하지 마세요)</small></label>
+            <button type="button" class="btn ghost small" id="clear-key">저장된 키 삭제</button>
+          </div>
+          <p class="hint small" id="key-help"></p>
+        </details>
+
+        <div class="actions">
+          <button type="submit" class="btn primary" id="submit-btn">탐구 주제 추천받기</button>
+          <button type="button" class="btn ghost" id="reset-btn">초기화</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 2. 결과 -->
+    <section id="results" hidden>
+      <div class="tabs" role="tablist">
+        <button role="tab" class="tab active" data-tab="ai" id="tab-ai" hidden>최신 동향 반영 주제 <span class="badge" id="ai-count"></span></button>
+        <button role="tab" class="tab" data-tab="db" id="tab-db">기본 추천 주제 <span class="badge" id="db-count"></span></button>
+        <button role="tab" class="tab" data-tab="fair" id="tab-fair" hidden>과학전람회 선행 연구 <span class="badge" id="fair-count"></span></button>
+      </div>
+      <div id="panel-ai" class="panel" hidden></div>
+      <div id="panel-db" class="panel"></div>
+      <div id="panel-fair" class="panel" hidden></div>
+    </section>
+
+    <section class="card note">
+      <h3>사용 안내</h3>
+      <ul>
+        <li>추천 결과는 <b>탐구의 출발점</b>입니다. 선행연구를 직접 찾아 읽고, 선생님과 상의해 가설·변인을 다듬으세요.</li>
+        <li>제시된 참고문헌은 반드시 링크를 열어 <b>실제로 존재하는지, 내용이 맞는지</b> 확인하세요. 확인하지 않은 자료를 보고서·생기부에 인용하면 안 됩니다.</li>
+        <li>사람을 대상으로 하는 측정(심박 등)은 본인 또는 동의한 참여자만 대상으로 하고, 개인정보를 기록하지 마세요.</li>
+        <li>각 주제 카드의 <b>PDF 저장</b> 버튼으로 탐구계획서를 내려받을 수 있습니다(인쇄 창에서 'PDF로 저장' 선택).</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    <small>고등학교 과학 탐구 주제 추천 프로그램</small>
+  </footer>
+
+  <div id="print-area"></div>
+
+  <script src="js/topics-db.js?v=11"></script>
+  <script src="js/topics-info.js?v=11"></script>
+  <script src="js/topics-phys-chem.js?v=11"></script>
+  <script src="js/topics-bio-earth.js?v=11"></script>
+  <script src="js/topics-fair-trend.js?v=11"></script>
+  <script src="js/fair-db.js?v=11"></script>
+  <script src="js/ai.js?v=11"></script>
+  <script src="js/app.js?v=11"></script>
+</body>
+</html>

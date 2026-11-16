@@ -751,6 +751,85 @@
         </div>
       </div>
 
+      <!-- 🔬 교사 직접 개발 웹앱: 과학 탐구 주제 추천 프로그램 -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-xl space-y-8 relative overflow-hidden">
+        <div class="absolute -left-24 -top-24 w-80 h-80 bg-indigo-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="space-y-4 max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-black bg-indigo-600 text-white tracking-wider">교사 직접 개발 · 학생용 웹앱</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">설치 · 로그인 없이 바로</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">AI 연동 (선택)</span>
+            </div>
+
+            <div class="flex items-center gap-4 pt-1">
+              <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                <i data-lucide="lightbulb" class="w-7 h-7"></i>
+              </div>
+              <div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight break-keep">고등학생을 위한 과학 탐구 주제 추천 프로그램</h3>
+                <p class="text-xs sm:text-sm text-slate-500 font-mono mt-0.5">Science Inquiry Topic Recommender</p>
+              </div>
+            </div>
+
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed pt-1 break-keep">
+              학생이 <strong class="text-slate-900">희망 진로 · 학과 · 키워드</strong>를 입력하면 물리·화학·생명과학·지구과학·정보 융합 탐구 주제를 골라,
+              <strong class="text-slate-900">준비물 · 아두이노 회로와 코드 · 연구 프로토콜 · 예상 결론</strong>까지 탐구계획서 형태로 추천합니다. 과학전람회 선행 연구도 함께 찾아 줘요.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-indigo-600">내장 주제</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">융합 탐구 109개</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-emerald-600">선행 연구</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">과학전람회 수상작 검색</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <div class="text-[11px] font-bold text-amber-600">결과 저장</div>
+                <div class="text-xs font-black text-slate-900 mt-0.5">탐구계획서 PDF</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-3">
+              <a href="apps/science-topic/index.html" target="_blank" rel="noopener"
+                class="px-6 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm tracking-wide transition shadow-lg shadow-indigo-600/25 flex items-center gap-2.5">
+                <i data-lucide="external-link" class="w-5 h-5"></i>
+                <span>탐구 주제 추천받기</span>
+              </a>
+              <button onclick="openDetailModal('tool-science-topic-app')"
+                class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>기능 소개 보기</span>
+              </button>
+            </div>
+            <div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 pt-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>AI API 키는 학생 브라우저에서 AI 회사로만 직접 전송되며, 키 없이도 기본 추천은 무료로 동작합니다.</span>
+            </div>
+          </div>
+
+          <div class="lg:w-96 shrink-0 space-y-3">
+            <a href="apps/science-topic/index.html" target="_blank" rel="noopener" class="block rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white group relative">
+              <img src="assets/programs/science-topic/screen_result.jpg" alt="과학 탐구 주제 추천 결과 화면" class="w-full h-56 object-cover object-top group-hover:scale-105 transition duration-500" loading="lazy" />
+              <div class="absolute bottom-3 left-3 bg-slate-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                <i data-lucide="monitor" class="w-3.5 h-3.5 text-indigo-400"></i> 추천 결과 예시
+              </div>
+            </a>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="openDetailModal('tool-science-topic-app')" class="rounded-xl overflow-hidden border border-slate-200 bg-white" title="탐구 조건 입력">
+                <img src="assets/programs/science-topic/screen_input.jpg" alt="탐구 조건 입력 화면" class="w-full h-16 object-cover object-top hover:scale-110 transition" loading="lazy" />
+              </button>
+              <button type="button" onclick="openDetailModal('tool-science-topic-app')" class="rounded-xl overflow-hidden border border-slate-200 bg-white" title="추천 결과">
+                <img src="assets/programs/science-topic/screen_result.jpg" alt="추천 결과 화면" class="w-full h-16 object-cover object-[center_40%] hover:scale-110 transition" loading="lazy" />
+              </button>
+            </div>
+            <div class="text-[10px] text-center text-slate-400">▲ 탐구 조건 입력 / 탐구계획서 형태의 추천 결과</div>
+          </div>
+        </div>
+      </div>
+
       <!-- 도구 2종 카드 그리드 (간편 웹 유틸리티) -->
       <div class="space-y-4">
         <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
