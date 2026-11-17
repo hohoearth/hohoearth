@@ -49,12 +49,16 @@
           NEIS의 <b class="text-white">근무상황(연가·조퇴·외출) · 출장 · 초과근무</b>와 <b class="text-white">방과후학교 · 탐구활동 · 면접</b> 같은 수당 활동을 한 달력에 모아,
           <b class="text-white">같은 시간에 겹친 기록</b>이 있는지 빨간색으로 알려 주는 점검 프로그램입니다. 수당 정산 전에 한 번 확인해 보세요.
         </p>
+        <p class="inline-flex items-start gap-2 text-sm bg-white/10 border border-white/15 rounded-2xl px-4 py-3 text-slate-200 break-keep max-w-2xl">
+          <span class="px-2 py-0.5 rounded-md bg-emerald-400 text-slate-950 text-[11px] font-black shrink-0">NEW ver.02</span>
+          <span><b class="text-white">차시 자동 배정</b> — 면접·탐구 지도처럼 여러 차시로 운영하는 프로그램을, 이미 있는 일정과 겹치지 않는 날로 자동 계획해 줍니다. <a href="#s5" class="underline font-bold text-emerald-300">자세히 보기</a></span>
+        </p>
         <div class="flex flex-wrap gap-3 pt-2">
           <a href="../apps/sudang/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-black text-sm transition shadow-lg shadow-rose-500/30 inline-flex items-center gap-2">
             <i data-lucide="play" class="w-5 h-5"></i>프로그램 바로 열기
           </a>
           <a href="../downloads/proctor/%EC%88%98%EB%8B%B9%EA%B4%80%EB%A6%AC_app.zip" download="수당관리_app.zip" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
-            <i data-lucide="download" class="w-4 h-4"></i>파일 받기 (zip · 14KB)
+            <i data-lucide="download" class="w-4 h-4"></i>파일 받기 (zip · 18KB)
           </a>
         </div>
       </div>
@@ -71,7 +75,8 @@
         <a href="#s2" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">2. 근무상황 · 출장 엑셀</a>
         <a href="#s3" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">3. 초과근무 캡처</a>
         <a href="#s4" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">4. 수당 활동 입력</a>
-        <a href="#s5" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 겹침 확인</a>
+        <a href="#s5" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 차시 자동 배정 <span class="text-[10px] font-black text-emerald-600">NEW</span></a>
+        <a href="#s6" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">6. 겹침 확인</a>
         <a href="#notice" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">알아두세요</a>
       </nav>
     </aside>
@@ -84,7 +89,7 @@
           <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">한눈에 보기</h2>
           <p class="text-slate-600 mt-2 leading-relaxed break-keep">왼쪽에서 자료를 올리면 오른쪽 달력에 색깔별로 쌓이고, 시간이 겹치는 날은 <b class="text-rose-600">⚠ 겹침</b>으로 표시됩니다.</p>
         </div>
-        <figure><img src="../assets/programs/sudang/screen_main.jpg" alt="수당 점검 프로그램 전체 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">전체 화면 (가상의 예시 자료) — 11월 10일과 26일에 겹침이 발견된 모습</figcaption></figure>
+        <figure><img src="../assets/programs/sudang/screen_main.jpg" alt="수당 점검 프로그램 전체 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">전체 화면 (가상의 예시 자료) — 11월 10일과 26일에 겹침이 발견되고, 점선으로 면접 지도 계획이 들어간 모습</figcaption></figure>
         <div class="grid sm:grid-cols-4 gap-3 text-sm">
           <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-orange-500 mr-1"></span><b>복무</b><p class="text-slate-600 mt-1">연가·조퇴·지각·외출 (NEIS 엑셀)</p></div>
           <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-600 mr-1"></span><b>출장</b><p class="text-slate-600 mt-1">관내·관외 출장 (NEIS 엑셀)</p></div>
@@ -149,7 +154,28 @@
 
       <section id="s5" class="space-y-5">
         <div>
-          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 5</div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 5 · <span class="text-emerald-600">NEW ver.02</span></div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">차시 자동 배정 — 겹치지 않는 날로 계획 세우기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">면접 지도 12차시, 탐구 지도 25차시처럼 <b>여러 번에 나눠 운영하는 프로그램</b>을 계획할 때 쓰는 기능입니다. 이미 올린 <b>복무·출장·초과근무·방과후 등과 시간이 겹치지 않는 날</b>만 골라 차례로 배정해 주니, 처음부터 겹침 없는 계획을 세울 수 있어요.</p>
+        </div>
+        <div class="grid md:grid-cols-[1fr_380px] gap-8 items-start">
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>④ 차시 자동 배정</b> 칸에 <b>프로그램 이름</b>과 구분(면접지도·탐구지도·방과후학교·기타)을 고릅니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>총 차시</b>(예: 12), <b>1차시 시간</b>(분, 예: 50), <b>하루 최대 차시</b>(예: 2)를 넣습니다. 하루 최대를 2로 하면 가능한 날에는 2차시를 이어서 배정하고, 자리가 부족하면 1차시만 넣어요.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>가능한 시간대</b>를 우선순위대로 넣습니다. 예: <b>1안 16:40</b>, <b>2안 19:10</b> → 16:40이 막힌 날은 19:10으로 배정합니다.<br>
+              · <b>끝을 비우면</b> 그 시각에 바로 시작<br>· <b>끝까지 넣으면</b>(예: 16:30 ~ 21:00) 그 범위 안에서 비어 있는 시간을 10분 단위로 찾아 줍니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>기간</b>과 <b>요일</b>을 고르고, 시험·행사 날은 <b>제외할 날짜</b>에 적습니다. (예: <code>2026-12-03, 12/10~12/12</code>) 일정이 하나라도 있는 날을 아예 피하고 싶으면 <b>통째로 피하기</b>에 체크하세요.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">5</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">자동 배정 미리보기</span>를 누르면 차시별 날짜·시간·몇 안으로 들어갔는지 표가 나오고, <b>피한 날</b>과 그 이유(어떤 일정과 겹쳤는지)도 볼 수 있어요. 기간 안에 다 못 넣으면 몇 차시가 남았는지 알려 줍니다.</div></div>
+            <div class="flex gap-3"><div class="step-num bg-emerald-600 text-white">6</div><div class="text-sm text-slate-700 leading-relaxed break-keep">결과가 괜찮으면 <span class="kbd">달력에 추가</span>(달력에 <b>점선</b>으로 표시) 또는 <span class="kbd">엑셀로 저장</span>(차시·날짜·요일·시작·종료·프로그램·구분·담당)을 누릅니다. 계획을 지우려면 달력에서 그 날짜를 눌러 <span class="kbd">이 계획 전체 삭제</span>.</div></div>
+          </div>
+          <figure><img src="../assets/programs/sudang/screen_plan.jpg" alt="차시 자동 배정 칸과 미리보기 결과" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">④ 차시 자동 배정 — 12차시 미리보기 (예시)</figcaption></figure>
+        </div>
+        <figure><img src="../assets/programs/sudang/screen_plan_calendar.jpg" alt="달력에 추가된 차시 계획" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">달력에 추가된 계획(점선). 초과근무가 있는 2·5·10·12일은 피하고, 방과후가 있는 13일은 2안(19:10)으로 들어갔어요.</figcaption></figure>
+      </section>
+
+      <section id="s6" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 6</div>
           <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">달력에서 겹침 확인</h2>
         </div>
         <div class="grid md:grid-cols-[380px_1fr] gap-8 items-start">

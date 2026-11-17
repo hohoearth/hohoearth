@@ -103,6 +103,28 @@ td input:focus{background:var(--primary-soft);box-shadow:none}
 .hidden{display:none}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:4px 0 24px}
 
+/* ---------- 차시 자동 배정 ---------- */
+.plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.plan-grid label{font-size:11px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.plan-grid input{width:100%;padding:6px 6px}
+.dchk{display:inline-flex;align-items:center;justify-content:center;width:34px;height:30px;border:1px solid var(--line);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;user-select:none;background:#fff}
+.dchk input{display:none}
+.dchk.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pl-sum{margin:14px 0 8px;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.6;background:var(--ot-bg);border:1px solid #bbe7c9}
+.pl-sum.short{background:var(--leave-bg);border-color:#fed7bd}
+.pl-list{max-height:260px;overflow-y:auto;margin-bottom:8px}
+.pl-list td{font-size:12px}
+details.pl-skip{font-size:12px;color:var(--muted);margin-bottom:10px}
+details.pl-skip summary{cursor:pointer;font-weight:700}
+details.pl-skip div{padding:2px 0 2px 10px}
+.chip.plan{background:#fff;border:1px dashed currentColor}
+.slot-box{border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;margin-bottom:8px}
+.slot-title{font-size:12px;font-weight:800;margin-bottom:6px}
+.slot{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.slot .snum{flex:none;font-size:11px;font-weight:800;color:var(--primary);background:var(--primary-soft);border-radius:999px;padding:2px 8px}
+.slot input{flex:1;min-width:0;padding:5px 6px}
+.slot .sdel{flex:none;width:28px;height:28px;padding:0;color:var(--muted)}
+
 /* ---------- 사용 가이드 ---------- */
 .modal{position:fixed;inset:0;z-index:50;background:rgba(15,23,42,.45);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
 .modal.hidden{display:none}
@@ -199,6 +221,37 @@ kbd{background:#fff;border:1px solid #cfd6e2;border-bottom-width:2px;border-radi
     </div>
 
     <div class="card">
+      <div class="card-head"><div class="ico green">🧩</div><div>
+        <h2><span class="step">4</span>차시 자동 배정</h2>
+        <p>복무·출장·초과근무·방과후와 겹치지 않는 날로 계획을 세웁니다.</p></div></div>
+      <div class="row">
+        <input id="plName" placeholder="프로그램 이름 (예: 면접 지도)" style="flex:1;min-width:0">
+        <select id="plType"><option>면접지도</option><option>탐구지도</option><option>방과후학교</option><option>기타</option></select>
+      </div>
+      <div class="plan-grid">
+        <label>총 차시<input type="number" id="plN" value="25" min="1" max="300"></label>
+        <label>1차시(분)<input type="number" id="plDur" value="50" min="10" max="300" step="5"></label>
+        <label>하루 최대<input type="number" id="plPerDay" value="1" min="1" max="10"></label>
+      </div>
+      <div class="slot-box">
+        <div class="slot-title">가능한 시간대 <span class="muted">(위에서부터 우선)</span></div>
+        <div id="plSlots"></div>
+        <button id="plAddSlot" style="width:100%;margin-top:4px">＋ 시간대 추가</button>
+        <div class="muted" style="margin-top:6px;line-height:1.6">· <b>끝을 비우면</b> 그 시각에 시작 (예: 16:40)<br>· <b>끝을 넣으면</b> 그 범위 안에서 10분 단위로 빈 시간을 찾음 (예: 16:30 ~ 21:00)</div>
+      </div>
+      <div class="row">
+        <input type="date" id="plFrom" style="flex:1;min-width:0"> ~ <input type="date" id="plTo" style="flex:1;min-width:0">
+      </div>
+      <div class="row" id="plDays"></div>
+      <div class="row">
+        <input id="plExclude" placeholder="제외할 날짜 (예: 2026-12-03, 12/10~12/12)" style="flex:1;min-width:0">
+      </div>
+      <label class="muted" style="display:block;margin-bottom:10px"><input type="checkbox" id="plWhole" style="vertical-align:-2px"> 일정이 하나라도 있는 날은 통째로 피하기</label>
+      <button class="primary" id="plRun" style="width:100%">자동 배정 미리보기</button>
+      <div id="plResult"></div>
+    </div>
+
+    <div class="card">
       <div class="card-head"><div class="ico red">⚠️</div><div>
         <h2>이번 달 겹침 <span id="confCount" class="badge" style="vertical-align:2px"></span></h2>
         <p>같은 시간에 두 가지 이상이 올라간 경우</p></div></div>
@@ -264,6 +317,14 @@ kbd{background:#fff;border:1px solid #cfd6e2;border-bottom-width:2px;border-radi
       </div></div>
 
       <div class="g-step"><div class="num">6</div><div>
+        <h3>차시 자동 배정 (계획 세우기)</h3>
+        <p><b>④ 차시 자동 배정</b>에 프로그램 이름, 총 차시(예: 25), 1차시 시간, 기간, 요일, <b>가능한 시간대</b>를 넣고 <b>자동 배정 미리보기</b>를 누르세요.</p>
+        <p>이미 올린 <b>복무·출장·초과근무·방과후 등과 시간이 겹치지 않는 날</b>에만 차례로 배정됩니다. 시험·행사 날은 <b>제외할 날짜</b>에 적어 두세요.</p>
+        <p>시간대는 여러 개 넣을 수 있습니다. 예를 들어 <b>1안 16:40</b>, <b>2안 19:10</b>을 넣으면 16:40이 막힌 날은 19:10으로 배정합니다. 끝 시각까지 넣으면(예: 16:30 ~ 21:00) 그 범위 안에서 비어 있는 시간을 10분 단위로 찾아 줍니다.</p>
+        <p>결과가 괜찮으면 <b>달력에 추가</b>(점선으로 표시) 또는 <b>엑셀로 저장</b>을 누르세요. 지울 때는 날짜를 눌러 <b>이 계획 전체 삭제</b>를 누르면 됩니다.</p>
+      </div></div>
+
+      <div class="g-step"><div class="num">7</div><div>
         <h3>달력에서 겹침 확인</h3>
         <p>시간이 겹치는 날은 달력 칸이 <b style="color:var(--warn)">빨간색</b>이 되고 <b>⚠ 겹침</b> 표시가 붙습니다. 왼쪽 <b>이번 달 겹침</b>에서 몇 시부터 몇 시까지 겹치는지 볼 수 있고, 날짜를 누르면 상세 내용이 나옵니다.</p>
       </div></div>
@@ -653,7 +714,7 @@ function render(){
     const conf = conflictsOf(list);
     if (key.startsWith(prefix)) monthConf.push(...conf);
     if (k>=35 && d.getMonth()!==viewM) break;
-    const chips = list.map(i => `<span class="chip ${i.kind}" title="${esc(i.title+' '+i.memo)}">${i.allDay?'종일':i.start+'~'+(i.end==='24:00'?'':i.end)} ${esc(i.title)}</span>`).join('');
+    const chips = list.map(i => `<span class="chip ${i.kind} ${i.plan?'plan':''}" title="${esc(i.title+' '+i.memo)}">${i.allDay?'종일':i.start+'~'+(i.end==='24:00'?'':i.end)} ${esc(i.title)}</span>`).join('');
     html += `<div class="day ${d.getMonth()!==viewM?'other':''} ${conf.length?'conflict':''} ${key===selDate?'sel':''} ${key===ymd(new Date())?'today':''}" data-d="${key}">
       <div class="num"><span style="color:${d.getDay()===0?'var(--warn)':d.getDay()===6?'var(--trip)':''}">${d.getDate()}</span>${conf.length?'<span class="flag">⚠ 겹침</span>':''}</div>${chips}</div>`;
   }
@@ -676,8 +737,14 @@ function render(){
   dv.innerHTML = list.map(i => `<div class="detail-item">
       <span class="tag ${i.kind}">${KIND_LABEL[i.kind]}</span><b>${esc(i.title)}</b> ${i.allDay?'종일':i.start+' ~ '+i.end}
       <button class="danger" style="float:right;padding:0 6px" data-del="${i.id}">삭제</button>
+      ${i.planId ? `<button class="danger" style="float:right;padding:0 6px;margin-right:4px" data-delplan="${i.planId}">이 계획 전체 삭제</button>` : ''}
       <div class="muted">${esc(i.memo)} ${i.extra?'· '+esc(i.extra):''} · 출처: ${esc(i.source||'')}</div></div>`).join('')
       || '<div class="muted">등록된 내용이 없습니다.</div>';
+  dv.querySelectorAll('[data-delplan]').forEach(b => b.onclick = () => {
+    const pid = b.dataset.delplan, cnt = db.items.filter(x => x.planId === pid).length;
+    if (!confirm(`이 계획의 ${cnt}차시를 모두 달력에서 지울까요?`)) return;
+    db.items = db.items.filter(x => x.planId !== pid); save(); render();
+  });
   dv.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
     const it = db.items.find(x => x.id === b.dataset.del);
     db.items = db.items.filter(x => it.gid ? x.gid !== it.gid : x.id !== it.id);
@@ -730,6 +797,155 @@ document.getElementById('actAdd').onclick = () => {
     title: document.getElementById('actType').value, memo: document.getElementById('actMemo').value, source:'직접 입력' });
   save(); viewY=+d.slice(0,4); viewM=+d.slice(5,7)-1; selDate=d; render();
 };
+
+/* ===================== 차시 자동 배정 ===================== */
+const DOW = ['일','월','화','수','목','금','토'];
+(function initPlanForm(){
+  const t = new Date(); t.setDate(t.getDate()+1);
+  const e = new Date(t); e.setDate(e.getDate()+60);
+  document.getElementById('plFrom').value = ymd(t);
+  document.getElementById('plTo').value = ymd(e);
+  document.getElementById('plDays').innerHTML = DOW.map((d,i) =>
+    `<label class="dchk ${i>=1&&i<=5?'on':''}"><input type="checkbox" value="${i}" ${i>=1&&i<=5?'checked':''}>${d}</label>`).join('');
+  document.querySelectorAll('#plDays input').forEach(c => c.onchange = () => c.parentElement.classList.toggle('on', c.checked));
+  addSlot('16:40',''); addSlot('19:10','');
+})();
+
+function addSlot(s='', e=''){
+  const box = document.getElementById('plSlots');
+  box.insertAdjacentHTML('beforeend', `<div class="slot"><span class="snum"></span>
+    <input type="time" class="sS" value="${s}" title="시작"> ~ <input type="time" class="sE" value="${e}" title="끝 (비우면 그 시각에 시작)">
+    <button class="sdel" title="삭제">✕</button></div>`);
+  renumberSlots();
+}
+function renumberSlots(){
+  document.querySelectorAll('#plSlots .slot').forEach((el,i) => {
+    el.querySelector('.snum').textContent = `${i+1}안`;
+    el.querySelector('.sdel').onclick = () => { el.remove(); renumberSlots(); };
+  });
+}
+document.getElementById('plAddSlot').onclick = () => addSlot('', '');
+
+/* 시간대 목록 → [{s,e}] (e 없으면 고정 시작) */
+function readSlots(){
+  return [...document.querySelectorAll('#plSlots .slot')].map(el => ({
+    s: el.querySelector('.sS').value, e: el.querySelector('.sE').value
+  })).filter(x => x.s && (!x.e || x.e > x.s));
+}
+/* 한 시간대에서 k차시를 넣어볼 시작 후보 (분) */
+function slotStarts(slot, len){
+  const s = toMin(slot.s);
+  if (!slot.e) return [s];
+  const e = toMin(slot.e), out = [];
+  for (let t = s; t + len <= e; t += 10) out.push(t);
+  return out;
+}
+
+/* "2026-12-03, 12/10~12/12" → 날짜 Set */
+function parseExclude(text){
+  const set = new Set();
+  for (const part of String(text).split(/[,\n]/)){
+    const [a,b] = part.split('~').map(s => s && s.trim());
+    if (!a) continue;
+    const sd = xlDate(a); if (!sd) continue;
+    let ed = b ? xlDate(b) : sd;
+    if (b && !ed) ed = sd;
+    const d = new Date(sd+'T00:00'), end = new Date(ed+'T00:00');
+    for (let g=0; d<=end && g<400; g++){ set.add(ymd(d)); d.setDate(d.getDate()+1); }
+  }
+  return set;
+}
+
+function planSchedule(o){
+  const byDate = {};
+  teacherItems().forEach(i => (byDate[i.date] ||= []).push(i));
+  const out = [], skipped = [];
+  let left = o.n;
+  const d = new Date(o.from+'T00:00'), end = new Date(o.to+'T00:00');
+  for (let g=0; d<=end && left>0 && g<1000; g++, d.setDate(d.getDate()+1)){
+    const key = ymd(d);
+    if (!o.days.includes(d.getDay())) continue;
+    if (o.exclude.has(key)){ skipped.push({ date:key, why:'제외 날짜' }); continue; }
+    const list = byDate[key] || [];
+    if (o.whole && list.length){ skipped.push({ date:key, why: list.map(i => `${KIND_LABEL[i.kind]} ${i.title}`).join(', ') }); continue; }
+    // 하루 최대 차시부터 줄여가며, 1안 → 2안 … 순서로 들어갈 수 있는 첫 시간을 찾음
+    let placed = false, lastHit = null;
+    for (let k=Math.min(o.perDay,left); k>=1 && !placed; k--){
+      const len = k*o.dur;
+      for (let si=0; si<o.slots.length && !placed; si++){
+        for (const s of slotStarts(o.slots[si], len)){
+          const e = s + len;
+          if (e > 1440) break;
+          const hit = list.find(i => Math.max(s, toMin(i.start)) < Math.min(e, toMin(i.end)));
+          if (hit){ lastHit = hit; continue; }
+          for (let j=0;j<k;j++) out.push({ no:o.n-left+1+j, date:key, slot:si+1, start:fromMin(s+j*o.dur), end:fromMin(s+(j+1)*o.dur) });
+          left -= k; placed = true; break;
+        }
+      }
+    }
+    if (!placed) skipped.push({ date:key, why: lastHit ? `${KIND_LABEL[lastHit.kind]} ${lastHit.title} ${lastHit.start}~${lastHit.end}` : '시간대에 차시가 들어갈 자리 없음' });
+  }
+  return { out, skipped, left };
+}
+
+let lastPlan = null;
+function runPlan(){
+  if (!db.current) return alert('먼저 교사를 추가하세요');
+  const v = id => document.getElementById(id).value;
+  const o = {
+    name: v('plName').trim() || v('plType'), type: v('plType'),
+    n: Math.max(1, +v('plN')||0), dur: Math.max(10, +v('plDur')||0), perDay: Math.max(1, +v('plPerDay')||1),
+    slots: readSlots(), from: v('plFrom'), to: v('plTo'),
+    days: [...document.querySelectorAll('#plDays input:checked')].map(c => +c.value),
+    exclude: parseExclude(v('plExclude')), whole: document.getElementById('plWhole').checked
+  };
+  if (!o.from || !o.to || o.from > o.to) return alert('기간을 확인하세요');
+  if (!o.days.length) return alert('요일을 하나 이상 고르세요');
+  if (!o.slots.length) return alert('가능한 시간대를 하나 이상 넣으세요 (범위는 끝이 시작보다 늦어야 합니다)');
+  const r = planSchedule(o);
+  lastPlan = { o, ...r };
+  const box = document.getElementById('plResult');
+  const first = r.out[0], last = r.out[r.out.length-1];
+  const dw = k => DOW[new Date(k+'T00:00').getDay()];
+  box.innerHTML = `
+    <div class="pl-sum ${r.left?'short':''}">
+      <b>${esc(o.name)}</b> ${o.n}차시 중 <b>${r.out.length}차시</b> 배정
+      ${first ? `<br>${first.date.slice(5)}(${dw(first.date)}) ~ ${last.date.slice(5)}(${dw(last.date)}), ${new Set(r.out.map(x=>x.date)).size}일` : ''}
+      ${r.left ? `<br>⚠ 기간 안에 빈 날이 부족해 <b>${r.left}차시</b>를 배정하지 못했습니다. 기간을 늘리거나 하루 최대 차시·요일을 바꿔보세요.` : ''}
+    </div>
+    ${r.out.length ? `<div class="pl-list"><table><thead><tr><th>차시</th><th>날짜</th><th>시간</th><th>안</th></tr></thead><tbody>
+      ${r.out.map(x => `<tr><td>${x.no}</td><td>${x.date}(${dw(x.date)})</td><td>${x.start}~${x.end}</td><td>${x.slot}안</td></tr>`).join('')}
+    </tbody></table></div>` : ''}
+    ${r.skipped.length ? `<details class="pl-skip"><summary>피한 날 ${r.skipped.length}일 보기</summary>
+      ${r.skipped.map(s => `<div>${s.date.slice(5)}(${dw(s.date)}) · ${esc(s.why)}</div>`).join('')}</details>` : ''}
+    ${r.out.length ? `<div class="row"><button class="primary" id="plApply" style="flex:1">달력에 추가</button><button id="plXlsx">엑셀로 저장</button></div>` : ''}`;
+  if (!r.out.length) return;
+  document.getElementById('plApply').onclick = applyPlan;
+  document.getElementById('plXlsx').onclick = exportPlan;
+}
+
+function applyPlan(){
+  if (!lastPlan) return;
+  const { o, out } = lastPlan, planId = uid();
+  out.forEach(x => db.items.push({ id:uid(), planId, plan:true, teacher:db.current, kind:'act', date:x.date, start:x.start, end:x.end,
+    title:o.name, memo:`${o.type} ${x.no}/${o.n}차시 (자동 배정 계획)`, source:'차시 자동 배정' }));
+  save();
+  viewY = +out[0].date.slice(0,4); viewM = +out[0].date.slice(5,7)-1; selDate = out[0].date;
+  render();
+  document.getElementById('plResult').innerHTML = `<div class="pl-sum">✔ ${out.length}차시를 달력에 추가했습니다. 점선 표시가 계획입니다.<br>지우려면 날짜를 눌러 <b>이 계획 전체 삭제</b>를 누르세요.</div>`;
+  lastPlan = null;
+}
+
+function exportPlan(){
+  const { o, out } = lastPlan;
+  const aoa = [['차시','날짜','요일','시작','종료','프로그램','구분','담당']];
+  out.forEach(x => aoa.push([x.no, x.date, DOW[new Date(x.date+'T00:00').getDay()], x.start, x.end, o.name, o.type, db.current]));
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [{wch:6},{wch:12},{wch:6},{wch:8},{wch:8},{wch:20},{wch:10},{wch:10}];
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '차시 계획');
+  XLSX.writeFile(wb, `${o.name} ${o.n}차시 계획.xlsx`);
+}
+document.getElementById('plRun').onclick = runPlan;
 
 /* 사용 가이드: 처음 열 때 자동 표시 */
 const GKEY = 'sudang-guide-hide';
