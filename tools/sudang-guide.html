@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>수당 점검 프로그램 사용 가이드 | HoHo earth</title>
+  <meta name="description" content="NEIS 근무상황·출장·초과근무와 방과후·탐구활동 등 수당 활동이 같은 시간에 겹치지 않는지 달력으로 점검하는 무료 웹 프로그램" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="내 수당에는 문제가 없을까? — 수당 점검 프로그램" />
+  <meta property="og:description" content="복무·출장·초과근무·수당 활동의 시간 겹침을 달력으로 한눈에. 모든 자료는 내 컴퓨터에만 저장" />
+  <meta property="og:image" content="https://hohoearth.github.io/hohoearth/assets/programs/sudang/screen_calendar.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .kbd { display:inline-block; padding:1px 8px; margin:0 1px; border:1px solid #cbd5e1; border-bottom-width:2px; border-radius:6px; background:#fff; font-size:.85em; font-weight:700; color:#334155; white-space:nowrap; }
+    .path { display:inline-block; padding:1px 8px; border-radius:6px; background:#eff6ff; border:1px solid #bfdbfe; color:#1d4ed8; font-size:.85em; font-weight:700; white-space:nowrap; }
+    .shot { border:1px solid #e2e8f0; border-radius:16px; box-shadow:0 10px 30px -12px rgba(15,23,42,.25); cursor:zoom-in; background:#fff; width:100%; }
+    .step-num { flex-shrink:0; width:28px; height:28px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; }
+    .toc a.active { color:#be123c; background:#fff1f2; }
+    section[id] { scroll-margin-top: 84px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <a href="../index.html#lab" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i><span>AI활용 도구로</span>
+      </a>
+      <div class="text-sm font-bold text-slate-700 truncate hidden sm:block">수당 점검 프로그램 · 사용 가이드</div>
+      <a href="../apps/sudang/index.html" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition shrink-0">
+        <i data-lucide="external-link" class="w-4 h-4"></i><span>프로그램 열기</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[1fr_460px] gap-10 items-center">
+      <div class="space-y-5">
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-rose-500 text-white">교사 직접 개발 · 무료</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">설치 없이 웹에서 바로</span>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/15">자료는 내 컴퓨터에만 저장</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight break-keep">내 수당에는<br><span class="text-rose-300">문제가 없을까?</span></h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed break-keep max-w-2xl">
+          NEIS의 <b class="text-white">근무상황(연가·조퇴·외출) · 출장 · 초과근무</b>와 <b class="text-white">방과후학교 · 탐구활동 · 면접</b> 같은 수당 활동을 한 달력에 모아,
+          <b class="text-white">같은 시간에 겹친 기록</b>이 있는지 빨간색으로 알려 주는 점검 프로그램입니다. 수당 정산 전에 한 번 확인해 보세요.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="../apps/sudang/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-black text-sm transition shadow-lg shadow-rose-500/30 inline-flex items-center gap-2">
+            <i data-lucide="play" class="w-5 h-5"></i>프로그램 바로 열기
+          </a>
+          <a href="../downloads/proctor/%EC%88%98%EB%8B%B9%EA%B4%80%EB%A6%AC_app.zip" download="수당관리_app.zip" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 font-bold text-sm transition inline-flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i>파일 받기 (zip · 14KB)
+          </a>
+        </div>
+      </div>
+      <img src="../assets/programs/sudang/screen_calendar.jpg" alt="겹침이 표시된 달력" class="shot hidden lg:block" />
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+    <aside class="hidden lg:block">
+      <nav class="toc sticky top-24 space-y-1 text-sm">
+        <div class="text-[11px] font-black tracking-wider text-slate-400 uppercase px-3 pb-2">목차</div>
+        <a href="#overview" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">한눈에 보기</a>
+        <a href="#s1" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">1. 교사 선택</a>
+        <a href="#s2" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">2. 근무상황 · 출장 엑셀</a>
+        <a href="#s3" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">3. 초과근무 캡처</a>
+        <a href="#s4" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">4. 수당 활동 입력</a>
+        <a href="#s5" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">5. 겹침 확인</a>
+        <a href="#notice" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-semibold">알아두세요</a>
+      </nav>
+    </aside>
+
+    <main class="space-y-20 min-w-0">
+
+      <section id="overview" class="space-y-6">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Overview</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">한눈에 보기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">왼쪽에서 자료를 올리면 오른쪽 달력에 색깔별로 쌓이고, 시간이 겹치는 날은 <b class="text-rose-600">⚠ 겹침</b>으로 표시됩니다.</p>
+        </div>
+        <figure><img src="../assets/programs/sudang/screen_main.jpg" alt="수당 점검 프로그램 전체 화면" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">전체 화면 (가상의 예시 자료) — 11월 10일과 26일에 겹침이 발견된 모습</figcaption></figure>
+        <div class="grid sm:grid-cols-4 gap-3 text-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-orange-500 mr-1"></span><b>복무</b><p class="text-slate-600 mt-1">연가·조퇴·지각·외출 (NEIS 엑셀)</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-600 mr-1"></span><b>출장</b><p class="text-slate-600 mt-1">관내·관외 출장 (NEIS 엑셀)</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-600 mr-1"></span><b>초과근무</b><p class="text-slate-600 mt-1">NEIS 목록 화면 캡처를 글자 인식</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 break-keep"><span class="inline-block w-2.5 h-2.5 rounded-full bg-violet-600 mr-1"></span><b>수당 활동</b><p class="text-slate-600 mt-1">방과후·탐구활동·면접 등 (엑셀 또는 직접 입력)</p></div>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-sm text-emerald-900 flex gap-3 break-keep">
+          <i data-lucide="shield-check" class="w-5 h-5 shrink-0"></i>
+          <span>올린 엑셀과 캡처는 <b>이 컴퓨터의 브라우저 안에서만</b> 읽고 저장합니다. 어떤 서버로도 전송되지 않아요. 공용 PC에서 썼다면 마지막에 <span class="kbd">🗑 이 교사 데이터 삭제</span>를 눌러 지워 주세요.</span>
+        </div>
+      </section>
+
+      <section id="s1" class="space-y-4">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 1</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">교사 선택</h2>
+        </div>
+        <p class="text-sm text-slate-700 leading-relaxed break-keep">위쪽 <span class="kbd">👤 교사</span>에서 이름을 고르거나 <span class="kbd">＋ 교사 추가</span>로 등록합니다. 근무상황 엑셀을 먼저 올리면 파일 안의 이름으로 자동 등록돼요. 한 컴퓨터에서 여러 선생님의 자료를 따로 점검할 수도 있습니다.</p>
+      </section>
+
+      <section id="s2" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 2</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">근무상황 · 출장 엑셀 올리기</h2>
+        </div>
+        <div class="grid md:grid-cols-[1fr_380px] gap-8 items-start">
+          <div class="space-y-4">
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>근무상황</b>(연가·조퇴·지각·외출 등): NEIS <span class="path">개인근무상황관리</span> › <span class="path">엑셀 내려받기</span></div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><b>출장</b>: NEIS <span class="path">개인출장관리</span> › <span class="path">엑셀 내려받기</span></div></div>
+            <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">받은 파일을 고치지 말고 그대로 <b>① NEIS 엑셀</b> 칸에 끌어다 놓습니다. 두 파일을 한꺼번에 올려도 종류를 알아서 구분하고, 삭제된 기록은 빼고 읽어요.</div></div>
+            <div class="bg-slate-100 rounded-xl p-3 text-xs text-slate-600 break-keep">출장은 동반 출장이면 신청자가 다른 선생님일 수 있어서, <b>지금 선택된 교사</b>의 기록으로 저장됩니다. 출장 파일을 올리기 전에 교사를 먼저 골라 주세요.</div>
+          </div>
+          <figure><img src="../assets/programs/sudang/screen_inputs.jpg" alt="자료 올리는 칸" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">왼쪽 자료 입력 칸 ①②③</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="s3" class="space-y-4">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 3</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">초과근무는 캡처해서 올리기</h2>
+          <p class="text-slate-600 mt-2 leading-relaxed break-keep">초과근무 목록은 NEIS에서 엑셀로 받을 수 없어서, 화면을 캡처하면 프로그램이 <b>글자를 인식</b>해 표로 바꿔 줍니다.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">1</div><div class="text-sm text-slate-700 leading-relaxed break-keep">NEIS <span class="path">개인초과근무관리</span>에서 목록을 띄웁니다. 화면 배율은 <b>100%(기본 크기)</b>가 가장 잘 읽혀요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">2</div><div class="text-sm text-slate-700 leading-relaxed break-keep"><span class="kbd">Windows</span>+<span class="kbd">Shift</span>+<span class="kbd">S</span>로 <b>표 머리글부터 마지막 줄까지</b> 드래그해 캡처합니다.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">3</div><div class="text-sm text-slate-700 leading-relaxed break-keep">프로그램 화면에서 <span class="kbd">Ctrl</span>+<span class="kbd">V</span>로 붙여 넣습니다. 저장한 이미지 파일은 <b>② 초과근무 캡처</b> 칸에 끌어다 놓아도 돼요.</div></div>
+          <div class="flex gap-3"><div class="step-num bg-slate-900 text-white">4</div><div class="text-sm text-slate-700 leading-relaxed break-keep">10~30초 뒤 읽은 결과가 표로 나옵니다. <b>날짜·시간이 맞는지 확인</b>하고 틀린 칸은 고친 뒤 <span class="kbd">초과근무로 저장</span>.</div></div>
+        </div>
+        <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-xs text-amber-900 break-keep">초과근무는 <b>실제 근무시간</b>으로 비교하고, 실제 기록이 없으면 신청시간으로 비교합니다. 같은 날짜를 다시 올리면 이전 기록을 새것으로 바꿔요. 처음 글자 인식을 할 때는 인터넷이 필요합니다.</div>
+      </section>
+
+      <section id="s4" class="space-y-4">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 4</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">수당 활동 입력 (방과후 · 탐구활동 · 면접 등)</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">📄 엑셀로 한 번에</div><p class="text-slate-600 mt-1"><b>③ 수당 활동</b>의 <span class="kbd">서식 내려받기</span>로 받은 엑셀에 <b>성명 · 구분 · 날짜 · 시작시간 · 종료시간 · 내용</b>을 적어 올립니다. 학교에서 쓰는 서식도 열 이름이 비슷하면 읽혀요.</p></div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 break-keep"><div class="font-black text-slate-900">✏️ 직접 입력</div><p class="text-slate-600 mt-1">구분(방과후학교·탐구활동·면접·기타), 날짜, 시작~종료 시간, 내용을 넣고 <span class="kbd">추가</span>. 몇 건 안 될 때 편해요.</p></div>
+        </div>
+      </section>
+
+      <section id="s5" class="space-y-5">
+        <div>
+          <div class="text-xs font-black tracking-widest text-rose-600 uppercase">Step 5</div>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">달력에서 겹침 확인</h2>
+        </div>
+        <div class="grid md:grid-cols-[380px_1fr] gap-8 items-start">
+          <figure><img src="../assets/programs/sudang/screen_conflict.jpg" alt="이번 달 겹침 목록" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">이번 달 겹침 목록</figcaption></figure>
+          <div class="space-y-3 text-sm text-slate-700 leading-relaxed break-keep">
+            <p>시간이 겹치는 날은 달력 칸이 <b class="text-rose-600">빨간색</b>이 되고 <b>⚠ 겹침</b> 표시가 붙습니다.</p>
+            <p>왼쪽 <b>이번 달 겹침</b>에서 몇 시부터 몇 시까지, 어떤 기록끼리 겹치는지 볼 수 있어요. 예를 들어 <i>초과근무 16:20~22:05</i>와 <i>방과후학교 16:30~18:10</i>이 같은 날이면 1시간 40분이 겹친다고 알려 줍니다.</p>
+            <p>날짜를 누르면 아래에 그날의 상세 내용이 나오고, 잘못 올린 항목은 <span class="kbd">삭제</span>할 수 있습니다. 위쪽 <span class="kbd">‹</span> <span class="kbd">›</span>로 달을 넘겨 보세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="notice" class="space-y-4">
+        <h2 class="text-2xl font-black text-slate-900">알아두세요</h2>
+        <ul class="bg-white border border-slate-200 rounded-2xl p-5 text-sm text-slate-600 space-y-2 list-disc pl-9 break-keep">
+          <li>이 프로그램은 <b>시간이 겹치는 기록을 찾아 주는 점검 도구</b>입니다. 수당 지급 기준이나 인정 여부는 학교·교육청 복무 규정을 따라 확인해 주세요.</li>
+          <li>모든 자료는 <b>이 컴퓨터의 브라우저에만 저장</b>되며 어디로도 전송되지 않습니다. 브라우저 기록을 지우면 함께 지워져요.</li>
+          <li>프로그램 안의 <span class="kbd">📖 사용 가이드</span> 버튼으로 언제든 같은 안내를 다시 볼 수 있습니다.</li>
+        </ul>
+        <figure class="max-w-xl"><img src="../assets/programs/sudang/screen_guide.jpg" alt="프로그램 안의 사용 가이드" class="shot" loading="lazy"><figcaption class="text-xs text-slate-500 mt-2 text-center">처음 열면 나오는 프로그램 안의 사용 가이드</figcaption></figure>
+        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div>
+            <div class="text-xs text-slate-400 font-bold">만든이</div>
+            <div class="font-black text-lg mt-1">충북사대부고 지구과학 교사 김호연</div>
+          </div>
+          <a href="../apps/sudang/index.html" target="_blank" rel="noopener" class="px-6 py-4 rounded-2xl bg-rose-500 hover:bg-rose-400 text-white font-black text-sm transition inline-flex items-center gap-2"><i data-lucide="play" class="w-5 h-5"></i>프로그램 열기</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-400">
+    <a href="../index.html" class="hover:text-slate-700 font-bold">HoHo earth</a> · 교실을 바꾸는 AI활용 도구
+  </footer>
+
+  <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/85 hidden items-start justify-center overflow-auto p-4 sm:p-10 cursor-zoom-out">
+    <img id="lightboxImg" alt="" class="max-w-full rounded-2xl shadow-2xl bg-white">
+  </div>
+  <script>
+    if (window.lucide) lucide.createIcons();
+    var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('img.shot').forEach(function (img) {
+      img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.remove('hidden'); lb.classList.add('flex'); });
+    });
+    lb.addEventListener('click', function () { lb.classList.add('hidden'); lb.classList.remove('flex'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.click(); });
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); }); });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+    }
+  </script>
+</body>
+</html>

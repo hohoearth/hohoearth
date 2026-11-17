@@ -974,6 +974,47 @@
         </div>
       </div>
 
+      <!-- ₩ 교사 직접 개발: 복무·수당 점검 프로그램 -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-xl relative overflow-hidden">
+        <div class="absolute -left-24 -bottom-24 w-80 h-80 bg-rose-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="space-y-4 max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white tracking-wider">교사 직접 개발 · 복무 점검</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">설치 없이 웹에서 바로</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">자료는 내 컴퓨터에만 저장</span>
+            </div>
+            <div class="flex items-center gap-4 pt-1">
+              <div class="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center shrink-0 text-2xl font-black">₩</div>
+              <div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight break-keep">내 수당에는 문제가 없을까?</h3>
+                <p class="text-xs sm:text-sm text-slate-500 font-mono mt-0.5">Duty &amp; Allowance Overlap Checker</p>
+              </div>
+            </div>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed pt-1 break-keep">
+              NEIS <strong class="text-slate-900">근무상황 · 출장 · 초과근무</strong>와 <strong class="text-slate-900">방과후 · 탐구활동 · 면접</strong> 같은 수당 활동을 한 달력에 모아,
+              <strong class="text-slate-900">같은 시간에 겹친 기록</strong>을 빨간색으로 찾아 줍니다. 초과근무 목록은 화면 캡처를 글자 인식으로 읽어요.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <a href="apps/sudang/index.html" target="_blank" rel="noopener"
+                class="px-6 py-4 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-black text-sm tracking-wide transition shadow-lg shadow-rose-600/25 flex items-center gap-2.5">
+                <i data-lucide="play" class="w-5 h-5"></i><span>프로그램 열기</span>
+              </a>
+              <a href="tools/sudang-guide.html"
+                class="px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4"></i><span>사용 가이드</span>
+              </a>
+            </div>
+          </div>
+          <a href="tools/sudang-guide.html" class="block lg:w-96 shrink-0 rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white group relative">
+            <img src="assets/programs/sudang/screen_calendar.jpg" alt="겹침이 표시된 달력" class="w-full h-56 object-cover object-top group-hover:scale-105 transition duration-500" loading="lazy" />
+            <div class="absolute bottom-3 left-3 bg-slate-900/85 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-400"></i> 겹친 날은 빨간색 (예시 자료)
+            </div>
+          </a>
+        </div>
+      </div>
+
       <!-- 도구 2종 카드 그리드 (간편 웹 유틸리티) -->
       <div class="space-y-4">
         <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
