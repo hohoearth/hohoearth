@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. 기압의 연직 분포와 대기를 움직이는 힘</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-4">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>하늘로 올라간 풍선은 왜 터질까?</h2><span class="tbref">교과서 p. 100</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>기압의 연직 분포로 <b>정역학 평형</b>을 이해하고, 대기 중 <b>연직 운동의 원인</b>을 추론할 수 있다.</li>
+      <li><b>대기를 움직이는 다양한 힘</b>을 설명할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-4/radiosonde.jpg" alt="라디오존데 기구 띄우기"></div><figcaption>높이별 기압·기온을 재는 라디오존데 기구</figcaption><div class="credit">NOAA Photo Library, 퍼블릭 도메인</div></figure>
+      <figure class="fig">
+        <div class="frame" style="padding:12px">
+          <svg viewBox="0 0 300 240" role="img" aria-label="토리첼리의 실험" style="font-family:Pretendard,sans-serif">
+            <rect x="40" y="170" width="220" height="50" fill="#94a3b8" rx="6"/>
+            <rect x="130" y="20" width="40" height="190" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <rect x="132" y="70" width="36" height="140" fill="#64748b"/>
+            <text x="134" y="50" font-size="12" fill="#334155">진공</text>
+            <line x1="185" y1="70" x2="185" y2="170" stroke="#dc2626" stroke-width="2"/><text x="192" y="125" font-size="14" font-weight="800" fill="#dc2626">76 cm</text>
+            <g stroke="#2563eb" stroke-width="2.5"><line x1="60" y1="140" x2="60" y2="168"/><line x1="240" y1="140" x2="240" y2="168"/></g>
+            <text x="44" y="135" font-size="12" fill="#2563eb" font-weight="700">대기압</text>
+            <text x="90" y="236" font-size="12" fill="#334155">수은</text>
+          </svg>
+        </div>
+        <figcaption>토리첼리의 실험 (1643)</figcaption><div class="credit">자체 제작 모식도</div>
+      </figure>
+    </div>
+    <div class="qbig">하늘로 날린 풍선은 점점 커지다 저절로 터지고, 비행기 안의 과자 봉지는 부풀어 오른다. 왜 그럴까?</div>
+    <p class="tnote">예시: 높이 올라갈수록 바깥 기압이 낮아져, 풍선·봉지 안의 공기가 팽창하기 때문입니다. 물이 가득 든 컵에 종이를 덮어 뒤집는 시연으로 기압의 작용을 보여 주면 좋습니다. 교과서 운영안은 3차시(기압의 연직 분포·정역학 평형 / 대기를 움직이는 힘·탐구 2차시)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 기압과 정역학 평형">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>기압의 연직 분포와 정역학 평형</h2><span class="tbref">교과서 p. 100 ~ 101</span></div>
+
+  <div class="card split">
+    <h3>(1) 기압과 연직 기압 경도력</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>기압</b>: 단위 면적에 작용하는 공기의 힘. 공기 분자가 모든 방향으로 움직이므로 모든 방향으로 똑같이 작용한다.</li>
+        <li>단위는 주로 <b>hPa</b>(1 hPa = 1 m²에 100 N). 해수면의 기압을 1기압(표준 기압, 약 <b>1013 hPa</b>)이라 한다.</li>
+        <li>토리첼리는 지표의 대기압이 <b>76 cm 수은 기둥의 무게</b>와 같다는 것을 실험으로 알아냈다.</li>
+        <li><b>기압 경도력</b>: 두 지점 사이의 기압 차로 생기는 힘. 공기는 기압이 높은 곳에서 낮은 곳으로 움직인다.</li>
+        <li>높이 올라갈수록 공기 밀도가 작아져 기압이 낮아진다. 그래서 지표에서 위쪽으로 <b>연직 기압 경도력</b>이 작용한다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산해 보기</span><b class="t">1기압 = 1013 hPa</b><p>정역학 방정식 ΔP = ρgΔZ에 수은의 밀도 13.6 g/cm³, g = 980 cm/s², 높이 76 cm를 넣으면 약 1 013 000 g/(cm·s²) = 101 300 Pa = 1013 hPa이다.</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">라디오존데</b><p>수소·헬륨 풍선에 기압·기온·습도 센서를 달아 띄우면, 높이별 기상 자료가 무선으로 지상에 전송된다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>높이에 따른 기압과 풍선의 부피</b></div>
+      <div class="sim-body">
+        <canvas id="sim-alt"></canvas>
+        <div class="ctrl">
+          <label>풍선의 높이 <span class="v" id="al-zv"></span><input type="range" id="al-z" min="0" max="16" step="0.1" value="0"></label>
+          <div class="out" id="al-out"></div>
+        </div>
+      </div>
+      <div class="hint">풍선을 올리며 기압과 부피가 어떻게 바뀌는지 보자. 기압은 높이 약 5.5 km에서 지표의 절반 정도가 된다(대략적인 모형).</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 정역학 평형과 대기의 연직 운동</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>공기에도 질량이 있어 <b>중력</b>이 작용하므로, 공기는 연직 방향으로 잘 움직이지 않는다.</li>
+        <li><b>정역학 평형</b>: 위로 작용하는 연직 기압 경도력과 아래로 작용하는 중력의 크기가 같은 상태. 대부분의 공기 덩어리는 이 상태이다.</li>
+        <li>정역학 평형이 깨지면 <b>연직 운동</b>이 일어난다. 보통 연직 운동은 수평 운동보다 훨씬 느리지만, 두 힘의 차이가 커지면 구름·태풍·뇌우 같은 기상 현상이 생기고 연직 속도가 수십 cm/s~수 m/s에 이른다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote link"><span class="lb">연계 · II-1</span><b class="t">해수의 정역학 평형</b><p>해수에서 배운 정역학 평형(ΔP = ρgΔZ)이 대기에서도 똑같이 성립한다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">해 보기</span><b>대기의 연직 운동이 일어나는 까닭</b></div>
+      <div class="sim-body">
+        <canvas id="sim-vm"></canvas>
+        <div class="ctrl">
+          <div class="out" id="vm-out"></div>
+          <div class="reveal"><button>해 보기 질문</button><div>1. A, B 지점에서 연직 기압 경도력과 중력의 크기를 비교하고 연직 운동의 까닭을 설명해 보자.<br>2. 대기의 연직 운동이 활발한 기상 현상을 찾아 설명해 보자. (예: 구름 생성, 태풍, 뇌우)</div></div>
+        </div>
+      </div>
+      <div class="hint">고기압(A)에서는 공기가 내려오고, 저기압(B)에서는 올라간다. 막대 대신 공기 입자의 움직임과 구름의 위치로 비교해 보자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 대기를 움직이는 힘">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>대기를 움직이는 네 가지 힘</h2><span class="tbref">교과서 p. 102 ~ 103</span></div>
+
+  <div class="card split">
+    <h3>기압 경도력 · 전향력 · 구심력 · 마찰력</h3>
+    <div class="body">
+      <div class="grid2">
+        <div class="mini"><h4>① 기압 경도력</h4><p>기압 차로 생기며 <b>바람을 일으키는 근본적인 힘</b>. 기압이 높은 곳 → 낮은 곳, 등압선에 수직으로 작용한다.</p></div>
+        <div class="mini"><h4>② 전향력</h4><p>지구 자전 때문에 큰 규모의 움직이는 공기에 작용. 북반구는 운동 방향의 오른쪽 직각, 남반구는 왼쪽 직각. <b>속력에 비례</b>하고 <b>고위도일수록</b> 크다.</p></div>
+        <div class="mini"><h4>③ 구심력</h4><p>원운동하는 물체의 궤적을 유지하도록 <b>중심 방향</b>으로 방향을 바꾸는 힘. 등압선이 곡선일 때의 바람에 작용한다.</p></div>
+        <div class="mini"><h4>④ 마찰력</h4><p>운동 반대 방향으로 작용해 속도를 줄인다. <b>풍속과 지표면 거칠기</b>가 클수록 크다 (해양 &lt; 평야 &lt; 숲 우거진 산악).</p></div>
+      </div>
+      <div class="eq"><i>P</i><sub>H</sub> = <span class="frac"><span>1</span><span><i>ρ</i></span></span><span class="frac"><span>Δ<i>P</i></span><span>Δ<i>L</i></span></span> &nbsp;&nbsp;&nbsp; 전향력 <i>C</i> = 2<i>v</i>Ω sin<i>φ</i> &nbsp;&nbsp;&nbsp; 구심력 = <span class="frac"><span><i>v</i>²</span><span><i>r</i></span></span> <span class="note">모두 단위 질량의 공기에 작용하는 힘 · ΔL: 두 지점 사이 거리</span></div>
+      <ul class="pts">
+        <li><b>대기 경계층(마찰층)</b>: 지표 마찰의 영향을 받는 약 <b>1 km</b> 높이까지의 대기층 / <b>자유 대기</b>: 그 위쪽. 위로 갈수록 마찰이 줄어 풍속이 커진다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">수평 기압 경도력</b><p>기압 경도력은 연직·수평 성분이 있지만, 수평으로 부는 바람을 다룰 때 '기압 경도력'은 수평 기압 경도력을 뜻한다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">코리올리 인자</b><p>전향력 2vΩsinφ에서 2Ωsinφ는 위도가 정해지면 일정한 값이라 비례 상수처럼 쓸 수 있다. 이를 코리올리 인자라고 한다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">원심력은?</b><p>원심력은 구심력과 크기가 같고 방향이 반대인 가상의 힘이다. 이 교과서에서는 실제 힘인 구심력으로 설명한다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · II-1</span><b class="t">전향력</b><p>해수를 움직이는 힘에서 배운 전향력과 같은 힘이다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>회전 원판을 이용한 전향 효과 실험하기</h2><span class="tbref">교과서 p. 102</span></div>
+  <div class="card split">
+    <h3>탐구 · 돌아가는 원판 위에 굴린 쇠구슬</h3>
+    <div class="body">
+      <p><b>목표</b> 회전 원판 실험으로 전향 효과를 설명할 수 있다.<br><b>준비물</b> 회전 원판, 종이, 쇠구슬, 집게, 스탬프잉크, 굴림대</p>
+      <ol class="proc">
+        <li>회전 원판에 종이를 올리고, 정지한 원판의 중심에서 가장자리로 잉크 묻힌 쇠구슬을 굴려 경로를 관찰한다.</li>
+        <li>원판을 시계 반대 방향, 시계 방향으로 각각 돌리며 같은 방법으로 관찰한다.</li>
+        <li>시계 반대 방향으로 더 빠르게 돌리며 다시 관찰한다.</li>
+      </ol>
+      <h4>결과 및 정리</h4>
+      <p>1. 정지·회전·회전 방향·회전 속도에 따른 경로 차이를 비교해 보자. &nbsp;2. 운동하는 물체에 작용하는 전향 효과를 설명해 보자.</p>
+      <textarea class="write" placeholder="관찰 결과를 적어 보세요 (입력 내용은 저장되지 않습니다)"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>1. 정지해 있으면 직선으로 간다. 원판이 돌면 쇠구슬 자국이 회전 방향과 반대쪽으로 휘며, 빠르게 돌릴수록 더 많이 휜다.<br>2. 시계 반대 방향으로 자전하는 북반구에서는 운동 방향의 오른쪽으로, 시계 방향으로 자전하는 남반구에서는 왼쪽으로 전향 효과가 작용한다. 자전 효과가 큰 고위도일수록 더 많이 휘고, 저위도일수록 덜 휜다.</div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">실험 팁</span><b class="t">일정한 속도로</b><p>굴림대를 써서 쇠구슬이 일정한 속도로 굴러가게 하고, 손으로 힘을 주어 굴리지 않는다.</p></div>
+      <div class="dnote"><span class="lb">연결하기</span><b class="t">원판 = 지구</b><p>원판의 회전 방향은 지구의 자전 방향, 회전 속도의 차이는 위도에 따른 자전 효과(Ωsinφ)의 차이에 해당한다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>가상 회전 원판 실험</b></div>
+      <div class="sim-body">
+        <canvas id="sim-disk"></canvas>
+        <div class="ctrl">
+          <label>원판의 회전 <span class="v" id="dk-wv"></span><input type="range" id="dk-w" min="-1.5" max="1.5" step="0.1" value="0.8"></label>
+          <div class="btns"><button class="tbtn on" id="dk-roll" type="button">● 쇠구슬 굴리기</button><button class="tbtn" id="dk-clear" type="button">종이 바꾸기</button></div>
+          <div class="out" id="dk-out"></div>
+        </div>
+      </div>
+      <div class="hint">회전 속도를 0 → 시계 반대 방향 → 더 빠르게 → 시계 방향으로 바꿔 가며 쇠구슬을 굴려 보자. 자국은 원판 위 종이에 남은 모습이다(회색: 정지, 파랑: 시계 반대, 빨강: 시계 방향).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 정역학 평형 상태에서 대기의 연직 운동은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>연직 기압 경도력과 중력의 크기가 같으므로 연직 운동 상태가 변하지 않는다.</div></div>
+    <h4>2. 기압 경도력, 전향력, 구심력, 마찰력을 각각 설명해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>기압 경도력: 기압 차로 생기며 기압이 높은 곳에서 낮은 곳으로 작용한다. 전향력: 지구 자전으로 생기며 북(남)반구에서 운동 방향의 오른쪽(왼쪽) 직각으로 작용한다. 구심력: 원운동의 궤적이 유지되도록 중심 방향으로 작용한다. 마찰력: 운동 반대 방향으로 작용해 속도를 줄인다.</div></div>
+    <h4>3. 창의력 더하기 · 기압 경도력이 같을 때, 적도 해양에서 고위도 육지로 가면 바람은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>고위도로 갈수록 전향력이 커져 북반구에서는 바람이 오른쪽으로(남반구는 왼쪽으로) 더 휘고, 해양보다 육지의 마찰력이 커서 풍속은 줄어든다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>사진은 NOAA의 퍼블릭 도메인 자료입니다. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "높이 올라갈수록 기압이 낮아지는 까닭으로 옳은 것은?", "options": ["① 기온이 높아지기 때문", "② 공기의 밀도가 작아져 공기 분자의 충돌 횟수가 줄기 때문", "③ 전향력이 커지기 때문", "④ 마찰력이 커지기 때문", "⑤ 중력이 커지기 때문"], "answer": 1, "explain": "위로 갈수록 공기가 희박해 분자 충돌이 줄어 기압이 낮아집니다."},
+  {"lv": "기본", "q": "정역학 평형을 이루는 두 힘은?", "options": ["① 수평 기압 경도력과 전향력", "② 연직 기압 경도력과 중력", "③ 구심력과 마찰력", "④ 전향력과 마찰력", "⑤ 중력과 구심력"], "answer": 1, "explain": "위로 작용하는 연직 기압 경도력과 아래로 작용하는 중력이 같을 때 정역학 평형입니다."},
+  {"lv": "적용", "q": "지상 저기압 중심에서 대기의 연직 운동에 대한 설명으로 옳은 것은?", "options": ["① 중력이 연직 기압 경도력보다 커서 하강 기류가 생긴다", "② 연직 기압 경도력이 중력보다 커서 상승 기류가 생긴다", "③ 두 힘이 평형을 이루어 연직 운동이 없다", "④ 마찰력 때문에 하강 기류가 생긴다", "⑤ 전향력 때문에 상승 기류가 생긴다"], "answer": 1, "explain": "저기압에서는 상승 기류가 나타나며, 연직 기압 경도력이 중력보다 큽니다."},
+  {"lv": "기본", "q": "바람을 일으키는 근본적인 힘은?", "options": ["① 전향력", "② 구심력", "③ 마찰력", "④ 기압 경도력", "⑤ 원심력"], "answer": 3, "explain": "기압 차로 생기는 기압 경도력이 바람을 일으키는 근본적인 힘입니다."},
+  {"lv": "적용", "q": "전향력에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 공기의 속력이 빠를수록 크다.</li><li>ㄴ. 고위도로 갈수록 크다.</li><li>ㄷ. 정지한 공기에도 작용한다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "전향력 = 2vΩsinφ이므로 속력이 0이면 작용하지 않습니다."},
+  {"lv": "적용", "q": "마찰력이 가장 크게 작용하는 곳은? (풍속은 같다)", "options": ["① 해양 위", "② 평야", "③ 숲이 우거진 산악 지역", "④ 높이 5 km 상공", "⑤ 높이 10 km 상공"], "answer": 2, "explain": "지표면이 거칠수록 마찰력이 크고, 자유 대기에서는 거의 없습니다."},
+  {"lv": "계산", "q": "토리첼리 실험에서 대기압은 몇 cm 높이의 수은 기둥 무게와 같은가?", "options": ["① 7.6 cm", "② 10 cm", "③ 76 cm", "④ 100 cm", "⑤ 1013 cm"], "answer": 2, "explain": "1기압은 76 cm 수은 기둥의 무게에 해당하며 약 1013 hPa입니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-4.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

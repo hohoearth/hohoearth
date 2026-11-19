@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05. 외계 행성계 탐사</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="1-5">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>보이지 않는 행성을 어떻게 찾을까?</h2><span class="tbref">교과서 p. 34</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>외계 행성계를 탐사하는 원리</b>를 설명할 수 있다.</li>
+      <li>외계 생명체가 존재할 수 있는 <b>조건</b>을 알고, 외계 생명체의 존재 가능성에 대해 논증할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/1-5/palebluedot.jpg" alt="보이저 1호가 찍은 창백한 푸른 점"></div>
+        <figcaption>창백한 푸른 점 · 보이저 1호가 약 60억 km 밖에서 본 지구 (1990)</figcaption>
+        <div class="credit">NASA/JPL-Caltech, 퍼블릭 도메인</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/1-5/trappist.jpg" alt="트라피스트-1 행성계 상상도"></div>
+        <figcaption>트라피스트-1 행성계의 일곱 행성 (상상도)</figcaption>
+        <div class="credit">NASA/JPL-Caltech, 퍼블릭 도메인</div>
+      </figure>
+    </div>
+    <div class="qbig">60억 km 밖에서 본 지구도 한 픽셀보다 작은 점이었다.<br>그런데 수백 광년 떨어진 별 옆의 행성을 6000개 넘게 찾아냈다. 어떻게 가능했을까?</div>
+    <p class="tnote">'행성을 직접 보지 않고, 행성이 별에 주는 영향(흔들림·가림·빛의 휨)을 본다'가 핵심입니다. 1-03의 질량 중심 시뮬레이션을 다시 보여 주며 시작하면 좋습니다. NASA 외계 행성 아카이브의 확인된 행성 수는 2025년 9월 6000개를 넘었습니다. 운영안 4차시.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 외계 행성 탐사 방법">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>외계 행성을 찾는 네 가지 방법</h2><span class="tbref">교과서 p. 34 ~ 35</span></div>
+  <div class="card split">
+    <h3>(1) 중심별의 시선 속도 변화 · 도플러 효과</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>행성과 중심별은 <b>공통 질량 중심</b>을 돈다. 별이 관측자에게 다가올 때는 흡수선이 <b>청색 편이</b>, 멀어질 때는 <b>적색 편이</b>한다.</li>
+        <li>흡수선 파장이 주기적으로 변하면 행성이 있다. 변화 주기 = 행성의 공전 주기, 변화 폭이 클수록 <b>행성 질량이 크고 궤도가 가깝다</b>.</li>
+        <li>궤도면이 시선 방향과 나란할수록 잘 보이고, 시선에 수직(정면)이면 시선 속도 변화가 없다.</li>
+      </ul>
+      <div class="eq"><span class="frac"><span>Δλ</span><span>λ₀</span></span> = <span class="frac"><span><i>v</i><sub>r</sub></span><span><i>c</i></span></span> <span class="note">목성이 태양을 흔드는 속도는 약 12.5 m/s, 지구는 약 0.09 m/s에 불과하다.</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">역사</span><b class="t">51 페가수스 b (1995)</b><p>마요르와 쿠엘로가 시선 속도 방법으로 찾은 첫 '태양 같은 별'의 행성. 공전 주기 4.2일의 뜨거운 목성으로, 2019년 노벨 물리학상을 받았다.</p></div>
+    </aside>
+  </div>
+  <div class="card split">
+    <h3>(2) 식현상 · 행성이 별을 가릴 때</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>행성이 별 앞을 지나면 별빛이 아주 조금 어두워진다. 밝기 감소량은 <b>(행성 반지름 / 별 반지름)²</b>에 비례 → 행성의 <b>크기</b>를 알 수 있다.</li>
+        <li>어두워지는 간격 = 공전 주기. 궤도면이 시선 방향과 거의 나란해야 관측된다.</li>
+        <li>케플러(2009 ~ 2018)와 TESS(2018 ~) 우주 망원경이 수천 개의 행성을 찾았다. 가장 많은 행성을 찾은 방법이다.</li>
+      </ul>
+      <div class="eq">밝기 감소율 ≈ <span class="frac"><span><i>R</i><sub>행성</sub>²</span><span><i>R</i><sub>별</sub>²</span></span> <span class="note">태양 앞을 지나는 목성: 약 1%, 지구: 약 0.008%</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">두 방법을 함께 쓰면</b><p>식현상 → 반지름, 시선 속도 → 질량. 둘을 합치면 <b>밀도</b>를 알 수 있어 암석 행성인지 기체 행성인지 판단할 수 있다.</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">투과 분광</b><p>행성이 별 앞을 지날 때 행성 대기를 통과한 별빛을 분석하면 대기 성분을 알 수 있다. 제임스 웹 망원경이 이 방법으로 CO₂, 수증기 등을 검출했다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>한 행성, 두 신호: 시선 속도와 식현상 동시 관측</b></div>
+      <div class="sim-body">
+        <canvas id="sim-rv"></canvas>
+        <div class="ctrl">
+          <label>행성 질량 <span class="v" id="rv-mv"></span><input type="range" id="rv-m" min="-2" max="1.3" step="0.01" value="0"></label>
+          <label>궤도 반지름 <span class="v" id="rv-av"></span><input type="range" id="rv-a" min="0.03" max="1.5" step="0.01" value="0.3"></label>
+          <label>궤도 경사 i <span class="v" id="rv-iv"></span><input type="range" id="rv-i" min="0" max="90" step="0.5" value="89"></label>
+          <div class="chips"><button class="chip" data-pre="hj">뜨거운 목성</button><button class="chip" data-pre="earth">지구 쌍둥이</button><button class="chip" data-pre="face">정면 궤도</button></div>
+          <div class="out" id="rv-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽 위: 옆에서 본 행성계(관측자는 아래쪽). 위 그래프: 별의 시선 속도, 아래 그래프: 별의 밝기. 경사 i = 90°는 궤도면을 정확히 옆에서 보는 경우이다. 지구 쌍둥이는 왜 찾기 어려울까?</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(3) 미세 중력 렌즈 · (4) 직접 촬영</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>미세 중력 렌즈</b>: 먼 별(광원) 앞을 다른 별(렌즈)이 지나가면 렌즈 별의 중력이 빛을 휘게 해 광원이 잠시 밝아진다. 렌즈 별에 행성이 있으면 <b>짧은 추가 밝기 변화</b>가 나타난다. 멀리 있거나 작은 행성도 찾을 수 있지만, <b>한 번만</b> 일어나 다시 관측하기 어렵다.</li>
+        <li><b>직접 촬영</b>: 코로나그래프로 별빛을 가리고 행성을 직접 찍는다. 별에서 <b>멀리 떨어진</b>, <b>젊고 뜨거운 거대 행성</b>을 적외선으로 찍기 유리하다.</li>
+      </ul>
+      <div class="figs one"><figure class="fig"><div class="frame"><img src="../assets/img/1-5/hr8799.jpg" alt="HR 8799 행성계 직접 촬영" style="object-fit:contain;background:#000"></div><figcaption>직접 촬영한 HR 8799 주위의 네 행성 (중심별을 가림)</figcaption><div class="credit">Jason Wang/Christian Marois (W. M. Keck Observatory), CC BY 3.0</div></figure></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">우리나라</span><b class="t">KMTNet</b><p>한국천문연구원은 칠레·남아공·호주에 1.6 m 망원경 3대를 두어 24시간 남쪽 하늘을 감시한다. 미세 중력 렌즈 방법으로 수백 개의 외계 행성을 찾아내 이 분야를 이끌고 있다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · III-03</span><b class="t">중력 렌즈와 암흑 물질</b><p>은하단 규모의 중력 렌즈는 암흑 물질 연구에 쓰인다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>미세 중력 렌즈 사건의 광도 곡선</b></div>
+      <div class="sim-body">
+        <canvas id="sim-ml"></canvas>
+        <div class="ctrl">
+          <label>최근접 거리 u₀ <span class="v" id="ml-uv"></span><input type="range" id="ml-u" min="0.05" max="1.2" step="0.01" value="0.3"></label>
+          <label>행성 위치 (아인슈타인 반지름 단위) <span class="v" id="ml-pv"></span><input type="range" id="ml-p" min="0.6" max="1.6" step="0.01" value="1.15"></label>
+          <label><input type="checkbox" id="ml-has" checked> 렌즈 별에 행성 있음</label>
+          <div class="btns"><button class="tbtn on" id="ml-go" type="button">▶ 사건 재생</button></div>
+          <div class="out" id="ml-out"></div>
+        </div>
+      </div>
+      <div class="hint">위: 하늘에서 광원(노란 점)이 렌즈 별(흰 점) 뒤를 지나가는 모습. 점선 원이 아인슈타인 고리. 아래: 관측된 밝기. 광원이 행성 근처를 지날 때 짧은 '삐죽'이 생긴다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 생명 가능 지대">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>외계 행성의 특징과 생명 가능 지대</h2><span class="tbref">교과서 p. 36 ~ 37</span></div>
+  <div class="card split">
+    <h3>(1) 지금까지 발견된 외계 행성</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>초기에는 별 가까이 도는 <b>뜨거운 목성</b>이 많이 발견되었다. 크고 가까울수록 시선 속도·식현상 신호가 커서 먼저 발견되기 때문이다(<b>관측 선택 효과</b>).</li>
+        <li>최근에는 지구보다 크고 해왕성보다 작은 <b>슈퍼지구·미니 해왕성</b>이 가장 흔한 것으로 밝혀졌다. 태양계에는 없는 종류이다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">데이터</span><b class="t">발견 방법별 비율 (2025)</b><p>식현상 약 74% · 시선 속도 약 19% · 미세 중력 렌즈 약 4% · 직접 촬영 약 1%</p></div>
+    </aside>
+  </div>
+  <div class="card split">
+    <h3>(2) 생명 가능 지대와 생명체 존재 조건</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>생명 가능 지대</b>: 중심별 주위에서 물이 <b>액체 상태</b>로 존재할 수 있는 거리 범위</li>
+        <li>중심별의 <b>광도가 클수록</b> 생명 가능 지대는 <b>멀어지고 폭이 넓어진다</b>. (같은 에너지를 받으려면 거리 ∝ <span class='sqrt'><span>L</span></span>)</li>
+        <li>질량이 큰 별은 <b>수명이 짧아</b> 생명이 진화할 시간이 부족하다. 질량이 매우 작은 별은 생명 가능 지대가 가까워 행성이 <b>조석 고정</b>되고 강한 플레어에 노출된다.</li>
+        <li>그 밖의 조건: 대기를 붙잡을 적당한 질량, 해로운 우주선을 막는 <b>자기장</b>, 안정한 궤도, 적당한 자전 등</li>
+      </ul>
+      <div class="eq"><span class="nw"><i>d</i><sub>HZ</sub> ≈ (0.95 ~ 1.4) × <span class="sqrt"><span><i>L</i> / <i>L</i><sub>☉</sub></span></span> AU</span> &nbsp;&nbsp; <span class="nw">주계열 수명 ≈ 10<sup>10</sup> × (<i>M</i>/<i>M</i><sub>☉</sub>)<sup>−2.5</sup> 년</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote link"><span class="lb">연계 · II-04</span><b class="t">질량–광도 관계</b><p>주계열성의 광도는 질량의 약 3.5 ~ 4제곱에 비례한다. 쌍성 단원에서 데이터로 직접 구한다.</p></div>
+      <div class="dnote"><span class="lb">외계 생명체 탐사</span><b class="t">SETI와 생명 지표</b><p>전파로 인공 신호를 찾는 SETI, 행성 대기에서 산소·메테인 같은 생명 지표 기체를 찾는 분광 관측, 태양계 안의 유로파·엔켈라두스 탐사가 진행 중이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 3</span><b>중심별에 따라 달라지는 생명 가능 지대</b></div>
+      <div class="sim-body">
+        <canvas id="sim-hz"></canvas>
+        <div class="ctrl">
+          <label>중심별 질량 <span class="v" id="hz-mv"></span><input type="range" id="hz-m" min="0.1" max="3" step="0.01" value="1"></label>
+          <label>행성 궤도 반지름 <span class="v" id="hz-av"></span><input type="range" id="hz-a" min="-2" max="1" step="0.01" value="0"></label>
+          <div class="out" id="hz-out"></div>
+          <div class="verdict" id="hz-ver"></div>
+        </div>
+      </div>
+      <div class="hint">거리 축은 로그 눈금이다. 초록 띠가 생명 가능 지대. 별의 질량을 바꾸며 띠의 위치·폭과 별의 수명이 어떻게 변하는지 보자. (교과서 탐구 '중심별의 표면 온도에 따른 생명 가능 지대 추론하기'와 연결)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>TESS 광도 곡선에서 외계 행성 찾기 · 위상 접기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">NASA TESS 관측 방식 재현</span><span class="skill">잡음 속 신호 찾기</span><span class="skill">추세 제거</span><span class="skill">위상 접기 · 주기 탐색</span><span class="skill">모형으로 물리량 추정</span><span>2차시</span></div>
+    <p>TESS는 한 하늘 구역을 약 27일 동안 30분(또는 2분)마다 촬영한다. 아래는 태양과 비슷한 별(반지름 0.95 R☉, 질량 0.97 M☉)을 27일 동안 관측한 <b>모의 광도 곡선</b>이다. 행성 신호는 잡음과 별의 밝기 변화에 묻혀 거의 보이지 않는다. 천문학자처럼 <b>추세를 지우고, 주기를 찾아 접고, 깊이를 재서</b> 행성의 크기와 궤도를 알아내자.</p>
+    <div class="steps-lab">
+      <div><b>원자료 보기</b>원자료에서 행성 신호가 보이는가? 밝기 변화의 원인이 무엇일지 추측한다.</div>
+      <div><b>추세 제거</b>별의 자전과 흑점 때문에 생긴 느린 변화를 '이동 중앙값'으로 빼서 평평하게 만든다.</div>
+      <div><b>위상 접기</b>주기 슬라이더로 시험 주기를 바꾸며 시간을 주기로 나눈 나머지(위상)로 다시 그린다. 딱 맞는 주기에서 흩어진 작은 어두워짐이 한곳에 모인다. '주기 자동 탐색' 버튼은 컴퓨터가 모든 주기를 시험해 신호가 가장 강한 주기를 찾는다(BLS 방법의 단순화).</div>
+      <div><b>물리량 구하기</b>밝기 감소 깊이로 행성 반지름, 주기와 케플러 제3법칙으로 궤도 반지름을 구하고 생명 가능 지대 안인지 판단한다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>모의 TESS 표적 별 · 27일 광도 곡선</b></div>
+      <div class="sim-body stack">
+        <canvas id="lab-lc"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="lab-view"><button class="chip on" data-v="raw">① 원자료</button><button class="chip" data-v="flat">② 추세 제거</button><button class="chip" data-v="fold">③ 위상 접기</button></div>
+          <label>시험 주기 P <span class="v" id="lab-pv"></span><input type="range" id="lab-p" min="1" max="10" step="0.001" value="5"></label>
+          <div class="btns"><button class="tbtn" id="lab-bls" type="button">🔎 주기 자동 탐색</button><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+          <div class="out" id="lab-out"></div>
+        </div>
+      </div>
+      <div class="hint">세로축은 상대 밝기(1 = 평소 밝기). '위상 접기'에서 주황 선은 같은 위상끼리 평균한 값(binned)이다.</div>
+    </div>
+    <div class="box calc"><span class="bt">계산 칸</span>
+      <p>밝기 감소 깊이 δ = <input id="in-d" style="width:90px" placeholder="예: 0.0028"> → R<sub>행성</sub> = R<sub>별</sub><span class='sqrt'><span>δ</span></span> = 0.95 × 109 × <span class='sqrt'><span>δ</span></span> = <b id="o-r">?</b> R<sub>⊕</sub></p>
+      <p>주기 P = <input id="in-p" style="width:90px" placeholder="일"> 일 → a = (M<sub>별</sub> P²)<sup>1/3</sup> = <b id="o-a">?</b> AU (P는 년 단위로 바꿔 계산)</p>
+      <p>이 별의 생명 가능 지대 ≈ 0.88 ~ 1.27 AU → 판정: <b id="o-hz">?</b></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 원자료에서 신호가 잘 보이지 않는 까닭은 무엇인가? 추세 제거 후에는 무엇이 보이는가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>밝기 감소(약 0.3%)가 관측 잡음(약 0.08%)보다 조금 클 뿐이고, 별의 자전에 따른 느린 밝기 변화(약 0.4%)가 더 크기 때문이다. 느린 변화를 빼면 몇 개의 짧은 어두워짐이 일정한 간격으로 보이기 시작한다.</div></div>
+    <h4>2. 찾은 주기와 깊이로 구한 행성의 반지름과 궤도 반지름은? 어떤 종류의 행성인가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>P ≈ 3.85일, δ ≈ 0.0028 → R ≈ 0.95 × 109 × 0.053 ≈ <b>5.5 R⊕</b>(해왕성보다 조금 큰 크기). a ≈ (0.97 × (3.85/365.25)²)<sup>1/3</sup> ≈ <b>0.048 AU</b>. 수성 궤도(0.39 AU)보다 훨씬 안쪽이라 매우 뜨거운 '뜨거운 해왕성'이며 생명 가능 지대 밖이다.</div></div>
+    <h4>3. 같은 방법으로 '지구 쌍둥이'(주기 365일, 깊이 0.008%)를 찾으려면 어떤 어려움이 있을까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>① 27일 관측으로는 식현상이 한 번도 안 일어날 수 있다 → 수년간 같은 곳을 봐야 한다. ② 깊이가 잡음보다 10배 작아 아주 많은 식현상을 겹쳐야(접어야) 신호가 드러난다. ③ 궤도가 멀수록 시선 방향과 나란할 확률도 작다(약 0.5%). 그래서 지구 쌍둥이 탐색에는 케플러처럼 한 영역을 4년간 본 망원경이나 차세대 망원경(PLATO)이 필요하다.</div></div>
+    <div class="box deep"><span class="bt">파이썬으로 해 보기 (선택)</span>
+      <div class="code"><span class="k">import</span> numpy <span class="k">as</span> np, pandas <span class="k">as</span> pd
+lc = pd.read_csv(<span class="s">"tess_mock_lightcurve.csv"</span>)
+P = <span class="s">3.85</span>                                     <span class="c"># 시험 주기(일)</span>
+phase = (lc.time % P) / P                     <span class="c"># 위상 접기</span>
+<span class="c"># 실제 TESS 자료: pip install lightkurve → lk.search_lightcurve("TOI-700").download()</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: NASA/JPL-Caltech, W. M. Keck Observatory (Wikimedia Commons 경유). 발견 방법별 비율은 NASA Exoplanet Archive 통계의 근사값입니다. 광도 곡선은 TESS 관측 방식(27일, 30분 간격)을 본떠 만든 모의 자료입니다. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "중심별의 시선 속도 변화로 외계 행성을 찾는 방법에서 이용하는 현상은?", "options": ["① 도플러 효과", "② 식현상", "③ 중력 렌즈 현상", "④ 연주시차", "⑤ 광전 효과"], "answer": 0, "explain": "별이 질량 중심을 돌며 다가오고 멀어질 때 흡수선이 청색·적색 편이하는 도플러 효과를 이용합니다."},
+  {"lv": "적용", "q": "식현상 방법에서 밝기 감소량이 커지는 경우는?", "options": ["① 행성의 질량이 클수록", "② 행성이 중심별에서 멀수록", "③ 중심별의 반지름이 클수록", "④ 궤도면이 시선 방향에 수직일수록", "⑤ 행성의 반지름이 클수록"], "answer": 4, "explain": "밝기 감소율 ≈ (R행성/R별)²이므로 행성이 클수록, 별이 작을수록 큽니다."},
+  {"lv": "적용", "q": "외계 행성 탐사 방법에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 시선 속도 방법은 궤도면이 시선 방향에 수직이면 행성을 찾기 어렵다.</li><li>ㄴ. 미세 중력 렌즈 방법은 같은 사건을 반복해서 관측하기 쉽다.</li><li>ㄷ. 직접 촬영 방법은 중심별에서 멀리 떨어진 거대 행성을 찾는 데 유리하다.</li></ul>", "options": ["① ㄱ", "② ㄴ", "③ ㄱ, ㄷ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "미세 중력 렌즈 사건은 별들의 우연한 정렬로 한 번만 일어나 다시 관측하기 어렵습니다."},
+  {"lv": "계산", "q": "반지름이 태양의 0.5배인 별 앞을 목성(태양 반지름의 0.1배) 크기의 행성이 지난다. 밝기는 약 몇 % 줄어드는가?", "options": ["① 0.1%", "② 1%", "③ 2%", "④ 4%", "⑤ 20%"], "answer": 3, "explain": "(0.1/0.5)² = 0.04 → 약 4% 감소합니다. 작은 별일수록 같은 행성의 신호가 커집니다."},
+  {"lv": "적용", "q": "중심별의 질량이 태양보다 큰 주계열성일 때 생명 가능 지대에 대한 설명으로 옳은 것은?", "options": ["① 중심별에 더 가까워진다", "② 중심별에서 더 멀어지고 폭이 넓어진다", "③ 폭이 더 좁아진다", "④ 위치는 별의 질량과 관계없다", "⑤ 중심별의 수명이 길어 생명 진화에 유리하다"], "answer": 1, "explain": "질량이 큰 주계열성은 광도가 커서 생명 가능 지대가 멀고 넓지만, 수명이 짧아 생명 진화에는 불리합니다."},
+  {"lv": "기본", "q": "외계 생명체가 존재하기 위한 행성의 조건으로 적절하지 않은 것은?", "options": ["① 액체 상태의 물이 있어야 한다", "② 대기를 붙잡을 만큼의 질량이 있어야 한다", "③ 우주선을 막아 줄 자기장이 있으면 유리하다", "④ 중심별이 질량이 매우 큰 O형 별이어야 한다", "⑤ 중심별의 수명이 충분히 길어야 한다"], "answer": 3, "explain": "O형 별은 수명이 수백만 년에 불과해 생명이 진화할 시간이 부족합니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 위상 접기를 하는 까닭으로 가장 적절한 것은?", "options": ["① 같은 주기로 반복되는 약한 신호를 겹쳐 잡음보다 뚜렷하게 만들기 위해", "② 별의 온도를 구하기 위해", "③ 관측 시간을 늘리기 위해", "④ 행성의 질량을 직접 구하기 위해", "⑤ 별의 자전 주기를 없애기 위해"], "answer": 0, "explain": "올바른 주기로 접으면 여러 번의 식현상이 한곳에 겹쳐 신호 대 잡음비가 커집니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/1-5.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

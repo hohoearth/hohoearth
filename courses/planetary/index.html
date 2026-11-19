@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>행성우주과학 아카이브</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .home-hero { position: relative; overflow: hidden; border-radius: 28px; padding: 44px 40px; color: #fff;
+    background: radial-gradient(ellipse at 80% 20%, #3b2a8f 0%, transparent 55%), radial-gradient(ellipse at 10% 90%, #0b3d91 0%, transparent 60%), #070a14; }
+  .home-hero h1 { color: #fff; }
+  .home-hero p { color: rgba(255,255,255,.75) !important; }
+  .home-hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .8; pointer-events: none; }
+  .home-hero > * { position: relative; }
+  .feat { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .feat span { font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); }
+  .lcard .lab { display: inline-block; margin-top: 8px; font-size: .72rem; font-weight: 700; color: var(--c-inquiry); }
+</style>
+</head>
+<body>
+<div class="home">
+  <a href="../../index.html#courses" style="display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:7px 14px;border-radius:999px;background:#f1f5f9;border:1px solid #e2e8f0;color:#334155;font-size:.82rem;font-weight:700;text-decoration:none">← HoHo earth · 지구과학 수업</a>
+  <header class="home-hero">
+    <canvas id="sky"></canvas>
+    <h1>행성우주과학 수업 아카이브</h1>
+    <p>고등학교 3학년 · 소단원 15개 · 각 차시는 동기 유발 → 핵심 개념 → 데이터 탐구 → 형성 평가 순서로 구성 · 교재 쪽수는 미래엔 교과서 기준</p>
+    <div class="feat"><span>NASA·ESA 실제 영상</span><span>인터랙티브 시뮬레이션</span><span>차시마다 새 데이터 탐구 1개</span><span>CSV 내려받기 → 스프레드시트·파이썬 분석</span><span>슬라이드 모드</span></div>
+  </header>
+  <div id="units"></div>
+</div>
+<script>
+(function () {
+  var KW = {
+    "1-1": "우주 망원경 · 탐사 방법 · 호만 전이 궤도",
+    "1-2": "우주 기상 · 지자기 폭풍 · 근지구 천체 · DART",
+    "1-3": "만유인력 · 케플러 3법칙 · 질량 중심",
+    "1-4": "왜소 행성 · 소행성 · 혜성 · 운석 · 분화",
+    "1-5": "시선 속도 · 식현상 · 미세 중력 렌즈 · 생명 가능 지대",
+    "2-1": "쌀알 무늬 · 흑점 주기 · 차등 자전 · 다파장 관측",
+    "2-2": "연주시차 · 등급 · 거리지수",
+    "2-3": "고유 운동 · 접선·시선 속도 · 별자리 변화",
+    "2-4": "안시·분광·식쌍성 · 질량 광도 관계",
+    "2-5": "맥동 변광성 · 주기 광도 관계 · Ia형 초신성",
+    "3-1": "색지수 · C-M도 · 주계열 맞추기 · 섀플리",
+    "3-2": "H I · H II · 분자운 · 성간 소광·적색화",
+    "3-3": "21 cm 수소선 · 회전 속도 곡선 · 암흑 물질",
+    "3-4": "적색 편이 탐사 · CfA · SDSS · 2dF",
+    "3-5": "은하군 · 은하단 · 초은하단 · 우주 그물"
+  };
+  var LAB = {
+    "1-1": "NASA 미션 데이터베이스 분석", "1-2": "2024년 5월 지자기 폭풍 데이터", "1-3": "JPL 궤도 데이터로 T²–a³ 회귀",
+    "1-4": "소행성 궤도 분포와 커크우드 간극", "1-5": "TESS 광도 곡선 위상 접기", "2-1": "SILSO 흑점 수 · 주기 분석",
+    "2-2": "Gaia 시차로 그린 H-R도", "2-3": "Hipparcos 고유 운동으로 북두칠성 예측", "2-4": "실제 쌍성 질량 → 질량 광도 관계 회귀",
+    "2-5": "레빗 법칙 회귀와 은하 거리", "3-1": "가상 Gaia 성단 C-M도 맞추기", "3-2": "HST vs JWST 다파장 비교",
+    "3-3": "NGC 3198 회전 곡선 · 암흑 물질 비율", "3-4": "적색 편이 쐐기 지도 만들기", "3-5": "FoF 군집 알고리즘으로 은하단 찾기"
+  };
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  var html = "";
+  var s = document.createElement("script");
+  s.src = "assets/app.js";
+  s.onload = function () {
+    window.ESC_UNITS.forEach(function (u) {
+      html += '<section class="unit"><div class="unit-head"><span class="pill">' + u.name.split(".")[0] + '</span><h2>' + u.name.slice(u.name.indexOf(" ") + 1) + '</h2></div><div class="grid">';
+      u.lessons.forEach(function (l) {
+        var a = l.id.split("-");
+        html += '<a class="lcard' + (l.ready ? "" : " todo") + '" href="lessons/' + l.id + '.html"><div class="cd">' + pad(+a[0]) + "-" + pad(+a[1]) + " · 교재 p. " + l.p + '</div><div class="nm">' + pad(+a[1]) + ". " + l.t + '</div><div class="kw">' + (KW[l.id] || "") + '</div><div class="lab">◆ 데이터 탐구 · ' + (LAB[l.id] || "") + "</div></a>";
+      });
+      html += "</div></section>";
+    });
+    document.getElementById("units").innerHTML = html;
+  };
+  document.body.appendChild(s);
+  // 배경 별
+  var cv = document.getElementById("sky"), ctx = cv.getContext("2d");
+  function draw() {
+    var w = cv.clientWidth, h = cv.clientHeight, d = window.devicePixelRatio || 1;
+    cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+    var a = 12345;
+    function r() { a = (a * 16807) % 2147483647; return a / 2147483647; }
+    for (var i = 0; i < 260; i++) { ctx.fillStyle = "rgba(255,255,255," + (0.2 + r() * 0.7) + ")"; var z = r() < 0.08 ? 2 : 1; ctx.fillRect(r() * w, r() * h, z, z); }
+  }
+  draw(); window.addEventListener("resize", draw);
+})();
+</script>
+</body>
+</html>

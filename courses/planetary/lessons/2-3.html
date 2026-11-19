@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03. 별의 운동</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="2-3">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>10만 년 전의 북두칠성은 국자 모양이었을까?</h2><span class="tbref">교과서 p. 58</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>별의 <b>시선 속도와 접선 속도</b>를 이용해 별의 공간 운동을 설명할 수 있다.</li>
+      <li>별자리를 이루는 별들의 <b>오랜 시간에 걸친 위치 변화</b>를 추론할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-3/bigdipper.jpg" alt="북두칠성"></div>
+        <figcaption>북두칠성 (큰곰자리의 일부)</figcaption>
+        <div class="credit">W.carter, CC BY-SA 4.0</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-3/barnard.jpg" alt="바너드별의 고유 운동" style="object-fit:contain;background:#000"></div>
+        <figcaption>바너드별의 위치 변화 · 고유 운동이 가장 큰 별 (연 10.4″)</figcaption>
+        <div class="credit">Steve Quirk, 퍼블릭 도메인</div>
+      </figure>
+    </div>
+    <div class="qbig">'붙박이별(항성)'이라는 이름과 달리 별들도 초속 수십 km로 움직인다.<br>그런데 왜 우리는 평생 별자리 모양이 변하는 것을 느끼지 못할까?</div>
+    <p class="tnote">답의 핵심은 '거리가 매우 멀어 각도 변화가 작다'. 접선 속도 = 4.74 μr 식을 거꾸로 생각하게 하면 좋습니다. 운영안 3차시(공간 운동 1 / 별자리 변화 1 / 데이터 탐구 1). 교과서 탐구(카시오페이아자리)와 달리 데이터 탐구는 북두칠성의 '운동 성단'을 찾는 활동으로 구성했습니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 별의 공간 운동">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>별의 공간 운동</h2><span class="tbref">교과서 p. 58 ~ 59</span></div>
+  <div class="card split">
+    <h3>(1) 고유 운동과 접선 속도</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>고유 운동(μ)</b>: 별이 1년 동안 천구 위에서 시선에 수직인 방향으로 움직인 각도(″/년)</li>
+        <li><b>접선 속도(v<sub>t</sub>)</b>: 별의 실제 속도 중 시선에 <b>수직</b>인 성분. 고유 운동과 거리를 알아야 구할 수 있다.</li>
+        <li>같은 접선 속도라도 <b>멀리 있는 별일수록 고유 운동이 작다</b>.</li>
+      </ul>
+      <div class="eq"><i>v</i><sub>t</sub> (km/s) = 4.74 <i>μ</i> (″/년) × <i>r</i> (pc) <span class="note">4.74 = 1 AU/년을 km/s로 바꾼 값 (1.496×10⁸ km ÷ 3.156×10⁷ s)</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">유도</span><b class="t">4.74는 어디서?</b><p>r pc 거리에서 μ″의 각은 μ·r AU에 해당한다(1 pc에서 1″ = 1 AU). 1년에 μr AU를 가므로 속도 = μr AU/년 = 4.74 μr km/s</p></div>
+    </aside>
+  </div>
+  <div class="card split">
+    <h3>(2) 시선 속도와 공간 속도</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>시선 속도(v<sub>r</sub>)</b>: 시선 방향 성분. 스펙트럼 흡수선의 <b>도플러 이동</b>으로 구한다. 멀어지면 적색 편이(+), 다가오면 청색 편이(−)</li>
+        <li><b>공간 속도(v)</b>: 접선 속도와 시선 속도를 합한 실제 속도</li>
+      </ul>
+      <div class="eq"><i>v</i><sub>r</sub> = <span class="frac"><span>Δλ</span><span>λ₀</span></span> <i>c</i> &nbsp;,&nbsp;&nbsp; <i>v</i> = <span class="sqrt"><span><i>v</i><sub>t</sub>² + <i>v</i><sub>r</sub>²</span></span></div>
+      <div class="box calc"><span class="bt">예제 · 바너드별</span><p>μ = 10.39″/년, r = 1.83 pc, Hα선(656.28 nm)이 656.04 nm에서 관측됨<br>v<sub>t</sub> = 4.74 × 10.39 × 1.83 ≈ <b>90 km/s</b>, v<sub>r</sub> = (−0.24/656.28) × 3×10⁵ ≈ <b>−110 km/s</b>(접근)<br>v = <span class='sqrt'><span>90² + 110²</span></span> ≈ <b>142 km/s</b></p></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">재미있는 사실</span><b class="t">바너드별은 다가오고 있다</b><p>약 1만 년 뒤에는 3.8광년까지 다가와 프록시마 센타우리를 제치고 태양에서 가장 가까운 별이 된다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · I-05, III-04</span><b class="t">도플러 효과의 쓰임</b><p>외계 행성 탐사(별의 흔들림), 은하의 회전(III-03), 은하의 적색 편이(III-04)에도 같은 원리를 쓴다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>공간 속도 분해기: 접선 속도와 시선 속도</b></div>
+      <div class="sim-body">
+        <canvas id="sim-vel"></canvas>
+        <div class="ctrl">
+          <label>공간 속도 크기 <span class="v" id="vel-sv"></span><input type="range" id="vel-s" min="10" max="200" step="1" value="142"></label>
+          <label>운동 방향 (시선과 이루는 각) <span class="v" id="vel-av"></span><input type="range" id="vel-a" min="0" max="180" step="1" value="141"></label>
+          <label>별까지의 거리 <span class="v" id="vel-dv"></span><input type="range" id="vel-d" min="1" max="50" step="0.1" value="1.83"></label>
+          <div class="out" id="vel-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽: 관측자(아래)와 별의 속도 벡터 분해. 오른쪽 위: 별의 스펙트럼(실선)과 실험실 기준 파장(점선). 오른쪽 아래: 100년 동안의 천구 위 이동. 각도를 90°로 두면 어떤 일이 생길까?</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 별자리의 변화">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>별자리 모양의 변화</h2><span class="tbref">교과서 p. 60 ~ 61</span></div>
+  <div class="card split">
+    <h3>별자리는 영원하지 않다</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>별자리를 이루는 별들은 서로 거리도 다르고 움직이는 방향과 빠르기도 다르다. 같은 별자리의 별들은 대부분 우연히 같은 방향에 보일 뿐이다.</li>
+        <li>고유 운동이 매우 작아 사람의 일생 동안에는 변화를 느낄 수 없지만, <b>수만 년</b>이 지나면 별자리 모양이 눈에 띄게 달라진다.</li>
+        <li>미래(과거)의 위치 = 현재 위치 + 고유 운동 × 시간. (단, 시선 속도 때문에 거리가 변하면 고유 운동 자체도 조금씩 변한다.)</li>
+        <li>북두칠성의 가운데 다섯 별은 실제로 함께 움직이는 무리(<b>큰곰자리 운동 성단</b>)이고, 양 끝 두 별은 다른 방향으로 움직인다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">교과서 탐구</span><b class="t">카시오페이아자리</b><p>교과서 탐구(p. 60)에서는 카시오페이아자리 별들의 거리와 고유 운동으로 미래 모습을 그린다. 아래 데이터 탐구는 같은 방법을 북두칠성에 적용하고 '함께 움직이는 별'을 찾는 분석을 더했다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>히파르코스 고유 운동으로 북두칠성의 과거와 미래 그리기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">ESA Hipparcos · SIMBAD</span><span class="skill">벡터 시각화</span><span class="skill">속도 공간 군집 찾기</span><span class="skill">시간 외삽</span><span>2차시</span></div>
+    <p>히파르코스 위성이 측정한 북두칠성 일곱 별의 <b>위치·고유 운동·시차·시선 속도</b>로 ① 각 별의 공간 속도를 계산하고, ② 별자리 모양이 10만 년 전후로 어떻게 변하는지 그리며, ③ '고유 운동 공간'에서 서로 가까운 별들을 묶어 <b>함께 태어난 별의 무리</b>를 찾는다.</p>
+    <div class="steps-lab">
+      <div><b>공간 속도 계산</b>표의 고유 운동(mas/년)과 시차(mas)로 접선 속도, 시선 속도와 합쳐 공간 속도를 계산한다.</div>
+      <div><b>시간 여행</b>시간 슬라이더로 10만 년 과거 ~ 10만 년 미래의 모습을 본다. 국자 모양은 언제 가장 뚜렷한가?</div>
+      <div><b>군집 찾기</b>'고유 운동 공간' 그림에서 점들이 모이는 무리를 찾는다. 같은 무리의 별은 거리(시차)도 비슷한가?</div>
+      <div><b>결론</b>함께 움직이는 별들은 어떤 공통 기원을 가졌을까?</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>북두칠성 시간 여행</b></div>
+      <div class="sim-body">
+        <canvas id="lab-ud"></canvas>
+        <div class="ctrl">
+          <label>시간 <span class="v" id="lab-tv"></span><input type="range" id="lab-t" min="-100000" max="100000" step="1000" value="0"></label>
+          <div class="btns"><button class="tbtn" id="lab-anim" type="button">▶ 자동 재생</button></div>
+          <div class="chips" id="lab-view"><button class="chip on" data-v="sky">하늘 보기</button><button class="chip" data-v="pm">고유 운동 공간</button></div>
+          <label><input type="checkbox" id="lab-vec" checked> 고유 운동 화살표 (1만 년 이동량)</label>
+          <div class="out" id="lab-out"></div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">하늘 보기는 북쪽이 위, 동쪽이 왼쪽인 실제 하늘 방향이다. 시선 속도로 인한 거리 변화는 무시하고 고유 운동이 일정하다고 가정했다.</div>
+    </div>
+    <div class="dataset">
+      <div class="dh">📋 데이터 표 <span class="sp"></span><span style="font-weight:500;color:var(--muted)">μα* = 적경 방향 고유 운동 × cos δ</span></div>
+      <div class="db" id="lab-table"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 일곱 별의 공간 속도를 계산해 보자. 고유 운동이 비슷한 별들은 공간 속도도 비슷한가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>메라크·페크다·메그레즈·알리오스·미자르는 고유 운동이 동쪽으로 약 100 ~ 120 mas/년, 시차 약 38 ~ 41 mas(약 25 pc)로 비슷하고, 접선 속도도 약 10 ~ 15 km/s, 시선 속도도 약 −6 ~ −13 km/s로 비슷하다. 두베와 알카이드는 고유 운동 방향이 반대(서쪽)이고 거리도 다르다(약 38 pc, 32 pc).</div></div>
+    <h4>2. 10만 년 뒤와 10만 년 전의 북두칠성은 어떤 모습인가? 왜 양 끝의 별만 크게 벗어날까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>가운데 다섯 별은 함께 움직여 모양을 거의 유지하지만, 두베(국자 앞 끝)와 알카이드(손잡이 끝)는 반대 방향으로 움직여 국자 모양이 일그러진다. 10만 년 뒤에는 국자 머리 앞쪽이 벌어지고 손잡이가 꺾인 모양이 된다.</div></div>
+    <h4>3. 고유 운동 공간에서 묶인 다섯 별은 어떤 공통점을 가졌을까? 이런 무리를 무엇이라 하는가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>같은 분자운에서 비슷한 시기(약 4억 년 전)에 태어나 같은 방향·빠르기로 함께 움직이는 별의 무리, 즉 <b>운동 성단</b>(큰곰자리 운동 성단)이다. 하늘에서 위치가 가까운 것만으로는 무리인지 알 수 없고, 속도·거리까지 비슷해야 실제 무리라고 판단할 수 있다(가이아 위성이 이 방법으로 수천 개의 성단과 별 흐름을 찾아냈다).</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: Wikimedia Commons. 북두칠성 자료는 Hipparcos(새 환원) 카탈로그와 SIMBAD의 고유 운동·시차·시선 속도를 반올림한 값입니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "별의 시선 속도를 구하는 데 이용하는 것은?", "options": ["① 연주시차", "② 고유 운동", "③ 겉보기 등급", "④ 색지수", "⑤ 스펙트럼 흡수선의 도플러 이동"], "answer": 4, "explain": "흡수선이 기준 파장에서 얼마나 이동했는지로 시선 속도를 구합니다."},
+  {"lv": "계산", "q": "고유 운동이 0.5″/년이고 거리가 20 pc인 별의 접선 속도는?", "options": ["① 약 2.4 km/s", "② 약 10 km/s", "③ 약 24 km/s", "④ 약 47 km/s", "⑤ 약 95 km/s"], "answer": 3, "explain": "vt = 4.74 × 0.5 × 20 ≈ 47 km/s입니다."},
+  {"lv": "계산", "q": "기준 파장 500 nm인 흡수선이 500.1 nm에서 관측되었다. 이 별의 시선 속도는? (c = 3×10⁵ km/s)", "options": ["① 30 km/s로 접근", "② 30 km/s로 후퇴", "③ 60 km/s로 후퇴", "④ 60 km/s로 접근", "⑤ 600 km/s로 후퇴"], "answer": 2, "explain": "vr = (0.1/500) × 3×10⁵ = 60 km/s, 파장이 길어졌으므로 멀어지고 있습니다."},
+  {"lv": "적용", "q": "접선 속도가 같은 두 별 A, B가 있다. A의 고유 운동이 B의 4배일 때 옳은 것은?", "options": ["① A까지의 거리는 B의 1/4이다", "② A까지의 거리는 B의 4배이다", "③ A의 연주시차는 B의 1/4이다", "④ A의 시선 속도는 B의 4배이다", "⑤ 두 별의 거리는 같다"], "answer": 0, "explain": "vt = 4.74μr가 같으므로 μ가 4배면 r은 1/4입니다."},
+  {"lv": "적용", "q": "별의 운동에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 공간 속도는 접선 속도와 시선 속도의 제곱합의 제곱근이다.</li><li>ㄴ. 시선 방향으로만 움직이는 별은 고유 운동이 0이다.</li><li>ㄷ. 별자리의 모양은 수만 년이 지나도 변하지 않는다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "별들은 각기 다른 고유 운동을 하므로 수만 년이 지나면 별자리 모양이 변합니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 북두칠성의 다섯 별을 '운동 성단'이라고 판단한 근거로 가장 적절한 것은?", "options": ["① 다섯 별의 밝기가 같다", "② 고유 운동의 방향·크기와 거리가 비슷하다", "③ 다섯 별의 색이 모두 같다", "④ 하늘에서 서로 가까이 보인다", "⑤ 모두 태양에서 멀어지고 있다"], "answer": 1, "explain": "하늘에서 가까워 보이는 것만으로는 부족하고, 속도와 거리가 비슷해야 실제로 함께 움직이는 무리입니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/2-3.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

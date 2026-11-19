@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02. 지형류</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="2-2">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>바다 한가운데의 쓰레기 섬</h2><span class="tbref">교과서 p. 58</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>에크만 수송</b>을 설명할 수 있다.</li>
+      <li><b>지형류의 발생 원리</b>를 설명할 수 있다.</li>
+    </ul>
+    <div class="figs one">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-1/garbage-patch.jpg" class="contain" alt="태평양 쓰레기 지대 지도" style="background:#fff"></div>
+        <figcaption>북태평양의 해양 쓰레기가 모이는 해역</figcaption>
+        <div class="credit">NOAA Marine Debris Program, 퍼블릭 도메인</div>
+      </figure>
+    </div>
+    <div class="qbig">하와이와 캘리포니아 사이에는 우리나라 면적의 16배가 넘는 '쓰레기 섬'이 있다고 한다.<br>쓰레기들은 왜 하필 그곳에 모일까?</div>
+    <p class="tnote">해양 쓰레기 지대의 위치를 표층 순환 지도의 환류 위치와 비교하게 합니다. 예시: 대양을 크게 도는 환류의 중심부는 흐름이 약하고 물이 정체되어, 떠다니던 쓰레기가 빠져나가지 못하고 모인다. 교과서 운영안은 3차시(에크만 수송·지형류 평형 / 해 보기 2차시)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 에크만 수송">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>에크만 나선과 에크만 수송</h2><span class="tbref">교과서 p. 58 ~ 59</span></div>
+
+  <div class="card split">
+    <h3>바람이 불면 바닷물은 어디로 갈까?</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>대기와 해수의 상호작용으로 생긴 표층 해류는 거의 일정한 세기와 방향으로 흐르며 <b>표층 순환</b>을 이룬다.</li>
+        <li><b>표면 해수</b>: 북반구에서 바람이 일정하게 계속 불면, 표면 해수는 전향력 때문에 <b>풍향의 오른쪽 45°</b>로 움직인다.</li>
+        <li><b>에크만 나선</b>: 해수의 점성 때문에 표면의 움직임이 아래로 전달되는데, 깊어질수록 마찰로 <b>유속이 줄고</b> 전향력으로 방향이 <b>점점 오른쪽으로</b> 치우친다. 이를 수평면에 투영하면 나선 모양이 된다.</li>
+        <li><b>마찰저항심도</b>: 해수의 이동 방향이 표면과 정반대가 되는 깊이 / <b>에크만층(마찰층)</b>: 표면~마찰저항심도</li>
+        <li><b>에크만 수송</b>: 에크만층 해수의 <b>평균 이동 방향</b>. 북반구에서는 <b>풍향의 오른쪽 90°</b>, 남반구에서는 <b>왼쪽 90°</b></li>
+        <li>에크만 수송은 해수의 수렴·발산과 그에 따른 <b>용승·침강</b>을 설명하는 데 중요하다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">오개념 주의</span><b class="t">물 입자가 나선을 따라 이동?</b><p>아니다. 에크만 나선은 깊이마다 해수가 흐르는 방향과 빠르기를 화살표로 나타낸 것이다. 물 입자가 나선 길을 따라 내려가는 것이 아니다.</p></div>
+      <div class="dnote"><span class="lb">인물</span><b class="t">난센과 에크만</b><p>노르웨이 탐험가 난센은 1893년 프람호로 북극해를 항해하며 빙산이 풍향의 오른쪽 20°~40°로 움직이는 것을 관찰했다. 이 자료를 받은 스웨덴의 에크만이 지구 자전 효과를 넣어 나선 이론으로 설명했다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>에크만 나선과 에크만 수송</b></div>
+      <div class="sim-body">
+        <canvas id="sim-ekman"></canvas>
+        <div class="ctrl">
+          <label>반구 <select id="ek-hem"><option value="n">북반구</option><option value="s">남반구</option></select></label>
+          <label>풍향 <span class="v" id="ek-windv"></span><input type="range" id="ek-wind" min="0" max="315" step="45" value="0"></label>
+          <label>보는 방법 <select id="ek-view"><option value="side">비스듬히 (깊이별)</option><option value="top">위에서 (수평면에 투영)</option></select></label>
+          <div class="out" id="ek-out"></div>
+        </div>
+      </div>
+      <div class="hint">화살표의 방향은 해수의 이동 방향, 길이는 유속이다. 노란 화살표는 에크만층 전체의 평균 이동(에크만 수송)이다. 남반구로 바꾸면 무엇이 달라지는지 보자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 지형류 평형">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>지형류 평형</h2><span class="tbref">교과서 p. 59</span></div>
+
+  <div class="card split">
+    <h3>수압 경도력과 전향력이 평형을 이루면</h3>
+    <div class="body">
+      <div class="chain">
+        <div><b>① 해수면 경사</b>에크만 수송으로 해수가 모이거나 흩어짐</div><i>→</i>
+        <div><b>② 수압 경도력</b>수압이 높은 곳 → 낮은 곳으로 해수가 움직이기 시작</div><i>→</i>
+        <div><b>③ 전향력</b>움직이는 해수가 북반구에서 점점 오른쪽으로 휨</div><i>→</i>
+        <div><b>④ 지형류</b>등수압선과 나란하게 흐름</div>
+      </div>
+      <ul class="pts">
+        <li><b>지형류 평형</b>: 수압 경도력과 전향력이 평형을 이룬 상태 / <b>지형류</b>: 이때의 해수의 흐름</li>
+        <li>북반구에서 지형류는 수압 경도력의 <b>오른쪽 직각 방향</b>으로, <b>등수압선과 나란하게</b> 흐른다.</li>
+        <li>유속은 <b>위도가 낮을수록, 해수면 경사가 클수록</b> 빠르다. 같은 위도에서는 해수면 경사가 유속을 결정한다.</li>
+      </ul>
+      <div class="eq"><i>g</i> <span class="frac"><span>Δ<i>Z</i></span><span>Δ<i>X</i></span></span> = 2<i>v</i>Ω sin<i>φ</i> &nbsp;&nbsp;⟹&nbsp;&nbsp; <i>v</i> = <span class="frac"><span>1</span><span>2Ω sin<i>φ</i></span></span> · <i>g</i> <span class="frac"><span>Δ<i>Z</i></span><span>Δ<i>X</i></span></span> <span class="note">수압 경도력 = 전향력</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">에크만 수송 ≠ 해류의 방향</b><p>에크만 수송 방향과 실제 해류 방향은 같지 않다. 실제 표층 해류는 에크만층보다 더 깊은 곳까지 흐른다.</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">적도에서는?</b><p>적도에서는 전향력이 0이라 지형류가 정의되지 않는다. 적도의 해류는 무역풍에 끌려가는 흐름이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>지형류는 이렇게 만들어진다</b></div>
+      <div class="sim-body">
+        <canvas id="sim-geo"></canvas>
+        <div class="ctrl">
+          <label>위도 <span class="v" id="geo-latv"></span><input type="range" id="geo-lat" min="10" max="60" step="5" value="30"></label>
+          <label>해수면 경사 <span class="v" id="geo-slv"></span><input type="range" id="geo-slope" min="20" max="100" step="10" value="50"></label>
+          <div class="btns"><button class="tbtn on" id="geo-go" type="button">↻ 다시 출발</button></div>
+          <div class="out" id="geo-out"></div>
+        </div>
+      </div>
+      <div class="hint">멈춰 있던 해수(흰 점)가 수압 경도력(빨강)을 받아 움직이기 시작하면 전향력(연두)이 작용한다. 두 힘이 평형을 이룰 때 해수의 방향을 확인하자. 실제보다 빠르게 보여 주며, 흔들림이 가라앉도록 약한 마찰을 넣었다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 실제 해양의 지형류">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>실제 해양의 지형류: 아열대 순환</h2><span class="tbref">교과서 p. 60 ~ 61</span></div>
+
+  <div class="card split">
+    <h3>북태평양 아열대 해양의 지형류</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>북반구 아열대 해양에서 <b>편서풍</b>과 <b>북동 무역풍</b>이 불면 에크만 수송으로 <b>위도 30°N 부근의 해수면이 높아진다</b>.</li>
+        <li>그 결과 수압 경도력이 남쪽 또는 북쪽으로 작용해, <b>0°~30°N에서는 서쪽으로</b>, <b>30°N~60°N에서는 동쪽으로</b> 지형류가 흐른다.</li>
+        <li>동서로 흐르던 지형류는 육지에 부딪혀 남북으로 나뉘며 <b>시계 방향의 큰 순환</b>을 만든다. 이 순환을 이루는 해류는 모두 지형류이다.</li>
+        <li>해수면이 가장 높은 곳은 순환의 중심에서 <b>서쪽으로 치우쳐</b> 있다. 그래서 수압 경도력이 대양의 서쪽에서 더 크게 작용해 <b>서쪽의 해류(쿠로시오 해류)가 더 강하게</b> 흐른다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">스토멜의 설명</b><p>미국의 해양학자 스토멜은 위도에 따라 지구 자전 효과가 다르기 때문에 대양의 서쪽 해류가 더 강하다는 것을 역학적으로 설명했다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">해수면 높이는 어떻게 잴까?</b><p>인공위성이 해수면에 전파를 쏘고 반사파가 돌아오는 시간을 재면 해수면 높이를 정확히 측정할 수 있다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 3</span><b>북태평양 아열대 순환이 만들어지기까지</b></div>
+      <div class="sim-body">
+        <canvas id="sim-gyre" style="cursor:pointer"></canvas>
+        <div class="ctrl">
+          <ol class="stepper" id="gyre-steps">
+            <li><b>① 바람</b></li>
+            <li><b>② 에크만 수송 → 해수면 상승</b></li>
+            <li><b>③ 지형류 (A~D 누르기)</b></li>
+            <li><b>④ 시계 방향 순환</b></li>
+          </ol>
+          <div class="btns"><button class="tbtn on" id="gyre-next" type="button">다음 단계 ▶</button><button class="tbtn" id="gyre-reset" type="button">↻ 처음부터</button></div>
+          <div class="out" id="gyre-out" style="font-family:var(--font);font-size:.86rem"></div>
+        </div>
+      </div>
+      <div class="hint">③ 단계부터 지도 위의 A~D를 누르면 그 해류에 작용하는 수압 경도력(빨강), 전향력(연두), 지형류(노랑)의 방향이 나타난다. 해 보기 문항과 함께 사용하자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>전 세계 해양의 해수면 높이와 지형류 분석하기</h2><span class="tbref">교과서 p. 60</span></div>
+
+  <div class="card split">
+    <h3>해 보기 · 인공위성 해수면 높이 자료 분석</h3>
+    <div class="body">
+      <p>인공위성으로 관측한 평균 해수면 높이 분포에서, 북태평양의 A(쿠로시오 해류), B(북태평양 해류), C(캘리포니아 해류), D(북적도 해류)를 찾아 답해 보자.</p>
+      <h4>1. A~D에서 수압 경도력, 전향력, 지형류의 방향을 각각 나타내 보자.</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>
+        <div class="tw" style="margin:0">
+          <table class="data">
+            <thead><tr><th>해류</th><th>수압 경도력</th><th>전향력</th><th>해류 방향</th></tr></thead>
+            <tbody>
+              <tr><th>A 쿠로시오 해류</th><td>서쪽</td><td>동쪽</td><td>북쪽</td></tr>
+              <tr><th>B 북태평양 해류</th><td>북쪽</td><td>남쪽</td><td>동쪽</td></tr>
+              <tr><th>C 캘리포니아 해류</th><td>동쪽</td><td>서쪽</td><td>남쪽</td></tr>
+              <tr><th>D 북적도 해류</th><td>남쪽</td><td>북쪽</td><td>서쪽</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div></div>
+      <h4>2. A와 C에서 지형류의 세기를 비교하고 까닭을 설명해 보자.</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>A가 C보다 강하다. A와 C는 위도가 비슷하지만 A 쪽의 해수면 경사가 더 커서 수평 수압 경도력이 더 크기 때문이다. 지형류 유속은 해수면 경사에 비례하고 sin(위도)에 반비례한다.</div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">주의</span><b class="t">실제 자료는 완벽하지 않다</b><p>실제 해수면 자료에서는 힘의 평형이 정확히 남북·동서 방향으로 이루어지지 않는다. 큰 흐름을 읽는 데 집중하자.</p></div>
+      <div class="dnote"><span class="lb">자료 찾기</span><b class="t">해수면 높이 자료</b><p>교과서 그림은 인공위성으로 1993~2017년에 관측한 평균 해수면 높이이다. 교과서 그림을 함께 펼쳐 놓고 시뮬레이션 3과 비교하자.</p></div>
+    </aside>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 우리나라 동해안에 남풍이 불 때 에크만 수송 방향은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>북반구에서는 풍향의 오른쪽 90°로 에크만 수송이 일어나므로, 남풍(북쪽으로 부는 바람)이 불면 동쪽, 즉 외해 방향으로 에크만 수송이 일어난다.</div></div>
+    <h4>2. 지형류에 작용하는 두 가지 힘은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>수압 경도력과 전향력</div></div>
+    <h4>3. 창의력 더하기 · 적도에서 지형류가 흐를 수 있을까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>지형류는 수압 경도력과 전향력이 평형을 이룰 때 흐른다. 적도(위도 0°)에서는 전향력이 작용하지 않으므로 지형류가 흐를 수 없다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>지도는 NOAA의 퍼블릭 도메인 자료입니다. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "북반구에서 바람이 계속 일정하게 불 때, 에크만층 해수의 평균 이동 방향은?", "options": ["① 풍향과 같은 방향", "② 풍향의 오른쪽 45°", "③ 풍향의 오른쪽 90°", "④ 풍향의 왼쪽 90°", "⑤ 풍향과 반대 방향"], "answer": 2, "explain": "표면 해수는 오른쪽 45°, 에크만층 전체의 평균(에크만 수송)은 오른쪽 90°입니다."},
+  {"lv": "기본", "q": "에크만 나선에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 깊어질수록 해수의 유속이 감소한다.</li><li>ㄴ. 북반구에서는 깊어질수록 이동 방향이 점점 오른쪽으로 치우친다.</li><li>ㄷ. 물 입자가 나선 모양의 경로를 따라 이동한다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "ㄷ: 에크만 나선은 깊이별 흐름의 방향·속도를 나타낸 것이지 물 입자의 경로가 아닙니다."},
+  {"lv": "적용", "q": "남반구에서 서풍(동쪽으로 부는 바람)이 계속 불 때 에크만 수송 방향은?", "options": ["① 동쪽", "② 서쪽", "③ 남쪽", "④ 북쪽", "⑤ 일어나지 않는다"], "answer": 3, "explain": "남반구에서는 풍향의 왼쪽 90°입니다. 동쪽을 향할 때 왼쪽은 북쪽이에요."},
+  {"lv": "기본", "q": "지형류에 대한 설명으로 옳은 것은?", "options": ["① 수압 경도력과 마찰력이 평형을 이룬 흐름이다", "② 북반구에서 수압 경도력의 왼쪽 직각 방향으로 흐른다", "③ 등수압선과 나란하게 흐른다", "④ 적도에서 가장 강하게 흐른다", "⑤ 해수면 경사와 관계없다"], "answer": 2, "explain": "지형류는 수압 경도력과 전향력이 평형을 이루어 등수압선과 나란하게, 북반구에서는 수압 경도력의 오른쪽 직각 방향으로 흐릅니다."},
+  {"lv": "적용", "q": "같은 위도에서 지형류의 유속을 결정하는 요인은?", "options": ["① 해수의 염분", "② 해수면 경사", "③ 바람의 세기만", "④ 해수의 색", "⑤ 수심만"], "answer": 1, "explain": "v = g(ΔZ/ΔX)/(2Ωsinφ)에서 위도가 같으면 해수면 경사가 유속을 결정합니다."},
+  {"lv": "적용", "q": "북태평양 아열대 순환에서 쿠로시오 해류에 작용하는 힘과 흐름의 방향을 바르게 짝지은 것은?", "options": ["① 수압 경도력 동쪽, 전향력 서쪽, 남쪽으로 흐름", "② 수압 경도력 서쪽, 전향력 동쪽, 북쪽으로 흐름", "③ 수압 경도력 북쪽, 전향력 남쪽, 동쪽으로 흐름", "④ 수압 경도력 남쪽, 전향력 북쪽, 서쪽으로 흐름", "⑤ 수압 경도력 서쪽, 전향력 서쪽, 북쪽으로 흐름"], "answer": 1, "explain": "해수면이 높은 순환 중심이 동쪽에 있으므로 수압 경도력은 서쪽, 전향력은 동쪽, 해류는 북쪽으로 흐릅니다."},
+  {"lv": "적용", "q": "쿠로시오 해류가 캘리포니아 해류보다 강하게 흐르는 까닭으로 가장 적절한 것은?", "options": ["① 쿠로시오 해류가 더 차갑기 때문", "② 해수면이 가장 높은 곳이 순환 중심의 서쪽으로 치우쳐, 서쪽의 해수면 경사가 더 크기 때문", "③ 캘리포니아 해류에는 전향력이 작용하지 않기 때문", "④ 쿠로시오 해류는 적도에 있기 때문", "⑤ 바람이 서쪽에서만 불기 때문"], "answer": 1, "explain": "해수면이 가장 높은 곳이 서쪽으로 치우쳐 대양 서쪽의 해수면 경사(수압 경도력)가 크기 때문입니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/2-2.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

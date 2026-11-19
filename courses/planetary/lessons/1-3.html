@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03. 케플러 법칙</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="1-3">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>1월의 태양이 7월보다 큰 까닭</h2><span class="tbref">교과서 p. 22</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>태양계를 지배하는 힘이 <b>태양의 중력</b>임을 설명할 수 있다.</li>
+      <li><b>케플러의 세 가지 법칙</b>을 이용하여 태양계 천체의 운동을 설명할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame" style="padding:14px;background:#05070e">
+          <svg viewBox="0 0 420 220" role="img" aria-label="근일점과 원일점에서 태양의 겉보기 크기 비교" style="font-family:Pretendard,sans-serif">
+            <defs><radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff7d6"/><stop offset=".7" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></radialGradient></defs>
+            <circle cx="110" cy="105" r="81.3" fill="url(#sg)"/><circle cx="310" cy="105" r="78.6" fill="url(#sg)"/>
+            <g fill="#fff" font-size="14" font-weight="700" text-anchor="middle"><text x="110" y="208">1월 초 (근일점)</text><text x="310" y="208">7월 초 (원일점)</text></g>
+            <g fill="#0b0e17" font-size="13" font-weight="700" text-anchor="middle"><text x="110" y="110">32.5′</text><text x="310" y="110">31.5′</text></g>
+          </svg>
+        </div>
+        <figcaption>근일점과 원일점에서 태양의 시지름 비교 (실제 비율)</figcaption>
+        <div class="credit">자체 제작</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame" style="padding:14px;background:#05070e">
+          <svg viewBox="0 0 420 240" role="img" aria-label="화성 궤도와 원의 비교" style="font-family:Pretendard,sans-serif">
+            <circle cx="210" cy="120" r="100" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <ellipse cx="210" cy="120" rx="100" ry="99.57" fill="none" stroke="#f87171" stroke-width="2.5"/>
+            <circle cx="219.3" cy="120" r="9" fill="#fbbf24"/><circle cx="200.7" cy="120" r="2.5" fill="#94a3b8"/>
+            <circle cx="210" cy="120" r="2" fill="#fff"/>
+            <g font-size="12" fill="#e5e7eb" font-weight="700"><text x="232" y="116">태양 (초점)</text><text x="318" y="60" fill="#fca5a5">화성 궤도 (e = 0.093)</text><text x="12" y="30" fill="#94a3b8">점선: 같은 크기의 원</text></g>
+            <g font-size="11" fill="#cbd5e1"><text x="140" y="140">빈 초점</text><text x="196" y="236">타원 중심과 태양이 9%만큼 어긋남</text></g>
+          </svg>
+        </div>
+        <figcaption>케플러가 분석한 화성 궤도 · 원과 거의 같지만 태양이 중심에서 벗어나 있다</figcaption>
+        <div class="credit">자체 제작 (실제 이심률로 작도)</div>
+      </figure>
+    </div>
+    <div class="qbig">북반구가 겨울인 1월에 지구는 태양에 가장 가깝다. 그렇다면 1월의 지구는 7월보다 더 빨리 움직일까, 더 느리게 움직일까?</div>
+    <p class="tnote">시지름 비 32.5/31.5 ≈ 1.03 → 거리 비 약 3%. 계절은 거리 때문이 아니라 자전축 기울기 때문임을 짚고, '거리가 바뀌면 속력도 바뀐다'는 질문으로 제2법칙에 연결합니다. 운영안 4차시(만유인력·제1법칙 1 / 제2·3법칙 1 / 탐구 2).</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 태양계를 지배하는 힘">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>태양계를 지배하는 힘</h2><span class="tbref">교과서 p. 22</span></div>
+  <div class="card split">
+    <h3>(1) 만유인력과 태양의 중력</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>만유인력 법칙</b>: 질량을 가진 두 물체는 서로 끌어당기며, 그 힘은 두 질량의 곱에 비례하고 거리의 제곱에 반비례한다.</li>
+        <li>태양은 태양계 전체 질량의 <b>약 99.86%</b>를 차지한다. 따라서 태양계 천체의 운동은 대부분 <b>태양의 중력</b>으로 결정된다.</li>
+        <li>뉴턴은 만유인력 법칙으로 케플러 법칙을 이론적으로 증명하여, <b>중력이 태양계를 지배하는 힘</b>임을 밝혔다.</li>
+      </ul>
+      <div class="eq"><i>F</i> = <i>G</i> <span class="frac"><span><i>M m</i></span><span><i>r</i>²</span></span> <span class="note">G = 6.67 × 10⁻¹¹ N·m²/kg² (만유인력 상수)</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산</span><b class="t">태양이 지구를 당기는 힘</b><p>M = 2.0×10³⁰ kg, m = 6.0×10²⁴ kg, r = 1.5×10¹¹ m<br>F ≈ 3.6×10²² N. 이 힘이 지구를 공전 궤도에 붙잡아 둔다.</p></div>
+      <div class="dnote"><span class="lb">인물</span><b class="t">튀코 브라헤의 관측 자료</b><p>케플러는 스승 튀코가 맨눈으로 20년 넘게 기록한 정밀한 화성 위치 자료를 분석해 법칙을 찾아냈다. 데이터에서 법칙을 찾아낸 대표적인 예이다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 제1·2법칙">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>타원 궤도 법칙과 면적 속도 일정 법칙</h2><span class="tbref">교과서 p. 23 ~ 24</span></div>
+  <div class="card split">
+    <h3>(1) 케플러 제1법칙 · 타원 궤도 법칙</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>행성은 태양을 <b>한 초점</b>으로 하는 <b>타원 궤도</b>를 따라 공전한다.</li>
+        <li><b>근일점</b>: 태양에 가장 가까운 점, <b>원일점</b>: 가장 먼 점. 근일점과 원일점 거리의 평균이 <b>긴반지름(a)</b>이다.</li>
+        <li><b>이심률(e)</b>: 타원이 납작한 정도. 0이면 원, 1에 가까울수록 납작하다.</li>
+      </ul>
+      <div class="eq"><i>e</i> = <span class="frac"><span><i>c</i></span><span><i>a</i></span></span> , &nbsp; 근일점 거리 = <i>a</i>(1 − <i>e</i>), &nbsp; 원일점 거리 = <i>a</i>(1 + <i>e</i>) <span class="note">c: 타원 중심에서 초점까지 거리</span></div>
+      <div class="tw"><table class="data">
+        <thead><tr><th>천체</th><th>수성</th><th>금성</th><th>지구</th><th>화성</th><th>목성</th><th>명왕성</th><th>핼리 혜성</th></tr></thead>
+        <tbody><tr><th>이심률</th><td>0.206</td><td>0.007</td><td>0.017</td><td>0.093</td><td>0.049</td><td>0.249</td><td>0.967</td></tr></tbody>
+      </table></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">생각해 보기</span><b class="t">왜 오랫동안 원이라고 믿었을까?</b><p>대부분의 행성은 이심률이 매우 작아 거의 원이다. 케플러가 이심률이 비교적 큰 화성을 분석했기 때문에 타원임을 알아챌 수 있었다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 케플러 제2법칙 · 면적 속도 일정 법칙</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>행성과 태양을 이은 선분은 <b>같은 시간 동안 같은 면적</b>을 쓸고 지나간다.</li>
+        <li>따라서 행성은 <b>근일점에서 가장 빠르고</b>, 원일점에서 가장 느리다. → 지구는 1월에 7월보다 빠르다.</li>
+        <li>근일점·원일점에서 속력 비는 거리 비의 역수이다(각운동량 보존).</li>
+      </ul>
+      <div class="eq"><span class="frac"><span><i>v</i><sub>근</sub></span><span><i>v</i><sub>원</sub></span></span> = <span class="frac"><span><i>r</i><sub>원</sub></span><span><i>r</i><sub>근</sub></span></span> = <span class="frac"><span>1 + <i>e</i></span><span>1 − <i>e</i></span></span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">생활 속 과학</span><b class="t">북반구의 여름이 더 길다</b><p>춘분 → 추분(원일점 쪽)은 약 186일, 추분 → 춘분(근일점 쪽)은 약 179일. 원일점 근처에서 지구가 느리게 움직이기 때문이다.</p></div>
+      <div class="dnote link"><span class="lb">물리학 연계</span><b class="t">각운동량 보존</b><p>중심 방향으로만 힘(중력)을 받으면 r × v가 일정하다. 면적 속도 ½ r v sinθ 가 일정한 것과 같다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>케플러 궤도 실험실: 같은 시간, 같은 면적</b></div>
+      <div class="sim-body">
+        <canvas id="sim-orb"></canvas>
+        <div class="ctrl">
+          <label>이심률 e <span class="v" id="orb-ev"></span><input type="range" id="orb-e" min="0" max="0.9" step="0.01" value="0.5"></label>
+          <label>긴반지름 a <span class="v" id="orb-av"></span><input type="range" id="orb-a" min="0.4" max="5.2" step="0.1" value="1.5"></label>
+          <label>부채꼴 나누기 <select id="orb-n"><option value="8">8 등분</option><option value="12" selected>12 등분</option><option value="16">16 등분</option></select></label>
+          <div class="chips"><button class="chip on" id="orb-vec">속도 벡터</button><button class="chip on" id="orb-sec">면적 표시</button></div>
+          <div class="out" id="orb-out"></div>
+        </div>
+      </div>
+      <div class="hint">색칠된 부채꼴은 모두 같은 시간(공전 주기 ÷ 등분 수) 동안 쓸고 간 넓이이다. 모양은 달라도 넓이가 같은지 오른쪽 숫자로 확인하자. 긴반지름을 바꾸면 공전 주기가 어떻게 변하는지도 보자(제3법칙).</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 제3법칙과 질량 중심">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>조화 법칙과 질량 중심</h2><span class="tbref">교과서 p. 24 ~ 25</span></div>
+  <div class="card split">
+    <h3>(1) 케플러 제3법칙 · 조화 법칙</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>행성의 <b>공전 주기(P)의 제곱은 궤도 긴반지름(a)의 세제곱에 비례</b>한다.</li>
+        <li>P를 년, a를 AU 단위로 쓰면 태양계 천체에 대해 비례 상수가 1이 된다.</li>
+        <li>뉴턴은 이 비례 상수가 <b>중심 천체의 질량</b>에 따라 정해짐을 보였다. → 위성·행성·쌍성의 공전을 관측하면 <b>중심 천체의 질량</b>을 구할 수 있다.</li>
+      </ul>
+      <div class="eq"><i>P</i>² = <i>a</i>³ &nbsp;(년, AU) &nbsp;&nbsp;⟸&nbsp;&nbsp; <i>P</i>² = <span class="frac"><span>4π²</span><span><i>G</i>(<i>M</i> + <i>m</i>)</span></span> <i>a</i>³ <span class="note">태양 질량 M에 비해 행성 질량 m은 매우 작아 무시할 수 있다.</span></div>
+      <div class="tw"><table class="data">
+        <thead><tr><th>행성</th><th>a (AU)</th><th>P (년)</th><th>a³</th><th>P²</th></tr></thead>
+        <tbody>
+          <tr><th>수성</th><td>0.387</td><td>0.241</td><td>0.058</td><td>0.058</td></tr>
+          <tr><th>지구</th><td>1.000</td><td>1.000</td><td>1.000</td><td>1.000</td></tr>
+          <tr><th>화성</th><td>1.524</td><td>1.881</td><td>3.54</td><td>3.54</td></tr>
+          <tr><th>목성</th><td>5.203</td><td>11.86</td><td>140.8</td><td>140.7</td></tr>
+          <tr><th>해왕성</th><td>30.07</td><td>164.8</td><td>27190</td><td>27160</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">분석+</span><b class="t">회합 주기</b><p>지구에서 본 행성이 같은 위치(예: 충)에 다시 오는 데 걸리는 시간 S<br>1/S = |1/P<sub>지구</sub> − 1/P<sub>행성</sub>|<br>화성: 1/S = 1 − 1/1.881 → S ≈ 2.14년(약 780일). 1-01의 화성 발사 기회 주기와 같다!</p></div>
+      <div class="dnote link"><span class="lb">연계 · II-04</span><b class="t">쌍성의 질량</b><p>서로 도는 두 별에도 같은 식을 적용해 별의 질량을 구한다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 질량 중심 · 태양도 움직인다</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>엄밀하게는 태양과 행성이 <b>공통 질량 중심</b>을 함께 돈다. 질량 중심은 무거운 천체 쪽에 가깝다.</li>
+        <li>태양–목성의 질량 중심은 태양 중심에서 약 74만 km(태양 반지름의 약 1.07배)로, <b>태양 표면 바로 바깥</b>에 있다. 그래서 태양은 약 12년 주기로 작게 흔들린다.</li>
+        <li>이 흔들림을 멀리서 관측하면 보이지 않는 행성의 존재를 알아낼 수 있다 → <b>외계 행성 탐사(I-05)</b></li>
+      </ul>
+      <div class="eq"><i>M</i> <i>a</i><sub>1</sub> = <i>m</i> <i>a</i><sub>2</sub> &nbsp;,&nbsp; <i>a</i> = <i>a</i><sub>1</sub> + <i>a</i><sub>2</sub> <span class="note">a₁, a₂: 각 천체에서 질량 중심까지의 거리</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산</span><b class="t">태양–목성의 질량 중심</b><p>질량비 M/m ≈ 1047, a = 7.78×10⁸ km<br>a₁ = a × m/(M+m) ≈ 7.4×10⁵ km<br>태양 반지름(6.96×10⁵ km)보다 크다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>두 천체는 함께 춤춘다: 질량 중심 공전</b></div>
+      <div class="sim-body">
+        <canvas id="sim-bary"></canvas>
+        <div class="ctrl">
+          <label>질량비 M : m <span class="v" id="bary-qv"></span><input type="range" id="bary-q" min="0" max="3" step="0.05" value="0.6"></label>
+          <div class="chips"><button class="chip" data-p="1">지구–달 (81 : 1)</button><button class="chip" data-p="2">태양–목성 (1047 : 1)</button><button class="chip" data-p="3">쌍성 (2 : 1)</button></div>
+          <div class="out" id="bary-out"></div>
+        </div>
+      </div>
+      <div class="hint">십자 표시가 공통 질량 중심이다. 질량비가 커질수록 질량 중심이 무거운 천체 쪽으로 다가가 큰 천체는 거의 제자리에서 작게 흔들린다. 오른쪽 그래프는 큰 천체의 시선 방향 속도 변화(외계 행성 탐사의 원리)이다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>JPL 궤도 데이터로 케플러 제3법칙을 검증하고 행성의 질량 재기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">NASA JPL Solar System Dynamics</span><span class="skill">로그–로그 그래프</span><span class="skill">선형 회귀</span><span class="skill">모형으로 물리량 추정</span><span>2차시</span></div>
+    <p>NASA JPL이 공개하는 실제 궤도 요소로 'P ∝ a<sup>1.5</sup>'가 정말 성립하는지 <b>회귀 분석</b>으로 확인한다. 이어서 같은 방법을 <b>목성의 위성</b>과 <b>지구의 위성(달·인공위성)</b>에 적용하여, 저울 없이 <b>목성과 지구의 질량</b>을 구해 본다.</p>
+    <div class="figs one"><figure class="fig"><div class="frame"><img src="../assets/img/1-3/jupiter-moons.jpg" alt="망원경으로 본 목성과 갈릴레이 위성" style="object-fit:contain;background:#000"></div><figcaption>목성과 네 갈릴레이 위성 (갈릴레오 탐사선 영상 합성) · 작은 망원경으로도 위성들의 위치 변화를 매일 기록할 수 있다</figcaption><div class="credit">NASA/JPL/DLR, 퍼블릭 도메인</div></figure></div>
+    <div class="steps-lab">
+      <div><b>그래프 그리기</b>a와 P를 그대로 그리면 곡선이지만, 양쪽에 로그를 취하면 직선이 된다. 왜 그럴까? log P = 1.5 log a + 상수</div>
+      <div><b>회귀 직선 구하기</b>중심 천체를 고르고 회귀선의 기울기와 결정 계수(r²)를 확인한다. 기울기가 1.5에 가까운가?</div>
+      <div><b>중심 천체의 질량</b>뉴턴의 식 M = 4π²a³ / (G P²)로 각 천체에서 질량을 구해 평균을 낸다.</div>
+      <div><b>예측</b>a만 알려진 가상 천체의 공전 주기를 회귀식으로 예측해 본다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>log a – log P 그래프와 회귀 분석</b></div>
+      <div class="sim-body">
+        <canvas id="lab-kep"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="lab-sys">
+            <button class="chip on" data-s="sun">태양 주위</button>
+            <button class="chip" data-s="jup">목성 주위</button>
+            <button class="chip" data-s="earth">지구 주위</button>
+          </div>
+          <div class="chips"><button class="chip on" id="lab-log">로그 축</button><button class="chip on" id="lab-fit">회귀선</button></div>
+          <div class="kpi" id="lab-kpi"></div>
+          <label>예측해 보기: 긴반지름 <span class="v" id="lab-pv"></span><input type="range" id="lab-pa" min="0" max="1" step="0.001" value="0.5"></label>
+          <div class="out" id="lab-pred"></div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">'로그 축'을 끄면 원래 눈금으로 볼 수 있다. 질량은 SI 단위(a: m, P: s, G = 6.674×10⁻¹¹)로 계산한다.</div>
+    </div>
+    <div class="dataset">
+      <div class="dh">📋 데이터 표 <span class="sp"></span><span style="font-weight:500;color:var(--muted)" id="lab-n"></span></div>
+      <div class="db" id="lab-table"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 태양 주위 천체의 회귀선 기울기와 r²는? 이 값이 의미하는 것은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>기울기 ≈ 1.500, r² ≈ 1.0000. log P = 1.5 log a + c 이므로 P ∝ a<sup>1.5</sup>, 즉 P² ∝ a³이다. 행성뿐 아니라 왜소 행성·소행성·혜성까지 한 직선 위에 놓이므로 케플러 제3법칙은 태양 주위의 모든 천체에 성립한다.</div></div>
+    <h4>2. 목성 주위와 지구 주위 자료의 회귀선은 태양 주위 직선과 어떻게 다른가? 그 까닭은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>세 직선의 기울기는 모두 1.5로 같지만 절편이 다르다. P² = 4π²a³/(GM)에서 절편이 중심 천체의 질량 M으로 정해지기 때문이다. 같은 a에서 중심 질량이 작을수록 공전 주기가 길다.</div></div>
+    <h4>3. 데이터로 구한 목성과 지구의 질량은? 태양 질량의 몇 분의 1인가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>목성 ≈ 1.90×10²⁷ kg(태양의 약 1/1050), 지구 ≈ 6.0×10²⁴ kg(태양의 약 1/33만). 태양 ≈ 2.0×10³⁰ kg. 실제로 행성의 질량은 이렇게 위성의 공전을 관측해 구했다.</div></div>
+    <h4>4. 심화 · 지구 주위 자료에서 '달' 하나만 쓰면 지구의 질량이 약간 크게 나온다. 왜 그럴까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>정확한 식은 P² = 4π²a³ / G(M + m)이다. 달의 질량은 지구의 약 1/81로 무시할 수 없을 만큼 커서, 계산값은 지구 + 달의 질량(약 1.2% 더 큼)이 된다. 인공위성은 질량이 매우 작아 지구 질량만 남는다.</div></div>
+    <div class="box deep"><span class="bt">파이썬으로 해 보기 (선택)</span>
+      <div class="code"><span class="k">import</span> numpy <span class="k">as</span> np
+a = np.array([<span class="s">0.387, 0.723, 1.0, 1.524, 5.203, 9.537, 19.19, 30.07</span>])   <span class="c"># AU</span>
+P = np.array([<span class="s">0.241, 0.615, 1.0, 1.881, 11.86, 29.46, 84.01, 164.8</span>])  <span class="c"># 년</span>
+m, c = np.polyfit(np.log10(a), np.log10(P), <span class="s">1</span>)
+print(<span class="s">"기울기"</span>, m, <span class="s">"절편"</span>, c)    <span class="c"># 기울기 ≈ 1.5, 절편 ≈ 0</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>목성 위성 사진: NASA/JPL/DLR(퍼블릭 도메인). 궤도 자료: NASA JPL Solar System Dynamics(행성 궤도 요소, 위성 평균 궤도 요소) 공개 값을 반올림하여 사용. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "케플러 제2법칙에 따른 설명으로 옳은 것은?", "options": ["① 행성은 근일점에서 가장 빠르다", "② 행성은 원 궤도로 공전한다", "③ 행성은 근일점에서 가장 느리다", "④ 공전 주기는 긴반지름에 비례한다", "⑤ 모든 행성의 공전 속력은 같다"], "answer": 0, "explain": "같은 시간에 같은 면적을 쓸어야 하므로 태양에 가까운 근일점에서 가장 빠릅니다."},
+  {"lv": "계산", "q": "긴반지름이 4 AU인 소행성의 공전 주기는?", "options": ["① 2년", "② 4년", "③ 8년", "④ 16년", "⑤ 64년"], "answer": 2, "explain": "P² = a³ = 64 → P = 8년입니다."},
+  {"lv": "계산", "q": "근일점 거리 1 AU, 원일점 거리 3 AU인 혜성의 이심률과 공전 주기는?", "options": ["① e = 0.33, P ≈ 2.0년", "② e = 0.5, P ≈ 2.8년", "③ e = 0.5, P = 8년", "④ e = 0.67, P ≈ 2.8년", "⑤ e = 0.67, P ≈ 5.2년"], "answer": 1, "explain": "a = (1+3)/2 = 2 AU, e = (3−1)/(3+1) = 0.5, P = 2^1.5 ≈ 2.83년입니다."},
+  {"lv": "계산", "q": "이심률이 0.6인 궤도에서 근일점 속력은 원일점 속력의 몇 배인가?", "options": ["① 1.6배", "② 2배", "③ 2.5배", "④ 4배", "⑤ 6배"], "answer": 3, "explain": "v근/v원 = (1+e)/(1−e) = 1.6/0.4 = 4배입니다."},
+  {"lv": "적용", "q": "뉴턴이 수정한 케플러 제3법칙 P² = 4π²a³/G(M+m)에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 위성의 공전 주기와 궤도 반지름을 알면 행성의 질량을 구할 수 있다.</li><li>ㄴ. 같은 긴반지름이라도 중심 천체의 질량이 크면 공전 주기가 짧다.</li><li>ㄷ. 태양계에서 P²/a³ 값은 행성마다 크게 다르다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "태양계 행성들은 중심 천체(태양)가 같으므로 P²/a³이 거의 같습니다."},
+  {"lv": "적용", "q": "질량이 각각 3M, M인 두 별이 6 AU 떨어져 공통 질량 중심을 돈다. 질량 중심은 무거운 별에서 몇 AU 떨어져 있는가?", "options": ["① 1.0 AU", "② 1.5 AU", "③ 2.0 AU", "④ 3.0 AU", "⑤ 4.5 AU"], "answer": 1, "explain": "3M·a₁ = M·a₂, a₁ + a₂ = 6 → a₁ = 1.5 AU, a₂ = 4.5 AU입니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 태양·목성·지구 주위 천체의 log a–log P 회귀선을 비교한 결과로 옳은 것은?", "options": ["① 기울기와 절편이 모두 같다", "② 기울기가 중심 천체의 질량에 비례한다", "③ 목성 주위 자료는 직선이 되지 않는다", "④ 지구 주위 자료의 기울기는 3이다", "⑤ 기울기는 1.5로 같고 절편은 중심 천체의 질량에 따라 다르다"], "answer": 4, "explain": "P ∝ a^1.5 관계는 모두 같고, 비례 상수(절편)가 중심 천체의 질량을 알려 줍니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/1-3.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

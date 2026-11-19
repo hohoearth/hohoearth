@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06. 편서풍 파동</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-6">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>같은 거리인데 비행시간이 다르다?</h2><span class="tbref">교과서 p. 108</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>행성파의 발달 과정</b>을 설명할 수 있다.</li>
+      <li>지상 고·저기압 발달에서 <b>편서풍 파동의 역할</b>을 평가할 수 있다.</li>
+    </ul>
+    <div class="figs one">
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-4/jet.jpg" alt="제트류 시각화"></div><figcaption>컴퓨터 모형으로 시각화한 상층의 강한 바람(제트류)</figcaption><div class="credit">NASA Goddard Space Flight Center, 퍼블릭 도메인</div></figure>
+    </div>
+    <div class="qbig">미국에서 우리나라로 올 때가 우리나라에서 미국으로 갈 때보다 비행시간이 더 길다. 같은 거리인데 왜 그럴까?</div>
+    <p class="tnote">예시: 중위도 상공에는 서쪽에서 동쪽으로 강한 편서풍이 불어, 동쪽으로 갈 때는 뒷바람, 서쪽으로 올 때는 맞바람을 받기 때문입니다. 교과서 운영안은 5차시(대기 대순환·편서풍 파동 2차시 / 행성파 탐구 / 변동 과정과 날씨 / 일기도 탐구)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 대기 대순환">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>대기 대순환</h2><span class="tbref">교과서 p. 108 ~ 109</span></div>
+  <div class="card split">
+    <h3>위도별 에너지 불균형에서 대순환으로</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>태양 상수</b>: 대기권 꼭대기에서 햇빛에 수직인 단위 면적이 단위 시간에 받는 태양 복사 에너지 ≈ <b>1367 W/m²</b>. 지구 표면 전체에 대한 평균은 그 1/4인 약 342 W/m²이다.</li>
+        <li>지구 전체는 복사 평형이지만, <b>저위도는 에너지 과잉</b>, <b>고위도는 에너지 부족</b>이다. 따뜻한 공기가 고위도로, 찬 공기가 저위도로 움직이며 불균형을 줄이는 것이 <b>대기 대순환</b>의 원인이다.</li>
+        <li><b>단일 세포 순환</b>: 지구가 자전하지 않고 표면이 고르다면, 적도에서 오른 공기가 극으로 가고 극에서 내려온 공기가 적도로 돌아오는 순환이 반구마다 하나씩 생긴다.</li>
+        <li><b>3세포 순환 모델</b>: 자전(전향력)을 고려하면 반구마다 <b>해들리 순환·페렐 순환·극순환</b> 3개가 생기고, 지상에는 무역풍·편서풍·극동풍이 분다.</li>
+        <li>실제 대기 순환은 대륙과 해양의 분포, 지형, 계절에 따른 기온 차 때문에 이보다 복잡하다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산해 보기</span><b class="t">왜 1/4일까?</b><p>지구가 햇빛을 받는 면적은 단면적 πR²이지만, 그 에너지는 표면적 4πR² 전체에 나누어진다. 1367 ÷ 4 ≈ 342 W/m²</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">직접 순환과 간접 순환</b><p>해들리 순환과 극순환은 열에 의한 대류로 생기는 직접 순환이고, 페렐 순환은 두 순환 사이에서 역학적으로 생기는 간접 순환이다.</p></div>
+      <div class="dnote"><span class="lb">인물</span><b class="t">해들리와 페렐</b><p>단일 세포 순환은 영국의 해들리가, 3세포 순환 모델은 미국의 페렐이 제안했다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>대기 대순환 모델 비교 (북반구 단면)</b></div>
+      <div class="sim-body">
+        <canvas id="sim-cell"></canvas>
+        <div class="ctrl">
+          <label>모델 <select id="ce-mode"><option value="one">단일 세포 순환 (자전 없음)</option><option value="three" selected>3세포 순환 (자전 있음)</option></select></label>
+          <div class="out" id="ce-out" style="font-family:var(--font);font-size:.85rem"></div>
+        </div>
+      </div>
+      <div class="hint">두 모델을 번갈아 선택해 지상에 부는 바람이 어떻게 달라지는지 비교하자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 편서풍 파동과 제트류">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>편서풍 파동과 제트류</h2><span class="tbref">교과서 p. 109 ~ 110</span></div>
+  <div class="card split">
+    <h3>(1) 행성파와 편서풍 파동</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>행성파(로스비파)</b>: 위도에 따른 자전 효과의 차이 때문에 대기에 생기는 대규모 파동</li>
+        <li><b>편서풍 파동</b>: 중위도 상층에서 파장이 수천 km에 이르며 지구를 감싸고 도는 행성파. 남북으로 굽이치며 <b>지구의 에너지 불균형을 해소</b>한다.</li>
+        <li>편서풍 파동을 경계로 북쪽에는 찬 공기, 남쪽에는 따뜻한 공기가 있다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">인물</span><b class="t">로스비 (1898~1957)</b><p>스웨덴 출신 기상학자. 1939년 상층 편서풍대에서 대규모 파동이 생기는 과정을 이론으로 설명했다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">전향력이 '복원력'</b><p>대기는 평형을 유지하려는 성질이 있어, 평형이 깨지면 전향력이 되돌리는 힘으로 작용해 로스비파 같은 큰 파동이 생긴다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 편서풍이 부는 원리와 제트류</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>고위도의 찬 공기는 밀도가 커서 위로 갈수록 기압이 빨리 낮아진다. 그래서 <b>등압면이 북쪽으로 기울고</b>, 저위도에서 고위도로 갈수록 등압면 간격이 좁아진다.</li>
+        <li>상층에서 기압 경도력은 <b>북쪽(고위도)</b>으로 작용하고, 반대 방향의 전향력과 평형을 이루어 <b>서쪽 → 동쪽</b>으로 편서풍이 분다.</li>
+        <li>등압면의 기울기는 위로 갈수록 커져 <b>대류권 계면 부근</b>에서 가장 크다 → 이곳에서 주위보다 매우 강한 흐름 = <span class="hl">제트류</span></li>
+        <li><b>한대 전선 제트류</b>: 한대 전선대의 대류권 계면 부근. 남북 기온 차가 큰 <b>겨울에 강해지고 저위도로</b>, 여름에 약해지고 고위도로 이동한다.</li>
+        <li><b>아열대 제트류</b>: 중위도 고압대의 대류권 계면 부근. 한대 전선 제트류보다 높고 상대적으로 약하다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">용어</span><b class="t">대류권 계면</b><p>대류권과 성층권 사이의 경계면</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">지구 규모의 순환</b><p>대기 운동은 규모에 따라 미규모, 중규모, 종관 규모, 지구 규모로 나눈다. 편서풍 파동과 대기 대순환은 수천 km 이상, 수 주~수 개월 지속되는 지구 규모의 순환이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>기울어진 등압면과 제트류 (남북 단면)</b></div>
+      <div class="sim-body">
+        <canvas id="sim-jet"></canvas>
+        <div class="ctrl">
+          <label>남북 기온 차 <span class="v" id="jt-dtv"></span><input type="range" id="jt-dt" min="5" max="45" step="1" value="25"></label>
+          <label>계절 <select id="jt-season"><option value="w">겨울</option><option value="s">여름</option></select></label>
+          <div class="out" id="jt-out"></div>
+        </div>
+      </div>
+      <div class="hint">남북 기온 차를 키우면 등압면의 기울기와 상층 풍속이 어떻게 변하는지 보자. 오른쪽 선은 높이에 따른 편서풍의 세기이다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 편서풍 파동과 날씨">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>편서풍 파동의 변동과 지상의 날씨</h2><span class="tbref">교과서 p. 112 ~ 113</span></div>
+  <div class="card split">
+    <h3>(1) 편서풍 파동의 변동 과정</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>편서풍 파동은 저위도의 에너지를 고위도로 옮기며, 옮기는 양은 파동의 모양에 따라 다르다.</li>
+        <li>진폭이 작으면 남북 에너지 수송이 잘 안 되어 기온 차가 커진다 → 기온 차가 커지면 진폭이 커지며 파동이 발달 → 남북으로 더 커지면 일부가 <b>떨어져 나가며</b> 기온 차가 작아진다 → 다시 진폭이 작은 상태로 돌아간다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">핵심</span><b class="t">진폭이 클수록</b><p>따뜻한 공기가 북쪽으로, 찬 공기가 남쪽으로 더 활발하게 옮겨진다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 3</span><b>편서풍 파동의 변동 과정</b></div>
+      <div class="sim-body">
+        <canvas id="sim-rw"></canvas>
+        <div class="ctrl">
+          <ol class="stepper" id="rw-steps">
+            <li><b>① 진폭이 작은 파동</b><div class="d">거의 직선 모양. 남북 에너지 수송이 약해 기온 차가 점점 커진다.</div></li>
+            <li><b>② 파동의 발달</b><div class="d">기온 차가 커져 진폭이 커지고, 따뜻한 공기는 북쪽으로, 찬 공기는 남쪽으로 활발히 이동한다.</div></li>
+            <li><b>③ 일부 분리</b><div class="d">파동이 더 커지면 일부가 떨어져 나가 남북 기온 차가 작아진다.</div></li>
+            <li><b>④ 원래 상태로</b><div class="d">떨어진 공기 덩어리가 주위와 섞여 사라지면 다시 진폭이 작은 파동으로 돌아간다.</div></li>
+          </ol>
+          <div class="btns"><button class="tbtn on" id="rw-next" type="button">다음 단계 ▶</button><button class="tbtn" id="rw-reset" type="button">↻ 처음부터</button></div>
+        </div>
+      </div>
+      <div class="hint">북극 위에서 내려다본 모습이다. 단계마다 흰 선(제트류)의 굽이침과 떨어져 나간 공기 덩어리를 관찰하자.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 기압골·기압 마루와 지상의 고·저기압</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>기압 마루</b>: 상층 일기도에서 등고선이 고위도 쪽으로 올라간 부분 (주위보다 기압 높음) / <b>기압골</b>: 저위도 쪽으로 내려간 부분 (주위보다 기압 낮음)</li>
+        <li>기압 마루를 도는 고기압성 경도풍은 기압골을 도는 저기압성 경도풍보다 빠르다.
+          <ul>
+            <li>마루 → 골로 불 때: 풍속 감소 → 공기 <b>수렴</b> → 기압골 <b>서쪽</b>에 하강 기류 → <b>지상 고기압</b></li>
+            <li>골 → 마루로 불 때: 풍속 증가 → 공기 <b>발산</b> → 기압골 <b>동쪽</b>에 상승 기류 → <b>지상 저기압</b></li>
+          </ul>
+        </li>
+        <li>기압골과 기압 마루는 편서풍 파동과 함께 <b>서쪽에서 동쪽</b>으로 이동하므로 지상의 고기압·저기압도 동쪽으로 이동한다.</li>
+        <li>상층 바람이 하층보다 빨라 상층 발산 구역이 지상 저기압 위를 벗어나면, 저기압은 약해져 사라진다.</li>
+        <li>따라서 지상의 날씨를 정확히 예측하려면 <b>상층 대기의 운동</b>을 아는 것이 중요하다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">용어</span><b class="t">수렴과 발산</b><p>수렴: 공기가 모여 쌓이는 것 → 공기 밀도 증가 → 아래 지상 기압 상승<br>발산: 공기가 퍼져 흩어지는 것 → 아래 지상 기압 하강</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">메워짐</b><p>상층 발산보다 지상 수렴이 우세해지면 지상에 공기가 쌓여 기압이 오르고 저기압이 약해진다. 이를 메워짐이라고 한다.</p></div>
+      <div class="dnote"><span class="lb">디지털 탐색</span><b class="t">500 hPa 일기도</b><p>기상청 날씨누리 → 분석 일기도 → 보조 일기도 → 북반구 500 hPa에서 편서풍 파동과 제트류를 찾을 수 있다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 4</span><b>편서풍 파동이 지상의 고·저기압을 만든다</b></div>
+      <div class="sim-body stack">
+        <canvas id="sim-tr"></canvas>
+        <div class="ctrl"><div class="btns"><button class="tbtn on" id="tr-play" type="button">❚❚ 멈춤</button></div><div class="out">기압골 <b>서쪽</b>: 상층 수렴 → 하강 기류 → 지상 <b>고기압</b> · 기압골 <b>동쪽</b>: 상층 발산 → 상승 기류 → 지상 <b>저기압</b></div></div>
+      </div>
+      <div class="hint">위: 상층의 편서풍 파동, 아래: 지상. 파동이 동쪽으로 이동하면 지상의 고기압과 저기압도 함께 이동한다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>행성파 시뮬레이션 실험 · 상층 일기도 해석</h2><span class="tbref">교과서 p. 111, 114</span></div>
+  <div class="card split">
+    <h3>탐구 1 · 회전 원통으로 행성파 만들기</h3>
+    <div class="body">
+      <p><b>목표</b> 회전 원통 실험으로 행성파가 생기는 과정을 시뮬레이션할 수 있다.<br><b>준비물</b> 실험복, 면장갑, 회전 원통 실험 장치, 물, 얼음, 수성 잉크(파랑), 송홧가루, 약숟가락</p>
+      <ol class="proc">
+        <li>준비물을 보고 실험 과정을 예상해 본다.</li>
+        <li>세 원통에 모두 물을 넣는다.</li>
+        <li>바깥 원통의 물을 5분 정도 가열한 뒤 안쪽 원통에 얼음을 넣는다.</li>
+        <li>중간 원통에 잉크와 송홧가루를 뿌린다.</li>
+        <li>원통을 느리게 돌리며 관찰한 다음, 회전 속도를 높여 다시 관찰한다.</li>
+      </ol>
+      <p style="color:var(--bad);font-weight:700">안전: 물을 가열할 때 화상에 주의하고, 가열 중에는 원통을 만지지 않는다.</p>
+      <h4>결과 및 정리</h4>
+      <p>1. 회전 속도에 따른 차이는? &nbsp;2. 안쪽·바깥 원통은 지구의 어디에 해당할까? &nbsp;3. 실험과 실제 지구의 차이는? &nbsp;4. 안팎의 온도 차를 크게 하면?</p>
+      <textarea class="write" placeholder="관찰 결과를 적어 보세요 (입력 내용은 저장되지 않습니다)"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>
+        1. 느리게 돌리면 따뜻한 바깥벽을 따라 오르고 차가운 안벽을 따라 내려가는 대류와 함께 구불구불한 파동이 나타난다. 빠르게 돌리면 파장이 짧아지고 파동 수가 늘며 작은 소용돌이가 생긴다.<br>
+        2. 얼음물이 든 안쪽은 극지방, 뜨거운 물이 든 바깥쪽은 적도 지방에 해당한다.<br>
+        3. 실험의 파동은 평면에서의 물의 운동이지만, 실제 행성파는 구면인 지구를 둘러싼 대기의 운동이다. 또 실험은 위도에 따른 전향력 차이를 반영하지 못한다.<br>
+        4. 대류가 더 활발해져 파동 수가 늘어날 것이다.
+      </div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">활동 도우미</span><b class="t">동영상으로 기록</b><p>스마트 기기로 촬영해 두면 파동의 모습을 자세히 살펴볼 수 있다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 5</span><b>회전 원통 실험 (모식 시뮬레이션)</b></div>
+      <div class="sim-body">
+        <canvas id="sim-ann"></canvas>
+        <div class="ctrl">
+          <label>회전 속도 <span class="v" id="an-wv"></span><input type="range" id="an-w" min="0" max="3.5" step="0.1" value="1.2"></label>
+          <label>안팎 온도 차 <span class="v" id="an-dtv"></span><input type="range" id="an-dt" min="10" max="60" step="5" value="30"></label>
+          <div class="out" id="an-out"></div>
+        </div>
+      </div>
+      <div class="hint">실제 실험 전 예상하기나 실험 후 정리에 활용하자. 회전 속도와 온도 차를 각각 바꿔 파동 수의 변화를 확인하자.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>탐구 2 · 편서풍 파동·제트류와 관련지어 상층 일기도 해석하기</h3>
+    <div class="body">
+      <p><b>목표</b> 상층 일기도를 해석해 편서풍 파동과 제트류가 지상 기압 배치에 주는 영향을 평가할 수 있다. &nbsp;<b>준비물</b> 색연필, 같은 날 같은 시각의 300 hPa·500 hPa·지상 일기도 (교과서 또는 기상청 날씨누리)</p>
+      <ol class="proc">
+        <li>300 hPa 일기도에서 제트류가 나타날 영역을 빨간 선으로 표시한다. (등고선이 촘촘한 곳)</li>
+        <li>500 hPa 일기도에서 기압 마루와 기압골을 검은 선으로 표시한다.</li>
+        <li>500 hPa 일기도에서 수렴과 발산이 일어날 영역을 표시한다.</li>
+        <li>그 영역의 지상 기압 분포를 지상 일기도에서 찾아 비교한다.</li>
+      </ol>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>기압골 서쪽(마루와 골 사이)에서 수렴이 일어나 하강 기류가 생기므로 지상에 고기압이, 기압골 동쪽(골과 마루 사이)에서 발산이 일어나 상승 기류가 생기므로 지상에 저기압이 발달한다. 이처럼 편서풍 파동과 제트류는 상층의 수렴·발산을 일으켜 지상의 기압 배치를 결정한다.</div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">수업 확장</span><b class="t">날씨 예측 프로젝트</b><p>모둠별로 며칠 동안의 상층 일기도를 모아 지상의 날씨를 예측해 보는 프로젝트 학습으로 확장할 수 있다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 대기 대순환과 편서풍 파동이 생기는 원인은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>고위도와 저위도의 기온 차(에너지 불균형)와 지구 자전에 의한 전향력 때문이다.</div></div>
+    <h4>2. 편서풍 파동과 지상의 기압 배치는 어떤 관계가 있을까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>기압골의 서쪽에는 하강 기류가 생겨 지상 고기압이, 기압골의 동쪽에는 상승 기류가 생겨 지상 저기압이 발달한다.</div></div>
+    <h4>3. 창의력 더하기 · 지구의 자전이 지금보다 느려진다면 해들리 순환은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>전향력이 약해져 적도에서 올라간 공기가 덜 휘고 더 고위도까지 이동한 뒤 하강하므로, 해들리 순환이 지금보다 커질 것이다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>사진은 NASA의 퍼블릭 도메인 자료입니다. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "대기 대순환이 일어나는 근본적인 원인은?", "options": ["① 해류의 흐름", "② 위도별 에너지 불균형", "③ 화산 활동", "④ 달의 인력", "⑤ 지구의 공전"], "answer": 1, "explain": "저위도는 에너지 과잉, 고위도는 에너지 부족이므로 이를 해소하려는 흐름이 대기 대순환입니다."},
+  {"lv": "적용", "q": "3세포 순환 모델에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 해들리 순환에서 지상에는 무역풍이 분다.</li><li>ㄴ. 페렐 순환은 열에 의해 직접 생기는 순환이다.</li><li>ㄷ. 위도 30° 부근에는 중위도 고압대가 생긴다.</li></ul>", "options": ["① ㄱ", "② ㄴ", "③ ㄱ, ㄷ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "ㄴ: 페렐 순환은 해들리 순환과 극순환에 의해 역학적으로 생기는 간접 순환입니다."},
+  {"lv": "계산", "q": "태양 상수가 1367 W/m²일 때, 지구 표면 전체에 대한 평균 태양 복사 에너지는?", "options": ["① 약 171 W/m²", "② 약 342 W/m²", "③ 약 684 W/m²", "④ 약 1367 W/m²", "⑤ 약 5468 W/m²"], "answer": 1, "explain": "받는 면적(πR²) ÷ 표면적(4πR²) = 1/4이므로 1367 ÷ 4 ≈ 342 W/m²입니다."},
+  {"lv": "적용", "q": "중위도 상층에서 편서풍이 부는 까닭으로 옳은 것은?", "options": ["① 등압면이 남쪽으로 기울어 기압 경도력이 남쪽으로 작용하기 때문", "② 등압면이 북쪽으로 기울어 북쪽으로 작용하는 기압 경도력과 전향력이 평형을 이루기 때문", "③ 마찰력이 강하기 때문", "④ 적도에서 바람이 불어오기 때문", "⑤ 해류가 동쪽으로 흐르기 때문"], "answer": 1, "explain": "찬 고위도 쪽으로 등압면이 기울어 기압 경도력이 북쪽으로 작용하고, 전향력과 평형을 이루어 서→동으로 붑니다."},
+  {"lv": "기본", "q": "제트류가 가장 강하게 나타나는 높이는?", "options": ["① 지표 부근", "② 대기 경계층 꼭대기 (약 1 km)", "③ 대류권 계면 부근", "④ 성층권 꼭대기", "⑤ 열권"], "answer": 2, "explain": "등압면의 기울기가 위로 갈수록 커져 대류권 계면 부근에서 풍속이 가장 강합니다."},
+  {"lv": "적용", "q": "한대 전선 제트류가 겨울에 강해지는 까닭은?", "options": ["① 겨울에 남북 기온 차가 크기 때문", "② 겨울에 태양 고도가 높기 때문", "③ 겨울에 전향력이 사라지기 때문", "④ 겨울에 마찰력이 커지기 때문", "⑤ 겨울에 대류권 계면이 사라지기 때문"], "answer": 0, "explain": "겨울에는 남북 기온 차가 커서 등압면 기울기와 기압 경도력이 커지고, 제트류가 강해지며 저위도로 내려옵니다."},
+  {"lv": "적용", "q": "편서풍 파동에서 지상 저기압이 발달하는 위치는?", "options": ["① 기압골의 서쪽", "② 기압골의 동쪽", "③ 기압 마루 바로 아래", "④ 적도", "⑤ 극"], "answer": 1, "explain": "기압골 동쪽에서는 상층 발산으로 상승 기류가 생겨 지상에 저기압이 발달합니다."},
+  {"lv": "적용", "q": "회전 원통 실험에서 안쪽 원통(얼음물)과 바깥쪽 원통(뜨거운 물)이 나타내는 지역을 바르게 짝지은 것은?", "options": ["① 안쪽 — 적도, 바깥쪽 — 극", "② 안쪽 — 극, 바깥쪽 — 적도", "③ 둘 다 중위도", "④ 안쪽 — 해양, 바깥쪽 — 대륙", "⑤ 안쪽 — 성층권, 바깥쪽 — 대류권"], "answer": 1, "explain": "냉각된 공기가 하강하는 극지방이 안쪽, 가열된 공기가 상승하는 적도 지방이 바깥쪽에 해당합니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-6.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

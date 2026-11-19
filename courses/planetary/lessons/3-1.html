@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01. 천체의 거리와 우리은하의 구조</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-1">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>은하수 속에서 은하수의 모양을 알 수 있을까?</h2><span class="tbref">교과서 p. 80</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>성단의 <b>C-M도</b>를 이용하여 성단의 나이와 거리를 구할 수 있다.</li>
+      <li>맥동 변광성의 <b>주기–광도 관계</b>를 이용하여 우리은하의 구조와 규모를 설명할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-1/milkyway.jpg" alt="칠레 파라날 천문대 위의 은하수"></div>
+        <figcaption>칠레 파라날 천문대 위로 펼쳐진 은하수 · 중심부가 검은 띠로 가려져 있다</figcaption>
+        <div class="credit">ESO/Y. Beletsky, CC BY 4.0</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-1/edge-on.jpg" alt="옆에서 본 나선 은하 NGC 4565"></div>
+        <figcaption>옆에서 본 나선 은하 NGC 4565 · 우리은하도 밖에서 보면 이런 모습일 것이다</figcaption>
+        <div class="credit">ESO, CC BY 3.0</div>
+      </figure>
+    </div>
+    <div class="qbig">숲속에 서 있으면 숲 전체의 모양을 알기 어렵다.<br>우리은하 안에 있는 우리는 어떻게 은하의 모양과 크기, 우리의 위치를 알아냈을까?</div>
+    <p class="tnote">'안에서 바깥 모양을 알아내기' 문제. 별을 세는 방법(허셜·캅테인)이 왜 실패했는지(성간 소광) 시뮬레이션 1로 직접 체험하게 합니다. 교과서 운영안은 5차시(색지수·C-M도 2 / 세페이드·섀플리 2 / 구조 1)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 색지수와 C-M도">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>색지수와 성단의 C-M도</h2><span class="tbref">교과서 p. 80 ~ 83</span></div>
+  <div class="card split">
+    <h3>(1) 색지수</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>별의 밝기를 서로 다른 필터(U: 자외선, B: 파랑, V: 노랑–초록)로 재면 별의 색에 따라 등급이 다르다.</li>
+        <li><b>색지수</b> = 짧은 파장 등급 − 긴 파장 등급 (예: B − V). 별까지의 거리와 관계없이 별의 <b>색(표면 온도)</b>만 알려 준다.</li>
+        <li>표면 온도가 <b>높을수록 색지수가 작다</b>(파란 별은 B에서 더 밝아 B 등급이 작음). 약 1만 K인 A0형 별의 B − V = 0이다.</li>
+      </ul>
+      <div class="tw"><table class="data">
+        <thead><tr><th>분광형</th><th>O5</th><th>B0</th><th>A0</th><th>F0</th><th>G2 (태양)</th><th>K0</th><th>M0</th></tr></thead>
+        <tbody>
+          <tr><th>표면 온도 (K)</th><td>약 42000</td><td>30000</td><td>9800</td><td>7300</td><td>5800</td><td>5300</td><td>3900</td></tr>
+          <tr><th>B − V</th><td>−0.33</td><td>−0.30</td><td>0.00</td><td>+0.30</td><td>+0.65</td><td>+0.81</td><td>+1.40</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">왜 거리와 무관할까?</span><b class="t">비율의 등급 표현</b><p>B − V = −2.5 log(I<sub>B</sub>/I<sub>V</sub>). 거리가 멀어지면 두 밝기가 같은 비율로 줄어 비(색지수)는 그대로이다. (성간 티끌이 있으면 달라진다 → III-02 성간 적색화)</p></div>
+    </aside>
+  </div>
+  <div class="card split">
+    <h3>(2) 성단의 C-M도로 나이와 거리 구하기</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>C-M도(색–등급도)</b>: 가로축 색지수, 세로축 등급으로 그린 그림. H-R도를 관측량으로 바꾼 것이다.</li>
+        <li>성단의 별들은 <b>같은 시기·같은 거리</b>에서 태어났지만 질량이 다르다. 무거운 별부터 주계열을 먼저 떠난다.</li>
+        <li><b>전향점</b>: 주계열에서 별이 거성 쪽으로 꺾여 나가는 점. 전향점이 <b>아래쪽(어둡고 붉은 쪽)</b>일수록 성단의 <b>나이가 많다</b>.</li>
+        <li><b>산개 성단</b>: 수백 ~ 수천 개의 젊은 별, 은하 원반에 분포, 전향점이 높다. <b>구상 성단</b>: 수십만 개의 늙은 별, 헤일로에 분포, 전향점이 낮고 적색 거성이 많다.</li>
+        <li><b>주계열 맞추기</b>: 성단의 주계열(겉보기 등급)을 표준 주계열(절대 등급)에 위아래로 맞춘 이동량 = <b>거리지수(m − M)</b></li>
+      </ul>
+      <div class="figs">
+        <figure class="fig"><div class="frame"><img src="../assets/img/3-1/pleiades.jpg" alt="플레이아데스 성단"></div><figcaption>산개 성단 플레이아데스 (약 1억 년, 136 pc)</figcaption><div class="credit">NASA, ESA, AURA/Caltech</div></figure>
+        <figure class="fig"><div class="frame"><img src="../assets/img/3-1/m5.jpg" alt="구상 성단 M5"></div><figcaption>구상 성단 M5 (약 120억 년, 약 7.5 kpc)</figcaption><div class="credit">NASA/ESA Hubble</div></figure>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote link"><span class="lb">연계 · II-04</span><b class="t">왜 무거운 별이 먼저?</b><p>질량–광도 관계에 따라 수명 ∝ M<sup>−2.5</sup>. 태양 질량 3배 별의 수명은 태양의 약 1/16이다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 우리은하 연구의 역사">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>세페이드 변광성과 우리은하의 중심</h2><span class="tbref">교과서 p. 84 ~ 87</span></div>
+  <div class="card split">
+    <h3>(1) 별을 세어 은하를 그린 사람들</h3>
+    <div class="body">
+      <div class="chain">
+        <div><small>1785</small><b>허셜</b>방향별로 별을 세어 납작한 원반 모양, 태양은 중심 근처</div><i>→</i>
+        <div><small>1922</small><b>캅테인</b>별의 밝기·고유 운동으로 지름 약 15 kpc의 원반, 태양은 중심 근처</div><i>→</i>
+        <div><small>1918</small><b>섀플리</b>구상 성단의 거리 측정 → 중심은 궁수자리 방향 멀리</div><i>→</i>
+        <div><small>1924</small><b>허블</b>안드로메다의 세페이드 → 외부 은하 확인</div>
+      </div>
+      <ul class="pts">
+        <li>허셜과 캅테인은 <b>성간 소광</b>(티끌이 빛을 가림)을 몰라, 어느 방향이든 비슷한 거리까지만 별이 보이는 것을 '은하의 끝'으로 착각했다. 그래서 태양이 중심에 있다고 생각했다.</li>
+        <li><b>섀플리</b>는 원반 위아래로 넓게 퍼져 티끌의 영향을 덜 받는 <b>구상 성단</b>의 거리를 그 속의 맥동 변광성으로 재었다. 구상 성단 분포의 중심 = 은하의 중심 → 태양은 중심에서 멀리 떨어져 있다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">역사</span><b class="t">1920년 대논쟁</b><p>섀플리와 커티스가 '나선 성운은 우리은하 안의 천체인가, 밖의 은하인가'를 두고 논쟁했다. 4년 뒤 허블의 V1(II-05)으로 결론이 났다.</p></div>
+      <div class="dnote"><span class="lb">교과서 탐구</span><b class="t">섀플리 따라 하기</b><p>교과서 탐구(p. 86)에서는 구상 성단 자료로 은하 중심과 크기를 직접 구한다. 시뮬레이션 1은 그 전 단계에서 '왜 별 세기는 실패했나'를 보여 준다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>허셜의 착각: 티끌 속에서 별을 세면?</b></div>
+      <div class="sim-body">
+        <canvas id="sim-dust"></canvas>
+        <div class="ctrl">
+          <label>성간 티끌의 양 (소광) <span class="v" id="dust-av"></span><input type="range" id="dust-a" min="0" max="3" step="0.05" value="0.6"></label>
+          <div class="chips"><button class="chip on" id="dust-stars">원반의 별 보기</button><button class="chip" id="dust-gc">구상 성단 보기</button><button class="chip" id="dust-true">실제 모습 보기</button></div>
+          <div class="out" id="dust-out"></div>
+        </div>
+      </div>
+      <div class="hint">위에서 내려다본 은하 원반(모형). 노란 점이 태양이다. 티끌이 많으면 태양 주변 일정 거리까지만 별이 보여, 보이는 별의 중심이 태양 근처가 된다. '구상 성단 보기'를 켜서 섀플리처럼 중심을 다시 찾아보자.</div>
+    </div>
+  </div>
+  <div class="card split">
+    <h3>(2) 천체까지의 거리 측정 방법</h3>
+    <div class="body">
+      <div class="tw"><table class="data">
+        <thead><tr><th>방법</th><th>원리</th><th>쓸 수 있는 거리</th></tr></thead>
+        <tbody>
+          <tr><th>레이더</th><td>전파 왕복 시간</td><td>태양계 안</td></tr>
+          <tr><th>연주시차</th><td>지구 공전에 따른 시차</td><td>~ 수천 pc (가이아)</td></tr>
+          <tr><th>주계열 맞추기 · 분광 시차</th><td>C-M도·스펙트럼으로 절대 등급 추정</td><td>~ 수만 pc (우리은하 안)</td></tr>
+          <tr><th>세페이드 변광성</th><td>주기–광도 관계</td><td>~ 수천만 pc</td></tr>
+          <tr><th>Ia형 초신성</th><td>최대 절대 등급 약 −19.3</td><td>~ 수십억 pc</td></tr>
+          <tr><th>허블 법칙</th><td>적색 편이 ∝ 거리 (III-04)</td><td>먼 우주</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">핵심</span><b class="t">우주 거리 사다리</b><p>가까운 거리의 방법이 바로 위 단계의 방법을 보정한다. II-05 데이터 탐구에서 직접 올라 본 사다리이다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 우리은하의 구조">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>우리은하의 구조와 규모</h2><span class="tbref">교과서 p. 85</span></div>
+  <div class="card split">
+    <h3>막대 나선 은하, 우리은하</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>은하핵·팽대부</b>: 중심부의 볼록한 부분. 늙은 별이 많고 막대 구조가 있다. 중심에는 태양 질량의 약 <b>400만 배</b>인 블랙홀 <b>궁수자리 A*</b>가 있다.</li>
+        <li><b>원반(나선팔)</b>: 지름 약 <b>30 kpc(약 10만 광년)</b>, 두께는 수백 pc. 젊은 별·산개 성단·성간 물질이 많다.</li>
+        <li><b>헤일로</b>: 원반을 공 모양으로 둘러싼 영역. <b>구상 성단</b>과 늙은 별, 그리고 대부분의 <b>암흑 물질</b>(III-03)이 있다.</li>
+        <li><b>태양의 위치</b>: 은하 중심에서 약 <b>8.2 kpc(약 2만 6천 광년)</b> 떨어진 원반 위, 나선팔 사이의 '오리온 팔'</li>
+      </ul>
+      <div class="figs one"><figure class="fig"><div class="frame"><img src="../assets/img/3-1/milkyway-art.jpg" alt="우리은하 상상도" style="object-fit:contain;background:#000"></div><figcaption>위에서 본 우리은하의 상상도 (관측 자료로 재구성)</figcaption><div class="credit">NASA/JPL-Caltech/R. Hurt (SSC/Caltech)</div></figure></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">노벨상</span><b class="t">궁수자리 A* (2020)</b><p>겐첼과 게즈는 은하 중심 별들의 궤도(케플러 제3법칙!)를 수십 년 추적해 거대 블랙홀의 질량을 구했다. 2022년 사건의 지평선 망원경(EHT)이 그 그림자를 촬영했다.</p></div>
+      <div class="dnote"><span class="lb">비교</span><b class="t">섀플리의 값은?</b><p>섀플리는 태양–은하 중심 거리를 약 15 kpc로 너무 크게 구했다. 그도 성간 소광을 보정하지 못해 구상 성단이 실제보다 멀게 보였기 때문이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>3D 우리은하 모형: 돌려 보기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-mw" style="cursor:grab"></canvas>
+        <div class="ctrl">
+          <div class="chips"><button class="chip" data-v="top">위에서</button><button class="chip on" data-v="tilt">비스듬히</button><button class="chip" data-v="side">옆에서</button></div>
+          <label><input type="checkbox" id="mw-gc" checked> 구상 성단(헤일로) 보이기</label>
+          <label><input type="checkbox" id="mw-lab" checked> 이름표</label>
+          <div class="out">마우스로 끌어 회전할 수 있다. 원반·팽대부·헤일로의 크기와 태양의 위치를 확인하자.<br>원반 지름 ≈ 30 kpc · 태양–중심 ≈ 8.2 kpc</div>
+        </div>
+      </div>
+      <div class="hint">점의 색: 파랑 = 나선팔의 젊은 별, 노랑 = 팽대부·막대의 늙은 별, 주황 동그라미 = 구상 성단. 실제 별 수와 비율은 단순화했다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>모형 맞추기로 성단의 거리와 나이 동시에 구하기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">ESA Gaia 측광 방식 재현</span><span class="skill">모형 적합(model fitting)</span><span class="skill">잔차 · 손실 함수</span><span class="skill">격자 탐색 최적화</span><span>2차시</span></div>
+    <p>가이아처럼 성단 별들의 <b>색지수와 겉보기 등급</b>을 측정한 모의 자료 4개가 있다. 이론으로 계산한 <b>등연령선</b>(같은 나이 별들이 C-M도에 그리는 선)을 <b>위아래로 옮기고(거리)</b> <b>나이를 바꿔 가며</b> 관측 자료와 가장 잘 맞는 값을 찾는다. 맞는 정도는 '평균 제곱 잔차'라는 숫자로 평가한다. 천문학자와 데이터 과학자가 모형을 자료에 맞추는 방법 그대로이다.</p>
+    <div class="steps-lab">
+      <div><b>눈으로 맞추기</b>성단을 고르고, 거리지수 슬라이더로 주계열의 높이를 먼저 맞춘다.</div>
+      <div><b>나이 맞추기</b>나이 슬라이더로 전향점과 거성 가지를 맞춘다.</div>
+      <div><b>숫자로 평가</b>'평균 제곱 잔차'가 가장 작아지도록 미세 조정한다. 값이 작을수록 모형이 자료를 잘 설명한다.</div>
+      <div><b>컴퓨터와 비교</b>'자동 맞추기'(격자 탐색)를 눌러 컴퓨터가 찾은 값과 내 값을 비교하고, 거리(pc)와 나이를 정리한다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>C-M도 모형 맞추기</b></div>
+      <div class="sim-body">
+        <canvas id="lab-cmd"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="lab-cl"><button class="chip on" data-c="0">성단 A</button><button class="chip" data-c="1">성단 B</button><button class="chip" data-c="2">성단 C</button><button class="chip" data-c="3">성단 D</button></div>
+          <label>거리지수 m − M <span class="v" id="lab-dmv"></span><input type="range" id="lab-dm" min="3" max="17" step="0.02" value="8"></label>
+          <label>나이 (log 년) <span class="v" id="lab-agv"></span><input type="range" id="lab-ag" min="7" max="10.15" step="0.01" value="8.5"></label>
+          <div class="kpi" id="lab-kpi"></div>
+          <div class="btns"><button class="tbtn" id="lab-auto" type="button">🤖 자동 맞추기</button><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+          <div class="out" id="lab-out"></div>
+        </div>
+      </div>
+      <div class="hint">점: 관측된 성단 별(겉보기 등급). 노란 선: 등연령선 모형(절대 등급 + 거리지수). 성간 소광은 없다고 가정한 모의 자료이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 네 성단의 거리(pc)와 나이를 표로 정리하고, 산개 성단과 구상 성단으로 분류해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>A: m − M ≈ 5.65 → 약 135 pc, 약 1억 년(플레이아데스형 산개 성단) · B: ≈ 3.3 → 약 46 pc, 약 6억 년(히아데스형 산개 성단) · C: ≈ 9.6 → 약 830 pc, 약 40억 년(M67형 늙은 산개 성단) · D: ≈ 14.4 → 약 7.6 kpc, 약 120억 년(M5형 구상 성단). D만 수평 가지가 있고 전향점이 가장 낮다.</div></div>
+    <h4>2. 거리지수와 나이를 '동시에' 맞춰야 하는 까닭은? 둘 중 하나가 틀리면 어떤 일이 생길까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>전향점의 높이는 거리(위아래 이동)와 나이(전향점 위치) 모두에 영향을 받는다. 거리를 너무 가깝게 잡으면 전향점이 실제보다 밝아 보여 나이를 젊게 판단하게 된다. 그래서 전향점에 영향을 덜 받는 주계열 아래쪽으로 거리를 먼저 맞추고, 그다음 나이를 맞춘다.</div></div>
+    <h4>3. 평균 제곱 잔차를 쓰는 까닭은 무엇이며, 자동 맞추기(격자 탐색)의 한계는?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>모든 별에서 모형과의 차이를 제곱해 평균하면 '얼마나 잘 맞나'를 하나의 숫자로 비교할 수 있다(부호 상쇄 방지). 격자 탐색은 모든 조합을 다 계산하므로 느리고, 격자 간격보다 정밀한 값은 찾지 못한다. 또 모형 자체가 틀리면(예: 소광 무시) 최적값도 틀린다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: ESO, NASA/ESA Hubble, NASA/JPL-Caltech (Wikimedia Commons 경유) 및 Wikimedia Commons 이용자 사진. C-M도 자료는 단순화한 등연령선 모형으로 만든 교육용 모의 자료입니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "색지수(B − V)에 대한 설명으로 옳은 것은?", "options": ["① 별까지의 거리가 멀수록 커진다", "② 태양의 색지수는 0이다", "③ 붉은 별일수록 작다", "④ 표면 온도가 높을수록 작다", "⑤ 별의 질량에 비례한다"], "answer": 3, "explain": "뜨거운 별은 파란빛이 강해 B 등급이 작아지므로 B − V가 작습니다. A0형(약 1만 K)이 0입니다."},
+  {"lv": "적용", "q": "두 성단의 C-M도에서 전향점이 더 아래쪽(어둡고 붉은 쪽)에 있는 성단에 대한 설명으로 옳은 것은?", "options": ["① 더 늙었다", "② 더 젊다", "③ 더 가깝다", "④ 더 무거운 별이 주계열에 남아 있다", "⑤ 금속 함량이 반드시 높다"], "answer": 0, "explain": "시간이 지날수록 덜 무거운 별까지 주계열을 떠나 전향점이 아래로 내려갑니다."},
+  {"lv": "계산", "q": "어떤 성단의 주계열을 표준 주계열에 맞추었더니 같은 색지수에서 성단 별이 10등급 더 어두웠다. 성단까지의 거리는?", "options": ["① 100 pc", "② 1000 pc", "③ 10000 pc", "④ 100000 pc", "⑤ 10 pc"], "answer": 1, "explain": "m − M = 10 → r = 10^((10+5)/5) = 1000 pc입니다."},
+  {"lv": "적용", "q": "섀플리가 은하의 중심을 찾는 데 구상 성단을 이용한 까닭으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 구상 성단은 은하 원반 밖 헤일로에 넓게 분포한다.</li><li>ㄴ. 구상 성단은 매우 밝아 멀리서도 보인다.</li><li>ㄷ. 구상 성단 속 맥동 변광성으로 거리를 잴 수 있다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 4, "explain": "헤일로에 퍼져 티끌의 영향을 덜 받고, 밝으며, 변광성으로 거리를 잴 수 있어 은하 전체 규모를 알려 줍니다."},
+  {"lv": "기본", "q": "허셜과 캅테인이 태양이 은하 중심 가까이 있다고 잘못 생각한 까닭은?", "options": ["① 망원경이 없었기 때문", "② 구상 성단을 관측했기 때문", "③ 은하가 회전하기 때문", "④ 성간 소광을 고려하지 않았기 때문", "⑤ 세페이드 변광성을 이용했기 때문"], "answer": 3, "explain": "티끌이 먼 별빛을 가려 어느 방향이든 비슷한 거리까지만 별이 보였기 때문입니다."},
+  {"lv": "기본", "q": "우리은하의 구조에 대한 설명으로 옳지 않은 것은?", "options": ["① 구상 성단은 주로 나선팔에 분포한다", "② 막대 나선 은하이다", "③ 원반의 지름은 약 30 kpc이다", "④ 태양은 은하 중심에서 약 8 kpc 떨어져 있다", "⑤ 중심에 거대 블랙홀이 있다"], "answer": 0, "explain": "구상 성단은 원반을 둘러싼 헤일로에 분포합니다. 나선팔에는 젊은 산개 성단이 많습니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 모형을 맞출 때 '평균 제곱 잔차'를 사용하는 까닭은?", "options": ["① 그래프를 예쁘게 그리기 위해", "② 별의 수를 세기 위해", "③ 성간 소광을 측정하기 위해", "④ 색지수를 구하기 위해", "⑤ 모형과 자료의 차이를 하나의 숫자로 비교해 가장 잘 맞는 값을 고르기 위해"], "answer": 4, "explain": "차이를 제곱해 평균하면 부호 상쇄 없이 맞는 정도를 수치로 비교할 수 있습니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-1.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

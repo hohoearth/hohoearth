@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03. 우리은하의 회전과 질량 분포</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-3">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>너무 빨리 도는 은하의 가장자리</h2><span class="tbref">교과서 p. 94</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>은하의 <b>회전 속도 곡선</b>을 이용하여 우리은하의 질량 분포를 설명할 수 있다.</li>
+      <li>은하에 <b>빛을 내지 않는 물질</b>이 존재한다는 사실을 추론할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-3/m31.jpg" alt="안드로메다은하"></div>
+        <figcaption>안드로메다은하 (M31)</figcaption>
+        <div class="credit">Adam Evans, CC BY 2.0</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-3/vera-rubin.jpg" alt="베라 루빈" style="object-fit:contain;background:#111"></div>
+        <figcaption>베라 루빈 (1928 ~ 2016) · 은하 회전 곡선으로 암흑 물질의 증거를 제시</figcaption>
+        <div class="credit">NASA, 퍼블릭 도메인</div>
+      </figure>
+    </div>
+    <div class="qbig">태양계에서는 바깥 행성일수록 느리게 돈다(해왕성 5 km/s, 수성 48 km/s).<br>그런데 1970년대 베라 루빈은 안드로메다은하의 바깥쪽 별과 가스도 안쪽만큼 빠르게 돈다는 것을 발견했다. 무엇을 뜻할까?</div>
+    <p class="tnote">1-03의 케플러 회전(V ∝ 1/<span class='sqrt'><span>r</span></span>)을 떠올리게 한 뒤, '보이는 질량만으로는 바깥쪽 속도를 설명할 수 없다 → 보이지 않는 질량'이라는 결론까지 학생 스스로 추론하게 합니다. 운영안 3차시(회전·21 cm 1 / 회전 곡선·질량 1 / 암흑 물질·데이터 탐구 1).</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 21 cm 수소선과 은하 회전">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>21 cm 수소선으로 은하의 회전 재기</h2><span class="tbref">교과서 p. 94 ~ 95</span></div>
+  <div class="card split">
+    <h3>(1) 우리은하의 회전과 21 cm 수소선</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>태양을 포함한 원반의 별과 가스는 은하 중심을 돈다. 태양은 약 <b>230 km/s</b>로 돌며, 한 바퀴에 약 <b>2억 3천만 년</b>(은하년)이 걸린다.</li>
+        <li><b>21 cm 수소선</b>: 중성 수소 원자의 전자 스핀 방향이 바뀔 때 나오는 파장 21.1 cm(1420 MHz)의 전파. 티끌에 막히지 않아 <b>은하 반대편</b>까지 관측할 수 있다.</li>
+        <li>수소 구름이 은하 회전으로 움직이면 21 cm 선이 <b>도플러 이동</b>한다. 한 방향(은경 l)을 보면 거리가 다른 여러 구름의 선이 겹쳐 나타난다.</li>
+        <li><b>접선점 방법</b>: 시선이 은하 중심에 가장 가까이 지나는 점(접선점)에 있는 구름이 가장 큰 시선 속도를 보인다. 그 거리 R = R₀ sin l, 회전 속도 V(R) = v<sub>r, max</sub> + V₀ sin l</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">숫자로 보기</span><b class="t">한 원자는 1천만 년에 한 번</b><p>수소 원자 하나가 21 cm 선을 내는 데 평균 약 1100만 년이 걸리지만, 은하에는 수소가 매우 많아 강한 신호가 잡힌다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · III-02</span><b class="t">H Ⅰ 영역</b><p>21 cm 선은 약 100 K의 중성 수소 영역에서 나온다. 이 지도로 나선팔 구조도 그렸다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>전파 망원경으로 회전 곡선 그리기 (접선점 방법)</b></div>
+      <div class="sim-body">
+        <canvas id="sim-21"></canvas>
+        <div class="ctrl">
+          <label>관측 방향 은경 l <span class="v" id="h21-lv"></span><input type="range" id="h21-l" min="5" max="85" step="1" value="30"></label>
+          <div class="btns"><button class="tbtn on" id="h21-rec" type="button">📍 최대 속도 기록</button><button class="tbtn" id="h21-clr" type="button">지우기</button></div>
+          <div class="out" id="h21-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽: 위에서 본 우리은하(모형)와 시선 방향. 가운데: 그 방향의 21 cm 스펙트럼(가로축: 시선 속도). 오른쪽: 기록한 회전 곡선. 여러 방향을 기록해 회전 곡선을 완성하자. (R₀ = 8.2 kpc, V₀ = 230 km/s)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 회전 곡선과 질량">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>회전 속도 곡선과 질량 분포</h2><span class="tbref">교과서 p. 96</span></div>
+  <div class="card split">
+    <h3>세 가지 회전 모형과 실제 회전 곡선</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>강체 회전</b>: 질량이 고르게 퍼진 원판처럼 V ∝ R. 은하 <b>중심부</b>가 이렇게 돈다.</li>
+        <li><b>케플러 회전</b>: 질량이 중심에 몰려 있으면 V ∝ 1/<span class='sqrt'><span>R</span></span> (태양계 행성처럼). 빛을 내는 물질은 대부분 중심부에 있으므로 은하 바깥쪽은 이렇게 돌 것으로 예상했다.</li>
+        <li><b>실제 관측</b>: 바깥쪽에서도 회전 속도가 줄지 않고 거의 <b>일정</b>하다(평탄한 회전 곡선).</li>
+        <li>원 궤도 운동에서 반지름 R 안의 질량은 M(R) = V²R/G. V가 일정하면 <b>M ∝ R</b> → 별이 거의 없는 바깥쪽에도 질량이 계속 늘어난다 → <b>빛을 내지 않는 물질(암흑 물질)</b></li>
+      </ul>
+      <div class="eq"><span class="frac"><span><i>G M</i>(<i>R</i>) <i>m</i></span><span><i>R</i>²</span></span> = <span class="frac"><span><i>m V</i>²</span><span><i>R</i></span></span> &nbsp;⟹&nbsp; <i>M</i>(<i>R</i>) = <span class="frac"><span><i>V</i>² <i>R</i></span><span><i>G</i></span></span> <span class="note">태양 궤도 안의 질량: (230 km/s)² × 8.2 kpc / G ≈ 1.0 × 10¹¹ M☉</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산</span><b class="t">G를 편한 단위로</b><p>G = 4.30 × 10⁻⁶ kpc·(km/s)²/M☉<br>M = 230² × 8.2 / 4.30×10⁻⁶ ≈ 1.0 × 10¹¹ M☉</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">우리은하 전체 질량</b><p>헤일로 바깥까지 포함하면 약 1 × 10¹² M☉로 추정되며, 그중 약 90%가 암흑 물질이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>회전 방식에 따라 은하는 어떻게 돌까?</b></div>
+      <div class="sim-body">
+        <canvas id="sim-rc"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="rc-mode"><button class="chip" data-m="rigid">강체 회전</button><button class="chip" data-m="kepler">케플러 회전</button><button class="chip on" data-m="flat">실제 (평탄)</button></div>
+          <div class="btns"><button class="tbtn" id="rc-reset" type="button">↻ 일직선으로 다시 줄 세우기</button></div>
+          <div class="out" id="rc-out"></div>
+        </div>
+      </div>
+      <div class="hint">처음에 한 줄로 늘어선 별들이 시간이 지나며 어떻게 휘어지는지 비교하자. 강체 회전에서는 줄이 그대로 유지되고, 나머지는 안쪽이 앞서 나가며 휘어진다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 암흑 물질">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>암흑 물질의 증거</h2><span class="tbref">교과서 p. 97</span></div>
+  <div class="card split">
+    <h3>보이지 않지만 중력으로 드러나는 물질</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>암흑 물질</b>: 전자기파로는 관측되지 않고 <b>중력</b>으로만 존재가 드러나는 물질. 은하를 둘러싼 헤일로에 넓게 분포한다.</li>
+        <li><b>증거 ①</b> 나선 은하의 평탄한 회전 곡선 (루빈, 1970년대)</li>
+        <li><b>증거 ②</b> 은하단 속 은하들의 빠른 운동 (츠비키, 1933): 보이는 질량으로는 은하단이 흩어져야 한다.</li>
+        <li><b>증거 ③</b> 중력 렌즈: 은하단 뒤 은하의 빛이 휘는 정도로 잰 질량이 보이는 질량보다 훨씬 크다.</li>
+        <li><b>증거 ④</b> 총알 은하단: 충돌한 두 은하단에서 뜨거운 기체(X선, 보통 물질)와 중력 렌즈로 잰 질량의 위치가 서로 어긋나 있다.</li>
+        <li>우주 전체에서 암흑 물질은 보통 물질의 약 <b>5배</b>이다. 정체는 아직 밝혀지지 않았다.</li>
+      </ul>
+      <div class="figs">
+        <figure class="fig"><div class="frame"><img src="../assets/img/3-3/abell.jpg" alt="은하단 Abell 2218의 중력 렌즈"></div><figcaption>은하단 Abell 2218 · 휘어진 호는 뒤쪽 은하의 상</figcaption><div class="credit">NASA, A. Fruchter and the ERO Team</div></figure>
+        <figure class="fig"><div class="frame"><img src="../assets/img/3-3/bullet.jpg" alt="총알 은하단"></div><figcaption>총알 은하단 · 분홍 = X선 기체, 파랑 = 중력 렌즈로 잰 질량</figcaption><div class="credit">NASA/CXC/M. Weiss 외, 퍼블릭 도메인</div></figure>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">오개념 주의</span><b class="t">암흑 물질 ≠ 블랙홀, ≠ 성간 티끌</b><p>성간 티끌은 빛을 흡수·방출하고, 블랙홀의 질량은 은하 전체에 비해 매우 작다. 암흑 물질은 빛과 거의 상호작용하지 않는 미지의 물질로 추정된다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · III-05</span><b class="t">우주거대구조</b><p>암흑 물질의 중력이 초기 우주의 작은 밀도 차이를 키워 은하와 은하단, 우주 그물을 만들었다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>NGC 3198의 회전 곡선을 모형으로 분해해 암흑 물질 찾기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">NRAO 전파 관측 · 21 cm (Begeman 1989)</span><span class="skill">다성분 모형 적합</span><span class="skill">잔차 분석</span><span class="skill">비율 계산</span><span>2차시</span></div>
+    <p>나선 은하 NGC 3198은 21 cm 관측으로 별이 거의 없는 바깥쪽 30 kpc까지 회전 속도를 잰, <b>암흑 물질 연구의 교과서 같은 은하</b>이다. 관측된 회전 곡선을 ① 빛을 내는 원반(별+가스)의 기여와 ② 암흑 물질 헤일로의 기여로 나누는 <b>모형</b>을 만들고, 반지름에 따라 암흑 물질이 차지하는 비율을 구해 보자.</p>
+    <div class="steps-lab">
+      <div><b>보이는 물질만으로</b>원반의 질량(빛의 양 × 질량–광도비)만 조절해 관측값과 맞춰 본다. 안쪽은 맞지만 바깥쪽은?</div>
+      <div><b>헤일로 추가</b>암흑 물질 헤일로의 세기(V<sub>∞</sub>)와 중심핵 크기(r<sub>c</sub>)를 조절한다. 전체 속도 V² = V<sub>원반</sub>² + V<sub>헤일로</sub>²</div>
+      <div><b>잔차 줄이기</b>평균 제곱 잔차가 가장 작은 조합을 찾는다(또는 '자동 맞추기').</div>
+      <div><b>질량 비율</b>각 반지름에서 M(R) = V²R/G로 전체 질량과 원반 질량을 구해, 암흑 물질 비율을 그래프로 본다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>NGC 3198 회전 곡선 분해</b></div>
+      <div class="sim-body">
+        <canvas id="lab-rc"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="lab-view"><button class="chip on" data-v="v">회전 속도</button><button class="chip" data-v="m">누적 질량</button></div>
+          <label>원반 질량 (M/L 배율) <span class="v" id="lab-dv"></span><input type="range" id="lab-d" min="0" max="2" step="0.01" value="1"></label>
+          <label>헤일로 세기 V<sub>∞</sub> <span class="v" id="lab-hv"></span><input type="range" id="lab-h" min="0" max="200" step="1" value="0"></label>
+          <label>헤일로 중심핵 r<sub>c</sub> <span class="v" id="lab-rv"></span><input type="range" id="lab-r" min="0.5" max="15" step="0.1" value="5"></label>
+          <div class="kpi" id="lab-kpi"></div>
+          <div class="btns"><button class="tbtn" id="lab-auto" type="button">🤖 자동 맞추기</button><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+          <div class="out" id="lab-out"></div>
+        </div>
+      </div>
+      <div class="hint">점과 오차 막대: 관측값(거리 9.4 Mpc 가정, 문헌 값을 반올림). 파랑: 원반, 보라: 헤일로, 노랑: 전체 모형.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 원반만으로 관측값을 맞추려 하면 어떤 문제가 생기는가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>안쪽(약 5 kpc 이내)을 맞추면 바깥쪽에서 모형 속도가 케플러 회전처럼 떨어져 관측값(약 150 km/s)보다 훨씬 작아진다. 바깥쪽을 맞추려고 원반 질량을 키우면 안쪽 속도가 관측값보다 너무 커진다. 원반 하나로는 둘 다 맞출 수 없다.</div></div>
+    <h4>2. 가장 잘 맞는 모형에서 30 kpc 안의 전체 질량과 암흑 물질 비율은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>M(30 kpc) = 148² × 30 / 4.30×10⁻⁶ ≈ 1.5 × 10¹¹ M☉. 자동 맞추기 결과 원반은 약 1 ~ 2 × 10¹⁰ M☉ → 암흑 물질이 약 90%(원반 질량을 관측 속도를 넘지 않는 최대로 잡아도 약 70% 이상). 5 kpc 안에서는 원반과 암흑 물질이 비슷하지만, 바깥으로 갈수록 암흑 물질 비율이 커진다.</div></div>
+    <h4>3. 심화 · '원반 질량을 최대로'(최대 원반) 잡아도 결론이 바뀌지 않는 까닭은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>원반의 질량–광도비는 정확히 알기 어려워 일부러 가장 크게 잡아도(안쪽 속도를 넘지 않는 한), 원반 기여는 바깥에서 1/<span class='sqrt'><span>R</span></span>로 줄어든다. 따라서 바깥쪽의 평탄한 속도는 원반이 아닌 넓게 퍼진 다른 질량(헤일로)이 있어야만 설명된다. 결론이 가정에 크게 의존하지 않는다는 점이 이 증거를 강하게 만든다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: NASA/CXC/STScI, NASA/ESA, Wikimedia Commons 이용자 사진. NGC 3198 회전 곡선은 Begeman(1989), van Albada 외(1985)의 21 cm 관측값을 반올림한 값이며, 원반 모형은 지수 원반(Freeman 1970)을 단순화했습니다. 21 cm 시뮬레이션의 은하는 교육용 모형입니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "21 cm 수소선 관측의 장점으로 옳은 것은?", "options": ["① 성간 티끌에 거의 흡수되지 않아 은하 반대편까지 관측할 수 있다", "② 뜨거운 별만 관측할 수 있다", "③ 가시광선이라 맨눈으로 볼 수 있다", "④ 분자운의 H₂를 직접 관측한다", "⑤ 은하 중심의 블랙홀만 관측한다"], "answer": 0, "explain": "파장이 긴 전파는 티끌을 통과하므로 우리은하 전체의 중성 수소 분포와 운동을 알 수 있습니다."},
+  {"lv": "적용", "q": "질량이 은하 중심에 집중되어 있다면 회전 속도 V는 거리 R에 따라 어떻게 변하는가?", "options": ["① V ∝ R", "② V 일정", "③ V ∝ 1/<span class='sqrt'><span>R</span></span>", "④ V ∝ R²", "⑤ V ∝ <span class='sqrt'><span>R</span></span>"], "answer": 2, "explain": "케플러 회전으로 V = <span class='sqrt'><span>GM/R</span></span>이므로 1/<span class='sqrt'><span>R</span></span>에 비례합니다."},
+  {"lv": "계산", "q": "은하 중심에서 10 kpc 떨어진 별의 회전 속도가 200 km/s이다. 이 반지름 안의 질량은? (G = 4.3 × 10⁻⁶ kpc·(km/s)²/M☉)", "options": ["① 약 9 × 10⁹ M☉", "② 약 4.7 × 10¹⁰ M☉", "③ 약 9.3 × 10¹⁰ M☉", "④ 약 4.7 × 10¹¹ M☉", "⑤ 약 9.3 × 10¹¹ M☉"], "answer": 2, "explain": "M = V²R/G = 40000 × 10 / 4.3×10⁻⁶ ≈ 9.3 × 10¹⁰ M☉입니다."},
+  {"lv": "적용", "q": "우리은하 회전 곡선에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 중심부에서는 강체 회전에 가까운 특성이 나타난다.</li><li>ㄴ. 바깥쪽 회전 속도는 케플러 회전처럼 빠르게 감소한다.</li><li>ㄷ. 바깥쪽에서도 반지름 안의 질량이 계속 증가한다.</li></ul>", "options": ["① ㄱ", "② ㄴ", "③ ㄱ, ㄷ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "실제 바깥쪽 회전 속도는 거의 일정하여 M ∝ R로 질량이 계속 늘어납니다."},
+  {"lv": "기본", "q": "암흑 물질의 존재를 뒷받침하는 증거가 아닌 것은?", "options": ["① 나선 은하의 평탄한 회전 곡선", "② 은하단 속 은하들의 빠른 운동", "③ 중력 렌즈로 잰 은하단의 질량", "④ 총알 은하단의 질량 분포", "⑤ 은하수 가운데의 검은 띠"], "answer": 4, "explain": "은하수의 검은 띠는 빛을 흡수하는 성간 티끌 때문입니다."},
+  {"lv": "적용", "q": "접선점 방법에서 은경 l = 30° 방향의 최대 시선 속도가 115 km/s이다. 접선점의 회전 속도는? (R₀ = 8 kpc, V₀ = 230 km/s, sin 30° = 0.5)", "options": ["① 115 km/s", "② 200 km/s", "③ 230 km/s", "④ 345 km/s", "⑤ 460 km/s"], "answer": 2, "explain": "V(R) = v_max + V₀ sin l = 115 + 115 = 230 km/s, 접선점 거리 R = 8 × 0.5 = 4 kpc입니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 NGC 3198의 회전 곡선을 원반만으로 설명할 수 없는 까닭은?", "options": ["① 원반이 회전하지 않기 때문", "② 관측 오차가 너무 크기 때문", "③ 은하가 너무 가깝기 때문", "④ 원반의 기여는 바깥에서 줄어드는데 관측 속도는 일정하기 때문", "⑤ 21 cm 선은 원반에서 나오지 않기 때문"], "answer": 3, "explain": "빛을 내는 질량은 중심에 몰려 있어 바깥에서 속도가 줄어야 하지만, 관측은 평탄해 넓게 퍼진 추가 질량이 필요합니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-3.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

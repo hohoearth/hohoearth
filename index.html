@@ -77,6 +77,7 @@
 
       <!-- 중앙 퀵 네비게이션 -->
       <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-slate-500">
+        <a href="#courses" class="hover:text-black transition-colors">지구과학 수업</a>
         <a href="#showcase" class="hover:text-black transition-colors">탐구 활동</a>
         <a href="#lab" class="hover:text-black transition-colors">AI활용 도구</a>
         <a href="#archive" class="hover:text-black transition-colors">전체 아카이브</a>
@@ -182,6 +183,106 @@
       </div>
     </div>
 
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 2-1. 지구과학 수업 (과목 3개) -->
+  <!--   과목을 추가하면 아래 카드를 하나 복사하고, js/courses-data.js 와 data/items.js 도 함께 고치세요. -->
+  <!-- ============================================== -->
+  <section id="courses" class="py-24 px-6 max-w-7xl mx-auto space-y-12">
+    <div class="text-center max-w-3xl mx-auto space-y-3">
+      <span class="text-xs font-bold tracking-widest text-indigo-600 uppercase">Earth Science Classes</span>
+      <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">지구과학 수업</h2>
+      <p class="text-slate-500 text-sm sm:text-base">과목을 고르면 차시별 수업자료를 볼 수 있어요. 모든 수업 화면에서 <b class="text-slate-700">판서</b>와 <b class="text-slate-700">학급별 진도 체크</b>를 쓸 수 있습니다.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="group bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col">
+        <button type="button" onclick="showSubject('earth')" class="block h-48 overflow-hidden bg-white border-b border-slate-100 relative">
+          <img src="assets/textbook/fig_01-01_p2_2.png" alt="지구과학 수업" class="w-full h-full object-contain p-3 group-hover:scale-105 transition duration-500" loading="lazy" />
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-black bg-indigo-600 text-white">지구과학Ⅰ</span>
+        </button>
+        <div class="p-7 flex-1 flex flex-col justify-between gap-5">
+          <div class="space-y-2">
+            <h3 class="text-2xl font-black text-slate-900">지구과학</h3>
+            <p class="text-sm text-slate-500">고등학교 지구과학Ⅰ · 17차시</p>
+            <ul class="text-sm text-slate-600 space-y-1 pt-1">
+              <li>Ⅰ. 대기와 해양의 상호작용</li>
+              <li>Ⅱ. 지구의 역사와 한반도의 암석</li>
+              <li>Ⅲ. 우주</li>
+            </ul>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="showSubject('earth')" class="flex-1 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="layout-grid" class="w-4 h-4"></i> 차시별 보기
+            </button>
+            <a href="courses/earth/index.html" class="flex-1 py-3 rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="book-open" class="w-4 h-4"></i> 과목 메인
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="group bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col">
+        <button type="button" onclick="showSubject('earthsystem')" class="block h-48 overflow-hidden bg-slate-900 border-b border-slate-100 relative">
+          <img src="courses/earthsystem/assets/img/1-1/earth-apollo17.jpg" alt="지구시스템과학 수업" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-black bg-teal-600 text-white">고3 · 진로 선택</span>
+        </button>
+        <div class="p-7 flex-1 flex flex-col justify-between gap-5">
+          <div class="space-y-2">
+            <h3 class="text-2xl font-black text-slate-900">지구시스템과학</h3>
+            <p class="text-sm text-slate-500">고등학교 3학년 · 16차시 · 인터랙티브 시뮬레이션</p>
+            <ul class="text-sm text-slate-600 space-y-1 pt-1">
+              <li>I. 지구 탄생과 생동하는 지구</li>
+              <li>II. 해수의 운동과 순환</li>
+              <li>III. 강수 과정과 대기의 운동</li>
+            </ul>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="showSubject('earthsystem')" class="flex-1 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="layout-grid" class="w-4 h-4"></i> 차시별 보기
+            </button>
+            <a href="courses/earthsystem/index.html" class="flex-1 py-3 rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="book-open" class="w-4 h-4"></i> 과목 메인
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="group bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col">
+        <button type="button" onclick="showSubject('planetary')" class="block h-48 overflow-hidden bg-black border-b border-slate-100 relative">
+          <img src="courses/planetary/assets/img/1-1/jwst.jpg" alt="행성우주과학 수업" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-black bg-violet-600 text-white">고3 · 진로 선택</span>
+        </button>
+        <div class="p-7 flex-1 flex flex-col justify-between gap-5">
+          <div class="space-y-2">
+            <h3 class="text-2xl font-black text-slate-900">행성우주과학</h3>
+            <p class="text-sm text-slate-500">고등학교 3학년 · 15차시 · 차시마다 실제 데이터 탐구</p>
+            <ul class="text-sm text-slate-600 space-y-1 pt-1">
+              <li>I. 우주 탐사와 행성계</li>
+              <li>II. 태양과 별의 관측</li>
+              <li>III. 은하와 우주</li>
+            </ul>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="showSubject('planetary')" class="flex-1 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="layout-grid" class="w-4 h-4"></i> 차시별 보기
+            </button>
+            <a href="courses/planetary/index.html" class="flex-1 py-3 rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <i data-lucide="book-open" class="w-4 h-4"></i> 과목 메인
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="max-w-4xl mx-auto grid sm:grid-cols-3 gap-3 text-sm">
+      <div class="flex gap-3 items-start bg-white border border-slate-200 rounded-2xl p-4"><i data-lucide="pen-tool" class="w-5 h-5 text-rose-500 shrink-0"></i><span class="break-keep"><b>판서</b> — 수업 화면 오른쪽 아래 <b>✎ 판서</b>로 펜·형광펜·지우개 사용</span></div>
+      <div class="flex gap-3 items-start bg-white border border-slate-200 rounded-2xl p-4"><i data-lucide="users" class="w-5 h-5 text-indigo-500 shrink-0"></i><span class="break-keep"><b>학급별 저장</b> — 학급을 고르면 판서와 멈춘 위치가 반마다 따로 남아요</span></div>
+      <div class="flex gap-3 items-start bg-white border border-slate-200 rounded-2xl p-4"><i data-lucide="list-checks" class="w-5 h-5 text-emerald-500 shrink-0"></i><span class="break-keep"><b>진도 체크</b> — <b>수업 완료</b>를 누르면 진도표에 반별로 기록</span></div>
+    </div>
   </section>
 
   <!-- ============================================== -->
@@ -1101,6 +1202,9 @@
     <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
       <!-- JavaScript로 동적 렌더링 -->
     </div>
+
+    <!-- 수업 자료 과목 버튼 (수업 자료 탭에서만 보임) -->
+    <div id="subject-tabs" class="hidden flex items-center gap-2 overflow-x-auto pb-1 -mt-4 scrollbar-none"></div>
 
     <!-- 선택된 태그 필터 배너 -->
     <div id="active-tag-banner" class="hidden items-center gap-2"></div>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. 해일</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="2-4">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>방파제를 넘는 바닷물</h2><span class="tbref">교과서 p. 66</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>해일이 발생하는 <b>여러 가지 원인</b>을 설명할 수 있다.</li>
+      <li>해일의 <b>피해 사례를 조사</b>하고 <b>대처 방안</b>을 제안할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig"><div class="frame"><img src="../assets/img/2-3/surge.jpg" alt="허리케인 폭풍 해일로 잠긴 거리"></div><figcaption>허리케인의 폭풍 해일로 잠긴 해안 도시</figcaption><div class="credit">Adog, CC BY-SA 4.0</div></figure>
+      <figure class="fig"><div class="frame"><img src="../assets/img/2-3/aceh.jpg" alt="2004년 지진 해일 피해"></div><figcaption>2004년 인도양 지진 해일 뒤의 반다아체</figcaption><div class="credit">U.S. Navy, 퍼블릭 도메인</div></figure>
+    </div>
+    <div class="qbig">큰 지진이 나거나 태풍이 지나가면 바닷물이 방파제를 넘어 해안을 덮친다.<br>지진이나 태풍은 어떻게 이런 큰 물결을 일으킬까?</div>
+    <p class="tnote">예시: 해저 지진이나 태풍이 해수면의 높이를 크게 바꾸면서 해파가 생기고 퍼져 나가기 때문입니다. 교과서 운영안은 3차시(폭풍 해일·지진 해일 / 탐구 프로젝트 2차시)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 폭풍 해일">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>폭풍 해일</h2><span class="tbref">교과서 p. 66</span></div>
+  <div class="card split">
+    <h3>태풍이 해수면을 들어 올린다</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>해일</b>: 태풍, 해저 지진, 해저 화산 폭발, 운석 충돌 등으로 해수면이 높아져 바닷물이 육지로 밀려드는 현상</li>
+        <li><b>폭풍 해일</b>: 태풍 같은 강한 저기압이 해안에 다가올 때 해수면이 높아져 바닷물이 내륙으로 밀려드는 현상</li>
+        <li><b>기압 효과</b>: 저기압 중심은 기압이 낮아 해수면이 주변보다 높다. 해면 기압이 <b>1 hPa 낮아지면 해수면은 약 1 cm 높아진다</b>. 중심 기압이 주변보다 50 hPa 낮으면 약 50 cm 높아진다.</li>
+        <li><b>바람 효과</b>: 태풍의 강풍이 바닷물을 해안으로 밀어 올린다. 해안이 태풍의 <b>위험 반원</b>에 있으면 해안 쪽으로 부는 바람 때문에 해수면이 더 높아진다.</li>
+        <li><b>만조와 겹치면</b> 해수면이 이미 높으므로 피해가 더 커진다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산해 보기</span><b class="t">1 hPa = 1 cm 의 근거</b><p>정역학 방정식 ΔP = ρgΔZ에 ΔP = 100 Pa, ρ = 1000 kg/m³, g = 10 m/s²를 넣으면 ΔZ = 0.01 m = 1 cm이다.</p></div>
+      <div class="dnote"><span class="lb">용어</span><b class="t">역기압 효과</b><p>해면 기압이 높아지면 해수면이 내려가고, 낮아지면 올라가는 현상이다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · II-1</span><b class="t">정역학 평형</b><p>해수에 작용하는 압력과 해수면 높이의 관계는 II-1에서 배운 정역학 평형으로 설명된다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>폭풍 해일: 무엇이 해수면을 높일까?</b></div>
+      <div class="sim-body">
+        <canvas id="sim-surge"></canvas>
+        <div class="ctrl">
+          <label>태풍 중심 기압이 주변보다 낮은 정도 <span class="v" id="sg-pv"></span><input type="range" id="sg-p" min="0" max="80" step="5" value="40"></label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sg-danger"> 해안이 태풍의 위험 반원에 있음</label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sg-high"> 만조 시각과 겹침</label>
+          <div class="out" id="sg-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽 쌓기 막대는 해수면을 높이는 요인을 더한 것이다. 세 요인을 하나씩 켜 보며 언제 방파제를 넘는지 확인하자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 지진 해일">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>지진 해일 (쓰나미)</h2><span class="tbref">교과서 p. 67</span></div>
+  <div class="card split">
+    <h3>대양을 비행기처럼 건너는 파도</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>해저에서 지진, 화산 폭발, 산사태 등이 일어나 해수면이 급격히 변하면 <b>파장이 매우 긴 해파</b>가 생긴다. 이것이 해안으로 밀려와 생긴 해일이 <b>지진 해일(쓰나미)</b>이다.</li>
+        <li>파장이 <b>100~200 km</b>로 매우 길어서, 평균 수심 약 4 km인 대양 한가운데에서도 <b>천해파</b>의 특징을 나타낸다.</li>
+        <li>천해파의 속도는 수심의 제곱근에 비례하므로 <b>깊은 대양에서 매우 빠르다</b>.</li>
+        <li>해안에 가까워지면 느려지는 대신 <b>파장이 짧아지고 파고가 수 m~수십 m</b>로 높아져 내륙까지 밀려든다.</li>
+        <li><b>사례</b>: 2004년 인도네시아 수마트라 앞바다 규모 9.1 지진의 해일, 2011년 일본 북동부 규모 9.1 지진의 해일(원자력 발전소 방사능 물질 유출)</li>
+      </ul>
+      <div class="chain">
+        <div><b>① 해저 지진</b></div><i>→</i><div><b>② 해수면 진동</b></div><i>→</i><div><b>③ 깊은 바다</b>매우 빠름</div><i>→</i><div><b>④ 얕은 바다</b>파고 상승</div><i>→</i><div><b>⑤ 해안 피해</b></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">자료 연계 물음</span><b class="t">수심 4 km에서의 속도</b><p>√(gh) = √(10 × 4000) = <b>200 m/s</b>. 시속 약 720 km로 여객기에 가까운 빠르기이다.</p></div>
+      <div class="dnote"><span class="lb">용어</span><b class="t">쓰나미</b><p>원래 '항구에 밀려오는 큰 파도'라는 뜻으로 모든 해일을 가리켰지만, 최근에는 주로 지진 해일을 뜻한다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">배 위에서는 못 느낀다</b><p>대양에서 지진 해일의 파고는 1 m도 안 되고 파장은 수백 km라, 배 위에서는 거의 느끼지 못한다. 위험해지는 것은 얕은 바다에 들어선 뒤이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>지진 해일의 전파</b></div>
+      <div class="sim-body">
+        <canvas id="sim-tsu"></canvas>
+        <div class="ctrl">
+          <div class="btns"><button class="tbtn on" id="ts-go" type="button">▶ 해저 지진 발생</button></div>
+          <div class="out" id="ts-out"></div>
+        </div>
+      </div>
+      <div class="hint">해일이 대양을 건너 해안에 다가가며 속도·파장·파고가 어떻게 변하는지 관찰하자. 시간은 실제보다 매우 빠르게, 파고는 과장해서 보여 준다.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>우리나라의 해일 피해와 대처</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>폭풍 해일</b>: 열대 태평양에서 발생한 태풍이 북상하며 해안 지역에 자주 피해를 준다. 태풍의 진로와 강도로 비교적 빨리 예보할 수 있지만, 정확한 피해 규모를 예측하려면 <b>해일 당시의 기압, 만조 시각, 해안·해저 지형</b> 등을 함께 고려해야 한다.</li>
+        <li><b>지진 해일</b>: 주변 해역에서 큰 지진이 일어나면 피해를 입을 수 있다. 주기적인 현상이 아니라 예보가 어렵지만, <b>지진파가 지진 해일보다 빠르므로</b> 지진 관측과 동시에 주의보를 낼 수 있다.</li>
+        <li><b>대처</b>: 체계적인 해일 경보 시스템 운영과 강화, 해안 방파제·차수벽 정비, 신속한 대피 훈련</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">디지털 탐색</span><b class="t">국민재난안전포털</b><p>'해일 특보 시 행동 요령'을 확인할 수 있다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>지진 해일의 피해 사례와 대처 방안 조사·발표하기</h2><span class="tbref">교과서 p. 68</span></div>
+  <div class="card split">
+    <h3>프로젝트 · 빅데이터와 시뮬레이션으로 지진 해일 조사하기</h3>
+    <div class="body">
+      <p><b>목표</b> 빅데이터와 시뮬레이션으로 전 세계 지진 해일의 피해 사례를 조사하고, 피해를 줄이는 대처 방안을 토의·발표할 수 있다. &nbsp;<b>준비물</b> 스마트 기기</p>
+      <ul class="pts"><li>지진 해일의 약 <b>86%</b>는 지진과 화산 활동이 활발한 <b>환태평양 조산대</b>를 따라 발생한다.</li></ul>
+      <ol class="proc">
+        <li>미국국립환경정보센터(NCEI) 자연재해 뷰어(www.ncei.noaa.gov/maps/hazards)를 실행한다.</li>
+        <li>모둠별로 조사할 지진 해일을 골라 최대 파고, 해일의 이동 시간, 에너지 전파 모습을 확인한다.</li>
+        <li>인명·경제적 피해 규모를 조사하고, 피해를 줄일 대처 방안을 토의한다.</li>
+        <li>조사한 피해 사례와 대처 방안을 발표한다.</li>
+      </ol>
+      <textarea class="write" placeholder="모둠 조사 내용을 정리해 보세요 (입력 내용은 저장되지 않습니다)"></textarea>
+      <div class="reveal"><button>예시 (2011년 일본 지진 해일)</button><div>
+        <b>최대 파고</b>: 시뮬레이션에서 검조기 기준 약 5~10 m, 목격 기준 10 m 이상<br>
+        <b>이동</b>: 진앙에서 동심원 모양으로 태평양으로 퍼져, 약 5시간 뒤 필리핀·알래스카, 약 10시간 뒤 오스트레일리아 중부·캘리포니아에 도달<br>
+        <b>피해</b>: 약 1만 8000명이 희생되었고 대부분 지진 해일 때문이었다. 원자력 발전소가 침수되어 방사능 물질이 유출되는 등 막대한 피해가 났다.<br>
+        <b>대처 방안</b>: 경보 시스템의 운영과 강화, 방파제 정비, 신속한 대피 훈련
+      </div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">활동 도우미</span><b class="t">자연재해 뷰어 사용법</b><p>왼쪽 항목에서 쓰나미 관련 요소를 모두 선택한다. 등치선은 해일의 이동 시간, 막대그래프는 최대 파고(시뮬레이션 결과)이다. 진앙의 동심원을 누르면 관측 정보를 더 볼 수 있다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>자료실 · 지진 해일이 올 때 이렇게 행동하자</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>해안에서 지진을 느끼거나 특보가 나오면 <b>즉시 해안·하천에서 벗어나</b> 높은 곳이나 긴급 대피 장소로 간다. 시간이 없으면 튼튼한 건물의 <b>3층 이상</b>이나 해발 <b>10 m 이상</b>의 언덕으로 간다.</li>
+        <li>바닷물이 갑자기 빠져나가거나 큰 소리가 나는 것은 위험 신호이다. 곧바로 높은 곳으로 피한다.</li>
+        <li>지진 해일은 <b>여러 번 반복</b>될 수 있으므로, 특보가 풀릴 때까지 낮은 곳으로 돌아가지 않는다.</li>
+        <li>특보가 나오면 주변에 알리고, 재난 방송의 안내에 따른다. 배는 시간이 있다면 깊은 바다로 이동한다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">왜 깊은 바다로?</span><b class="t">배의 대피</b><p>깊은 바다에서는 지진 해일의 파고가 낮아 배가 거의 영향을 받지 않는다. 위험한 곳은 파고가 높아지는 얕은 해안이다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 폭풍 해일의 피해가 커지는 경우는?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>해안이 태풍의 위험 반원에 있으면 해안 쪽으로 부는 바람 때문에 해수면이 더 높아진다. 또 만조 때 태풍이 지나가면 피해가 더 커진다.</div></div>
+    <h4>2. 지진 해일이 천해파의 특징을 나타내는 까닭은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>지진 해일은 파장이 수심의 20배보다 훨씬 길기 때문이다(파장 100~200 km, 대양 수심 약 4 km).</div></div>
+    <h4>3. 창의력 더하기 · 기후 변화로 폭풍 해일의 피해는 어떻게 될까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>지구 온난화로 강한 태풍이 잦아지고 평균 해수면이 높아지므로 폭풍 해일의 피해는 커질 것이다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>사진은 Wikimedia Commons의 퍼블릭 도메인 또는 CC 라이선스 자료이며 그림 아래에 저작자와 라이선스를 표시했습니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "폭풍 해일에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 태풍 중심의 낮은 기압 때문에 해수면이 높아진다.</li><li>ㄴ. 해안 쪽으로 부는 강한 바람이 해수면을 더 높인다.</li><li>ㄷ. 간조 때 태풍이 지나가면 피해가 가장 크다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "ㄷ: 해수면이 높은 만조 때 겹치면 피해가 더 큽니다."},
+  {"lv": "계산", "q": "태풍 중심의 해면 기압이 주변보다 60 hPa 낮을 때, 기압 효과만으로 해수면은 약 얼마나 높아지는가?", "options": ["① 6 cm", "② 30 cm", "③ 60 cm", "④ 6 m", "⑤ 60 m"], "answer": 2, "explain": "1 hPa 낮아질 때 약 1 cm 높아지므로 60 hPa이면 약 60 cm입니다."},
+  {"lv": "기본", "q": "지진 해일이 대양 한가운데에서도 천해파의 특징을 나타내는 까닭은?", "options": ["① 대양이 매우 얕기 때문", "② 파장이 수심에 비해 매우 길기 때문", "③ 파고가 매우 높기 때문", "④ 바람이 강하게 불기 때문", "⑤ 주기가 매우 짧기 때문"], "answer": 1, "explain": "파장(100~200 km)이 수심(약 4 km)의 20배보다 훨씬 길어서 천해파의 성질을 가집니다."},
+  {"lv": "계산", "q": "수심 1000 m인 바다에서 지진 해일의 속도는? (g = 10 m/s²)", "options": ["① 10 m/s", "② 31.6 m/s", "③ 100 m/s", "④ 316 m/s", "⑤ 10000 m/s"], "answer": 2, "explain": "√(gh) = √(10 × 1000) = √10000 = 100 m/s입니다."},
+  {"lv": "적용", "q": "지진 해일이 해안에 가까워질 때의 변화로 옳은 것은?", "options": ["① 속도가 빨라지고 파고가 낮아진다", "② 속도가 느려지고 파장이 짧아지며 파고가 높아진다", "③ 파장이 길어진다", "④ 천해파에서 심해파로 바뀐다", "⑤ 변화가 없다"], "answer": 1, "explain": "얕아질수록 √(gh)에 따라 느려지고, 파장이 짧아지며 파고가 높아집니다."},
+  {"lv": "적용", "q": "지진이 관측되자마자 지진 해일 주의보를 낼 수 있는 까닭은?", "options": ["① 지진 해일이 지진파보다 빠르기 때문", "② 지진파가 지진 해일보다 빠르기 때문", "③ 지진 해일은 주기적으로 일어나기 때문", "④ 지진 해일은 바람으로 생기기 때문", "⑤ 지진 해일은 육지에서만 생기기 때문"], "answer": 1, "explain": "지진파(수 km/s)가 지진 해일(수백 m/s)보다 훨씬 빨리 도착하므로, 지진을 관측하는 즉시 경보를 낼 시간이 생깁니다."},
+  {"lv": "기본", "q": "지진 해일이 발생했을 때의 행동으로 옳지 않은 것은?", "options": ["① 즉시 해안에서 벗어나 높은 곳으로 대피한다", "② 바닷물이 갑자기 빠지면 위험 신호로 보고 대피한다", "③ 첫 번째 파도가 지나가면 바로 해안으로 돌아간다", "④ 튼튼한 건물의 3층 이상으로 대피한다", "⑤ 재난 방송 안내에 따라 행동한다"], "answer": 2, "explain": "지진 해일은 여러 번 반복될 수 있으므로 특보가 해제될 때까지 낮은 곳으로 가면 안 됩니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/2-4.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

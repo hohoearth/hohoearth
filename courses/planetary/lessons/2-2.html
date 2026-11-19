@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02. 별의 거리 측정</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="2-2">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>밝은 별은 가까운 별일까?</h2><span class="tbref">교과서 p. 54</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>별의 <b>시차와 밝기</b>를 이용하여 거리를 측정하는 원리를 설명할 수 있다.</li>
+      <li>별의 거리를 측정하는 <b>다양한 방법을 비교·평가</b>할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-2/gaia-sky.jpg" alt="가이아가 그린 우리은하 전천 지도" style="object-fit:contain;background:#000"></div>
+        <figcaption>가이아 위성이 18억 개 별의 위치·밝기로 그린 전천 지도</figcaption>
+        <div class="credit">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-2/proxima.jpg" alt="프록시마 센타우리"></div>
+        <figcaption>태양에서 가장 가까운 별, 프록시마 센타우리 (허블)</figcaption>
+        <div class="credit">ESA/Hubble & NASA, CC BY 4.0</div>
+      </figure>
+    </div>
+    <div class="qbig">밤하늘에서 가장 가까운 별 프록시마 센타우리는 맨눈으로 보이지도 않는다(11등급).<br>반면 1등급 데네브는 2600광년이나 떨어져 있다. 별까지의 거리는 어떻게 잴까?</div>
+    <p class="tnote">'겉보기 밝기 = 실제 밝기 + 거리'라는 두 변수 문제임을 인식시키면, 시차(기하학)와 밝기(광도) 두 방법의 필요성이 자연스럽게 나옵니다. 운영안 3차시(연주시차 1 / 등급·거리지수 1 / 데이터 탐구 1).</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 연주시차">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>연주시차로 별의 거리 재기</h2><span class="tbref">교과서 p. 54</span></div>
+  <div class="card split">
+    <h3>(1) 시차와 연주시차</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>시차</b>: 관측 위치가 달라질 때 가까운 물체가 먼 배경에 대해 이동해 보이는 각. 한 눈씩 감고 엄지를 보면 엄지가 움직여 보이는 것과 같다.</li>
+        <li><b>연주시차(p)</b>: 지구가 공전하며 6개월 간격으로 관측한 별의 시차의 <b>절반</b>. 태양–지구–별이 이루는 각이다.</li>
+        <li>연주시차가 1″인 별까지의 거리를 <b>1 pc(파섹)</b>이라 한다. 거리는 연주시차에 <b>반비례</b>한다.</li>
+      </ul>
+      <div class="eq"><i>r</i> (pc) = <span class="frac"><span>1</span><span><i>p</i> (″)</span></span> <span class="note">1 pc ≈ 3.26 광년 ≈ 206 265 AU ≈ 3.09 × 10¹³ km</span></div>
+      <ul class="pts">
+        <li><b>한계</b>: 먼 별일수록 연주시차가 작아 측정하기 어렵다. 지상에서는 약 100 pc, 히파르코스 위성은 약 1000 pc, <b>가이아</b> 위성은 수천 ~ 1만 pc 범위까지 잴 수 있다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">역사</span><b class="t">최초의 연주시차 (1838)</b><p>베셀이 백조자리 61번 별의 연주시차 0.31″를 측정했다. 지구가 공전한다는 직접 증거이기도 하다.</p></div>
+      <div class="dnote"><span class="lb">비유</span><b class="t">0.01″는 얼마나 작을까?</b><p>약 20 km 밖에 있는 동전(지름 1 mm 정도의 점)을 보는 각도이다. 가이아는 이보다 수백 배 작은 각도까지 잰다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>연주시차 관측 시뮬레이터</b></div>
+      <div class="sim-body">
+        <canvas id="sim-plx"></canvas>
+        <div class="ctrl">
+          <label>별까지의 거리 <span class="v" id="plx-dv"></span><input type="range" id="plx-d" min="0.5" max="20" step="0.1" value="2"></label>
+          <label>관측 날짜 (공전 위치) <span class="v" id="plx-tv"></span><input type="range" id="plx-t" min="0" max="12" step="0.1" value="0"></label>
+          <div class="btns"><button class="tbtn" id="plx-play" type="button">▶ 1년 돌리기</button></div>
+          <div class="out" id="plx-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽: 위에서 내려다본 지구 공전 궤도와 별(각도는 매우 과장). 오른쪽: 망원경으로 본 하늘. 가까운 별(빨강)이 먼 배경 별에 대해 1년 동안 작은 타원을 그리며 움직인다. 거리를 2배로 하면 흔들림은 어떻게 변할까?</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 등급과 거리지수">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>별의 밝기와 거리지수</h2><span class="tbref">교과서 p. 55 ~ 56</span></div>
+  <div class="card split">
+    <h3>(1) 등급과 밝기</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>등급이 작을수록 밝다. <b>1등급 차 = 약 2.5배</b>, 5등급 차 = 정확히 100배의 밝기 차이이다.</li>
+        <li>별의 밝기는 <b>거리의 제곱에 반비례</b>한다. 거리가 10배 멀어지면 밝기는 1/100, 등급은 5등급 커진다.</li>
+        <li><b>겉보기 등급(m)</b>: 지구에서 보이는 밝기로 정한 등급</li>
+        <li><b>절대 등급(M)</b>: 별을 <b>10 pc</b> 거리에 두었다고 가정할 때의 등급 → 별의 실제 밝기(광도)를 비교할 수 있다.</li>
+      </ul>
+      <div class="eq"><i>m</i><sub>1</sub> − <i>m</i><sub>2</sub> = −2.5 log <span class="frac"><span><i>I</i><sub>1</sub></span><span><i>I</i><sub>2</sub></span></span> <span class="note">포그슨 공식 (I: 겉보기 밝기)</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">숫자로 보기</span><b class="t">태양의 두 가지 등급</b><p>겉보기 등급 −26.7, 절대 등급 +4.8. 10 pc 거리에 두면 맨눈으로 겨우 보이는 평범한 별이다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 거리지수 · 밝기로 거리 재기</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>거리지수(m − M)</b>: 겉보기 등급과 절대 등급의 차. 별까지의 거리만으로 정해진다.</li>
+        <li>m − M &gt; 0 이면 10 pc보다 멀고, m − M &lt; 0 이면 10 pc보다 가깝다.</li>
+        <li>절대 등급을 알 수 있는 천체(<b>표준 촛불</b>)를 찾으면 연주시차가 닿지 않는 먼 거리도 잴 수 있다. <ul><li>주계열성: 스펙트럼(분광형) → H-R도 → 절대 등급 (분광 시차)</li><li>세페이드 변광성: 변광 주기 → 절대 등급 (II-05)</li><li>Ia형 초신성: 최대 밝기 절대 등급 약 −19.3 (II-05)</li></ul></li>
+      </ul>
+      <div class="eq"><i>m</i> − <i>M</i> = 5 log <i>r</i> − 5 &nbsp;&nbsp;⟺&nbsp;&nbsp; <i>r</i> = 10<sup>(<i>m</i> − <i>M</i> + 5)/5</sup> pc</div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">유도</span><b class="t">거리지수 식은 어디서?</b><p>같은 별을 r pc와 10 pc에서 볼 때 밝기 비 = (10/r)²<br>m − M = −2.5 log (10/r)² = 5 log r − 5</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">우주 거리 사다리</b><p>가까운 거리의 방법(연주시차)으로 다음 방법(세페이드)을 보정하고, 그것으로 다시 더 먼 방법(Ia형 초신성)을 보정한다. 사다리를 한 칸씩 올라가듯 우주의 거리를 잰다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>같은 별을 멀리 옮기면? 거리지수 계산기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-dm"></canvas>
+        <div class="ctrl">
+          <label>별 고르기 <select id="dm-star">
+            <option value="4.83">태양과 같은 별 (M = 4.8)</option>
+            <option value="1.4">시리우스 A (M = 1.4)</option>
+            <option value="-7.0">리겔 (M = −7.0)</option>
+            <option value="15.5">프록시마 (M = 15.5)</option>
+          </select></label>
+          <label>거리 r <span class="v" id="dm-rv"></span><input type="range" id="dm-r" min="0" max="4" step="0.01" value="1"></label>
+          <div class="out" id="dm-out"></div>
+        </div>
+      </div>
+      <div class="hint">거리 축은 로그 눈금(1 pc ~ 10 000 pc). 거리가 10배 늘 때마다 겉보기 등급이 정확히 5씩 커지는지 확인하자. 맨눈 한계(약 6등급)와 대형 망원경 한계(약 25등급)를 넘는 거리는?</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>가이아·히파르코스 시차로 이웃 별들의 H-R도 그리기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">ESA Gaia DR3 · Hipparcos</span><span class="skill">단위 변환 · 파생 변수 만들기</span><span class="skill">산점도 · 분류</span><span class="skill">오차 전파</span><span>2차시</span></div>
+    <p>실제 위성 측정값(연주시차, 겉보기 등급, 색지수)만 가지고, <b>거리 → 절대 등급</b>이라는 새 변수를 직접 계산해 <b>H-R도</b>를 그린다. 겉보기 등급으로 그린 그림과 절대 등급으로 그린 그림을 비교하면, 왜 '거리'가 천문학의 핵심인지 데이터로 확인할 수 있다.</p>
+    <div class="steps-lab">
+      <div><b>파생 변수 계산</b>시차(mas, 1/1000″) → 거리(pc) = 1000 / 시차 → 절대 등급 M = m − 5 log r + 5. 표의 빈칸을 채우듯 '계산' 버튼을 눌러 열을 만든다.</div>
+      <div><b>두 그림 비교</b>색지수(B−V)–겉보기 등급 그림과 색지수–절대 등급 그림을 번갈아 보며 무엇이 달라지는지 찾는다.</div>
+      <div><b>무리 짓기</b>H-R도에서 주계열성, 거성·초거성, 백색 왜성 무리를 찾고, 각 별을 분류한다.</div>
+      <div><b>오차 생각하기</b>시차 오차가 10%일 때 절대 등급 오차는 얼마인가? 먼 별일수록 왜 불확실해지는가?</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>태양 주변의 밝은 별·가까운 별 31개</b></div>
+      <div class="sim-body">
+        <canvas id="lab-hr"></canvas>
+        <div class="ctrl">
+          <div class="btns"><button class="tbtn on" id="lab-calc" type="button">🧮 거리·절대 등급 계산</button></div>
+          <div class="chips" id="lab-y"><button class="chip on" data-y="m">세로축: 겉보기 등급</button><button class="chip" data-y="M">세로축: 절대 등급</button></div>
+          <label><input type="checkbox" id="lab-cls"> 무리별로 색칠하기</label>
+          <div class="out" id="lab-out">별 위에 마우스를 올려 보자.</div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">가로축: 색지수 B−V(작을수록 푸르고 뜨거움). 세로축은 위로 갈수록 밝다(등급이 작다). 시차는 Gaia DR3 또는 Hipparcos(밝은 별) 값을 반올림한 것이다.</div>
+    </div>
+    <div class="dataset">
+      <div class="dh">📋 데이터 표 <span class="sp"></span><span style="font-weight:500;color:var(--muted)">시차 단위 mas = 0.001″</span></div>
+      <div class="db" id="lab-table"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 겉보기 등급으로 그린 그림과 절대 등급으로 그린 그림은 어떻게 다른가? 그 까닭은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>겉보기 등급 그림에서는 점들이 흩어져 규칙이 보이지 않지만, 절대 등급 그림에서는 왼쪽 위 ~ 오른쪽 아래의 주계열, 오른쪽 위의 거성·초거성, 왼쪽 아래의 백색 왜성 무리가 나타난다. 겉보기 등급에는 거리의 영향이 섞여 있기 때문에, 거리를 보정해야 별의 실제 성질(광도–온도 관계)이 드러난다.</div></div>
+    <h4>2. 데네브와 프록시마 센타우리를 비교해 보자. 겉보기 밝기와 실제 광도는 어떻게 다른가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>데네브는 겉보기 등급 1.25, 시차 2.31 mas → 거리 약 430 pc로 절대 등급 약 −6.9(태양의 약 5만 배). 프록시마는 겉보기 11.1등급, 거리 1.30 pc로 절대 등급 약 15.6(태양의 약 1/20000). 겉보기 밝기만으로는 실제 광도를 판단할 수 없다.</div></div>
+    <h4>3. 데네브의 시차는 2.31 ± 0.32 mas(히파르코스)이다. 거리와 절대 등급의 불확실성은 얼마인가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>시차 1.99 ~ 2.63 mas → 거리 약 380 ~ 500 pc → 절대 등급 약 −7.3 ~ −6.6으로 약 ±0.3등급의 불확실성이 생긴다(시차 상대 오차 14%). 실제로 다른 방법으로는 약 800 pc라는 추정도 있을 만큼 데네브의 거리는 불확실하다. 시차가 작은(먼) 별일수록 같은 측정 오차가 거리에 큰 상대 오차를 만들기 때문에, 먼 천체는 표준 촛불 방법을 함께 쓴다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: ESA/Gaia/DPAC, ESA/Hubble & NASA (Wikimedia Commons 경유). 별 자료: ESA Gaia DR3, Hipparcos(새 환원) 카탈로그와 SIMBAD의 값을 반올림한 교육용 표본입니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "연주시차가 0.25″인 별까지의 거리는?", "options": ["① 0.25 pc", "② 2.5 pc", "③ 4 pc", "④ 25 pc", "⑤ 40 pc"], "answer": 2, "explain": "r = 1/p = 1/0.25 = 4 pc입니다."},
+  {"lv": "기본", "q": "겉보기 등급이 1등급인 별은 6등급인 별보다 몇 배 밝은가?", "options": ["① 5배", "② 2.5배", "③ 25배", "④ 100배", "⑤ 250배"], "answer": 3, "explain": "5등급 차이는 정확히 100배입니다."},
+  {"lv": "계산", "q": "절대 등급이 0등급인 별의 겉보기 등급이 10등급이다. 이 별까지의 거리는?", "options": ["① 10 pc", "② 100 pc", "③ 1000 pc", "④ 10000 pc", "⑤ 100000 pc"], "answer": 2, "explain": "m − M = 10 = 5 log r − 5 → log r = 3 → r = 1000 pc입니다."},
+  {"lv": "적용", "q": "별 A(m = 2, M = 2)와 별 B(m = 7, M = −3)에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. A까지의 거리는 10 pc이다.</li><li>ㄴ. 실제 광도는 B가 A의 100배이다.</li><li>ㄷ. 연주시차는 B가 A보다 크다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "B의 거리지수는 10 → 1000 pc로 A보다 멀어 연주시차가 더 작습니다. 절대 등급 차 5 → 광도 100배."},
+  {"lv": "계산", "q": "같은 별이 지금보다 100배 먼 곳에 있다면 겉보기 등급은?", "options": ["① 2등급 커진다", "② 5등급 커진다", "③ 5등급 작아진다", "④ 변하지 않는다", "⑤ 10등급 커진다"], "answer": 4, "explain": "밝기는 1/10000 → −2.5 log(10⁻⁴) = +10등급입니다."},
+  {"lv": "적용", "q": "연주시차 방법의 특징으로 옳은 것은?", "options": ["① 기하학적인 방법이라 가까운 별의 거리를 가장 직접적으로 잰다", "② 먼 별일수록 정확하다", "③ 별의 광도를 알아야 쓸 수 있다", "④ 외부 은하의 거리 측정에 주로 쓰인다", "⑤ 지구의 자전을 이용한다"], "answer": 0, "explain": "연주시차는 지구 공전을 이용한 기하학적 방법으로, 다른 거리 측정법을 보정하는 기준이 됩니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 H-R도를 겉보기 등급 대신 절대 등급으로 그려야 하는 까닭은?", "options": ["① 겉보기 등급은 측정할 수 없기 때문", "② 겉보기 등급에는 거리의 영향이 섞여 있어 별의 실제 광도를 비교할 수 없기 때문", "③ 절대 등급이 항상 더 작은 값이기 때문", "④ 색지수가 거리에 따라 크게 변하기 때문", "⑤ 가까운 별만 H-R도에 나타나기 때문"], "answer": 1, "explain": "같은 거리(10 pc)로 맞춰야 별의 실제 밝기를 비교할 수 있고, 주계열 등의 무리가 드러납니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/2-2.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

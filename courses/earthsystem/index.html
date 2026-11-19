@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지구시스템과학 아카이브</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="home">
+  <a href="../../index.html#courses" style="display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:7px 14px;border-radius:999px;background:#f1f5f9;border:1px solid #e2e8f0;color:#334155;font-size:.82rem;font-weight:700;text-decoration:none">← HoHo earth · 지구과학 수업</a>
+  <header class="home-hero">
+    <h1>지구시스템과학 수업 아카이브</h1>
+    <p>고등학교 3학년 · 소단원 16개 · 각 차시는 동기 유발 → 핵심 개념 → 탐구 활동 → 형성 평가 순서로 구성</p>
+  </header>
+  <div id="units"></div>
+</div>
+<script>
+(function () {
+  var KW = {
+    "1-1": "성운설 · 응축과 집적 · 분화 · 2차 대기",
+    "1-2": "산소·탄소·물의 순환",
+    "1-3": "판 구조론 · 맨틀 상부 운동 · 플룸",
+    "1-4": "암석의 순환 · 화산 활동 · 화성암 조직",
+    "1-5": "지진파 · 지구 내부 구조",
+    "2-1": "수압 경도력 · 전향력 · 마찰력",
+    "2-2": "지형류 · 서안 강화",
+    "2-3": "심해파 · 천해파 · 굴절",
+    "2-4": "지진 해일 · 폭풍 해일",
+    "2-5": "기조력 · 사리와 조금",
+    "3-1": "대기의 구조 · 대기와 생명",
+    "3-2": "복사 평형 · 온실 효과",
+    "3-3": "단열 변화 · 대기 안정도 · 강수",
+    "3-4": "정역학 평형 · 기압 경도력 · 전향력",
+    "3-5": "지균풍 · 경도풍 · 지상풍",
+    "3-6": "편서풍 파동 · 제트류"
+  };
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  var html = "";
+  // app.js 의 단원 목록을 그대로 쓰기 위해 같은 데이터를 불러온다
+  var s = document.createElement("script");
+  s.src = "assets/app.js";
+  s.onload = function () {
+    window.ESC_UNITS.forEach(function (u) {
+      html += '<section class="unit"><div class="unit-head"><span class="pill">' + u.name.split(".")[0] + '</span><h2>' + u.name.slice(u.name.indexOf(" ") + 1) + '</h2></div><div class="grid">';
+      u.lessons.forEach(function (l) {
+        var a = l.id.split("-");
+        html += '<a class="lcard' + (l.ready ? "" : " todo") + '" href="lessons/' + l.id + '.html"><div class="cd">' + pad(+a[0]) + "-" + pad(+a[1]) + " · 교재 p. " + l.p + '</div><div class="nm">' + pad(+a[1]) + ". " + l.t + '</div><div class="kw">' + (KW[l.id] || "") + "</div></a>";
+      });
+      html += "</div></section>";
+    });
+    document.getElementById("units").innerHTML = html;
+  };
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

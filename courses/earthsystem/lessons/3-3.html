@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03. 대기 안정도와 강수</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-3">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>어제는 얇은 구름, 오늘은 솟구치는 구름</h2><span class="tbref">교과서 p. 92</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>기온의 연직 분포와 <b>대기 안정도</b>의 관계를 설명할 수 있다.</li>
+      <li>단열 변화를 통해 <b>구름·안개가 생성되는 과정</b>과 <b>강수 과정</b>을 분석할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-1/cb.jpg" alt="거대한 적란운"></div><figcaption>위로 솟구치는 적운형 구름(적란운)</figcaption><div class="credit">DimiTalen, CC0</div></figure>
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-1/fog-valley.jpg" alt="골짜기를 채운 안개"></div><figcaption>위성에서 본 골짜기의 안개</figcaption><div class="credit">NASA MODIS, 퍼블릭 도메인</div></figure>
+    </div>
+    <div class="qbig">구름은 날마다 두께도, 모양도, 떠 있는 높이도 다르다. 무엇이 이 차이를 만들까?</div>
+    <p class="tnote">예시: 구름은 지표의 공기 덩어리가 올라가며 생기므로, 올라가는 공기 덩어리의 상태와 주위 공기의 기온 분포에 따라 모양과 높이가 달라진다. 교과서 운영안은 5차시(단열 변화·감률 2차시 / 대기 안정도 / 탐구 / 안개와 강수)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 단열 변화">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>단열 변화와 단열 감률</h2><span class="tbref">교과서 p. 92 ~ 94</span></div>
+
+  <div class="card split">
+    <h3>(1) 단열 팽창과 단열 압축</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>대기는 지표 근처에 많고 위로 갈수록 희박해, <b>높이 올라갈수록 기압이 낮다</b>.</li>
+        <li><b>단열 팽창</b>: 공기 덩어리가 상승하면 부피가 커지며, 분자 운동 에너지 일부가 팽창에 쓰여 <b>온도가 내려간다</b>.</li>
+        <li><b>단열 압축</b>: 공기 덩어리가 하강하면 압축되어 <b>온도가 올라간다</b>.</li>
+        <li><b>단열 변화</b>: 외부와 열을 주고받지 않고 부피 변화만으로 온도가 변하는 현상</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">생활 속 예</span><b class="t">풍선과 자전거 펌프</b><p>크게 분 풍선을 놓으면 빠져나온 공기가 팽창해 시원하다. 자전거 펌프로 공기를 넣으면 압축되어 바퀴가 따뜻해진다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 건조 단열 감률 · 습윤 단열 감률 · 이슬점 감률</h3>
+    <div class="body">
+      <div class="tw">
+        <table class="data">
+          <thead><tr><th></th><th>불포화 공기 (건조 단열 변화)</th><th>포화 공기 (습윤 단열 변화)</th></tr></thead>
+          <tbody>
+            <tr><th>기온 변화</th><td>1 km마다 약 <b>10 °C</b></td><td>1 km마다 약 <b>5 °C</b> (응결열이 냉각을 일부 상쇄)</td></tr>
+            <tr><th>이슬점 변화</th><td>1 km마다 약 <b>2 °C</b></td><td>1 km마다 약 <b>5 °C</b> (기온과 같음)</td></tr>
+            <tr><th>상대 습도</th><td>상승하면 증가</td><td>100%로 일정</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="pts">
+        <li><b>상승 응결 고도</b>: 상승하는 공기의 기온과 이슬점이 같아져 상대 습도 100%가 되고 <b>구름이 생기기 시작</b>하는 높이</li>
+      </ul>
+      <div class="eq"><i>H</i>(km) = <span class="frac"><span>1</span><span>8</span></span> (<i>T</i> − <i>T</i><sub>d</sub>) <span class="note">T: 지표 공기의 기온, T<sub>d</sub>: 이슬점 · 기온은 10°C/km, 이슬점은 2°C/km씩 내려가 차이가 8°C/km씩 줄어든다</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">용어</span><b class="t">상대 습도와 이슬점</b><p>상대 습도(%) = 현재 수증기압 ÷ 포화 수증기압 × 100<br>이슬점: 상대 습도가 100%가 되어 응결이 시작되는 기온. 수증기가 많을수록 높다.</p></div>
+      <div class="dnote"><span class="lb">자료 연계 물음</span><b class="t">20 °C 불포화 공기가 1 km 상승하면?</b><p>건조 단열 감률로 10 °C 내려가 <b>10 °C</b>가 된다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">습윤 단열 감률은 일정하지 않다</b><p>따뜻한 포화 공기는 응결할 물이 많아 응결열도 많다. 그래서 따뜻할수록 습윤 단열 감률이 작아지고, 매우 차가우면 건조 단열 감률에 가까워진다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(3) 산을 넘는 바람: 푄과 높새바람</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>불포화 공기가 산을 만나 사면을 타고 오르면, 상승 응결 고도에서 구름이 생기고 정상까지 오르며 <b>비나 눈</b>이 내린다.</li>
+        <li>정상을 넘어 내려올 때는 건조 단열 변화로 데워진다. 그래서 산을 넘은 공기는 <b>처음보다 기온이 높고 건조</b>해진다. → <b>푄</b></li>
+        <li>우리나라에서는 동풍이 불 때 태백산맥을 넘어 영서 지방으로 부는 고온 건조한 바람이 있는데, 이를 <b>높새바람</b>이라고 한다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">구름이 생기는 여러 경우</b><p>지표가 국지적으로 가열될 때, 저기압 중심으로 공기가 모여 상승할 때, 전선면을 타고 오를 때, 산 사면을 타고 오를 때 구름이 생긴다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">세계의 푄</b><p>알프스를 넘는 바람은 푄, 로키산맥을 넘는 바람은 치누크라 부른다. 높새바람은 늦봄~초여름 오호츠크해 기단이 강할 때 잘 나타나 영서 지방 농작물에 피해를 주기도 한다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>산을 넘는 공기 덩어리 따라가기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-foehn"></canvas>
+        <div class="ctrl">
+          <label>출발 기온 <span class="v" id="fo-tv"></span><input type="range" id="fo-t" min="10" max="35" step="1" value="25"></label>
+          <label>출발 이슬점 <span class="v" id="fo-tdv"></span><input type="range" id="fo-td" min="-5" max="35" step="1" value="17"></label>
+          <label>산의 높이 <span class="v" id="fo-hv"></span><input type="range" id="fo-h" min="0.5" max="3" step="0.1" value="2"></label>
+          <div class="btns"><button class="tbtn on" id="fo-go" type="button">▶ 출발</button></div>
+          <div class="out" id="fo-out"></div>
+        </div>
+      </div>
+      <div class="hint">노란 공 = 불포화 공기, 파란 공 = 포화 공기(구름 속). 산을 넘기 전과 후의 기온·상대 습도를 비교하자. 상승 응결 고도가 산보다 높으면 어떻게 될까?</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 대기 안정도">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>대기 안정도와 구름의 생성</h2><span class="tbref">교과서 p. 95 ~ 96</span></div>
+  <div class="card split">
+    <h3>절대 안정 · 절대 불안정 · 조건부 불안정</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>대기 안정도</b>: 공기 덩어리를 억지로 올리거나 내렸을 때, 원래 자리로 돌아가려는지 더 멀어지려는지의 경향. 공기 덩어리와 <b>주위 공기의 온도를 비교</b>해 판단한다.</li>
+        <li>올린 공기 덩어리가 주위보다 <b>차가우면</b> 다시 내려온다(안정). <b>따뜻하면</b> 계속 올라간다(불안정).</li>
+      </ul>
+      <div class="tw">
+        <table class="data">
+          <thead><tr><th>상태</th><th>기온 감률 (Γ)</th><th>특징</th><th>구름</th></tr></thead>
+          <tbody>
+            <tr><th>절대 안정</th><td>Γ &lt; 습윤 단열 감률</td><td>포화 여부와 관계없이 원래 자리로</td><td>얇은 <b>층운형</b></td></tr>
+            <tr><th>절대 불안정</th><td>Γ &gt; 건조 단열 감률</td><td>포화 여부와 관계없이 멀어짐</td><td>두꺼운 <b>적운형</b></td></tr>
+            <tr><th>조건부 불안정</th><td>습윤 &lt; Γ &lt; 건조</td><td>불포화면 안정, 포화되면 불안정</td><td>층운형 → 적운형</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="pts"><li><b>조건부 불안정</b>에서는 처음엔 억지로 올라가 상승 응결 고도에서 층운형 구름이 생기지만, 계속 올라가 주위보다 따뜻해지면 <b>저절로 상승</b>하며 적운형 구름이 발달한다.</li></ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">헷갈리기 쉬운 점</span><b class="t">기온 감률 vs 단열 감률</b><p>기온 감률: 주위 공기의 기온이 높이에 따라 낮아지는 비율<br>단열 감률: 움직이는 공기 덩어리가 단열 변화로 식는 비율</p></div>
+      <div class="dnote"><span class="lb">용어</span><b class="t">역전층</b><p>위로 갈수록 기온이 높아지는 절대 안정층. 바람 약하고 맑은 날 새벽, 지표의 복사 냉각으로 잘 생긴다. 오염 물질이 잘 퍼지지 않아 대기 오염이 심해질 수 있다.</p></div>
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">구름의 10가지 기본형</b><p>세계 기상 기구는 높이에 따라 상층운(권운·권적운·권층운), 중층운(고적운·고층운), 하층운(층운·층적운·난층운)과 연직 발달운(적운·적란운)으로 구름을 나눈다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>기온 감률을 바꾸면 어떤 구름이 생길까?</b></div>
+      <div class="sim-body">
+        <canvas id="sim-stab"></canvas>
+        <div class="ctrl">
+          <label>주위 공기의 기온 감률 <span class="v" id="st-gv"></span><input type="range" id="st-g" min="2" max="13" step="0.5" value="8"></label>
+          <label>지표 공기의 이슬점 (기온 30 °C) <span class="v" id="st-tdv"></span><input type="range" id="st-td" min="6" max="28" step="1" value="22"></label>
+          <div class="out" id="st-out"></div>
+        </div>
+      </div>
+      <div class="hint">빨간 선(공기 덩어리)이 검은 선(주위 공기)보다 오른쪽이면 덩어리가 더 따뜻해 저절로 올라간다. 기온 감률 4, 8, 12 °C/km를 차례로 넣어 비교해 보자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 안개와 강수">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>안개의 생성과 강수 과정</h2><span class="tbref">교과서 p. 98 ~ 99</span></div>
+
+  <div class="card split">
+    <h3>(1) 안개</h3>
+    <div class="body">
+      <ul class="pts"><li><b>안개</b>: 지표 근처에서 수증기가 응결한 작은 물방울이 공기 중에 떠 있는 것</li></ul>
+      <div class="grid2">
+        <div class="mini"><h4>복사 안개</h4><p>바람 없고 맑은 날 밤, 지표의 복사 냉각으로 기온이 이슬점까지 내려가 생긴다.</p></div>
+        <div class="mini"><h4>이류 안개</h4><p>따뜻하고 습한 공기가 차가운 지표나 바다 위로 이동하며 식어서 생긴다.</p></div>
+        <div class="mini"><h4>활승 안개</h4><p>따뜻하고 습한 공기가 산 사면을 따라 오르며 단열 팽창으로 식어서 생긴다.</p></div>
+      </div>
+      <ul class="pts" style="margin-top:12px"><li>복사 안개와 이류 안개는 주로 <b>대기가 안정할 때</b> 지표 근처 공기가 냉각되어 생긴다.</li></ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">심화해서 알아보기</span><b class="t">수증기가 늘어서 생기는 안개</b><p>찬 공기가 따뜻한 수면 위를 지날 때 증발한 수증기가 응결하는 증발 안개, 전선 근처에서 떨어지는 빗방울이 증발해 생기는 전선 안개도 있다.</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">안개와 구름은 같은 것</b><p>둘 다 수증기가 응결한 물방울이다. 지표 근처에서 생기면 안개, 공기가 올라가 높은 곳에서 생기면 구름이다. 차가운 바다 위에 생기는 이류 안개를 해무라고 한다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 강수 과정: 병합설과 빙정설</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>강수</b>: 구름의 물방울이나 얼음 알갱이가 비·눈·우박 등으로 떨어지는 것. 구름 입자가 빗방울 크기로 자라야 한다.</li>
+        <li><b>병합설</b> (저위도, 여름철 중위도): 0 °C 이상인 구름이 주로 물방울로 이루어져 있다. 크기가 다른 물방울이 오르내리며 충돌·합체해 커지고, 무거워지면 떨어져 비가 된다.</li>
+        <li><b>빙정설</b> (고위도, 중위도): 구름의 −40~0 °C 층에 <b>빙정과 과냉각 물방울</b>이 함께 있다. 같은 온도에서 과냉각 물방울의 포화 수증기압이 빙정보다 높아, 물방울은 증발하고 그 수증기가 빙정에 붙어 빙정이 자란다. 떨어지면 눈, 도중에 녹으면 비가 된다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">용어</span><b class="t">과냉각 물방울</b><p>0 °C보다 낮은 온도에서도 얼지 않고 액체 상태로 있는 물방울</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">빗방울로 잘 자라려면</b><p>구름 속 물방울의 크기가 다양할수록, 구름이 두껍고 상승 기류가 강해 물방울이 오래 머물수록 빗방울로 잘 자란다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · 중학교 과학</span><b class="t">강수 과정</b><p>병합설과 빙정설의 기본 내용은 중학교에서 배웠다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 3</span><b>구름 속에서 빗방울이 자라는 과정</b></div>
+      <div class="sim-body">
+        <canvas id="sim-rain"></canvas>
+        <div class="ctrl">
+          <label>구름의 종류 <select id="rn-mode"><option value="warm">따뜻한 구름 (병합설)</option><option value="cold">찬 구름 (빙정설)</option></select></label>
+          <div class="btns"><button class="tbtn on" id="rn-reset" type="button">↻ 다시 시작</button></div>
+          <div class="out" id="rn-out"></div>
+        </div>
+      </div>
+      <div class="hint">병합설: 큰 물방울(진한 파랑)이 떨어지며 작은 물방울을 삼키는 모습을 보자. 빙정설: 눈송이 모양 빙정이 자라는 동안 주변 물방울이 작아지는 모습을 보자. 크기와 속도는 과장했다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>단열선도를 이용하여 대기 안정도 해석하기</h2><span class="tbref">교과서 p. 97</span></div>
+  <div class="card split">
+    <h3>탐구 · 두 지점의 기온 분포 비교</h3>
+    <div class="body">
+      <p><b>목표</b> 높이에 따른 기온 분포와 단열선도를 이용해 대기 안정도를 해석할 수 있다. &nbsp;<b>준비물</b> 색연필, 자</p>
+      <div class="tw">
+        <table class="data">
+          <thead><tr><th>높이 (m)</th><th>0</th><th>100</th><th>200</th><th>300</th><th>400</th><th>500</th></tr></thead>
+          <tbody>
+            <tr><th>(가) 기온 (°C)</th><td>10.0</td><td>10.8</td><td>11.6</td><td>12.4</td><td>11.1</td><td>9.8</td></tr>
+            <tr><th>(나) 기온 (°C)</th><td>17.0</td><td>16.3</td><td>15.6</td><td>14.9</td><td>14.2</td><td>13.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.8rem;color:var(--muted)">※ 수업용으로 새로 만든 예시 자료입니다. 교과서 탐구 표를 함께 분석해도 좋습니다.</p>
+      <ol class="proc">
+        <li>(가), (나)의 기온 분포를 단열선도에 서로 다른 색으로 그린다.</li>
+        <li>각 구간의 기울기를 건조 단열선·습윤 단열선과 비교해 안정도를 판단한다.</li>
+      </ol>
+      <h4>1. (가), (나) 지점의 대기 안정도를 높이에 따라 구분해 보자.</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>(가): 0~300 m는 위로 갈수록 기온이 높아지는 역전층으로 <b>절대 안정</b>, 300~500 m는 기온 감률이 1.3 °C/100 m로 건조 단열 감률보다 커 <b>절대 불안정</b>이다.<br>(나): 기온 감률이 0.7 °C/100 m로 두 단열 감률 사이이므로 <b>조건부 불안정</b>이다.</div></div>
+      <h4>2. (가) 지점의 300 m 높이에서 주위와 온도가 같은 오염 물질이 나온다면 어느 쪽으로 퍼질까?</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>300 m 아래는 절대 안정이라 공기가 내려가기 어렵고, 위쪽은 절대 불안정이라 연직 운동이 활발하다. 따라서 오염 물질은 <b>300 m보다 위쪽으로</b> 퍼져 나갈 것이다.</div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">활동 도우미</span><b class="t">단열선도</b><p>기온과 함께 건조 단열선, 습윤 단열선, 이슬점 감률선을 그려, 오르내리는 공기 덩어리의 성질 변화를 분석하기 쉽게 만든 그래프</p></div>
+      <div class="dnote"><span class="lb">생각해 보기</span><b class="t">대기 오염과 안정도</b><p>대기의 연직 운동은 오염 물질이 퍼지는 방향에 영향을 준다. 역전층 아래에 갇힌 오염 물질은 잘 흩어지지 않는다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 4</span><b>단열선도 위에 기온 분포 그리기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-ad"></canvas>
+        <div class="ctrl">
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ad-a" checked> (가) 지점</label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ad-b" checked> (나) 지점</label>
+          <div class="out" id="ad-out" style="font-family:var(--font);font-size:.85rem"></div>
+        </div>
+      </div>
+      <div class="hint">직접 그린 그래프와 비교해 보자. 각 구간의 기울기가 어느 단열선과 가까운지 살펴보면 된다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 기온 감률과 단열 감률로 대기 안정도를 판단하는 방법을 설명해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>기온 감률이 습윤 단열 감률보다 작으면 절대 안정, 건조 단열 감률보다 크면 절대 불안정, 두 값 사이면 조건부 불안정이다.</div></div>
+    <h4>2. 기온 25 °C, 이슬점 17 °C인 공기의 상승 응결 고도는?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>H = (25 − 17)/8 = <b>1 km</b></div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>사진은 Wikimedia Commons의 CC0, NASA 퍼블릭 도메인 자료입니다. 탐구 자료와 시뮬레이션은 수업용으로 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "공기 덩어리가 상승할 때 일어나는 변화로 옳은 것은?", "options": ["① 단열 압축으로 온도가 올라간다", "② 단열 팽창으로 온도가 내려간다", "③ 외부에서 열을 받아 온도가 올라간다", "④ 부피가 줄어든다", "⑤ 기압이 높아진다"], "answer": 1, "explain": "위로 갈수록 기압이 낮아 공기 덩어리가 팽창하고, 그 과정에서 온도가 내려갑니다."},
+  {"lv": "계산", "q": "기온 28 °C, 이슬점 12 °C인 지표 공기가 상승할 때 상승 응결 고도는?", "options": ["① 0.5 km", "② 1 km", "③ 2 km", "④ 3 km", "⑤ 4 km"], "answer": 2, "explain": "H = (28 − 12)/8 = 2 km입니다."},
+  {"lv": "적용", "q": "불포화 공기 덩어리가 상승할 때의 변화로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 기온은 1 km마다 약 10 °C씩 낮아진다.</li><li>ㄴ. 이슬점은 1 km마다 약 2 °C씩 낮아진다.</li><li>ㄷ. 상대 습도는 일정하다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "ㄷ: 기온이 이슬점보다 빨리 내려가므로 상대 습도는 증가합니다."},
+  {"lv": "적용", "q": "기온 감률이 8 °C/km인 대기의 안정도는? (건조 단열 감률 10, 습윤 단열 감률 5 °C/km)", "options": ["① 절대 안정", "② 절대 불안정", "③ 조건부 불안정", "④ 중립", "⑤ 알 수 없다"], "answer": 2, "explain": "5 < 8 < 10이므로 조건부 불안정입니다."},
+  {"lv": "기본", "q": "절대 안정 상태인 대기에서 주로 생기는 구름은?", "options": ["① 적란운", "② 적운", "③ 층운형 구름", "④ 구름이 생기지 않는다", "⑤ 연직 발달운"], "answer": 2, "explain": "연직 운동이 억제되어 두께가 얇은 층운형 구름이 생깁니다."},
+  {"lv": "적용", "q": "푄 현상에 대한 설명으로 옳은 것은?", "options": ["① 산을 넘은 공기는 처음보다 차갑고 습해진다", "② 바람받이 사면에서 구름이 생기고 비가 내리며, 산을 넘은 공기는 고온 건조해진다", "③ 서풍이 불 때 태백산맥 동쪽에 높새바람이 분다", "④ 상승 응결 고도가 산보다 높을 때 잘 나타난다", "⑤ 하강하는 공기는 습윤 단열 변화를 한다"], "answer": 1, "explain": "올라갈 때 응결로 수증기를 잃고 내려올 때 건조 단열로 데워져 고온 건조해집니다. 높새바람은 동풍이 불 때 영서 지방에 붑니다."},
+  {"lv": "기본", "q": "바람 없고 맑은 날 밤 지표의 복사 냉각으로 생기는 안개는?", "options": ["① 이류 안개", "② 활승 안개", "③ 복사 안개", "④ 증발 안개", "⑤ 전선 안개"], "answer": 2, "explain": "지표가 복사로 식으며 기온이 이슬점까지 내려가 생기는 안개가 복사 안개입니다."},
+  {"lv": "적용", "q": "빙정설에서 빙정이 자라는 까닭으로 옳은 것은?", "options": ["① 같은 온도에서 빙정의 포화 수증기압이 과냉각 물방울보다 높기 때문", "② 같은 온도에서 과냉각 물방울의 포화 수증기압이 빙정보다 높기 때문", "③ 물방울끼리 충돌하기 때문", "④ 0 °C 이상에서만 일어나기 때문", "⑤ 빙정이 상승 기류에 녹기 때문"], "answer": 1, "explain": "물방울에 대해서는 불포화, 빙정에 대해서는 과포화가 되어 물방울의 수증기가 빙정으로 옮겨 갑니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-3.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+{
+ "1-1/jwst.jpg": {
+  "title": "File:JWST spacecraft model 3.png",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 465892
+ },
+ "1-1/hubble.jpg": {
+  "title": "File:HST-SM4.jpeg",
+  "artist": "Ruffnax (Crew of STS-125)",
+  "license": "Public domain",
+  "bytes": 168301
+ },
+ "1-1/curiosity.jpg": {
+  "title": "File:Curiosity Self-Portrait at 'Big Sky' Drilling Site.jpg",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 672960
+ },
+ "1-1/io.jpg": {
+  "title": "File:Io highest resolution true color.jpg",
+  "artist": "NASA / JPL / University of Arizona",
+  "license": "Public domain",
+  "bytes": 272821
+ },
+ "1-1/pluto.jpg": {
+  "title": "File:Pluto in True Color - High-Res.jpg",
+  "artist": "NASA/Johns Hopkins University Applied Physics Laboratory/Southwest Research Institute/Alex Parker",
+  "license": "Public domain",
+  "bytes": 342287
+ },
+ "1-1/67p.jpg": {
+  "title": "File:Comet 67P on 19 September 2014 NavCam mosaic.jpg",
+  "artist": "ESA/Rosetta/NAVCAM, CC BY-SA IGO 3.0",
+  "license": "CC BY-SA 3.0 igo",
+  "bytes": 239276
+ },
+ "1-1/ryugu.jpg": {
+  "title": "File:Hayabusa2 approaching asteroid.jpg",
+  "artist": "DLR German Aerospace Center",
+  "license": "CC BY 2.0",
+  "bytes": 125998
+ },
+ "1-1/jezero.jpg": {
+  "title": "File:Jezero crater on Mars, sol 4 of Perseverance mission.png",
+  "artist": "NASA/JPL-Caltech/ASU",
+  "license": "Public domain",
+  "bytes": 1999739
+ },
+ "1-1/earthrise.jpg": {
+  "title": "File:NASA-Apollo8-Dec24-Earthrise.jpg",
+  "artist": "NASA/Bill Anders",
+  "license": "Public domain",
+  "bytes": 107262
+ },
+ "1-2/aurora.jpg": {
+  "title": "File:Polarlicht 2.jpg",
+  "artist": "United States Air Force photo by Senior Airman Joshua Strang",
+  "license": "Public domain",
+  "bytes": 155790
+ },
+ "1-2/cme.jpg": {
+  "title": "File:Magnificent CME Erupts on the Sun - August 31.jpg",
+  "artist": "NASA Goddard Space Flight Center",
+  "license": "CC BY 2.0",
+  "bytes": 228444
+ },
+ "1-2/magnetosphere.jpg": {
+  "title": "File:Magnetosphere rendition.jpg",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 401278
+ },
+ "1-2/debris.jpg": {
+  "title": "File:Debris-GEO1280.jpg",
+  "artist": "NASA image",
+  "license": "Public domain",
+  "bytes": 128052
+ },
+ "1-2/dart.jpg": {
+  "title": "File:Dimorphos from DART aprox. 3 sec before impact.jpg",
+  "artist": "NASA/Johns Hopkins APL",
+  "license": "Public domain",
+  "bytes": 313099
+ },
+ "1-2/barringer.jpg": {
+  "title": "File:Meteor Crater - Arizona.jpg",
+  "artist": "National Map Seamless Server",
+  "license": "Public domain",
+  "bytes": 364293
+ },
+ "1-2/iss-aurora.jpg": {
+  "title": "File:Aurora Australis From ISS.JPG",
+  "artist": "ISS Expedition 23 crew",
+  "license": "Public domain",
+  "bytes": 224631
+ },
+ "1-3/jupiter-moons.jpg": {
+  "title": "File:Jupiter and the Galilean Satellites.jpg",
+  "artist": "NASA/JPL/DLR",
+  "license": "Public domain",
+  "bytes": 130285
+ },
+ "1-4/ceres.jpg": {
+  "title": "File:Ceres - RC3 - Haulani Crater (22381131691) (cropped).jpg",
+  "artist": "Justin Cowart",
+  "license": "Public domain",
+  "bytes": 269287
+ },
+ "1-4/ida.jpg": {
+  "title": "File:243 ida.jpg",
+  "artist": "NASA/JPL",
+  "license": "Public domain",
+  "bytes": 20580
+ },
+ "1-4/halebopp.jpg": {
+  "title": "File:Comet Hale-Bopp 1995O1.jpg",
+  "artist": "E. Kolmhofer, H. Raab; Johannes-Kepler-Observatory, Linz, Austria (https://sternwarte.at)",
+  "license": "CC BY-SA 3.0",
+  "bytes": 562204
+ },
+ "1-4/bennu.jpg": {
+  "title": "File:Bennu mosaic OSIRIS-REx.jpg",
+  "artist": "NASA/Goddard/University of Arizona",
+  "license": "Public domain",
+  "bytes": 205367
+ },
+ "1-4/meteorite.jpg": {
+  "title": "File:Willamette Meteorite AMNH.jpg",
+  "artist": "User:Dante Alighieri",
+  "license": "CC BY-SA 3.0",
+  "bytes": 683509
+ },
+ "1-4/chondrite.jpg": {
+  "title": "File:Allende meteorite.jpg",
+  "artist": "Shiny Things",
+  "license": "CC BY 2.0",
+  "bytes": 599379
+ },
+ "1-4/planets.jpg": {
+  "title": "File:Planets2013.svg",
+  "artist": "WP",
+  "license": "CC BY-SA 3.0",
+  "bytes": 575378
+ },
+ "1-4/leonid.jpg": {
+  "title": "File:Leonid Meteor.jpg",
+  "artist": "Navicore",
+  "license": "CC BY 3.0",
+  "bytes": 194178
+ },
+ "1-5/trappist.jpg": {
+  "title": "File:PIA21422 - TRAPPIST-1 Planet Lineup, Figure 1.jpg",
+  "artist": "NASA/JPL-Caltech",
+  "license": "Public domain",
+  "bytes": 54759
+ },
+ "1-5/tess.jpg": {
+  "title": "File:Transiting Exoplanet Survey Satellite artist concept (transparent background).png",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 628031
+ },
+ "1-5/palebluedot.jpg": {
+  "title": "File:Pale Blue Dot.png",
+  "artist": "Voyager 1",
+  "license": "Public domain",
+  "bytes": 538822
+ },
+ "2-1/sdo-aia.jpg": {
+  "title": "File:The Sun by the Atmospheric Imaging Assembly of NASA's Solar Dynamics Observatory - 20100819.jpg",
+  "artist": "NASA/SDO (AIA)",
+  "license": "Public domain",
+  "bytes": 426910
+ },
+ "2-1/sunspots.jpg": {
+  "title": "File:Sunspots 1302 Sep 2011 by NASA.jpg",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 44715
+ },
+ "2-1/granulation.jpg": {
+  "title": "File:Solar granulation.jpg",
+  "artist": "PetrusQ",
+  "license": "CC BY 4.0",
+  "bytes": 457701
+ },
+ "2-1/corona.jpg": {
+  "title": "File:Solar eclipse 1999 4 NR.jpg",
+  "artist": "Luc Viatour",
+  "license": "CC BY-SA 3.0",
+  "bytes": 179135
+ },
+ "2-1/prominence.jpg": {
+  "title": "File:Solar prominence 2011-04-14T202956.120.png",
+  "artist": "NASA/SDO",
+  "license": "Public domain",
+  "bytes": 527412
+ },
+ "2-1/flare.jpg": {
+  "title": "File:NASA's SDO Observes an X-class Solar Flare (15562323166).jpg",
+  "artist": "NASA Goddard Space Flight Center from Greenbelt, MD, USA",
+  "license": "Public domain",
+  "bytes": 388553
+ },
+ "2-1/sun-white.jpg": {
+  "title": "File:Sun white.jpg",
+  "artist": "Geoff Elston",
+  "license": "CC BY 4.0",
+  "bytes": 86587
+ },
+ "2-2/gaia.jpg": {
+  "title": "File:Maquette de Gaia salon du Bourget 2013 DSC 0191.JPG",
+  "artist": "Pline",
+  "license": "CC BY-SA 3.0",
+  "bytes": 413809
+ },
+ "2-2/proxima.jpg": {
+  "title": "File:New shot of Proxima Centauri, our nearest neighbour.jpg",
+  "artist": "ESA/Hubble & NASA",
+  "license": "CC BY 4.0",
+  "bytes": 69750
+ },
+ "2-2/gaia-sky.jpg": {
+  "title": "File:Gaia's all-sky view (ESA Gaia DR2 AllSky Brightness Colour black bg 8k).jpg",
+  "artist": "ESA/Gaia/DPAC",
+  "license": "CC BY 4.0",
+  "bytes": 176375
+ },
+ "2-3/bigdipper.jpg": {
+  "title": "File:Thin clouds and the Big Dipper over Brastad 2.jpg",
+  "artist": "W.carter",
+  "license": "CC BY-SA 4.0",
+  "bytes": 481377
+ },
+ "2-3/barnard.jpg": {
+  "title": "File:Barnard2005.gif",
+  "artist": "Steve Quirk",
+  "license": "Public domain",
+  "bytes": 39254
+ },
+ "2-4/sirius.jpg": {
+  "title": "File:Sirius A and B Hubble photo.jpg",
+  "artist": "NASA, ESA, H. Bond (STScI), and M. Barstow (University of Leicester)",
+  "license": "Public domain",
+  "bytes": 183428
+ },
+ "2-4/albireo.jpg": {
+  "title": "File:Albireo double star.jpg",
+  "artist": "N. B.",
+  "license": "CC BY-SA 4.0",
+  "bytes": 49126
+ },
+ "2-4/algol.jpg": {
+  "title": "File:Algol AB movie imaged with the CHARA interferometer - labeled.gif",
+  "artist": "Dr. Fabien Baron, Dept. of Astronomy, University of Michigan, Ann Arbor, MI 48109-1090, labels indicating phase added by",
+  "license": "CC BY-SA 3.0",
+  "bytes": 437864
+ },
+ "2-5/crab.jpg": {
+  "title": "File:Crab Nebula.jpg",
+  "artist": "NASA, ESA, J. Hester and A. Loll (Arizona State University)",
+  "license": "Public domain",
+  "bytes": 484529
+ },
+ "2-5/v1-hubble.jpg": {
+  "title": "File:Snapshots of the star that changed the Universe (opo1115d).jpg",
+  "artist": "Illustration Credit: NASA, ESA and Z. Levay (STScI). Credit: NASA, ESA and the Hubble Heritage Team (STScI/AURA)",
+  "license": "CC BY 4.0",
+  "bytes": 494443
+ },
+ "2-5/rs-pup.jpg": {
+  "title": "File:RS Puppis.jpg",
+  "artist": "NASA/ESA/Hubble Heritage (STScI/AURA)-Hubble/Europe Collab.",
+  "license": "Public domain",
+  "bytes": 342443
+ },
+ "2-5/sn1994d.jpg": {
+  "title": "File:SN1994D.jpg",
+  "artist": "NASA/ESA, The Hubble Key Project Team and The High-Z Supernova Search Team",
+  "license": "Public domain",
+  "bytes": 239623
+ },
+ "2-5/leavitt.jpg": {
+  "title": "File:Henrietta Swan Leavitt.jpg",
+  "artist": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "bytes": 618232
+ },
+ "3-1/pleiades.jpg": {
+  "title": "File:Pleiades large.jpg",
+  "artist": "NASA, ESA, AURA/Caltech, Palomar Observatory\n\nThe science team consists of: D. Soderblom and E. Nelan (STScI), F. Benedi",
+  "license": "Public domain",
+  "bytes": 257532
+ },
+ "3-1/m5.jpg": {
+  "title": "File:Messier 5 Hubble WikiSky.jpg",
+  "artist": "ESA/Hubble & NASA",
+  "license": "Public domain",
+  "bytes": 935076
+ },
+ "3-1/milkyway-art.jpg": {
+  "title": "File:Artist's impression of the Milky Way (updated - annotated).jpg",
+  "artist": "NASA/JPL-Caltech/ESO/R. Hurt",
+  "license": "Public domain",
+  "bytes": 333053
+ },
+ "3-1/milkyway.jpg": {
+  "title": "File:ESO-VLT-Laser-phot-33a-07.jpg",
+  "artist": "ESO/Y. Beletsky",
+  "license": "CC BY 4.0",
+  "bytes": 407275
+ },
+ "3-1/shapley.jpg": {
+  "title": "File:HarlowShapley-crop.jpg",
+  "artist": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "bytes": 91806
+ },
+ "3-1/edge-on.jpg": {
+  "title": "File:NGC 4565.jpg",
+  "artist": "ESO",
+  "license": "CC BY 3.0",
+  "bytes": 167085
+ },
+ "3-2/pillars-hst.jpg": {
+  "title": "File:Pillars of creation 2014 HST WFC3-UVIS full-res denoised.jpg",
+  "artist": "NASA, ESA, and the Hubble Heritage Team (STScI/AURA)",
+  "license": "Public domain",
+  "bytes": 262397
+ },
+ "3-2/pillars-jwst.jpg": {
+  "title": "File:Pillars of Creation (NIRCam Image).jpg",
+  "artist": "SCIENCE: NASA, ESA, CSA, STScI; IMAGE PROCESSING: Joseph DePasquale (STScI), Anton M. Koekemoer (STScI), Alyssa Pagan (S",
+  "license": "Public domain",
+  "bytes": 1242392
+ },
+ "3-2/horsehead.jpg": {
+  "title": "File:Barnard 33.jpg",
+  "artist": "Ken Crawford",
+  "license": "CC BY-SA 3.0",
+  "bytes": 267738
+ },
+ "3-2/orion.jpg": {
+  "title": "File:Orion Nebula - Hubble 2006 mosaic 18000.jpg",
+  "artist": "NASA, ESA, M. Robberto (Space Telescope Science Institute/ESA) and the Hubble Space Telescope Orion Treasury Project Tea",
+  "license": "Public domain",
+  "bytes": 216119
+ },
+ "3-2/sombrero.jpg": {
+  "title": "File:M104 ngc4594 sombrero galaxy hi-res.jpg",
+  "artist": "NASA/ESA and The Hubble Heritage Team (STScI/AURA)",
+  "license": "Public domain",
+  "bytes": 145740
+ },
+ "3-2/b68.jpg": {
+  "title": "File:Barnard 68.jpg",
+  "artist": "ESO",
+  "license": "CC BY 4.0",
+  "bytes": 732234
+ },
+ "3-2/m78.jpg": {
+  "title": "File:Messier 78.jpg",
+  "artist": "ESO/Igor Chekalin",
+  "license": "CC BY 4.0",
+  "bytes": 256505
+ },
+ "3-3/m31.jpg": {
+  "title": "File:Andromeda Galaxy (with h-alpha).jpg",
+  "artist": "Adam Evans",
+  "license": "CC BY 2.0",
+  "bytes": 467775
+ },
+ "3-3/bullet.jpg": {
+  "title": "File:1e0657 scale.jpg",
+  "artist": "NASA/CXC/M. Weiss",
+  "license": "Public domain",
+  "bytes": 264312
+ },
+ "3-3/vera-rubin.jpg": {
+  "title": "File:Vera Rubin.jpg",
+  "artist": "NASA",
+  "license": "Public domain",
+  "bytes": 45228
+ },
+ "3-3/abell.jpg": {
+  "title": "File:The galaxy cluster Abell 2218 (heic0113c).jpg",
+  "artist": "NASA, ESA, A. Fruchter and the ERO Team (STScI, ST-ECF)",
+  "license": "Public domain",
+  "bytes": 198661
+ },
+ "3-3/m33.jpg": {
+  "title": "File:VST snaps a very detailed view of the Triangulum Galaxy.jpg",
+  "artist": "ESO",
+  "license": "CC BY 4.0",
+  "bytes": 542297
+ },
+ "3-4/hudf.jpg": {
+  "title": "File:Hubble ultra deep field.jpg",
+  "artist": "NASA and the European Space Agency.",
+  "license": "Public domain",
+  "bytes": 368169
+ },
+ "3-4/2df.jpg": {
+  "title": "File:2dfdtfe.gif",
+  "artist": "Willem Schaap",
+  "license": "CC BY-SA 3.0",
+  "bytes": 278193
+ },
+ "3-4/sdss-tel.jpg": {
+  "title": "File:Plug plate from the Sloan Digital Sky Survey, held up to the light.jpg",
+  "artist": "Drkirstyross",
+  "license": "CC BY-SA 4.0",
+  "bytes": 191117
+ },
+ "3-4/webb-deep.jpg": {
+  "title": "File:Webb's First Deep Field.jpg",
+  "artist": "NASA, ESA, CSA, and STScI",
+  "license": "Public domain",
+  "bytes": 244201
+ },
+ "3-5/m31-m32.jpg": {
+  "title": "File:Andromeda Galaxy 560mm FL.jpg",
+  "artist": "David (Deddy) Dayag",
+  "license": "CC BY-SA 4.0",
+  "bytes": 458699
+ },
+ "3-5/lmc.jpg": {
+  "title": "File:Large.mc.arp.750pix.jpg",
+  "artist": "NASA/Ames Research Center",
+  "license": "Public domain",
+  "bytes": 80245
+ },
+ "3-5/coma.jpg": {
+  "title": "File:Ssc2007-10a1.jpg",
+  "artist": "NASA / JPL-Caltech / L. Jenkins (GSFC)",
+  "license": "Public domain",
+  "bytes": 380296
+ },
+ "3-5/stephan.jpg": {
+  "title": "File:Stephan's Quintet taken by James Webb Space Telescope.jpg",
+  "artist": "Image: \n\nNational Aeronautics and Space Administration  (a U.S. federal government agency; https://www.nasa.gov/)\nEurope",
+  "license": "Public domain",
+  "bytes": 255410
+ },
+ "1-1/enceladus.jpg": {
+  "title": "File:PIA17202 - Approaching Enceladus.jpg",
+  "artist": "National Aeronautics and Space Administration (NASA) / Jet Propulsion Laboratory (JPL)",
+  "license": "Public domain",
+  "bytes": 115595
+ },
+ "1-5/hr8799.jpg": {
+  "title": "File:HR 8799 Orbiting Exoplanets.gif",
+  "artist": "Jason Wang, et al",
+  "license": "CC BY 3.0",
+  "bytes": 364842
+ }
+}

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. 전천 탐사와 은하의 공간 분포</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-4">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>사진 한 장에 은하 1만 개</h2><span class="tbref">교과서 p. 98</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li>대규모로 이루어진 외부 은하의 <b>적색 편이 탐사의 성과</b>를 설명할 수 있다.</li>
+      <li>은하의 공간 분포를 파악하는 데 <b>분광 관측 자료의 중요성</b>을 설명할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-4/hudf.jpg" alt="허블 울트라 딥 필드"></div>
+        <figcaption>허블 울트라 딥 필드 · 보름달 크기의 1/100 하늘에 은하 약 1만 개</figcaption>
+        <div class="credit">NASA, ESA, S. Beckwith (STScI) and the HUDF Team</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/3-4/webb-deep.jpg" alt="웹의 첫 딥 필드"></div>
+        <figcaption>제임스 웹 망원경의 첫 딥 필드 (은하단 SMACS 0723, 2022)</figcaption>
+        <div class="credit">NASA, ESA, CSA, STScI</div>
+      </figure>
+    </div>
+    <div class="qbig">사진 속 은하들은 하늘에 고르게 흩어진 것처럼 보인다.<br>그렇다면 실제 3차원 우주에서도 은하들은 고르게 퍼져 있을까? 사진만으로 그것을 알 수 있을까?</div>
+    <p class="tnote">사진은 '방향'만 알려 주고 '깊이(거리)'는 알려 주지 않는다는 점이 핵심입니다. 시뮬레이션 2(2D 하늘 vs 3D 공간)로 바로 확인하게 하면 좋습니다. 운영안 3차시(적색 편이 1 / 탐사의 역사·성과 1 / 데이터 탐구 1).</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 분광 관측과 적색 편이">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>분광 관측으로 은하까지의 거리 재기</h2><span class="tbref">교과서 p. 98</span></div>
+  <div class="card split">
+    <h3>적색 편이와 허블 법칙</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>외부 은하의 스펙트럼에서 흡수선·방출선은 대부분 <b>파장이 긴 쪽(붉은 쪽)</b>으로 이동해 있다 → <b>적색 편이</b></li>
+        <li>적색 편이 z = Δλ/λ₀. z가 작을 때 은하의 후퇴 속도 v ≈ cz</li>
+        <li><b>허블 법칙</b>: 멀리 있는 은하일수록 빨리 멀어진다(v = H₀ d). 우주가 팽창하기 때문이다. → 적색 편이만 재면 <b>거리</b>를 알 수 있다.</li>
+        <li>하늘의 위치(적경·적위) + 적색 편이(거리) = 은하의 <b>3차원 위치</b>. 이것이 우주 지도를 그리는 원리이다.</li>
+      </ul>
+      <div class="eq"><i>z</i> = <span class="frac"><span>λ − λ₀</span><span>λ₀</span></span> , &nbsp; <i>v</i> ≈ <i>cz</i> , &nbsp; <i>d</i> = <span class="frac"><span><i>v</i></span><span><i>H</i>₀</span></span> <span class="note">H₀ ≈ 70 km/s/Mpc (허블 상수). z가 크면 상대론적 효과와 우주 팽창의 역사를 고려해야 한다.</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산</span><b class="t">z = 0.02인 은하</b><p>v ≈ 3×10⁵ × 0.02 = 6000 km/s<br>d = 6000 / 70 ≈ 86 Mpc ≈ 2억 8천만 광년</p></div>
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">허블 긴장</b><p>세페이드·Ia형 초신성으로 잰 H₀(약 73)와 우주 배경 복사로 추정한 H₀(약 67)가 서로 달라, 새로운 물리학의 실마리일 수 있어 활발히 연구 중이다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · II-03</span><b class="t">도플러 효과</b><p>별의 시선 속도와 같은 원리이지만, 은하의 적색 편이는 주로 공간 자체의 팽창 때문이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>은하 스펙트럼의 적색 편이 측정하기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-z"></canvas>
+        <div class="ctrl">
+          <label>관측할 은하 <select id="z-gal"><option value="0">은하 A</option><option value="1">은하 B</option><option value="2">은하 C</option><option value="3">은하 D</option></select></label>
+          <label>내가 추정한 z <span class="v" id="z-zv"></span><input type="range" id="z-z" min="0" max="0.2" step="0.0005" value="0"></label>
+          <div class="out" id="z-out"></div>
+        </div>
+      </div>
+      <div class="hint">위: 실험실 기준 스펙트럼(정지 상태)의 주요 선 위치를 내 추정 z만큼 옮긴 것(점선). 아래: 관측된 은하 스펙트럼. 점선이 관측된 흡수·방출선(Ca Ⅱ K·H, Hβ, Mg, Na, Hα)과 겹치도록 z를 맞춰 보자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 적색 편이 탐사의 역사">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>대규모 적색 편이 탐사와 그 성과</h2><span class="tbref">교과서 p. 99 ~ 100</span></div>
+  <div class="card split">
+    <h3>(1) 우주 지도를 그린 탐사들</h3>
+    <div class="body">
+      <div class="tw"><table class="data">
+        <thead><tr><th>탐사</th><th>시기</th><th>규모</th><th>성과</th></tr></thead>
+        <tbody>
+          <tr><th>CfA 적색 편이 탐사</th><td>1977 ~ 1995</td><td>약 1만 8천 개</td><td>은하들이 '거품' 표면에 모여 있음을 발견. <b>CfA 장성(은하 장성)</b>, 거대 공동</td></tr>
+          <tr><th>2dF 적색 편이 탐사</th><td>1997 ~ 2002</td><td>약 22만 개</td><td>더 먼 곳까지 필라멘트·공동 구조 확인</td></tr>
+          <tr><th>슬로운 디지털 전천 탐사(SDSS)</th><td>2000 ~</td><td>수백만 개 스펙트럼</td><td>하늘의 1/3 이상 3차원 지도, <b>슬로운 장성</b>(약 4억 광년 이상), 바리온 음향 진동</td></tr>
+          <tr><th>DESI</th><td>2021 ~</td><td>목표 4천만 개 이상</td><td>110억 년 전까지의 우주 지도, 암흑 에너지 연구</td></tr>
+        </tbody>
+      </table></div>
+      <ul class="pts">
+        <li><b>전천 탐사</b>: 하늘의 넓은 영역(또는 전체)을 체계적으로 관측하는 것. 측광(사진) 탐사로 은하를 찾고, 분광 탐사로 적색 편이(거리)를 잰다.</li>
+        <li>수백 개의 광섬유를 한꺼번에 꽂아(SDSS 플러그 판) 또는 로봇으로 배치해(DESI 5000개) 많은 은하의 스펙트럼을 동시에 얻는다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">사진</span><b class="t">SDSS 플러그 판</b><p>알루미늄 판의 구멍 하나하나가 은하 하나의 위치이다. 구멍마다 광섬유를 꽂아 한 번에 약 640 ~ 1000개 천체의 스펙트럼을 얻었다.</p></div>
+      <div class="dnote"><span class="lb">우리나라</span><b class="t">한국의 참여</b><p>한국천문연구원과 국내 대학 연구진은 SDSS, DESI 등 국제 탐사에 참여해 우주거대구조와 은하 진화를 연구하고 있다.</p></div>
+    </aside>
+    <div class="figs">
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-4/sdss-tel.jpg" alt="SDSS 플러그 판"></div><figcaption>빛에 비춰 본 SDSS 플러그 판</figcaption><div class="credit">Drkirstyross, CC BY-SA 4.0</div></figure>
+      <figure class="fig"><div class="frame"><img src="../assets/img/3-4/2df.jpg" alt="2dF 은하 적색 편이 탐사 지도" style="object-fit:contain;background:#000"></div><figcaption>2dF 적색 편이 탐사로 그린 쐐기 모양 우주 지도</figcaption><div class="credit">Willem Schaap (2dFGRS 자료 재구성), CC BY-SA 3.0</div></figure>
+    </div>
+  </div>
+  <div class="card split">
+    <h3>(2) 왜 분광 관측이 꼭 필요할까?</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>사진(측광)은 은하의 <b>하늘 위 위치</b>만 알려 준다. 가까운 은하와 먼 은하가 겹쳐 보여 실제 구조가 지워진다.</li>
+        <li>분광으로 적색 편이를 재야 깊이(거리)가 생겨 <b>장성·필라멘트·공동</b>이 드러난다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">비유</span><b class="t">숲 사진</b><p>숲을 정면에서 찍으면 나무가 빽빽해 보이지만, 위에서 보면 나무 사이에 빈 길이 있다. 깊이 정보가 있어야 '빈 곳'이 보인다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>2D 하늘 사진 vs 3D 우주 지도</b></div>
+      <div class="sim-body">
+        <canvas id="sim-3d" style="cursor:grab"></canvas>
+        <div class="ctrl">
+          <label>보는 각도 <span class="v" id="d3-av"></span><input type="range" id="d3-a" min="0" max="90" step="1" value="0"></label>
+          <div class="btns"><button class="tbtn" id="d3-play" type="button">▶ 천천히 돌리기</button></div>
+          <div class="out" id="d3-out"></div>
+        </div>
+      </div>
+      <div class="hint">0°: 지구에서 본 하늘(모든 은하가 한 평면에 겹쳐 보임). 90°: 옆에서 본 모습(적색 편이로 거리를 알 때). 각도를 돌리면서 숨어 있던 거대 공동과 필라멘트가 언제 드러나는지 보자.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>적색 편이 목록으로 나만의 '쐐기 지도' 만들기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">SDSS 분광 탐사 방식 재현</span><span class="skill">좌표 변환(극좌표)</span><span class="skill">자료 자르기(slicing)</span><span class="skill">선택 효과(편향) 이해</span><span>2차시</span></div>
+    <p>SDSS 분광 탐사 방식을 본뜬 은하 목록(적경, 적위, 적색 편이, 겉보기 등급)이 있다. 이 표를 ① 허블 법칙으로 <b>거리</b>로 바꾸고, ② 얇은 적위 띠만 <b>잘라</b> 적경–거리 <b>쐐기 지도</b>로 그려서 우주거대구조를 찾아본다. 마지막으로 먼 곳의 은하가 적어 보이는 까닭(<b>선택 효과</b>)을 분석한다.</p>
+    <div class="steps-lab">
+      <div><b>하늘 지도</b>적경–적위로만 그린 2D 지도에서 구조가 보이는가?</div>
+      <div><b>거리 계산 · 쐐기 지도</b>d = cz / H₀로 거리를 계산하고, 적위 띠(슬라이스)를 골라 부채꼴(극좌표)로 그린다.</div>
+      <div><b>구조 찾기</b>은하 장성(벽), 필라멘트, 거대 공동을 찾아 표시하고, 공동의 크기를 Mpc로 어림한다. 띠 두께를 바꾸면 무엇이 달라지는가?</div>
+      <div><b>선택 효과</b>거리별 은하 수 히스토그램을 보고, 먼 곳에 은하가 적은 까닭을 '겉보기 등급 한계'로 설명한다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>모의 적색 편이 탐사 목록 · 쐐기 지도</b></div>
+      <div class="sim-body stack">
+        <canvas id="lab-wedge"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="lab-view"><button class="chip" data-v="sky">① 하늘 지도</button><button class="chip on" data-v="wedge">② 쐐기 지도</button><button class="chip" data-v="hist">③ 거리 분포</button></div>
+          <label>적위 띠 중심 <span class="v" id="lab-dcv"></span><input type="range" id="lab-dc" min="0" max="50" step="0.5" value="25"></label>
+          <label>띠 두께 <span class="v" id="lab-dwv"></span><input type="range" id="lab-dw" min="1" max="60" step="0.5" value="6"></label>
+          <label>H₀ (km/s/Mpc) <span class="v" id="lab-hv"></span><input type="range" id="lab-h" min="50" max="90" step="1" value="70"></label>
+          <div class="kpi" id="lab-kpi"></div>
+          <div class="out" id="lab-out"></div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">쐐기 지도의 중심(꼭짓점)이 우리은하, 각도는 적경, 반지름은 거리이다. 모의 목록은 겉보기 등급 17.7등급보다 밝은 은하만 담았다(SDSS 주 표본의 한계와 같음). 실제 SDSS 자료는 SkyServer에서 SQL로 내려받을 수 있다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 하늘 지도와 쐐기 지도를 비교해 보자. 분광 관측(적색 편이)이 왜 필요한가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>하늘 지도에서는 은하가 대체로 고르게 흩어져 보이고 몇 개의 진한 덩어리(은하단)만 보인다. 쐐기 지도에서는 은하들이 벽·실 모양으로 이어지고 그 사이에 은하가 거의 없는 거대 공동이 뚜렷하다. 거리 정보 없이 투영하면 앞뒤 구조가 겹쳐 지워지므로, 3차원 구조를 알려면 분광 관측이 꼭 필요하다.</div></div>
+    <h4>2. 쐐기 지도에서 가장 큰 공동의 지름은 약 몇 Mpc인가? 띠 두께를 아주 두껍게 하면 어떻게 되는가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>큰 공동은 지름 약 30 ~ 50 Mpc(1억 ~ 1.6억 광년) 정도이다. 띠를 두껍게 하면 다른 깊이(적위)의 구조가 겹쳐 공동이 메워지고 구조가 흐려진다(2D 투영과 같은 문제). 얇게 하면 구조는 선명하지만 은하 수가 적어진다.</div></div>
+    <h4>3. 거리 분포 히스토그램에서 약 150 Mpc 이후 은하 수가 줄어드는 까닭은? 이 자료로 '먼 우주에는 은하가 적다'고 결론 내려도 될까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>겉보기 등급 17.7등급보다 밝은 은하만 관측 목록에 들어가므로, 먼 곳에서는 아주 밝은 은하만 남는다(선택 효과, 맘퀴스트 편향). 실제로 은하가 적은 것이 아니므로 그렇게 결론 내리면 안 된다. 같은 절대 등급 이상인 은하만 골라(부피 제한 표본) 비교해야 공정하다.</div></div>
+    <h4>4. H₀를 50과 90으로 바꾸면 지도는 어떻게 변하는가? 구조의 '모양'은 변하는가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>H₀가 작으면 같은 z에 대해 거리가 커져 지도 전체가 비례해서 커지고, H₀가 크면 작아진다. 구조의 모양과 상대적 위치는 그대로이고 크기 눈금만 바뀐다. 따라서 H₀를 정확히 알아야 공동·장성의 실제 크기를 말할 수 있다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: NASA, ESA, CSA, STScI, 2dFGRS Team, Wikimedia Commons. 쐐기 지도 탐구의 은하 목록은 보로노이 우주 그물 모형과 SDSS 등급 한계로 만든 교육용 모의 자료입니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "은하의 3차원 공간 분포를 알기 위해 반드시 필요한 관측은?", "options": ["① 분광 관측으로 적색 편이 측정", "② 은하의 겉보기 등급 측정", "③ 은하의 색 측정", "④ 은하의 크기 측정", "⑤ 은하의 모양 분류"], "answer": 0, "explain": "적색 편이로 거리를 알아야 하늘의 위치(2차원)에 깊이를 더할 수 있습니다."},
+  {"lv": "계산", "q": "Hα선(656.3 nm)이 669.4 nm에서 관측된 은하의 적색 편이와 거리는? (H₀ = 70 km/s/Mpc)", "options": ["① z ≈ 0.01, 약 43 Mpc", "② z ≈ 0.02, 약 86 Mpc", "③ z ≈ 0.02, 약 43 Mpc", "④ z ≈ 0.2, 약 860 Mpc", "⑤ z ≈ 0.05, 약 210 Mpc"], "answer": 1, "explain": "z = 13.1/656.3 ≈ 0.020, v ≈ 6000 km/s, d = 6000/70 ≈ 86 Mpc입니다."},
+  {"lv": "기본", "q": "대규모 적색 편이 탐사로 밝혀진 사실로 옳은 것은?", "options": ["① 은하들은 우주에 고르게 분포한다", "② 모든 은하는 우리은하 쪽으로 다가온다", "③ 우주에는 은하단이 없다", "④ 은하들은 벽·필라멘트를 이루고 그 사이에 거대 공동이 있다", "⑤ 은하는 우리은하 주변에만 있다"], "answer": 3, "explain": "CfA, 2dF, SDSS 탐사로 은하 장성·필라멘트·거대 공동으로 이루어진 우주거대구조가 드러났습니다."},
+  {"lv": "적용", "q": "적색 편이 탐사에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 많은 은하의 스펙트럼을 동시에 얻기 위해 광섬유를 이용한다.</li><li>ㄴ. 겉보기 등급 한계 때문에 먼 곳에서는 밝은 은하만 목록에 포함된다.</li><li>ㄷ. 허블 상수를 바꾸면 우주거대구조의 모양이 완전히 달라진다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "허블 상수는 거리 눈금만 비례로 바꿀 뿐, 구조의 모양은 그대로입니다."},
+  {"lv": "적용", "q": "CfA 적색 편이 탐사에서 처음 발견된 대표적인 구조는?", "options": ["① 국부 은하군", "② 우리은하의 나선팔", "③ 마젤란은하", "④ 우주 배경 복사", "⑤ 은하 장성과 거대 공동"], "answer": 4, "explain": "1989년 겔러와 허크라는 CfA 탐사에서 길이 수억 광년의 은하 장성(CfA 장성)과 거대 공동을 확인했습니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 쐐기 지도의 띠(적위 범위)를 매우 두껍게 했을 때 나타나는 현상은?", "options": ["① 은하 수가 줄어든다", "② 서로 다른 깊이의 구조가 겹쳐 공동이 메워지고 구조가 흐려진다", "③ 거리가 두 배가 된다", "④ 적색 편이가 커진다", "⑤ 공동이 더 커 보인다"], "answer": 1, "explain": "두꺼운 띠는 3차원 정보를 다시 2차원으로 투영하는 것과 같아 구조가 지워집니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-4.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

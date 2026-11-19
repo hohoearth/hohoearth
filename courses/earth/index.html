@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지구과학 수업 아카이브</title>
+<!-- 디자인은 지구시스템과학 과목 메인과 같은 스타일을 함께 씁니다 -->
+<link rel="stylesheet" href="../earthsystem/assets/style.css">
+<style>
+  .home-hero { position: relative; overflow: hidden; border-radius: 28px; padding: 44px 40px; color: #fff;
+    background: radial-gradient(ellipse at 85% 15%, #4f46e5 0%, transparent 55%), radial-gradient(ellipse at 5% 95%, #0e7490 0%, transparent 60%), #0b1026; }
+  .home-hero h1 { color: #fff; }
+  .home-hero p { color: rgba(255,255,255,.78) !important; }
+  .feat { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .feat span { font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); }
+  .lcard .thumb { height: 120px; margin: -18px -20px 12px; border-radius: 18px 18px 0 0; overflow: hidden; background: #fff; border-bottom: 1px solid var(--line); }
+  .lcard .thumb img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+  .lcard .sm { display: inline-block; margin-top: 8px; font-size: .72rem; font-weight: 700; color: var(--c-inquiry, #0d9488); }
+</style>
+</head>
+<body>
+<div class="home">
+  <a href="../../index.html#courses" style="display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:7px 14px;border-radius:999px;background:#f1f5f9;border:1px solid #e2e8f0;color:#334155;font-size:.82rem;font-weight:700;text-decoration:none">← HoHo earth · 지구과학 수업</a>
+  <header class="home-hero">
+    <h1>지구과학 수업 아카이브</h1>
+    <p>고등학교 지구과학Ⅰ · 17차시 · 교재 원문 도표와 인터랙티브 정답 확인이 들어간 웹 수업자료</p>
+    <div class="feat"><span>단원별 웹 수업자료</span><span>판서 · 학급별 진도 체크</span></div>
+  </header>
+  <div id="units"></div>
+</div>
+<!-- 차시 목록은 홈페이지의 카드 자료(data/items.js)와 과목 목록(js/courses-data.js)에서 자동으로 만들어집니다 -->
+<script src="../../data/items.js"></script>
+<script src="../../js/courses-data.js"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var items = {};
+  (window.archiveItems || []).forEach(function (it) {
+    if ((it.category === "class" || it.category === "sim") && (!it.subject || it.subject === "earth") && it.lessonUrl) items[it.lessonUrl] = it;
+  });
+  var lessons = (window.CP_COURSES && window.CP_COURSES.earth.lessons) || [];
+  var html = "", unit = null, n = 0, ui = 0;
+  lessons.forEach(function (l) {
+    var it = items[l.url] || {};
+    var sim = l.t.indexOf("[시뮬]") === 0;
+    if (l.u !== unit) {
+      if (unit !== null) html += "</div></section>";
+      unit = l.u; ui++; n = 0;
+      var parts = unit.split(".");
+      html += '<section class="unit"><div class="unit-head"><span class="pill">' + esc(parts.length > 1 ? parts[0] : "+") + "</span><h2>" + esc(parts.length > 1 ? parts.slice(1).join(".").trim() : unit) + '</h2></div><div class="grid">';
+    }
+    if (!sim) n++;
+    var page = String(it.date || "").replace(/교재\s*/g, "").trim();
+    var kw = (it.tags || []).filter(function (t) { return t !== "수업자료"; }).slice(0, 4).join(" · ");
+    html += '<a class="lcard" href="../../' + esc(l.url) + '">' +
+      (it.thumbnail ? '<div class="thumb"><img src="' + (/^https?:/.test(it.thumbnail) ? "" : "../../") + esc(it.thumbnail) + '" alt="" loading="lazy"></div>' : "") +
+      '<div class="cd">' + (sim ? "수업 시뮬레이션" : ("0" + ui).slice(-2) + "-" + ("0" + n).slice(-2) + (page ? " · 교재 p. " + esc(page.replace(/^p\.\s*/, "")) : "")) + "</div>" +
+      '<div class="nm">' + (sim ? "" : ("0" + n).slice(-2) + ". ") + esc(l.t.replace("[시뮬] ", "")) + "</div>" +
+      '<div class="kw">' + esc(kw) + "</div>" +
+      (sim ? '<div class="sm">◆ 인터랙티브 시뮬레이션</div>' : "") + "</a>";
+  });
+  if (unit !== null) html += "</div></section>";
+  document.getElementById("units").innerHTML = html || "<p>차시 목록을 불러오지 못했습니다.</p>";
+})();
+</script>
+</body>
+</html>

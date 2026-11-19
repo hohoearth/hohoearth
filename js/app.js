@@ -5,6 +5,15 @@
 let currentCategory = "all";
 let currentSearchQuery = "";
 let currentTag = "";
+let currentSubject = "all";   // 수업 자료 과목 필터: all | earth | earthsystem | planetary
+
+// 과목 이름 (수업 자료 카드의 subject 값). subject가 없는 수업 자료는 지구과학으로 봅니다.
+const SUBJECTS = [
+  { id: "earth", name: "지구과학", short: "지구과학" },
+  { id: "earthsystem", name: "지구시스템과학", short: "지구시스템" },
+  { id: "planetary", name: "행성우주과학", short: "행성우주" }
+];
+function subjectOf(item) { return item.category === "class" ? (item.subject || "earth") : ""; }
 
 function safeCreateIcons() {
   if (window.lucide && typeof lucide.createIcons === 'function') {
@@ -124,11 +133,35 @@ function renderCategoryTabs() {
       </button>
     `;
   }).join('');
+  renderSubjectTabs();
+}
+
+// 3-1. 수업 자료 과목 버튼 (수업 자료 탭에서만 보임)
+function renderSubjectTabs() {
+  const box = document.getElementById("subject-tabs");
+  if (!box) return;
+  if (currentCategory !== "class") { box.innerHTML = ""; box.classList.add("hidden"); return; }
+  box.classList.remove("hidden");
+  const items = window.archiveItems || [];
+  const opts = [{ id: "all", name: "모든 과목" }].concat(SUBJECTS);
+  box.innerHTML = `<span class="text-[11px] font-extrabold tracking-wider text-slate-400 mr-1">과목</span>` + opts.map(s => {
+    const n = items.filter(i => i.category === "class" && (s.id === "all" || subjectOf(i) === s.id)).length;
+    const on = s.id === currentSubject;
+    return `<button onclick="setSubject('${s.id}')" class="px-4 py-2 rounded-full text-xs font-bold transition border ${on ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'bg-indigo-50/60 text-indigo-700 border-indigo-100 hover:bg-indigo-100'}">${s.name} <span class="${on ? 'text-indigo-100' : 'text-indigo-400'} font-mono">${n}</span></button>`;
+  }).join('');
+}
+
+function setSubject(id) {
+  currentSubject = id;
+  renderSubjectTabs();
+  renderItems();
+  safeCreateIcons();
 }
 
 function setCategory(catId) {
   currentCategory = catId;
   currentTag = "";
+  if (catId !== "class") currentSubject = "all";
   renderCategoryTabs();
   renderItems();
   safeCreateIcons();
@@ -142,7 +175,21 @@ function filterAndScrollTo(catId) {
   }
 }
 
+// '지구과학 수업' 영역의 과목 카드 → 아카이브의 그 과목 차시 카드로 이동
+function showSubject(id) {
+  currentCategory = "class";
+  currentTag = "";
+  currentSubject = id;
+  renderCategoryTabs();
+  renderItems();
+  safeCreateIcons();
+  const archiveSec = document.getElementById("archive");
+  if (archiveSec) archiveSec.scrollIntoView({ behavior: "smooth" });
+}
+
 window.setCategory = setCategory;
+window.setSubject = setSubject;
+window.showSubject = showSubject;
 window.filterAndScrollTo = filterAndScrollTo;
 
 // 4. 아이템 목록 렌더링 (화이트 카드 갤러리)
@@ -162,7 +209,8 @@ function renderItems() {
       item.tags.some(t => t.toLowerCase().includes(q))
     );
     const matchTag = !currentTag || item.tags.includes(currentTag);
-    return matchCategory && matchQuery && matchTag;
+    const matchSubject = currentCategory !== "class" || currentSubject === "all" || subjectOf(item) === currentSubject;
+    return matchCategory && matchQuery && matchTag && matchSubject;
   });
 
   // 태그 배너
@@ -212,7 +260,7 @@ function renderItems() {
           <!-- 상단 뱃지 -->
           <div class="absolute top-4 left-4 flex items-center gap-2">
             <span class="px-3 py-1 text-[11px] font-bold tracking-wider uppercase rounded-full bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200 shadow-sm">
-              ${item.unitMajor && item.category !== 'tools' ? item.unitMajor.split('.')[0] + '단원' : catObj.name}
+              ${item.category === 'sim' ? '시뮬레이션' : (item.subject && item.subject !== 'earth' ? ((SUBJECTS.find(s => s.id === item.subject) || {}).short || '') + ' · ' : '') + (item.unitMajor && item.category !== 'tools' ? item.unitMajor.split('.')[0] + '단원' : catObj.name)}
             </span>
             ${item.featured ? '<span class="px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full bg-indigo-600 text-white shadow-sm">핵심단원</span>' : ''}
           </div>
@@ -257,7 +305,7 @@ function renderItems() {
                   </button>`
                 : item.lessonUrl
                 ? `<a href="${item.lessonUrl}" class="flex-1 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold tracking-wider rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
-                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> 단원 수업자료 열기
+                    ${item.category === 'sim' ? '<i data-lucide="atom" class="w-3.5 h-3.5"></i> 시뮬레이션 열기' : '<i data-lucide="book-open" class="w-3.5 h-3.5"></i> 단원 수업자료 열기'}
                   </a>
                   <button onclick="openDetailModal('${item.id}')" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition" title="요약 미리보기">
                     요약

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. 쌍성과 별의 질량</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="2-4">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>별의 무게는 어떻게 잴까?</h2><span class="tbref">교과서 p. 62</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>쌍성의 관측 자료</b>로 별의 질량을 구할 수 있다.</li>
+      <li>주계열성의 <b>질량–광도 관계</b>를 이용하여 쌍성이 아닌 별의 질량을 추정할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-4/sirius.jpg" alt="시리우스 A와 B" style="object-fit:contain;background:#000"></div>
+        <figcaption>시리우스 A와 동반성 시리우스 B(왼쪽 아래 작은 점, 백색 왜성)</figcaption>
+        <div class="credit">NASA, ESA, H. Bond (STScI), M. Barstow (Univ. of Leicester)</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/2-4/albireo.jpg" alt="알비레오 이중성"></div>
+        <figcaption>백조자리 알비레오 · 주황색과 푸른색 두 별</figcaption>
+        <div class="credit">N. B., CC BY-SA 4.0</div>
+      </figure>
+    </div>
+    <div class="qbig">별은 저울에 올릴 수도, 직접 가 볼 수도 없다.<br>그런데 천문학자들은 시리우스 B가 지구만 한 크기에 태양만큼 무겁다는 것을 알아냈다. 어떻게?</div>
+    <p class="tnote">1-03에서 위성의 공전으로 행성의 질량을 구한 경험을 떠올리게 합니다(뉴턴의 케플러 제3법칙). '서로 도는 두 별 = 질량을 재는 저울'이 이 차시의 핵심 비유입니다. 운영안 4차시(쌍성 종류 1 / 질량 구하기 1 / 질량–광도 관계 1 / 데이터 탐구 1).</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 쌍성의 종류">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>쌍성의 종류</h2><span class="tbref">교과서 p. 62 ~ 63</span></div>
+  <div class="card split">
+    <h3>관측 방법에 따른 분류</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>쌍성</b>: 두 별이 서로의 중력에 묶여 <b>공통 질량 중심</b>을 공전하는 별. 우리은하 별의 절반 가까이가 쌍성(다중성)이다.</li>
+        <li><b>안시 쌍성</b>: 망원경으로 두 별이 분리되어 보이는 쌍성. 오랫동안 위치를 측정해 궤도를 그린다.</li>
+        <li><b>분광 쌍성</b>: 너무 가까워 분리되지 않지만, 스펙트럼의 흡수선이 주기적으로 <b>둘로 갈라졌다 합쳐지는</b> 쌍성(도플러 효과)</li>
+        <li><b>식쌍성</b>: 궤도면이 시선 방향과 거의 나란하여 두 별이 번갈아 서로를 가리며 밝기가 주기적으로 변하는 쌍성
+          <ul><li><b>주극소</b>: 표면 온도가 높은(단위 면적당 더 밝은) 별이 가려질 때 → 더 깊다</li><li><b>부극소</b>: 표면 온도가 낮은 별이 가려질 때</li><li>극소 사이 간격 → 공전 주기, 극소 지속 시간 → 별의 크기</li></ul></li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">오개념 주의</span><b class="t">겉보기 이중성</b><p>하늘에서 우연히 같은 방향에 보이지만 실제로는 멀리 떨어진 두 별은 쌍성이 아니다. 알비레오도 진짜 쌍성인지 논란이 있다(가이아 측정에서 두 별의 거리가 다르게 나옴).</p></div>
+      <div class="dnote"><span class="lb">대표 예</span><b class="t">알골 (페르세우스자리 β)</b><p>2.87일마다 밝기가 2.1등급에서 3.4등급으로 떨어지는 유명한 식쌍성. '악마의 별'이라 불렸다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>쌍성 관측소: 궤도 · 스펙트럼 · 광도 곡선</b></div>
+      <div class="sim-body">
+        <canvas id="sim-bin"></canvas>
+        <div class="ctrl">
+          <label>별 A 질량 <span class="v" id="bin-m1v"></span><input type="range" id="bin-m1" min="0.3" max="5" step="0.05" value="2"></label>
+          <label>별 B 질량 <span class="v" id="bin-m2v"></span><input type="range" id="bin-m2" min="0.3" max="5" step="0.05" value="1"></label>
+          <label>두 별 사이 거리 <span class="v" id="bin-av"></span><input type="range" id="bin-a" min="0.03" max="0.5" step="0.005" value="0.06"></label>
+          <label>궤도 경사 i <span class="v" id="bin-iv"></span><input type="range" id="bin-i" min="0" max="90" step="0.5" value="88"></label>
+          <div class="out" id="bin-out"></div>
+        </div>
+      </div>
+      <div class="hint">왼쪽 위: 관측자가 본 모습(크기 과장 없음). 오른쪽 위: 두 별의 시선 속도. 왼쪽 아래: 흡수선(두 별의 선이 갈라짐). 오른쪽 아래: 밝기 변화(주극소·부극소). 궤도 경사를 줄이면 무엇이 먼저 사라질까?</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 쌍성으로 질량 구하기">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>쌍성으로 별의 질량 구하기</h2><span class="tbref">교과서 p. 64</span></div>
+  <div class="card split">
+    <h3>케플러 제3법칙 + 질량 중심</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>두 별의 <b>질량의 합</b>: 케플러 제3법칙에서 구한다. a는 두 별 사이 거리(궤도 긴반지름의 합)</li>
+        <li>안시 쌍성은 궤도의 각 크기(α″)를 거리로 바꿔야 한다 → <b>연주시차</b>가 필요하다.</li>
+        <li>두 별의 <b>질량비</b>: 질량 중심까지의 거리에 반비례한다. 분광 쌍성에서는 시선 속도 크기에 반비례한다.</li>
+      </ul>
+      <div class="eq"><i>m</i><sub>1</sub> + <i>m</i><sub>2</sub> = <span class="frac"><span><i>a</i>³</span><span><i>P</i>²</span></span> &nbsp;(태양 질량, AU, 년) &nbsp;&nbsp; <i>a</i> (AU) = <span class="frac"><span>α (″)</span><span><i>p</i> (″)</span></span> &nbsp;&nbsp; <span class="frac"><span><i>m</i><sub>1</sub></span><span><i>m</i><sub>2</sub></span></span> = <span class="frac"><span><i>a</i><sub>2</sub></span><span><i>a</i><sub>1</sub></span></span> = <span class="frac"><span><i>v</i><sub>2</sub></span><span><i>v</i><sub>1</sub></span></span></div>
+      <div class="box calc"><span class="bt">예제 · 시리우스</span><p>공전 주기 50.1년, 궤도 각 긴반지름 7.50″, 연주시차 0.379″<br>a = 7.50 / 0.379 ≈ 19.8 AU → m<sub>A</sub> + m<sub>B</sub> = 19.8³ / 50.1² ≈ <b>3.1 M☉</b><br>질량 중심까지 거리 비 a<sub>A</sub> : a<sub>B</sub> ≈ 1 : 2 → m<sub>A</sub> ≈ <b>2.1 M☉</b>, m<sub>B</sub> ≈ <b>1.0 M☉</b><br>시리우스 B는 지구만 한 크기에 태양 질량을 가진 <b>백색 왜성</b>이다!</p></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote link"><span class="lb">연계 · I-03</span><b class="t">같은 식, 다른 천체</b><p>행성의 위성 → 행성 질량, 쌍성 → 별의 질량, 은하 속 별의 회전 → 은하의 질량(III-03). 중력이 있는 곳이면 어디서나 쓰는 '우주의 저울'이다.</p></div>
+      <div class="dnote"><span class="lb">주의</span><b class="t">분광 쌍성의 한계</b><p>시선 속도로는 궤도 경사 i를 알 수 없어 m sin³i만 구해진다. 식쌍성이기도 하면 i ≈ 90°이므로 질량을 정확히 구할 수 있다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 질량–광도 관계">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>주계열성의 질량–광도 관계</h2><span class="tbref">교과서 p. 65 ~ 66</span></div>
+  <div class="card split">
+    <h3>무거운 별은 훨씬 더 밝다</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>쌍성으로 질량을 구한 <b>주계열성</b>들의 광도를 비교하면, 광도는 질량의 약 <b>3.5 ~ 4제곱</b>에 비례한다.</li>
+        <li>이 관계를 쓰면 쌍성이 아닌 주계열성도 광도만 재서 <b>질량을 추정</b>할 수 있다.</li>
+        <li>백색 왜성·거성처럼 주계열성이 아닌 별에는 적용할 수 없다.</li>
+        <li><b>수명</b>: 연료(질량)를 쓰는 빠르기(광도)에 반비례 → 질량이 큰 별일수록 수명이 짧다.</li>
+      </ul>
+      <div class="eq"><i>L</i> ∝ <i>M</i><sup>3.5 ~ 4</sup> &nbsp;&nbsp; ⟹ &nbsp;&nbsp; 수명 <i>t</i> ∝ <span class="frac"><span><i>M</i></span><span><i>L</i></span></span> ∝ <i>M</i><sup>−2.5</sup></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">계산</span><b class="t">태양 10배 질량의 별</b><p>광도 ≈ 10<sup>3.5</sup> ≈ 3000배, 수명 ≈ 100억 년 × 10<sup>−2.5</sup> ≈ 3000만 년</p></div>
+      <div class="dnote link"><span class="lb">연계 · I-05</span><b class="t">생명 가능 지대</b><p>무거운 별은 수명이 짧아 생명이 진화하기 어렵다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>실제 쌍성 자료로 질량–광도 관계식 만들기</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">USNO 안시 쌍성 궤도 목록 · DEBCat 식쌍성 목록</span><span class="skill">물리 모형으로 변수 만들기</span><span class="skill">로그–로그 회귀</span><span class="skill">이상값 판단</span><span>2차시</span></div>
+    <p>6쌍의 <b>안시 쌍성</b>은 궤도 자료(P, α, 연주시차)로 질량을 직접 계산하고, 4쌍의 <b>식쌍성</b>은 이미 정밀하게 구해진 질량을 더해 <b>20개 별의 질량–광도 그래프</b>를 만든다. 회귀 분석으로 지수를 구하고, <b>백색 왜성 같은 이상값</b>이 결과를 어떻게 망가뜨리는지 확인한다.</p>
+    <div class="steps-lab">
+      <div><b>질량 계산</b>안시 쌍성 6쌍의 a = α/p, M<sub>A</sub> + M<sub>B</sub> = a³/P²를 계산하고 질량비로 나눈다(버튼 클릭).</div>
+      <div><b>그래프와 회귀</b>log M–log L 산점도에 회귀선을 그리고 기울기(지수)와 r²를 읽는다.</div>
+      <div><b>이상값</b>백색 왜성 2개를 포함하면 기울기와 r²가 어떻게 변하는가? 넣어도 되는 자료인가?</div>
+      <div><b>활용</b>얻은 관계식으로 베가(L = 40 L☉)의 질량과 수명을 추정한다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>질량–광도 그래프와 회귀 분석</b></div>
+      <div class="sim-body">
+        <canvas id="lab-ml"></canvas>
+        <div class="ctrl">
+          <div class="btns"><button class="tbtn on" id="lab-calc" type="button">🧮 안시 쌍성 질량 계산</button></div>
+          <label><input type="checkbox" id="lab-wd"> 백색 왜성 2개 포함</label>
+          <div class="kpi" id="lab-kpi"></div>
+          <label>광도로 질량 예측 · L <span class="v" id="lab-lv"></span><input type="range" id="lab-l" min="-3" max="4.5" step="0.01" value="1.6"></label>
+          <div class="out" id="lab-out"></div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">양쪽 축 모두 로그 눈금(태양 = 1). 별 위에 마우스를 올리면 이름과 값이 보인다.</div>
+    </div>
+    <div class="dataset">
+      <div class="dh">📋 안시 쌍성 궤도 자료</div>
+      <div class="db" id="lab-table"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 주계열성만으로 구한 질량–광도 관계의 지수와 r²는? 교과서의 3.5 ~ 4와 비교해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>기울기(지수) ≈ 3.8, r² ≈ 0.98. 교과서 값 범위 안에 있다. 질량이 0.2배에서 11배까지 약 50배 다른 별들이 한 직선 위에 놓여, 광도가 약 400만 배 차이 남을 설명한다.</div></div>
+    <h4>2. 백색 왜성을 포함하면 회귀 결과가 어떻게 변하는가? 이 자료를 넣는 것이 옳은가?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>시리우스 B와 프로키온 B는 질량은 0.6 ~ 1 M☉인데 광도는 매우 작아(약 0.0005 ~ 0.06 L☉) 회귀선 아래로 크게 벗어난다. 포함하면 기울기가 달라지고 r²가 약 0.98에서 0.89로 크게 떨어진다. 질량–광도 관계는 수소 핵융합을 하는 '주계열성'의 관계이므로, 핵융합이 끝난 백색 왜성은 모집단이 다른 자료이다. 이상값은 무조건 지우는 것이 아니라 '왜 벗어났는지' 물리적 이유가 있을 때 제외한다.</div></div>
+    <h4>3. 베가(L ≈ 40 L☉, 주계열성)의 질량과 수명을 추정해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>회귀식으로 M ≈ 40<sup>1/3.9</sup> ≈ 2.6 M☉(실제 약 2.1 M☉ — 베가는 빠르게 자전해 광도 추정이 복잡하다). 수명 ≈ 100억 년 × 2.6/40 ≈ 6.5억 년. 태양보다 훨씬 짧다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: NASA/ESA/STScI, Wikimedia Commons. 안시 쌍성 궤도 자료는 USNO Sixth Catalog of Orbits of Visual Binary Stars 등의 값을, 식쌍성 질량·광도는 DEBCat(Southworth) 등 문헌 값을 반올림한 교육용 근사값입니다. 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "스펙트럼의 흡수선이 주기적으로 둘로 갈라졌다 합쳐지는 쌍성은?", "options": ["① 안시 쌍성", "② 식쌍성", "③ 겉보기 이중성", "④ 분광 쌍성", "⑤ 맥동 변광성"], "answer": 3, "explain": "두 별이 번갈아 다가오고 멀어지며 흡수선이 도플러 효과로 갈라지는 쌍성이 분광 쌍성입니다."},
+  {"lv": "적용", "q": "식쌍성의 광도 곡선에서 주극소가 나타나는 때는?", "options": ["① 크기가 큰 별이 가려질 때", "② 표면 온도가 높은 별이 가려질 때", "③ 질량이 작은 별이 가려질 때", "④ 두 별이 가장 멀리 떨어져 있을 때", "⑤ 두 별이 질량 중심에서 정지할 때"], "answer": 1, "explain": "같은 면적이 가려질 때, 단위 면적당 더 밝은(온도가 높은) 별이 가려지면 밝기가 더 많이 줄어듭니다."},
+  {"lv": "계산", "q": "두 별 사이 거리가 4 AU이고 공전 주기가 2년인 쌍성의 질량 합은?", "options": ["① 2 M☉", "② 4 M☉", "③ 8 M☉", "④ 16 M☉", "⑤ 32 M☉"], "answer": 3, "explain": "m₁ + m₂ = a³/P² = 64/4 = 16 M☉입니다."},
+  {"lv": "계산", "q": "연주시차 0.1″인 안시 쌍성의 궤도 각 긴반지름이 2″, 공전 주기가 40년이다. 질량 합은?", "options": ["① 1 M☉", "② 2 M☉", "③ 5 M☉", "④ 10 M☉", "⑤ 20 M☉"], "answer": 2, "explain": "a = 2/0.1 = 20 AU, m₁ + m₂ = 8000/1600 = 5 M☉입니다."},
+  {"lv": "적용", "q": "분광 쌍성에서 별 A의 시선 속도 변화 폭이 별 B의 2배이다. 이에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 질량은 B가 A의 2배이다.</li><li>ㄴ. 질량 중심까지의 거리는 A가 B의 2배이다.</li><li>ㄷ. 두 별의 공전 주기는 같다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 4, "explain": "질량비는 속도비의 역수이고, 두 별은 같은 주기로 질량 중심을 돕니다."},
+  {"lv": "계산", "q": "질량–광도 관계 L ∝ M⁴를 따르는 주계열성의 광도가 태양의 81배라면 질량과 수명(태양 수명 100억 년)은?", "options": ["① 3 M☉, 약 3.7억 년", "② 3 M☉, 약 33억 년", "③ 9 M☉, 약 1.1억 년", "④ 81 M☉, 약 100만 년", "⑤ 3 M☉, 약 270억 년"], "answer": 0, "explain": "M = 81^(1/4) = 3 M☉, 수명 ∝ M/L = 3/81 → 100억 × 0.037 ≈ 3.7억 년입니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 백색 왜성을 질량–광도 회귀에서 제외한 까닭으로 가장 적절한 것은?", "options": ["① 질량을 측정할 수 없기 때문", "② 너무 밝기 때문", "③ 쌍성이 아니기 때문", "④ 자료의 수를 줄이기 위해", "⑤ 주계열성이 아니어서 같은 물리 관계를 따르지 않기 때문"], "answer": 4, "explain": "질량–광도 관계는 수소 핵융합을 하는 주계열성의 관계입니다. 물리적 이유가 있는 이상값만 제외합니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/2-4.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>

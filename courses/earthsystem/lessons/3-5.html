@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05. 여러 가지 바람</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="3-5">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>구름과 깃발이 서로 다른 쪽으로 움직인다?</h2><span class="tbref">교과서 p. 104</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>지균풍, 경도풍, 지상풍</b>의 발생 원리를 설명할 수 있다.</li>
+      <li>여러 가지 바람과 관련된 <b>힘의 작용</b>을 설명할 수 있다.</li>
+    </ul>
+    <div class="figs one">
+      <figure class="fig">
+        <div class="frame" style="padding:12px">
+          <svg viewBox="0 0 700 220" role="img" aria-label="상층 구름과 지상 깃발" style="font-family:Pretendard,sans-serif">
+            <rect width="700" height="220" fill="#dbeafe"/><rect y="180" width="700" height="40" fill="#65a30d"/>
+            <g fill="#fff"><ellipse cx="420" cy="50" rx="70" ry="22"/><ellipse cx="470" cy="38" rx="50" ry="20"/></g>
+            <line x1="520" y1="50" x2="620" y2="50" stroke="#1d4ed8" stroke-width="4"/><path d="M620,42 L636,50 L620,58z" fill="#1d4ed8"/>
+            <text x="540" y="80" font-size="14" font-weight="800" fill="#1d4ed8">상층의 바람</text>
+            <line x1="160" y1="180" x2="160" y2="100" stroke="#475569" stroke-width="4"/>
+            <path d="M160,102 L230,92 L222,125 L160,128z" fill="#ef4444"/>
+            <line x1="250" y1="120" x2="320" y2="95" stroke="#dc2626" stroke-width="4"/><path d="M318,88 L334,92 L322,104z" fill="#dc2626"/>
+            <text x="250" y="150" font-size="14" font-weight="800" fill="#dc2626">지상의 바람</text>
+          </svg>
+        </div>
+        <figcaption>높은 곳의 구름과 지상의 깃발이 다른 방향으로 움직이는 모습 (모식도)</figcaption><div class="credit">자체 제작</div>
+      </figure>
+    </div>
+    <div class="qbig">높은 하늘의 구름이 움직이는 방향과 지상의 깃발이 날리는 방향이 다를 때가 있다. 왜 그럴까?</div>
+    <p class="tnote">예시: 구름 높이와 지상에서 부는 바람의 방향이 다르기 때문입니다. 공기는 보이지 않지만 구름과 깃발로 바람을 추정할 수 있다는 점을 짚어 줍니다. 교과서 운영안은 2차시(상층의 바람 / 지상의 바람·일기도)입니다.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 상층의 바람">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>상층에서 부는 바람: 지균풍과 경도풍</h2><span class="tbref">교과서 p. 104 ~ 105</span></div>
+
+  <div class="card split">
+    <h3>(1) 지균풍</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>지표에서 약 1 km 위의 상층은 지표의 영향을 거의 받지 않아 <b>마찰력을 무시</b>할 수 있다.</li>
+        <li>수평 기압 차가 생기면 정지한 공기가 기압 경도력을 받아 저기압 쪽으로 움직이기 시작한다 → 북반구에서는 전향력이 오른쪽으로 작용해 풍향이 휜다 → 풍속이 커질수록 전향력도 커져 더 휜다.</li>
+        <li>결국 <b>기압 경도력과 전향력이 평형</b>을 이루어 <b>등압선과 나란하게</b> 부는 바람 → <span class="hl">지균풍</span></li>
+        <li>같은 위도에서는 기압 경도력이 클수록, 기압 경도력이 같으면 위도가 낮을수록 풍속이 빠르다.</li>
+      </ul>
+      <div class="eq"><i>v</i> = <span class="frac"><span>1</span><span>2<i>ρ</i>Ω sin<i>φ</i></span></span> · <span class="frac"><span>Δ<i>P</i></span><span>Δ<i>L</i></span></span> <span class="note">ρ: 공기의 밀도, Ω: 지구 자전 각속도, φ: 위도, ΔP/ΔL: 수평 기압 경도</span></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote link"><span class="lb">연계 · II-2</span><b class="t">지형류와 똑같다</b><p>해양의 지형류가 수압 경도력과 전향력의 평형이었듯, 지균풍은 기압 경도력과 전향력의 평형이다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>지균풍은 이렇게 만들어진다</b></div>
+      <div class="sim-body">
+        <canvas id="sim-gw"></canvas>
+        <div class="ctrl">
+          <label>위도 <span class="v" id="gw-latv"></span><input type="range" id="gw-lat" min="15" max="70" step="5" value="40"></label>
+          <label>기압 차 <span class="v" id="gw-dpv"></span><input type="range" id="gw-dp" min="1" max="8" step="1" value="4"></label>
+          <div class="btns"><button class="tbtn on" id="gw-go" type="button">↻ 다시 출발</button></div>
+          <div class="out" id="gw-out"></div>
+        </div>
+      </div>
+      <div class="hint">위도와 기압 차를 바꾸며 지균풍의 풍속이 어떻게 달라지는지 확인하자. 실제보다 빠르게 보여 주며, 흔들림이 가라앉도록 약한 감쇠를 넣었다.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 경도풍</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>상층에서 등압선이 <b>원형이거나 곡선</b>이면, 바람은 기압 경도력·전향력과 함께 <b>구심력</b>의 영향을 받는다.</li>
+        <li><b>저기압 주위</b>: 중심 쪽 기압 경도력과 바깥쪽 전향력의 차이가 구심력 → 북반구에서 <b>시계 반대 방향</b>으로 등압선과 나란하게 분다.</li>
+        <li><b>고기압 주위</b>: 중심 쪽 전향력과 바깥쪽 기압 경도력의 차이가 구심력 → 북반구에서 <b>시계 방향</b>으로 분다.</li>
+        <li><b>경도풍</b>: 상층에서 기압 경도력·전향력·구심력이 균형을 이루며 원형으로 부는 바람</li>
+        <li>전향력은 풍속에 비례하므로, 기압 경도력이 같으면 <b>고기압 주위의 경도풍이 저기압 주위보다 빠르다</b>.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">정리</span><b class="t">경도풍의 힘 관계</b><p>저기압: 전향력 = 기압 경도력 − 구심력<br>고기압: 전향력 = 기압 경도력 + 구심력</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>저기압과 고기압 주위의 경도풍</b></div>
+      <div class="sim-body">
+        <canvas id="sim-grw"></canvas>
+        <div class="ctrl">
+          <label>중심 <select id="gr-type"><option value="L">저기압</option><option value="H">고기압</option></select></label>
+          <label>반구 <select id="gr-hem"><option value="n">북반구</option><option value="s">남반구</option></select></label>
+          <div class="out" id="gr-out"></div>
+        </div>
+      </div>
+      <div class="hint">맨 위 지점에서 세 힘의 방향을 보자. 저기압과 고기압을 바꾸면 기압 경도력과 전향력 중 어느 쪽이 중심을 향하는지가 달라진다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 지상의 바람">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>지상에서 부는 바람과 일기도</h2><span class="tbref">교과서 p. 106 ~ 107</span></div>
+
+  <div class="card split">
+    <h3>(1) 지상풍</h3>
+    <div class="body">
+      <ul class="pts">
+        <li>지표에서 약 1 km까지는 <b>마찰</b>이 바람에 영향을 준다. 마찰력이 풍속을 줄이면 전향력도 작아진다.</li>
+        <li>그 결과 <b>마찰력과 전향력의 합력</b>이 기압 경도력과 평형을 이루고, 바람이 <b>등압선을 비스듬히 가로질러</b> 저기압 쪽으로 분다 → <span class="hl">지상풍</span></li>
+        <li><b>경각</b>: 지상풍이 등압선과 이루는 각. 마찰력이 클수록 크다 (육상 &gt; 해상).</li>
+        <li>등압선이 원형일 때: 지상의 <b>저기압</b>에서는 바람이 <b>시계 반대 방향으로 불어 들어가고</b>, <b>고기압</b>에서는 <b>시계 방향으로 불어 나간다</b> (북반구).</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">경각의 크기</b><p>거친 육지에서는 약 20°~35°, 해상에서는 약 15°~20°, 기복이 심한 산맥에서는 약 45°에 이른다. 높이 올라갈수록 마찰이 줄어 경각이 작아지고 풍속은 빨라진다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 3</span><b>마찰력에 따라 달라지는 지상풍</b></div>
+      <div class="sim-body">
+        <canvas id="sim-sw"></canvas>
+        <div class="ctrl">
+          <label>바람이 부는 곳 <select id="sw-sfc"><option value="upper">상층 (마찰 없음)</option><option value="sea">해상</option><option value="land" selected>육상 평야</option><option value="mtn">산악 지대</option></select></label>
+          <div class="out" id="sw-out"></div>
+        </div>
+      </div>
+      <div class="hint">상층 → 해상 → 육상 → 산악으로 바꾸며 경각과 풍속의 변화를 비교하자. 이것이 '해 보기'에서 지상 일기도와 상층 일기도의 바람이 다른 까닭이다.</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 4</span><b>지상의 저기압과 고기압 주위의 바람 (북반구)</b></div>
+      <div class="sim-body stack"><canvas id="sim-lh"></canvas></div>
+      <div class="hint">저기압으로는 공기가 모여들어(수렴) 상승하고, 고기압에서는 공기가 퍼져 나가며(발산) 하강한다.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 지상 일기도와 상층 일기도</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>지상 일기도</b>: 지상의 날씨 정보. 기압이 같은 곳을 이은 <b>등압선</b>으로 기압 분포를 나타낸다.</li>
+        <li><b>상층 일기도(등압면도)</b>: 특정 기압(예: 500 hPa) <b>등압면의 높이</b>가 같은 곳을 이은 <b>등고선</b>으로 기압 분포를 나타낸다.</li>
+        <li>상층 일기도에서 등압면이 <b>높은 곳일수록 기압이 높다</b>. 기압 경도력은 등고선이 높은 쪽에서 낮은 쪽으로 작용한다.</li>
+      </ul>
+      <div class="figs one">
+        <figure class="fig">
+          <div class="frame" style="padding:10px">
+            <svg viewBox="0 0 700 220" role="img" aria-label="등압면과 등고선" style="font-family:Pretendard,sans-serif">
+              <path d="M20,150 C200,60 360,60 520,120 C600,150 650,140 690,120" fill="none" stroke="#2563eb" stroke-width="4"/>
+              <line x1="20" y1="110" x2="690" y2="110" stroke="#94a3b8" stroke-dasharray="6 5"/>
+              <text x="560" y="105" font-size="12" fill="#64748b">500 hPa 등압면의 평균 높이</text>
+              <text x="260" y="58" font-size="13" font-weight="800" fill="#2563eb">500 hPa 등압면</text>
+              <circle cx="270" cy="110" r="6" fill="#c2410c"/><text x="250" y="135" font-size="13" font-weight="800" fill="#c2410c">A: 500 hPa보다 높음</text>
+              <circle cx="60" cy="110" r="6" fill="#1d4ed8"/><text x="30" y="180" font-size="13" font-weight="800" fill="#1d4ed8">B: 500 hPa보다 낮음</text>
+              <line x1="60" y1="116" x2="60" y2="162" stroke="#1d4ed8"/>
+            </svg>
+          </div>
+          <figcaption>등압면이 높이 솟은 곳(A)은 같은 높이에서 기압이 더 높다</figcaption><div class="credit">자체 제작 모식도</div>
+        </figure>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">디지털 탐색</span><b class="t">기상청 날씨누리</b><p>지상 일기도와 상층 일기도를 직접 찾아볼 수 있다. 같은 날 같은 시각의 두 일기도를 비교해 보자.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="탐구 활동">
+  <div class="sec-head"><span class="pill inquiry">탐구 활동</span><h2>지상 일기도와 상층 일기도 비교하기</h2><span class="tbref">교과서 p. 107</span></div>
+  <div class="card split">
+    <h3>해 보기 · 같은 시각, 다른 높이의 바람</h3>
+    <div class="body">
+      <p>같은 날 같은 시각의 지상 일기도와 상층 500 hPa 일기도에서, 같은 위치의 지상 A 지점과 상층 A' 지점을 비교해 보자. (교과서 일기도 또는 기상청 날씨누리의 실제 일기도 활용)</p>
+      <h4>1. A와 A'에서 기압 경도력의 방향을 화살표로 나타내 보자.</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>답 찾는 방법</button><div>기압 경도력은 기압(등고선)이 높은 곳에서 낮은 곳으로, 그 지점을 지나는 등압선(등고선)에 <b>수직</b>으로 그린다.</div></div>
+      <h4>2. A와 A'에서 기압 경도력의 방향과 풍향은 어떻게 다르며, 그 까닭은?</h4>
+      <textarea class="write"></textarea>
+      <div class="reveal"><button>예시 답안</button><div>A(지상)에서는 바람이 기압 경도력 방향의 오른쪽으로 등압선을 <b>비스듬히 가로질러</b> 불고, A'(상층)에서는 기압 경도력의 오른쪽 직각 방향으로 등압선과 <b>나란하게</b> 분다. 지상에는 마찰력이 작용하고 상층에는 작용하지 않기 때문이다.</div></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">도우미</span><b class="t">시뮬레이션 3으로 확인</b><p>'상층(마찰 없음)'과 '육상 평야'를 번갈아 선택하면 A'과 A의 바람 차이를 그대로 볼 수 있다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card">
+    <h3>스스로 확인하기</h3>
+    <h4>1. 기압 경도력이 같을 때 지균풍의 풍속은 위도에 따라 어떻게 다를까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>위도가 낮을수록 풍속이 빠르다.</div></div>
+    <h4>2. 북반구에서 중심이 고기압인 원형 등압선일 때, 지상과 상층의 바람을 비교해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>지상에서는 고기압 중심에서 바깥쪽으로 등압선을 가로지르며 시계 방향으로 불어 나가고, 상층에서는 시계 방향으로 등압선과 나란하게 분다.</div></div>
+    <h4>3. 창의력 더하기 · 상층의 구름이 남서쪽에서 북동쪽으로 이동한다면 상층의 기압 배치는?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>상층에서는 바람이 등압선과 나란하게 불고(북반구에서 저기압이 왼쪽), 구름은 바람을 따라 움직인다. 따라서 구름 이동 방향의 북서쪽에 저기압, 남동쪽에 고기압이 있을 것이다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림 출처</h3>
+    <p>모식도와 시뮬레이션은 모두 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "지균풍을 만드는 두 힘은?", "options": ["① 기압 경도력과 마찰력", "② 기압 경도력과 전향력", "③ 전향력과 구심력", "④ 구심력과 마찰력", "⑤ 중력과 기압 경도력"], "answer": 1, "explain": "마찰이 없는 상층에서 기압 경도력과 전향력이 평형을 이루어 등압선과 나란하게 붑니다."},
+  {"lv": "적용", "q": "지균풍의 풍속에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 같은 위도에서 등압선 간격이 좁을수록 빠르다.</li><li>ㄴ. 기압 경도력이 같으면 위도가 높을수록 빠르다.</li><li>ㄷ. 지표면의 마찰이 클수록 빠르다.</li></ul>", "options": ["① ㄱ", "② ㄴ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 0, "explain": "ㄴ: 위도가 낮을수록 빠릅니다. ㄷ: 지균풍은 마찰이 없는 상층의 바람입니다."},
+  {"lv": "기본", "q": "북반구 상층의 저기압 주위에서 부는 경도풍의 방향은?", "options": ["① 시계 방향, 등압선과 나란하게", "② 시계 반대 방향, 등압선과 나란하게", "③ 중심으로 불어 들어감", "④ 중심에서 불어 나감", "⑤ 등압선에 수직"], "answer": 1, "explain": "북반구 저기압 주위의 경도풍은 시계 반대 방향으로 등압선과 나란하게 붑니다."},
+  {"lv": "적용", "q": "기압 경도력의 크기가 같을 때 고기압 주위 경도풍이 저기압 주위 경도풍보다 빠른 까닭은?", "options": ["① 고기압 주위에서는 전향력 = 기압 경도력 + 구심력이므로 전향력(풍속)이 더 크기 때문", "② 고기압 주위에서는 마찰력이 없기 때문", "③ 저기압 주위에서는 구심력이 없기 때문", "④ 고기압은 항상 고위도에 있기 때문", "⑤ 저기압 주위에서는 전향력이 작용하지 않기 때문"], "answer": 0, "explain": "전향력은 풍속에 비례하므로, 전향력이 더 큰 고기압 쪽 경도풍이 더 빠릅니다."},
+  {"lv": "기본", "q": "지상풍이 등압선을 비스듬히 가로질러 부는 까닭은?", "options": ["① 구심력 때문", "② 마찰력 때문", "③ 전향력이 커지기 때문", "④ 중력 때문", "⑤ 기압 경도력이 없어지기 때문"], "answer": 1, "explain": "마찰력이 풍속을 줄여 전향력이 작아지고, 마찰력과 전향력의 합력이 기압 경도력과 평형을 이루기 때문입니다."},
+  {"lv": "적용", "q": "같은 기압 배치에서 경각이 가장 큰 곳은?", "options": ["① 상층 5 km", "② 해상", "③ 육상 평야", "④ 기복이 심한 산악 지대", "⑤ 모두 같다"], "answer": 3, "explain": "마찰력이 클수록 경각이 커지며, 산악 지대에서 가장 큽니다."},
+  {"lv": "적용", "q": "상층 500 hPa 일기도에 대한 설명으로 옳은 것은?", "options": ["① 등압선으로 기압을 나타낸다", "② 등고선이 높은 곳일수록 기압이 낮다", "③ 기압 경도력은 등고선이 높은 쪽에서 낮은 쪽으로 작용한다", "④ 바람이 등고선을 비스듬히 가로지른다", "⑤ 지상의 날씨만 나타낸다"], "answer": 2, "explain": "등압면이 높은 곳은 같은 높이에서 기압이 더 높으므로, 기압 경도력은 등고선 값이 높은 쪽에서 낮은 쪽으로 작용합니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/3-5.js"></script>
+<script src="../../../js/classpen.js" data-course="earthsystem"></script>
+</body>
+</html>

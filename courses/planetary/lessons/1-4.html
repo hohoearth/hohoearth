@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. 태양계 행성과 소천체</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-lesson="1-4">
+<main>
+
+<section class="sec" id="motivation" data-nav="동기 유발">
+  <div class="sec-head"><span class="pill motivation">동기 유발</span><h2>소행성에서 가져온 121 g의 흙</h2><span class="tbref">교과서 p. 28</span></div>
+  <div class="card">
+    <h3>학습 목표</h3>
+    <ul class="pts">
+      <li><b>행성과 소천체의 정의</b>를 구분하여 설명할 수 있다.</li>
+      <li><b>소천체 탐사 자료</b>를 통해 소천체의 특징을 추론할 수 있다.</li>
+    </ul>
+    <div class="figs">
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/1-4/bennu.jpg" alt="소행성 베누"></div>
+        <figcaption>소행성 베누 (오시리스-렉스, 지름 약 490 m)</figcaption>
+        <div class="credit">NASA/Goddard/University of Arizona, 퍼블릭 도메인</div>
+      </figure>
+      <figure class="fig">
+        <div class="frame"><img src="../assets/img/1-4/chondrite.jpg" alt="콘드라이트 운석 단면"></div>
+        <figcaption>탄소질 콘드라이트(아옌데 운석) 단면 · 둥근 알갱이가 콘드룰</figcaption>
+        <div class="credit">Shiny Things, CC BY 2.0</div>
+      </figure>
+    </div>
+    <div class="qbig">NASA는 7년에 걸쳐 소행성 베누의 흙 121.6 g을 가져왔다(2023).<br>지구에도 흙은 많은데, 왜 굳이 소행성의 흙이 필요했을까?</div>
+    <p class="tnote">핵심 아이디어: 지구 물질은 분화·풍화·판 운동으로 계속 바뀌었지만, 작은 소행성은 46억 년 전 태양계 초기 물질을 거의 그대로 간직합니다(→ 개념 3 '분화'). 베누 시료에서는 아미노산 14종과 DNA·RNA 염기 5종이 모두 확인되었습니다(2025 발표). 운영안 4차시.</p>
+  </div>
+</section>
+
+<section class="sec" id="c1" data-nav="핵심 개념 1 · 행성과 소천체의 구분">
+  <div class="sec-head"><span class="pill">핵심 개념 1</span><h2>태양계의 구성 천체</h2><span class="tbref">교과서 p. 28 ~ 29</span></div>
+  <div class="card split">
+    <h3>(1) 행성이 되려면? · 2006년 국제천문연맹(IAU) 정의</h3>
+    <div class="body">
+      <div class="chain">
+        <div><small>조건 ①</small><b>태양 주위를 공전</b>다른 행성의 위성이 아님</div><i>+</i>
+        <div><small>조건 ②</small><b>충분한 질량</b>자체 중력으로 거의 구형(정역학 평형)</div><i>+</i>
+        <div><small>조건 ③</small><b>궤도 주변을 청소</b>궤도에서 지배적인 천체</div>
+      </div>
+      <ul class="pts">
+        <li><b>행성</b>: 세 조건을 모두 만족 → 수성 ~ 해왕성 8개</li>
+        <li><b>왜소 행성</b>: ①, ②는 만족하지만 ③을 만족하지 못함 → 세레스, 명왕성, 에리스, 하우메아, 마케마케</li>
+        <li><b>태양계 소천체</b>: ②도 만족하지 못하는 작은 천체 → 소행성, 혜성, 유성체 등</li>
+        <li><b>위성</b>: 행성·왜소 행성·소행성 주위를 공전하는 천체 (예: 달, 이오, 카론)</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">이야기</span><b class="t">명왕성은 왜 행성에서 빠졌을까?</b><p>2005년 명왕성보다 무거운 에리스가 발견되면서 '행성'의 기준이 필요해졌다. 명왕성은 카이퍼대 천체들과 궤도를 공유하므로 조건 ③을 만족하지 못한다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">인터랙티브</span><b>천체 분류기: 세 개의 질문으로 분류해 보자</b></div>
+      <div class="sim-body">
+        <canvas id="sim-cls"></canvas>
+        <div class="ctrl">
+          <div class="chips" id="cls-obj"></div>
+          <div class="out" id="cls-out">천체를 하나 골라 보자.</div>
+        </div>
+      </div>
+      <div class="hint">천체를 고르면 IAU 기준의 세 질문을 차례로 거쳐 분류되는 경로가 표시된다. 베스타처럼 '거의 구형'인지 애매한 경우도 있다.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 지구형 행성과 목성형 행성</h3>
+    <div class="body">
+      <div class="figs one"><figure class="fig"><div class="frame"><img src="../assets/img/1-4/planets.jpg" alt="태양계 행성의 크기 비교" style="object-fit:contain;background:#000"></div><figcaption>태양계 행성의 크기 비교 (거리는 실제 비율이 아님)</figcaption><div class="credit">WP (NASA 영상 합성), CC BY-SA 3.0</div></figure></div>
+      <div class="tw"><table class="data">
+        <thead><tr><th>구분</th><th>지구형 행성 (수·금·지·화)</th><th>목성형 행성 (목·토·천·해)</th></tr></thead>
+        <tbody>
+          <tr><th>질량·반지름</th><td>작다</td><td>크다</td></tr>
+          <tr><th>평균 밀도</th><td>크다 (3.9 ~ 5.5 g/cm³)</td><td>작다 (0.7 ~ 1.6 g/cm³)</td></tr>
+          <tr><th>주성분</th><td>암석, 철</td><td>수소·헬륨 기체, 얼음</td></tr>
+          <tr><th>위성 수 · 고리</th><td>적거나 없음 · 없음</td><td>많음 · 있음</td></tr>
+          <tr><th>자전 주기</th><td>길다</td><td>짧다 (약 10 ~ 17시간)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">더 알아보기</span><b class="t">설선(눈선)</b><p>원시 태양계에서 물이 얼음으로 존재할 수 있는 경계(약 2.7 AU 부근). 바깥쪽은 얼음까지 고체 재료가 되어 큰 핵이 빨리 자랐고, 주변 기체를 끌어모아 목성형 행성이 되었다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c2" data-nav="핵심 개념 2 · 소천체의 특징">
+  <div class="sec-head"><span class="pill">핵심 개념 2</span><h2>왜소 행성 · 소행성 · 혜성 · 유성체</h2><span class="tbref">교과서 p. 30</span></div>
+  <div class="card split">
+    <h3>(1) 왜소 행성과 소행성</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>왜소 행성</b>: 세레스(소행성대, 지름 약 940 km)를 빼면 대부분 해왕성 바깥 <b>카이퍼대</b>에 있다. 명왕성에는 질소 얼음 평원, 세레스에는 소금(탄산 나트륨) 침전물이 있다.</li>
+        <li><b>소행성</b>: 대부분 화성과 목성 사이의 <b>소행성대(약 2.1 ~ 3.3 AU)</b>에 분포한다. 질량이 작아 <b>불규칙한 모양</b>이 많고, 위성을 가진 것도 있다(아이다–닥틸).</li>
+        <li>목성 궤도의 앞뒤 60° 지점에 모인 <b>트로이 소행성</b>, 지구 궤도 가까이 오는 <b>근지구 소행성</b>도 있다.</li>
+      </ul>
+      <div class="figs">
+        <figure class="fig"><div class="frame"><img src="../assets/img/1-4/ceres.jpg" alt="왜소 행성 세레스"></div><figcaption>왜소 행성 세레스 (돈 탐사선)</figcaption><div class="credit">NASA/JPL-Caltech/UCLA/MPS/DLR/IDA (처리: Justin Cowart), 퍼블릭 도메인</div></figure>
+        <figure class="fig"><div class="frame"><img src="../assets/img/1-4/ida.jpg" alt="소행성 아이다와 위성 닥틸"></div><figcaption>소행성 아이다와 위성 닥틸 (갈릴레오 탐사선)</figcaption><div class="credit">NASA/JPL, 퍼블릭 도메인</div></figure>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">생각해 보기</span><b class="t">소행성대는 왜 행성이 되지 못했나?</b><p>바로 옆 거대한 목성의 중력이 미행성들의 궤도를 흔들어 충돌 속도를 높였기 때문에, 서로 뭉치기보다 부서졌다. 소행성대 전체 질량은 달의 약 3%에 불과하다.</p></div>
+    </aside>
+  </div>
+
+  <div class="card split">
+    <h3>(2) 혜성 · 더러운 눈덩이</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>핵</b>: 얼음과 먼지로 된 지름 수 km의 덩어리. 태양에 다가가면 얼음이 승화한다.</li>
+        <li><b>코마</b>: 핵을 둘러싼 기체·먼지 구름, <b>꼬리</b>: 태양 반대쪽으로 뻗는다.
+          <ul><li><b>이온(가스) 꼬리</b>: 태양풍에 밀려 <b>태양 정반대</b>로 곧게 뻗고 푸른빛</li><li><b>먼지 꼬리</b>: 복사압에 밀리며 궤도를 따라 <b>휘어지고</b> 노르스름함</li></ul></li>
+        <li>궤도 이심률이 크며, 단주기 혜성(200년 미만)은 주로 <b>카이퍼대</b>, 장주기 혜성은 태양계를 공 모양으로 둘러싼 <b>오르트 구름</b>에서 온다.</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">오개념 주의</span><b class="t">꼬리는 '뒤로' 끌리지 않는다</b><p>혜성이 태양에서 멀어질 때는 꼬리가 진행 방향의 앞쪽에 있다. 꼬리 방향은 운동 방향이 아니라 태양의 위치가 정한다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 1</span><b>혜성의 궤도와 두 개의 꼬리</b></div>
+      <div class="sim-body">
+        <canvas id="sim-comet"></canvas>
+        <div class="ctrl">
+          <label>궤도 이심률 <span class="v" id="com-ev"></span><input type="range" id="com-e" min="0.5" max="0.97" step="0.01" value="0.85"></label>
+          <label>시간 속도 <input type="range" id="com-sp" min="0.2" max="3" step="0.1" value="1"></label>
+          <div class="btns"><button class="tbtn" id="com-pause" type="button">⏸ 멈춤</button></div>
+          <div class="out" id="com-out"></div>
+          <div class="legend"><span><i style="background:#60a5fa"></i>이온 꼬리</span><span><i style="background:#fde68a"></i>먼지 꼬리</span></div>
+        </div>
+      </div>
+      <div class="hint">태양에 가까워질수록 코마와 꼬리가 커진다. 근일점을 지나 멀어질 때 꼬리가 어느 쪽을 향하는지, 두 꼬리의 방향이 왜 조금 다른지 관찰하자.</div>
+    </div>
+  </div>
+
+  <div class="card split">
+    <h3>(3) 유성체 · 유성 · 운석</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>유성체</b>: 행성 사이 공간을 떠도는 작은 암석·금속 조각(소행성 파편, 혜성이 흘린 먼지)</li>
+        <li><b>유성</b>: 유성체가 대기로 들어와 마찰열로 타며 빛을 내는 현상. 혜성 궤도를 지구가 지날 때 <b>유성우</b>가 내린다.</li>
+        <li><b>운석</b>: 다 타지 않고 지표에 떨어진 것. 구성 물질에 따라 <b>석질</b>(가장 흔함), <b>철질</b>, <b>석철질</b> 운석으로 나눈다.</li>
+      </ul>
+      <div class="figs">
+        <figure class="fig"><div class="frame"><img src="../assets/img/1-4/leonid.jpg" alt="사자자리 유성우"></div><figcaption>사자자리 유성우 (모혜성: 템펠–터틀 혜성)</figcaption><div class="credit">Navicore, CC BY 3.0</div></figure>
+        <figure class="fig"><div class="frame"><img src="../assets/img/1-4/halebopp.jpg" alt="헤일–밥 혜성"></div><figcaption>헤일–밥 혜성의 이온 꼬리(푸른색)와 먼지 꼬리(흰색), 1997</figcaption><div class="credit">E. Kolmhofer, H. Raab (Johannes-Kepler-Observatory), CC BY-SA 3.0</div></figure>
+      </div>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">우리나라</span><b class="t">두원 운석과 진주 운석</b><p>1943년 전남 고흥 두원 운석(석질), 2014년 경남 진주에서 떨어진 진주 운석(석질, 콘드라이트) 등이 있다.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="c3" data-nav="핵심 개념 3 · 태양계 천체의 분화">
+  <div class="sec-head"><span class="pill">핵심 개념 3</span><h2>태양계 천체의 분화와 운석</h2><span class="tbref">교과서 p. 32</span></div>
+  <div class="card split">
+    <h3>분화된 천체 vs 분화되지 않은 천체</h3>
+    <div class="body">
+      <ul class="pts">
+        <li><b>분화</b>: 충돌 에너지와 방사성 원소(²⁶Al 등)의 붕괴열로 천체 내부가 녹으면, 밀도가 큰 <b>철·니켈은 가라앉아 핵</b>, 가벼운 <b>규산염은 맨틀·지각</b>이 되는 과정</li>
+        <li><b>분화된 천체</b>: 행성, 왜소 행성, 일부 큰 소행성(베스타). 부서진 조각은 <b>철질 운석(핵)</b>, <b>석철질 운석(핵–맨틀 경계)</b>, <b>에이콘드라이트(지각)</b>가 된다.</li>
+        <li><b>분화되지 않은 천체</b>: 대부분의 작은 소행성, 혜성의 핵. 녹은 적이 없어 원시 태양계 성운에서 응축된 작은 알갱이(콘드룰)를 품은 <b>콘드라이트</b> 운석이 된다. → <b>태양계 초기 물질의 타임캡슐</b></li>
+      </ul>
+    </div>
+    <aside class="notes">
+      <div class="dnote"><span class="lb">사진</span><b class="t">철질 운석의 무늬</b><p>철질 운석 단면을 산으로 부식하면 비드만슈테텐 무늬가 나타난다. 녹은 금속이 수백만 년에 걸쳐 아주 천천히 식어야 생기는 무늬로, 큰 천체의 핵에서 왔다는 증거이다.</p></div>
+      <div class="dnote link"><span class="lb">연계 · 지구시스템과학</span><b class="t">지구의 분화</b><p>지구도 마그마 바다 시기에 같은 과정을 거쳐 핵·맨틀·지각으로 나뉘었다.</p></div>
+    </aside>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">시뮬레이션 2</span><b>미행성 데우기 → 분화 → 충돌로 부서지기</b></div>
+      <div class="sim-body">
+        <canvas id="sim-diff"></canvas>
+        <div class="ctrl">
+          <label>천체 지름 <span class="v" id="diff-dv"></span><input type="range" id="diff-d" min="10" max="1000" step="10" value="500"></label>
+          <ol class="stepper" id="diff-steps">
+            <li><b>① 집적</b><div class="d">금속(회색)과 규산염(갈색) 알갱이가 고르게 섞인 미행성</div></li>
+            <li><b>② 가열</b><div class="d">²⁶Al 붕괴열·충돌열. 지름이 클수록 열이 덜 빠져나가 더 뜨거워진다.</div></li>
+            <li><b>③ 분화</b><div class="d">녹은 금속은 무거워 가라앉고 규산염은 떠오른다.</div></li>
+            <li><b>④ 충돌·파괴</b><div class="d">다른 천체와 부딪혀 부서진 조각이 운석이 되어 지구로 온다.</div></li>
+          </ol>
+          <div class="btns"><button class="tbtn on" id="diff-next" type="button">다음 단계 ▶</button><button class="tbtn" id="diff-reset" type="button">↻ 처음부터</button></div>
+          <div class="out" id="diff-out"></div>
+        </div>
+      </div>
+      <div class="hint">지름을 작게(약 100 km 이하) 하고 같은 과정을 거쳐 보자. 녹지 않은 천체가 부서지면 어떤 운석이 될까?</div>
+    </div>
+    <div class="figs">
+      <figure class="fig"><div class="frame"><img src="../assets/img/1-4/meteorite.jpg" alt="철질 운석"></div><figcaption>철질 운석 윌래밋 운석 (분화된 천체의 핵)</figcaption><div class="credit">Dante Alighieri, CC BY-SA 3.0</div></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inquiry" data-nav="데이터 탐구">
+  <div class="sec-head"><span class="pill inquiry">데이터 탐구</span><h2>소행성 궤도 분포에서 '빈자리' 찾기 · 커크우드 간극</h2></div>
+  <div class="card">
+    <h3>탐구 개요</h3>
+    <div class="lab-meta"><span class="src">NASA JPL 소천체 데이터베이스(SBDB) 기반</span><span class="skill">히스토그램 · 구간 너비</span><span class="skill">이상 패턴 탐지</span><span class="skill">물리 모형으로 설명</span><span>2차시</span></div>
+    <p>소행성대에는 130만 개가 넘는 소행성이 알려져 있다. 이들의 <b>궤도 긴반지름</b>을 히스토그램으로 그리면 이상하게 <b>소행성이 거의 없는 빈 틈</b>이 나타난다. 1866년 커크우드가 발견한 이 틈의 위치를 데이터로 찾고, 앞 차시의 <b>케플러 제3법칙</b>으로 원인을 밝혀 보자.</p>
+    <div class="steps-lab">
+      <div><b>히스토그램 그리기</b>소행성 4000개 표본의 긴반지름을 구간으로 나누어 센다. 구간 너비를 바꾸면 그래프가 어떻게 달라지는가? 너무 넓거나 좁으면 무엇이 문제인가?</div>
+      <div><b>간극 찾기</b>개수가 뚝 떨어지는 위치를 클릭해 표시하고 a 값을 읽는다.</div>
+      <div><b>공명 계산</b>목성(a = 5.203 AU, P = 11.86년)과 공전 주기가 간단한 정수비(3 : 1, 5 : 2, 7 : 3, 2 : 1)를 이루는 긴반지름을 P² = a³으로 계산해 간극 위치와 비교한다.</div>
+      <div><b>설명하기</b>왜 공명 위치에서는 소행성이 사라질까? 반대로 3 : 2 위치(힐다군)와 1 : 1 위치(트로이군)에는 왜 모여 있을까?</div>
+    </div>
+    <div class="sim full">
+      <div class="sim-head"><span class="tag">데이터 랩</span><b>소행성 긴반지름 히스토그램</b></div>
+      <div class="sim-body stack">
+        <canvas id="lab-hist"></canvas>
+        <div class="ctrl">
+          <label>구간 너비 <span class="v" id="lab-bwv"></span><input type="range" id="lab-bw" min="0.005" max="0.15" step="0.005" value="0.02"></label>
+          <div class="chips"><button class="chip" id="lab-res">목성 공명 위치 표시</button><button class="chip" id="lab-clear">내 표시 지우기</button></div>
+          <div class="out" id="lab-out">그래프를 클릭해 간극 위치에 표시해 보자.</div>
+          <div class="btns"><button class="tbtn" id="lab-csv" type="button">⬇ CSV 내려받기</button></div>
+        </div>
+      </div>
+      <div class="hint">표본은 JPL SBDB의 소행성대 긴반지름 분포(공명 간극, 헝가리아군, 힐다군, 트로이군 포함)를 본떠 만든 4000개의 모의 자료이다. 실제 전체 자료는 JPL SBDB 검색 도구에서 내려받을 수 있다.</div>
+    </div>
+    <div class="dataset">
+      <div class="dh">🧮 공명 위치 계산표 (직접 채우고, 버튼으로 확인)</div>
+      <div class="db"><div class="tw" style="margin:0"><table class="data" id="res-table">
+        <thead><tr><th>공명 (목성 : 소행성 공전 횟수)</th><th>소행성 주기 P (년)</th><th>a = P<sup>2/3</sup> (AU)</th><th>데이터에서 찾은 위치</th></tr></thead>
+        <tbody>
+          <tr><th>1 : 3</th><td>11.86 ÷ 3 = 3.95</td><td><input class="ans" data-v="2.50" style="width:70px"></td><td>간극</td></tr>
+          <tr><th>2 : 5</th><td>11.86 × 2/5 = 4.74</td><td><input class="ans" data-v="2.82" style="width:70px"></td><td>간극</td></tr>
+          <tr><th>3 : 7</th><td>11.86 × 3/7 = 5.08</td><td><input class="ans" data-v="2.95" style="width:70px"></td><td>간극</td></tr>
+          <tr><th>1 : 2</th><td>11.86 ÷ 2 = 5.93</td><td><input class="ans" data-v="3.28" style="width:70px"></td><td>간극</td></tr>
+          <tr><th>2 : 3</th><td>11.86 × 2/3 = 7.91</td><td><input class="ans" data-v="3.97" style="width:70px"></td><td>무리 (힐다군)</td></tr>
+        </tbody>
+      </table></div></div>
+      <div class="dh" style="border-top:1px solid var(--line);border-bottom:0"><button class="tbtn" id="res-check" type="button">✔ 계산 확인</button><span id="res-msg" style="font-weight:500"></span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>분석 질문</h3>
+    <h4>1. 구간 너비를 0.15 AU로 크게 하면 간극이 어떻게 보이는가? 적절한 구간 너비를 고를 때 고려할 점은?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>구간이 너무 넓으면 좁은 간극이 이웃 구간과 평균되어 사라진다. 너무 좁으면 각 구간의 개수가 적어 우연한 들쭉날쭉(통계적 잡음)이 간극처럼 보인다. 찾으려는 구조의 크기(간극 폭 약 0.03 ~ 0.05 AU)보다 작으면서 각 구간에 충분한 개수가 들어가도록 고른다(여기서는 0.01 ~ 0.03 AU).</div></div>
+    <h4>2. 공명 위치에서 소행성이 사라지는 까닭을 설명해 보자.</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>예를 들어 3 : 1 공명 위치의 소행성은 목성이 1바퀴 돌 때 정확히 3바퀴를 돌아, 궤도의 같은 지점에서 목성과 반복해서 가장 가까워진다. 같은 방향의 작은 중력이 계속 쌓여(그네를 같은 타이밍에 미는 것처럼) 궤도 이심률이 커지고, 결국 화성·지구 궤도를 가로지르다 충돌하거나 튕겨 나간다. 이렇게 빠져나온 소행성이 근지구 소행성과 운석의 주요 공급원이다.</div></div>
+    <h4>3. 심화 · 힐다군(3 : 2)과 트로이군(1 : 1)은 공명 위치인데도 소행성이 모여 있다. 왜일까?</h4>
+    <textarea class="write"></textarea>
+    <div class="reveal"><button>예시 답안</button><div>이들은 궤도 배치상 목성과 가까이 만나지 않는 '안정한 공명'이다. 힐다군은 목성과 가장 가까워질 때 항상 목성에서 멀리 떨어진 지점에 있고, 트로이군은 목성 궤도의 앞뒤 60°(라그랑주점 L4, L5)에 머물러 오히려 공명이 보호막 역할을 한다. 공명이 항상 '파괴'만 하는 것은 아니다.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="quiz-sec" data-nav="형성 평가">
+  <div class="sec-head"><span class="pill quiz">형성 평가</span><h2>개념 확인 문제</h2></div>
+  <div class="card"><div id="quiz"></div></div>
+</section>
+
+<section class="sec" data-nav="그림 출처">
+  <div class="card" style="font-size:.82rem;color:var(--muted)">
+    <h3>그림·자료 출처</h3>
+    <p>사진: NASA, NASA/JPL, NASA/Goddard (Wikimedia Commons 경유) 및 Wikimedia Commons 이용자 사진. 소행성 궤도 자료는 NASA JPL SBDB 분포를 본뜬 교육용 모의 표본입니다. 모식도와 시뮬레이션은 직접 만들었습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<script type="application/json" id="quiz-data">
+[
+  {"lv": "기본", "q": "왜소 행성이 행성과 다른 점은?", "options": ["① 태양 주위를 공전하지 않는다", "② 궤도 주변의 다른 천체를 청소하지 못했다", "③ 자체 중력으로 구형을 이루지 못한다", "④ 다른 행성의 위성이다", "⑤ 크기가 혜성보다 작다"], "answer": 1, "explain": "왜소 행성은 태양을 공전하고 거의 구형이지만, 궤도 주변에서 지배적인 천체가 아닙니다."},
+  {"lv": "기본", "q": "목성형 행성이 지구형 행성보다 큰 값을 갖는 것은?", "options": ["① 위성 수", "② 평균 밀도", "③ 자전 주기", "④ 표면의 암석 비율", "⑤ 태양에서 받는 단위 면적당 에너지"], "answer": 0, "explain": "목성형 행성은 질량·반지름·위성 수가 크고, 밀도와 자전 주기는 작습니다."},
+  {"lv": "적용", "q": "혜성의 꼬리에 대한 설명으로 옳은 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?", "box": "<ul><li>ㄱ. 이온 꼬리는 태양의 정반대 방향으로 뻗는다.</li><li>ㄴ. 태양에서 멀어질 때 꼬리는 혜성의 진행 방향 앞쪽에 있다.</li><li>ㄷ. 꼬리는 원일점 부근에서 가장 길다.</li></ul>", "options": ["① ㄱ", "② ㄷ", "③ ㄱ, ㄴ", "④ ㄴ, ㄷ", "⑤ ㄱ, ㄴ, ㄷ"], "answer": 2, "explain": "꼬리는 태양에 가까운 근일점 부근에서 가장 길게 발달합니다."},
+  {"lv": "적용", "q": "분화된 천체의 핵이 부서져 생긴 운석은?", "options": ["① 콘드라이트", "② 에이콘드라이트", "③ 탄소질 콘드라이트", "④ 혜성 먼지", "⑤ 철질 운석"], "answer": 4, "explain": "철·니켈로 된 철질 운석은 분화된 천체의 핵 조각입니다."},
+  {"lv": "적용", "q": "콘드라이트 운석이 태양계 초기 연구에 중요한 까닭은?", "options": ["① 지구의 지각에서 왔기 때문", "② 철 함량이 가장 높기 때문", "③ 화성에서 왔기 때문", "④ 녹은 적이 없어 원시 태양계 물질을 간직하기 때문", "⑤ 가장 최근에 만들어졌기 때문"], "answer": 3, "explain": "분화되지 않은 천체에서 온 콘드라이트는 태양계 형성 초기의 물질과 구조(콘드룰)를 그대로 보존합니다."},
+  {"lv": "계산", "q": "목성(공전 주기 11.86년)과 1 : 2 공명인 소행성의 궤도 긴반지름은 약 몇 AU인가?", "options": ["① 2.50 AU", "② 2.82 AU", "③ 3.28 AU", "④ 3.97 AU", "⑤ 5.20 AU"], "answer": 2, "explain": "P = 11.86 ÷ 2 = 5.93년, a = 5.93^(2/3) ≈ 3.28 AU입니다."},
+  {"lv": "자료", "q": "데이터 탐구에서 커크우드 간극이 생기는 원인으로 가장 적절한 것은?", "options": ["① 태양풍이 소행성을 밀어내기 때문", "② 목성과의 궤도 공명으로 궤도가 불안정해지기 때문", "③ 화성의 중력이 소행성을 끌어당기기 때문", "④ 그 위치의 소행성이 모두 혜성이 되었기 때문", "⑤ 관측 망원경의 한계 때문"], "answer": 1, "explain": "목성과 주기가 간단한 정수비를 이루는 곳에서는 섭동이 반복적으로 쌓여 소행성이 제거됩니다."}
+]
+</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/sim/common.js"></script>
+<script src="../assets/sim/1-4.js"></script>
+<script src="../../../js/classpen.js" data-course="planetary"></script>
+</body>
+</html>
