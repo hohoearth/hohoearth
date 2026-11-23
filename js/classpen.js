@@ -266,12 +266,12 @@
       raf = 0;
       if (!drawing) syncPage();
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
-      var sx = slideNo() ? 0 : window.scrollX, sy = slideNo() ? 0 : window.scrollY;
-      ctx.setTransform(dpr, 0, 0, dpr, -sx * dpr, -sy * dpr);
+      /* 슬라이드 쪽이 길어 스크롤해도 글씨가 내용과 함께 움직이도록 항상 문서 좌표로 그림 */
+      ctx.setTransform(dpr, 0, 0, dpr, -window.scrollX * dpr, -window.scrollY * dpr);
       strokes.forEach(line);
     }
     function later() { if (!raf) raf = requestAnimationFrame(render); }
-    function pt(e) { var s = slideNo(); return [Math.round(e.clientX + (s ? 0 : window.scrollX)), Math.round(e.clientY + (s ? 0 : window.scrollY))]; }
+    function pt(e) { return [Math.round(e.clientX + window.scrollX), Math.round(e.clientY + window.scrollY)]; }
     function erase(q) {
       var n = strokes.length;
       for (var i = strokes.length - 1; i >= 0; i--) {

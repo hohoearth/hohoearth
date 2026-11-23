@@ -301,6 +301,27 @@ body.slides .slide-pager {
 .hot:hover circle { fill: #3730a3; }
 .hot.sel circle { fill: #e8590c; }
 
+/* ---------- 교사용 카드 · O/X 개념 확인 · 자세히 알아보기 ---------- */
+.teacher-only { display: none; }
+body.teacher .teacher-only { display: block; }
+.teacher-only.card { border: 2px dashed var(--note-line); background: var(--note-bg); }
+.ox-list { display: grid; gap: 8px; }
+.ox { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.ox .st { font-size: .93rem; }
+.ox .bt { display: flex; gap: 6px; }
+.ox .bt button { font: inherit; font-weight: 800; width: 40px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; }
+.ox .bt button:disabled { cursor: default; }
+.ox.right { background: var(--ok-bg); border-color: var(--ok); }
+.ox.wrong { background: var(--bad-bg); border-color: var(--bad); }
+.ox .why { grid-column: 1 / -1; display: none; font-size: .85rem; color: var(--text); }
+.ox.right .why, .ox.wrong .why { display: block; }
+.ox-score { margin-top: 8px; font-size: .85rem; font-weight: 700; color: var(--primary); }
+.deep-card > h3::before { background: var(--c-inquiry); }
+.deep-card .tag-deep { display: inline-block; font-size: .7rem; font-weight: 800; color: #fff; background: var(--c-inquiry); border-radius: 999px; padding: 2px 10px; margin-left: 4px; }
+.analysis { border-left: 4px solid var(--primary); background: var(--primary-soft); border-radius: 0 14px 14px 0; padding: 14px 18px; margin: 14px 0; }
+.analysis > b:first-child { display: block; color: var(--primary); margin-bottom: 6px; }
+.plan-table td, .plan-table th { text-align: left !important; }
+
 /* ---------- 교과서 쪽 표시 ---------- */
 .tbref { font-family: var(--mono); font-size: .74rem; font-weight: 600; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; background: var(--surface); }
 
@@ -328,51 +349,6 @@ body.slides .slide-pager {
   .card.split > .notes { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 }
 body.wide .card.split { grid-template-columns: minmax(0, 1fr) 320px; }
-
-/* ---------- v2 기능 (body[data-v2] 차시) ---------- */
-/* 글씨 크기 */
-.fsz { display: inline-flex; align-items: center; gap: 2px; }
-.fsz .tbtn { padding: 7px 11px; }
-.fs-val { font: inherit; font-family: var(--mono); font-size: .74rem; font-weight: 600; min-width: 44px; text-align: center; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 4px 0; }
-.fs-val:hover { color: var(--primary); }
-/* 접는 심화 노트 */
-.dnote.fold { cursor: pointer; transition: border-color .15s, box-shadow .15s; }
-.dnote.fold:hover, .dnote.fold:focus-visible { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--primary-soft); }
-.dnote.fold:not(.open) > :not(.lb):not(.t) { display: none; }
-.dnote.fold > b.t { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 0; }
-.dnote.fold > b.t::after { content: "보기 ▾"; flex: none; font-size: .72rem; font-weight: 700; color: var(--primary); }
-.dnote.fold.open > b.t { margin-bottom: 4px; }
-.dnote.fold.open > b.t::after { content: "접기 ▴"; }
-.dnote.fold.open > .lb::before { content: "－"; }
-@media print { .dnote.fold > * { display: block !important; } .dnote.fold > b.t::after { content: none; } }
-/* 화면 맞춤 슬라이드 */
-body.slides[data-v2] .topbar { display: none; }
-body.slides[data-v2] .shell { padding-top: 18px; }
-body.slides[data-v2] .sec-head { margin-bottom: 12px; }
-body.slides[data-v2] main .card { min-height: 0; }
-body.slides[data-v2] main { overflow: clip; overflow-clip-margin: 8px; }
-body.slides[data-v2] .fig .frame { min-height: 0; }
-body.slides[data-v2] .fig .frame img { max-height: 34vh; }
-body.slides[data-v2] .fig .frame svg { max-height: 46vh; }
-body.slides .pg-off { display: none !important; }
-body.slides .card.split.cont, body.slides .card.split.sim-only { grid-template-columns: minmax(0, 1fr); }
-body.slides .card.cont > h3::after { content: "(이어서)"; font-size: .8em; font-weight: 600; color: var(--muted); }
-body.slides .card.sim-only > .sim { margin-top: 0; }
-body.slides[data-v2] .slide-pager { flex-wrap: wrap; row-gap: 6px; padding: 8px 20px; }
-.slide-pager .sp-sep { width: 1px; height: 22px; background: var(--line); }
-/* 판서 */
-.ink-layer, .ink-tools { display: none; }
-body.slides .ink-layer { display: block; position: fixed; left: 0; top: 0; z-index: 35; pointer-events: none; touch-action: none; }
-body.slides.drawing .ink-layer { pointer-events: auto; cursor: crosshair; }
-body.slides.drawing .ink-layer.erasing { cursor: cell; }
-body.slides.drawing .ink-tools {
-  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
-  position: fixed; left: 50%; transform: translateX(-50%); bottom: 70px; z-index: 41; max-width: calc(100vw - 24px);
-  padding: 8px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(0,0,0,.18);
-}
-.ink-tools .sw { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); cursor: pointer; padding: 0; }
-.ink-tools .sw.on { box-shadow: 0 0 0 3px var(--primary); }
-.ink-tools .tbtn { padding: 6px 12px; }
 
 /* ---------- 단계형 시뮬레이션 ---------- */
 .stepper { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }

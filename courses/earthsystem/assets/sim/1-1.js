@@ -459,34 +459,17 @@
      ========================================================= */
   (function () {
     var box = $("sim-esc"); if (!box) return;
-    var chips = $("esc-chips"), out = $("esc-out"), note = $("esc-note"), bars = $("esc-bars");
+    var sel = $("esc-planet"), sT = $("esc-t"), out = $("esc-out"), bars = $("esc-bars");
     var k = 1.380649e-23, u = 1.6605e-27;
-    /* 실제 값: 질량·반지름(지구 = 1), 탈출 속도(km/s).
-       온도는 대기 윗부분(외기권)의 대표값이며, 대기가 거의 없는 수성·달은 낮 쪽 표면 온도이다. */
-    var ORDER = ["mercury", "venus", "earth", "mars", "moon"];
     var PLAN = {
-      mercury: { n: "수성", m: "0.055", r: "0.38", v: 4.25, T: 700, tl: "낮 쪽 표면 온도",
-        note: "질량이 작아 탈출 속도가 작고, 태양과 가까워 뜨겁다. 그래서 대부분의 기체가 빠져나가 대기가 거의 없다." },
-      venus: { n: "금성", m: "0.81", r: "0.95", v: 10.36, T: 300, tl: "대기 윗부분 온도",
-        note: "질량이 지구와 비슷해 무거운 기체를 잘 붙잡는다. 수증기도 계산상 붙잡을 수 있지만, 대기 높은 곳에서 자외선에 분해된 뒤 가벼운 수소가 빠져나가 물을 잃었다고 본다." },
-      earth: { n: "지구", m: "1", r: "1", v: 11.19, T: 1000, tl: "대기 윗부분 온도",
-        note: "질소·산소·이산화 탄소·수증기를 붙잡는다. 수소·헬륨처럼 가벼운 기체는 빠져나간다." },
-      mars: { n: "화성", m: "0.11", r: "0.53", v: 5.03, T: 270, tl: "대기 윗부분 온도",
-        note: "계산상으로는 이산화 탄소 같은 무거운 기체를 붙잡을 수 있다. 그런데도 대기가 희박한 것은 자기장을 잃은 뒤 태양풍이 대기를 조금씩 깎아 냈기 때문이다(심화 노트 참고)." },
-      moon: { n: "달", m: "0.012", r: "0.27", v: 2.38, T: 390, tl: "낮 쪽 표면 온도",
-        note: "질량이 매우 작아 탈출 속도가 작다. 어떤 기체도 오래 붙잡지 못해 대기가 없다." }
+      mercury: { n: "수성", v: 4.25, T: 600 }, venus: { n: "금성", v: 10.36, T: 300 },
+      earth: { n: "지구", v: 11.19, T: 1000 }, mars: { n: "화성", v: 5.03, T: 250 },
+      moon: { n: "달", v: 2.38, T: 380 }
     };
     var GAS = [["수소 H₂", 2], ["헬륨 He", 4], ["수증기 H₂O", 18], ["질소 N₂", 28], ["산소 O₂", 32], ["이산화 탄소 CO₂", 44]];
-    var curP = "earth";
-    ORDER.forEach(function (key) {
-      var b = document.createElement("button"); b.className = "chip"; b.type = "button";
-      b.textContent = PLAN[key].n; b.dataset.p = key;
-      b.addEventListener("click", function () { curP = key; draw(); });
-      chips.appendChild(b);
-    });
     function draw() {
-      var p = PLAN[curP], T = p.T, html = "", maxR = 40;
-      chips.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("on", c.dataset.p === curP); });
+      var p = PLAN[sel.value], T = +sT.value, html = "", maxR = 40;
+      $("esc-tv").textContent = T + " K";
       GAS.forEach(function (gs) {
         var vr = Math.sqrt(3 * k * T / (gs[1] * u)) / 1000, ratio = p.v / vr, keep = ratio >= 6;
         var w = Math.min(100, ratio / maxR * 100);
@@ -498,12 +481,10 @@
           '<span style="font-weight:800;font-size:.82rem;color:' + (keep ? "var(--ok)" : "var(--bad)") + '">' + (keep ? "붙잡음" : "빠져나감") + "</span></div>";
       });
       bars.innerHTML = html + '<div style="font-size:.76rem;color:var(--muted);margin-top:6px">막대 길이 = 행성이 기체를 붙잡는 힘(탈출 속도)이 기체 분자의 속력보다 얼마나 큰지. 점선을 넘으면 오랫동안 붙잡을 수 있다.</div>';
-      out.innerHTML = "<b style='font-size:1rem'>" + p.n + "</b>" +
-        "<br><b>질량</b> " + p.m + " · <b>반지름</b> " + p.r + " (지구 = 1)" +
-        "<br><b>탈출 속도</b> " + p.v.toFixed(2) + " km/s" +
-        "<br><b>" + p.tl + "</b> 약 " + T + " K (" + (T - 273) + " °C)";
-      note.innerHTML = p.note + "<br><span style='color:var(--muted);font-size:.8rem'>질량이 클수록 탈출 속도가 크다. 가벼운 기체일수록, 온도가 높을수록 분자가 빠르다.</span>";
+      out.innerHTML = "<b>" + p.n + "</b> · 탈출 속도 " + p.v + " km/s<br>질량이 클수록 탈출 속도가 크다.<br>가벼운 기체일수록, 온도가 높을수록 분자가 빠르다.";
     }
+    sel.addEventListener("change", function () { sT.value = PLAN[sel.value].T; draw(); });
+    sT.addEventListener("input", draw);
     draw();
   })();
 })();

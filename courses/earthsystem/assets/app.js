@@ -1,8 +1,6 @@
 /* 지구시스템과학 수업 자료 · 공통 스크립트
    각 차시 HTML은 <body data-lesson="1-1"> 과 <main> 만 가지고 있으면,
-   상단 바·왼쪽 목차·차시 흐름·형성 평가를 이 파일이 만들어 준다.
-   <body data-v2> 가 붙은 차시에는 새 기능(글씨 크기 조절, 접는 심화 노트,
-   화면 맞춤 슬라이드, 판서)이 켜진다. 지금은 1-1에만 적용되어 있다. */
+   상단 바·왼쪽 목차·차시 흐름·형성 평가를 이 파일이 만들어 준다. */
 (function () {
   var UNITS = [
     { name: "I. 지구 탄생과 생동하는 지구", lessons: [
@@ -47,10 +45,6 @@
   if (!id || !main) return;
   var me = flat.filter(function (l) { return l.id === id; })[0];
   var order = flat.indexOf(me) + 1;
-  var V2 = body.hasAttribute("data-v2");
-  var FSZ = '<div class="fsz" title="글씨 크기"><button class="tbtn" type="button" data-fs="down" title="글씨 작게">가−</button>' +
-    '<button class="fs-val" type="button" data-fs="reset" title="100%로 되돌리기">100%</button>' +
-    '<button class="tbtn" type="button" data-fs="up" title="글씨 크게">가＋</button></div>';
 
   /* ---- 상단 바 ---- */
   var top = document.createElement("header");
@@ -60,35 +54,11 @@
     '<div class="crumb"><span class="idx">[' + pad(order) + "/" + pad(flat.length) + ']</span>' +
     '<span class="path">' + me.unit + '<span>›</span>' + code(id).slice(3) + ". " + me.t + "</span></div>" +
     '<div class="spacer"></div>' +
-    (V2 ? FSZ : "") +
     '<button class="tbtn" id="btn-teacher" title="교사용 메모 보이기/숨기기">교사용 메모</button>' +
     '<button class="tbtn" id="btn-wide" title="목차를 숨기고 글자를 키웁니다">⤢ 넓은 화면 모드</button>' +
     '<button class="tbtn" id="btn-slide" title="카드를 한 장씩 PPT처럼 봅니다 (←/→, Esc)">▣ 슬라이드 모드</button>' +
     '<span class="pages">교재 p. ' + me.p + "</span>";
   body.insertBefore(top, body.firstChild);
-
-  /* ---- 글씨 크기 (v2) ---- */
-  var fsScale = 1;
-  function applyFont() {
-    if (!V2) return;
-    var base = (body.classList.contains("slides") || body.classList.contains("wide")) ? 19 : 16;
-    document.documentElement.style.fontSize = (base * fsScale).toFixed(2) + "px";
-    document.querySelectorAll(".fs-val").forEach(function (el) { el.textContent = Math.round(fsScale * 100) + "%"; });
-  }
-  function setFont(s) {
-    fsScale = Math.round(Math.max(0.7, Math.min(1.8, s)) * 10) / 10;
-    store("esc-fs", String(fsScale));
-    applyFont();
-    window.dispatchEvent(new Event("resize"));
-  }
-  if (V2) {
-    fsScale = parseFloat(store("esc-fs")) || 1;
-    document.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-fs]"); if (!b) return;
-      var a = b.dataset.fs;
-      setFont(a === "up" ? fsScale + 0.1 : a === "down" ? fsScale - 0.1 : 1);
-    });
-  }
 
   /* ---- 레이아웃 ---- */
   var shell = document.createElement("div");
@@ -135,468 +105,174 @@
   /* ---- 버튼 ---- */
   function toggle(cls, btnId, key) {
     var b = document.getElementById(btnId);
-    function set(on) { body.classList.toggle(cls, on); b.classList.toggle("on", on); store(key, on ? "1" : "0"); applyFont(); }
+    function set(on) { body.classList.toggle(cls, on); b.classList.toggle("on", on); store(key, on ? "1" : "0"); }
     b.addEventListener("click", function () { set(!body.classList.contains(cls)); window.dispatchEvent(new Event("resize")); });
     set(store(key) === "1");
   }
   toggle("teacher", "btn-teacher", "esc-teacher");
   toggle("wide", "btn-wide", "esc-wide");
-  applyFont();
 
-  /* ---- 접는 심화 노트 (v2) ----
-     '심화해서 알아보기' 노트는 제목(질문)만 보이고, 누르면 내용이 펼쳐진다. */
-  if (V2) {
-    main.querySelectorAll(".dnote").forEach(function (d) {
-      var lb = d.querySelector(".lb");
-      if (!lb || lb.textContent.indexOf("심화") < 0) return;
-      d.classList.add("fold");
-      d.setAttribute("role", "button");
-      d.setAttribute("aria-expanded", "false");
-      d.tabIndex = 0;
-      function tg() { var o = d.classList.toggle("open"); d.setAttribute("aria-expanded", o ? "true" : "false"); }
-      d.addEventListener("click", function (e) { if (e.target.closest("a")) return; tg(); });
-      d.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); tg(); } });
-    });
+  /* ---- 슬라이드(PPT) 모드 ----
+     카드 한 장 = 슬라이드 한 장. 섹션 제목은 그 섹션의 슬라이드마다 함께 보인다.
+     [HoHo earth 홈페이지 수정] 카드 안의 시뮬레이션(.sim)은 설명과 나눠 따로 한 장씩 보여 준다.
+       설명 쪽 → 시뮬레이션 1 → 시뮬레이션 2 … 순서. 화면보다 조금 길면 그 쪽만 살짝 축소한다.
+       (이 파일을 새 버전으로 바꾸면 이 부분도 다시 넣어야 합니다) */
+  var cards = Array.prototype.slice.call(main.querySelectorAll(".sec > .card"));
+  var cur = 0;
+  var slides = [];          // { k: 카드 번호, sim: 시뮬레이션 요소 또는 null }
+  cards.forEach(function (c, k) {
+    var sims = Array.prototype.slice.call(c.querySelectorAll(".sim"));
+    var hasText = Array.prototype.some.call(c.children, function (el) { return !el.classList.contains("sim") && el.tagName !== "H3" && !el.querySelector(".sim"); }) || !sims.length;
+    if (hasText) slides.push({ k: k, sim: null });
+    sims.forEach(function (s) { slides.push({ k: k, sim: s }); });
+  });
+  function clearCard(c) {
+    c.querySelectorAll(".off").forEach(function (el) { el.classList.remove("off"); });
+    c.style.transform = c.style.transformOrigin = c.style.marginBottom = "";
   }
-
-  if (V2) v2Slides(); else legacySlides();
-
-  /* =====================================================================
-     슬라이드(PPT) 모드 · 기존 방식: 카드 한 장 = 슬라이드 한 장
-     ===================================================================== */
-  function legacySlides() {
-    var cards = Array.prototype.slice.call(main.querySelectorAll(".sec > .card"));
-    var cur = 0;
-    var pager = document.createElement("div");
-    pager.className = "slide-pager";
-    pager.innerHTML = '<button class="tbtn" data-a="prev">◀ 이전</button>' +
-      '<span class="sp-title"></span><div class="sp-bar"><i></i></div><span class="sp-count"></span>' +
-      '<button class="tbtn on" data-a="next">다음 ▶</button>' +
-      '<button class="tbtn" data-a="full" title="전체 화면">⛶</button>' +
-      '<button class="tbtn" data-a="exit">✕ 종료</button>';
-    body.appendChild(pager);
-    function show(i) {
-      cur = Math.max(0, Math.min(cards.length - 1, i));
-      var sec = cards[cur].closest(".sec");
-      main.querySelectorAll(".sec").forEach(function (s) { s.classList.toggle("off", s !== sec); });
-      cards.forEach(function (c, k) { c.classList.toggle("off", k !== cur); });
-      pager.querySelector(".sp-count").textContent = (cur + 1) + " / " + cards.length;
-      pager.querySelector(".sp-bar i").style.width = ((cur + 1) / cards.length * 100) + "%";
-      pager.querySelector(".sp-title").textContent = sec.dataset.nav || "";
-      window.scrollTo(0, 0);
-      try { history.replaceState(null, "", "#slide-" + (cur + 1)); } catch (e) {}
+  /* 설명 쪽: 시뮬레이션만 숨김 / 시뮬레이션 쪽: 카드 제목(h3)과 그 시뮬레이션만 남김 */
+  function applySlide(s) {
+    var c = cards[s.k];
+    clearCard(c);
+    if (!s.sim) { c.querySelectorAll(".sim").forEach(function (el) { el.classList.add("off"); }); return; }
+    var x = s.sim;
+    while (x && x !== c) {
+      var p = x.parentElement;
+      Array.prototype.forEach.call(p.children, function (k) { if (k !== x && !(p === c && k.tagName === "H3")) k.classList.add("off"); });
+      x = p;
+    }
+  }
+  function fitSlide(c) {
+    var pagerH = (document.querySelector(".slide-pager") || {}).offsetHeight || 0;
+    var dock = document.querySelector(".cp-dock");
+    var lim = window.innerHeight - pagerH - (dock ? dock.offsetHeight + 10 : 0) - 10;
+    var r = c.getBoundingClientRect();
+    if (r.bottom <= lim) return;
+    var z = Math.max(0.75, (lim - r.top) / r.height);   // 너무 작아지면 축소 대신 스크롤
+    c.style.transformOrigin = "top center";
+    c.style.transform = "scale(" + z.toFixed(4) + ")";
+    c.style.marginBottom = (-r.height * (1 - z)).toFixed(1) + "px";
+  }
+  var pager = document.createElement("div");
+  pager.className = "slide-pager";
+  pager.innerHTML = '<button class="tbtn" data-a="prev">◀ 이전</button>' +
+    '<span class="sp-title"></span><div class="sp-bar"><i></i></div><span class="sp-count"></span>' +
+    '<button class="tbtn on" data-a="next">다음 ▶</button>' +
+    '<button class="tbtn" data-a="full" title="전체 화면">⛶</button>' +
+    '<button class="tbtn" data-a="exit">✕ 종료</button>';
+  body.appendChild(pager);
+  // 교사용 카드는 교사용 메모를 켰을 때만 슬라이드에 넣는다
+  function usable(i) {
+    return !(cards[slides[i].k].classList.contains("teacher-only") && !body.classList.contains("teacher"));
+  }
+  function show(i) {
+    var dir = i < cur ? -1 : 1;
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    var j = i;
+    while (j >= 0 && j < slides.length && !usable(j)) j += dir;
+    if (j < 0 || j >= slides.length) { j = i; while (j >= 0 && j < slides.length && !usable(j)) j -= dir; }
+    cur = (j >= 0 && j < slides.length) ? j : 0;
+    var s = slides[cur], card = cards[s.k];
+    var sec = card.closest(".sec");
+    main.querySelectorAll(".sec").forEach(function (x) { x.classList.toggle("off", x !== sec); });
+    cards.forEach(function (c, k) { c.classList.toggle("off", k !== s.k); if (k !== s.k) clearCard(c); });
+    applySlide(s);
+    var vis = slides.filter(function (x, k) { return usable(k); });
+    var pos = vis.indexOf(s) + 1;
+    pager.querySelector(".sp-count").textContent = pos + " / " + vis.length;
+    pager.querySelector(".sp-bar i").style.width = (pos / vis.length * 100) + "%";
+    var simName = s.sim && s.sim.querySelector(".sim-head b");
+    pager.querySelector(".sp-title").textContent = (sec.dataset.nav || "") + (s.sim ? " · " + (simName ? simName.textContent : "시뮬레이션") : "");
+    window.scrollTo(0, 0);
+    try { history.replaceState(null, "", "#slide-" + (cur + 1)); } catch (e) {}
+    window.dispatchEvent(new Event("resize"));     // 시뮬레이션 캔버스 크기 다시 맞추기
+    requestAnimationFrame(function () { fitSlide(card); window.dispatchEvent(new Event("resize")); });
+  }
+  function slideMode(on, start) {
+    body.classList.toggle("slides", on);
+    document.getElementById("btn-slide").classList.toggle("on", on);
+    if (on) show(start === undefined ? cur : start);
+    else {
+      cards.forEach(clearCard);
+      main.querySelectorAll(".off").forEach(function (el) { el.classList.remove("off"); });
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+      var c = slides[cur] && cards[slides[cur].k];
+      if (c) c.scrollIntoView({ block: "start" });
       window.dispatchEvent(new Event("resize"));
     }
-    function slideMode(on, start) {
-      body.classList.toggle("slides", on);
-      document.getElementById("btn-slide").classList.toggle("on", on);
-      if (on) show(start === undefined ? cur : start);
-      else {
-        main.querySelectorAll(".off").forEach(function (el) { el.classList.remove("off"); });
-        try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
-        cards[cur].scrollIntoView({ block: "start" });
-        window.dispatchEvent(new Event("resize"));
-      }
-    }
-    document.getElementById("btn-slide").addEventListener("click", function () {
-      if (body.classList.contains("slides")) { slideMode(false); return; }
-      var start = 0;
-      cards.forEach(function (c, k) { if (c.getBoundingClientRect().top < window.innerHeight * 0.4) start = k; });
-      slideMode(true, start);
-    });
-    pager.addEventListener("click", function (e) {
-      var a = e.target.closest("button"); if (!a) return;
-      var act = a.dataset.a;
-      if (act === "prev") show(cur - 1);
-      if (act === "next") show(cur + 1);
-      if (act === "exit") slideMode(false);
-      if (act === "full") {
-        if (document.fullscreenElement) document.exitFullscreen();
-        else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
-      }
-    });
-    side.querySelectorAll(".flow-nav a").forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        if (!body.classList.contains("slides")) return;
-        e.preventDefault();
-        var sec = document.querySelector(a.getAttribute("href"));
-        var k = cards.findIndex(function (c) { return sec.contains(c); });
-        if (k >= 0) show(k);
-      });
-    });
-    document.addEventListener("keydown", function (e) {
-      if (!body.classList.contains("slides")) return;
-      var t = e.target.tagName;
-      if (t === "TEXTAREA" || t === "INPUT" || t === "SELECT") return;
-      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(cur + 1); }
-      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(cur - 1); }
-      else if (e.key === "Home") show(0);
-      else if (e.key === "End") show(cards.length - 1);
-      else if (e.key === "Escape" && !document.fullscreenElement) slideMode(false);
-    });
-    var mh = location.hash.match(/^#slide-(\d+)$/);
-    if (mh) slideMode(true, parseInt(mh[1], 10) - 1);
   }
-
-  /* =====================================================================
-     슬라이드(PPT) 모드 · v2
-     - 카드가 화면보다 길면 여러 쪽으로 나눈다 (넘칠 때만).
-     - 시뮬레이션은 항상 별도 쪽으로 보여 준다.
-     - 그래도 넘치면 그 쪽만 살짝 축소한다.
-     - 판서(펜): 슬라이드마다 따로 남는다 (새로 고치면 사라짐).
-     ===================================================================== */
-  function v2Slides() {
-    var cards = Array.prototype.slice.call(main.querySelectorAll(".sec > .card"));
-    var slides = [], cur = 0, busy = false, timer = null, penOn = false;
-    var btnSlide = document.getElementById("btn-slide");
-
-    var pager = document.createElement("div");
-    pager.className = "slide-pager";
-    pager.innerHTML =
-      '<button class="tbtn" type="button" data-a="prev">◀ 이전</button>' +
-      '<span class="sp-title"></span><div class="sp-bar"><i></i></div><span class="sp-count"></span>' +
-      '<button class="tbtn on" type="button" data-a="next">다음 ▶</button>' +
-      '<span class="sp-sep"></span>' + FSZ +
-      '<button class="tbtn" type="button" data-a="memo" title="교사용 메모 보이기/숨기기">메모</button>' +
-      '<button class="tbtn" type="button" data-a="pen" title="판서 켜기/끄기 (P)">✎ 판서</button>' +
-      '<button class="tbtn" type="button" data-a="full" title="전체 화면 (F)">⛶</button>' +
-      '<button class="tbtn" type="button" data-a="exit" title="슬라이드 모드 끝내기 (Esc)">✕ 종료</button>';
-    body.appendChild(pager);
-    applyFont();
-
-    function on() { return body.classList.contains("slides"); }
-    function kids(el) { return Array.prototype.slice.call(el.children); }
-    function hide(el) { el.classList.add("pg-off"); }
-    function fireResize() { busy = true; window.dispatchEvent(new Event("resize")); busy = false; }
-    function toTop() { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); }
-    function limit() { return window.innerHeight - pager.offsetHeight - 14; }
-    function bottomOf(el) { return el.getBoundingClientRect().bottom + window.scrollY; }
-    function fits(card) { return bottomOf(card) <= limit() + 0.5; }
-    function scaleNeeded(card) {
-      var topY = card.getBoundingClientRect().top + window.scrollY;
-      return (limit() - topY) / (bottomOf(card) - topY);
-    }
-
-    /* 카드 안에서 쪽 나누기의 단위가 되는 덩어리. 소제목(h4)은 다음 소제목 전까지 한 덩어리. */
-    function hostOf(card) { return card.classList.contains("split") ? (card.querySelector(":scope > .body") || card) : card; }
-    function topBlocks(card) {
-      var h = hostOf(card), out = [], grp = null;
-      kids(h).forEach(function (el) {
-        if (el.classList.contains("sim") || el.classList.contains("notes")) return;
-        if (h === card && el.tagName === "H3") return;
-        if (el.tagName === "H4") { grp = [el]; out.push(grp); return; }
-        if (grp) grp.push(el); else out.push([el]);
-      });
-      return out;
-    }
-    function canSplit(el) {
-      return el.children.length > 1 && !el.matches(".figs, .chain, .tw, .eq, figure, table, ol, .reveal, .mini, .qbox, svg, .grid2");
-    }
-    function clearCard(card) {
-      card.querySelectorAll(".pg-off").forEach(function (e) { e.classList.remove("pg-off"); });
-      card.classList.remove("cont", "sim-only");
-      unscale(card);
-    }
-    function applyMain(card, all, page, first) {
-      all.forEach(hide);
-      card.querySelectorAll(".sim").forEach(hide);
-      page.forEach(function (blk) {
-        blk.forEach(function (el) { var x = el; while (x && x !== card) { x.classList.remove("pg-off"); x = x.parentElement; } });
-      });
-      var notes = card.querySelector(":scope > .notes");
-      if (notes) notes.classList.toggle("pg-off", !first);
-      card.classList.toggle("cont", !first);
-    }
-    function applySim(card, sim) {
-      card.classList.add("sim-only");
-      var x = sim;
-      while (x && x !== card) {
-        var p = x.parentElement;
-        kids(p).forEach(function (k) { if (k !== x && !(p === card && k.tagName === "H3")) hide(k); });
-        x = p;
+  // 정답 펼치기 등으로 내용 높이가 바뀌면 그 쪽만 다시 맞춤
+  main.addEventListener("click", function () {
+    if (!body.classList.contains("slides")) return;
+    requestAnimationFrame(function () { var c = cards[slides[cur].k]; c.style.transform = c.style.marginBottom = ""; fitSlide(c); });
+  });
+  document.getElementById("btn-slide").addEventListener("click", function () {
+    if (body.classList.contains("slides")) { slideMode(false); return; }
+    // 지금 보고 있는 카드부터 시작
+    var start = 0;
+    cards.forEach(function (c, k) {
+      if (c.getBoundingClientRect().top < window.innerHeight * 0.4) {
+        var i = slides.findIndex(function (s) { return s.k === k; });
+        if (i >= 0) start = i;
       }
-    }
-    function paginate(card) {
-      var queue = topBlocks(card), all = [], pages = [[]], guard = 0;
-      queue.forEach(function (b) { all.push.apply(all, b); });
-      var n = queue.length;
-      while (queue.length && guard++ < 400) {
-        var b = queue.shift(), page = pages[pages.length - 1];
-        page.push(b); applyMain(card, all, page, pages.length === 1);
-        if (fits(card) || scaleNeeded(card) >= 0.85) continue; // 조금만 넘치면 나누지 않고 살짝 축소
-        page.pop();
-        if (page.length) { pages.push([]); queue.unshift(b); continue; }
-        if (b.length === 1 && canSplit(b[0])) {
-          var ks = kids(b[0]);
-          all.push.apply(all, ks);
-          queue = ks.map(function (k) { return [k]; }).concat(queue);
-          continue;
-        }
-        page.push(b); // 혼자서도 넘치는 덩어리 → 보여 줄 때 축소
-      }
-      pages = pages.filter(function (p) { return p.length; });
-      if (!pages.length) pages = [[]];
-      return { all: all, pages: pages, n: n };
-    }
-
-    function build() {
-      busy = true;
-      var keep = slides[cur] ? slides[cur].key : null;
-      slides = [];
-      toTop();
-      main.querySelectorAll(".sec").forEach(function (s) { s.classList.add("off"); });
-      cards.forEach(function (c) { c.classList.add("off"); clearCard(c); });
-      cards.forEach(function (card, ci) {
-        var sec = card.closest(".sec");
-        sec.classList.remove("off"); card.classList.remove("off");
-        var sims = Array.prototype.slice.call(card.querySelectorAll(".sim"));
-        var r = paginate(card);
-        if (r.n || !sims.length) {
-          r.pages.forEach(function (pg, pi) {
-            slides.push({ card: card, kind: "main", all: r.all, page: pg, pi: pi, pn: r.pages.length, key: ci + "m" + pi });
-          });
-        }
-        sims.forEach(function (sim, si) { slides.push({ card: card, kind: "sim", sim: sim, si: si, key: ci + "s" + si }); });
-        clearCard(card);
-        sec.classList.add("off"); card.classList.add("off");
-      });
-      busy = false;
-      if (keep) {
-        var k = slides.findIndex(function (s) { return s.key === keep; });
-        if (k < 0) k = slides.findIndex(function (s) { return s.key.indexOf(keep.replace(/[ms]\d+$/, "")) === 0; });
-        cur = k >= 0 ? k : Math.min(cur, slides.length - 1);
-      }
-    }
-
-    function show(i) {
-      if (!slides.length) return;
-      cur = Math.max(0, Math.min(slides.length - 1, i));
-      var s = slides[cur], sec = s.card.closest(".sec");
-      main.querySelectorAll(".sec").forEach(function (x) { x.classList.toggle("off", x !== sec); });
-      cards.forEach(function (c) { c.classList.toggle("off", c !== s.card); clearCard(c); });
-      if (s.kind === "main") applyMain(s.card, s.all, s.page, s.pi === 0);
-      else applySim(s.card, s.sim);
-      var sub = s.kind === "sim" ? " · 시뮬레이션" : (s.pn > 1 ? " · " + (s.pi + 1) + "/" + s.pn + "쪽" : "");
-      pager.querySelector(".sp-title").textContent = (sec.dataset.nav || "") + sub;
-      pager.querySelector(".sp-count").textContent = (cur + 1) + " / " + slides.length;
-      pager.querySelector(".sp-bar i").style.width = ((cur + 1) / slides.length * 100) + "%";
-      pager.querySelector('[data-a="memo"]').classList.toggle("on", body.classList.contains("teacher"));
-      toTop();
-      try { history.replaceState(null, "", "#slide-" + (cur + 1)); } catch (e) {}
-      fireResize();
-      fitCurrent();
-      ink.load(s.key);
-    }
-
-    /* 지금 쪽이 화면을 넘치면 그 쪽만 축소해서 맞춘다 (노트·답안을 펼쳤을 때도) */
-    function unscale(card) { card.style.transform = card.style.transformOrigin = card.style.marginBottom = ""; }
-    function fitCurrent() {
-      var s = slides[cur]; if (!s || !on()) return;
-      var card = s.card;
-      shell.style.paddingBottom = (pager.offsetHeight + 12) + "px";
-      unscale(card);
-      if (fits(card)) return;
-      var topY = card.getBoundingClientRect().top + window.scrollY, h = bottomOf(card) - topY;
-      var z = Math.max(0.45, scaleNeeded(card));
-      card.style.transformOrigin = "top center";
-      card.style.transform = "scale(" + z.toFixed(4) + ")";
-      card.style.marginBottom = (-h * (1 - z)).toFixed(1) + "px";
-    }
-
-    function rebuildSoon() {
-      clearTimeout(timer);
-      timer = setTimeout(function () { if (!on()) return; build(); show(cur); }, 160);
-    }
-    window.addEventListener("resize", function () { if (!busy && on()) { ink.size(); rebuildSoon(); } });
-    window.addEventListener("load", function () { if (on()) rebuildSoon(); });
-    var quizBox = document.getElementById("quiz");
-    if (quizBox && "MutationObserver" in window) {
-      new MutationObserver(function () { if (on() && !busy) rebuildSoon(); }).observe(quizBox, { childList: true });
-    }
-    main.addEventListener("click", function () {
-      if (!on()) return;
-      requestAnimationFrame(function () { requestAnimationFrame(fitCurrent); });
     });
-
-    function slideMode(want, startCard) {
-      body.classList.toggle("slides", want);
-      btnSlide.classList.toggle("on", want);
-      applyFont();
-      if (want) {
-        build();
-        if (startCard) { var k = slides.findIndex(function (s) { return s.card === startCard; }); cur = k < 0 ? 0 : k; }
-        ink.size();
-        show(cur);
-      } else {
-        pen(false);
-        var c = slides[cur] && slides[cur].card;
-        cards.forEach(clearCard);
-        shell.style.paddingBottom = "";
-        main.querySelectorAll(".off").forEach(function (el) { el.classList.remove("off"); });
-        try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
-        window.dispatchEvent(new Event("resize"));
-        if (c) c.scrollIntoView({ block: "start" });
-      }
-    }
-    function fullscreen() {
+    slideMode(true, start);
+  });
+  pager.addEventListener("click", function (e) {
+    var a = e.target.closest("button"); if (!a) return;
+    var act = a.dataset.a;
+    if (act === "prev") show(cur - 1);
+    if (act === "next") show(cur + 1);
+    if (act === "exit") slideMode(false);
+    if (act === "full") {
       if (document.fullscreenElement) document.exitFullscreen();
       else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
     }
+  });
+  // 흐름 목차를 누르면 해당 섹션 첫 슬라이드로
+  side.querySelectorAll(".flow-nav a").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (!body.classList.contains("slides")) return;
+      e.preventDefault();
+      var sec = document.querySelector(a.getAttribute("href"));
+      var k = slides.findIndex(function (s) { return sec.contains(cards[s.k]); });
+      if (k >= 0) show(k);
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (!body.classList.contains("slides")) return;
+    var t = e.target.tagName;
+    if (t === "TEXTAREA" || t === "INPUT" || t === "SELECT") return;
+    if (document.querySelector(".cp-ink.on")) return;   // 판서 중에는 넘김 키 막기 (홈페이지 판서 기능)
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(cur + 1); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(cur - 1); }
+    else if (e.key === "Home") show(0);
+    else if (e.key === "End") show(slides.length - 1);
+    else if (e.key === "Escape" && !document.fullscreenElement) slideMode(false);
+  });
+  var mh = location.hash.match(/^#slide-(\d+)$/);
+  if (mh) slideMode(true, parseInt(mh[1], 10) - 1);
 
-    btnSlide.addEventListener("click", function () {
-      if (on()) { slideMode(false); return; }
-      var start = cards[0];
-      cards.forEach(function (c) { if (c.getBoundingClientRect().top < window.innerHeight * 0.4) start = c; });
-      slideMode(true, start);
-    });
-    pager.addEventListener("click", function (e) {
-      var a = e.target.closest("button[data-a]"); if (!a) return;
-      var act = a.dataset.a;
-      if (act === "prev") show(cur - 1);
-      if (act === "next") show(cur + 1);
-      if (act === "exit") slideMode(false);
-      if (act === "full") fullscreen();
-      if (act === "pen") pen(!penOn);
-      if (act === "memo") { document.getElementById("btn-teacher").click(); a.classList.toggle("on", body.classList.contains("teacher")); }
-    });
-    side.querySelectorAll(".flow-nav a").forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        if (!on()) return;
-        e.preventDefault();
-        var sec = document.querySelector(a.getAttribute("href"));
-        var k = slides.findIndex(function (s) { return sec.contains(s.card); });
-        if (k >= 0) show(k);
-      });
-    });
-    document.addEventListener("keydown", function (e) {
-      if (!on()) return;
-      var t = e.target, tg = t.tagName;
-      if (tg === "TEXTAREA" || tg === "INPUT" || tg === "SELECT") return;
-      var k = e.key;
-      if (k === "ArrowRight" || k === "PageDown" || (k === " " && !t.closest("button, .dnote"))) { e.preventDefault(); show(cur + 1); }
-      else if (k === "ArrowLeft" || k === "PageUp") { e.preventDefault(); show(cur - 1); }
-      else if (k === "Home") show(0);
-      else if (k === "End") show(slides.length - 1);
-      else if (e.code === "KeyP" && !e.ctrlKey && !e.metaKey) pen(!penOn);
-      else if (e.code === "KeyF" && !e.ctrlKey && !e.metaKey) fullscreen();
-      else if (k === "+" || k === "=") setFont(fsScale + 0.1);
-      else if (k === "-") setFont(fsScale - 0.1);
-      else if (k === "Escape") { if (penOn) pen(false); else if (!document.fullscreenElement) slideMode(false); }
-    });
-
-    /* ---------------- 판서 ---------------- */
-    var ink = (function () {
-      var cv = document.createElement("canvas");
-      cv.className = "ink-layer";
-      body.appendChild(cv);
-      var bar = document.createElement("div");
-      bar.className = "ink-tools";
-      var PENS = [["#e03131", "빨강"], ["#1c7ed6", "파랑"], ["#2f9e44", "초록"], ["auto", "검정/흰색 (화면 색에 맞춤)"]];
-      bar.innerHTML = PENS.map(function (p, i) {
-        return '<button type="button" class="sw' + (i === 0 ? " on" : "") + '" data-c="' + p[0] + '" title="' + p[1] + ' 펜" style="background:' + (p[0] === "auto" ? "var(--text)" : p[0]) + '"></button>';
-      }).join("") +
-        '<button type="button" class="tbtn" data-t="hl" title="형광펜">형광펜</button>' +
-        '<button type="button" class="tbtn" data-t="w" title="굵기 바꾸기">굵기 <b>보통</b></button>' +
-        '<button type="button" class="tbtn" data-t="er" title="선을 문질러 지우기">지우개</button>' +
-        '<button type="button" class="tbtn" data-t="undo" title="되돌리기 (Ctrl+Z)">↶</button>' +
-        '<button type="button" class="tbtn" data-t="clr" title="이 쪽의 판서 모두 지우기">이 쪽 지우기</button>' +
-        '<button type="button" class="tbtn on" data-t="done" title="판서 끝내기 (P)">완료</button>';
-      body.appendChild(bar);
-      var data = {}, key = null, strokes = [], ctx = cv.getContext("2d"), dpr = 1;
-      var tool = { c: "#e03131", mode: "pen", wi: 1 }, WIDTHS = [[2.5, "가늘게"], [4.5, "보통"], [8, "굵게"]];
-      var drawing = null, raf = 0;
-      function color(c) { return c === "auto" ? getComputedStyle(body).color : c; }
-      function size() {
-        dpr = window.devicePixelRatio || 1;
-        var w = window.innerWidth, h = window.innerHeight;
-        cv.style.width = w + "px"; cv.style.height = h + "px";
-        cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-        bar.style.bottom = (pager.offsetHeight + 12) + "px";
-        render();
-      }
-      function line(s) {
-        var p = s.p; if (!p.length) return;
-        ctx.globalAlpha = s.a; ctx.strokeStyle = ctx.fillStyle = color(s.c); ctx.lineWidth = s.w;
-        ctx.lineCap = "round"; ctx.lineJoin = "round";
-        if (p.length === 1) { ctx.beginPath(); ctx.arc(p[0][0], p[0][1], s.w / 2, 0, 7); ctx.fill(); ctx.globalAlpha = 1; return; }
-        ctx.beginPath(); ctx.moveTo(p[0][0], p[0][1]);
-        for (var i = 1; i < p.length - 1; i++) {
-          ctx.quadraticCurveTo(p[i][0], p[i][1], (p[i][0] + p[i + 1][0]) / 2, (p[i][1] + p[i + 1][1]) / 2);
-        }
-        ctx.lineTo(p[p.length - 1][0], p[p.length - 1][1]); ctx.stroke(); ctx.globalAlpha = 1;
-      }
-      function render() {
-        raf = 0;
-        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
-        ctx.setTransform(dpr, 0, 0, dpr, -window.scrollX * dpr, -window.scrollY * dpr);
-        strokes.forEach(line);
-      }
-      function later() { if (!raf) raf = requestAnimationFrame(render); }
-      function pt(e) { return [e.clientX + window.scrollX, e.clientY + window.scrollY]; }
-      function erase(q) {
-        var n = strokes.length;
-        strokes = strokes.filter(function (s) {
-          var r = 12 + s.w / 2;
-          return !s.p.some(function (a) { return Math.abs(a[0] - q[0]) < r && Math.abs(a[1] - q[1]) < r; });
+  /* ---- O/X 개념 확인 ---- */
+  document.querySelectorAll(".ox-list").forEach(function (list) {
+    var items = list.querySelectorAll(".ox"), done = 0, ok = 0;
+    var sc = document.createElement("div"); sc.className = "ox-score"; list.appendChild(sc);
+    function upd() { sc.textContent = done < items.length ? "확인 " + done + " / " + items.length : "결과 " + ok + " / " + items.length + (ok === items.length ? " · 모두 맞았어요!" : " · 틀린 문장의 설명을 확인하세요"); }
+    items.forEach(function (it) {
+      var st = it.innerHTML, why = it.dataset.why || "";
+      it.innerHTML = '<div class="st">' + st + '</div><div class="bt"><button type="button">O</button><button type="button">X</button></div>' + (why ? '<div class="why">' + why + "</div>" : "");
+      it.querySelectorAll(".bt button").forEach(function (b, k) {
+        b.addEventListener("click", function () {
+          var ans = it.dataset.a === "o" ? 0 : 1, right = k === ans;
+          it.classList.add(right ? "right" : "wrong");
+          it.querySelectorAll(".bt button").forEach(function (x) { x.disabled = true; });
+          it.querySelectorAll(".bt button")[ans].style.background = "var(--ok)"; it.querySelectorAll(".bt button")[ans].style.color = "#fff";
+          done++; if (right) ok++; upd();
         });
-        if (strokes.length !== n) { data[key] = strokes; later(); }
-      }
-      cv.addEventListener("pointerdown", function (e) {
-        if (!penOn) return;
-        e.preventDefault(); cv.setPointerCapture(e.pointerId);
-        var q = pt(e);
-        if (tool.mode === "er") { drawing = { er: true }; erase(q); return; }
-        var hl = tool.mode === "hl";
-        drawing = { c: hl ? "#ffd43b" : tool.c, w: hl ? 22 : WIDTHS[tool.wi][0], a: hl ? 0.38 : 1, p: [q] };
-        strokes.push(drawing); data[key] = strokes; later();
       });
-      cv.addEventListener("pointermove", function (e) {
-        if (!drawing) return;
-        var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
-        if (!evs.length) evs = [e];
-        evs.forEach(function (ev) { var q = pt(ev); if (drawing.er) erase(q); else drawing.p.push(q); });
-        later();
-      });
-      function end() { drawing = null; }
-      cv.addEventListener("pointerup", end);
-      cv.addEventListener("pointercancel", end);
-      window.addEventListener("scroll", function () { if (on()) later(); }, { passive: true });
-      document.addEventListener("keydown", function (e) {
-        if (penOn && (e.ctrlKey || e.metaKey) && e.code === "KeyZ") { e.preventDefault(); strokes.pop(); later(); }
-      });
-      function setMode(m) {
-        tool.mode = m;
-        bar.querySelector('[data-t="hl"]').classList.toggle("on", m === "hl");
-        bar.querySelector('[data-t="er"]').classList.toggle("on", m === "er");
-        bar.querySelectorAll(".sw").forEach(function (b) { b.classList.toggle("on", m === "pen" && b.dataset.c === tool.c); });
-        cv.classList.toggle("erasing", m === "er");
-      }
-      bar.addEventListener("click", function (e) {
-        var b = e.target.closest("button"); if (!b) return;
-        if (b.dataset.c) { tool.c = b.dataset.c; setMode("pen"); return; }
-        var t = b.dataset.t;
-        if (t === "hl") setMode(tool.mode === "hl" ? "pen" : "hl");
-        if (t === "er") setMode(tool.mode === "er" ? "pen" : "er");
-        if (t === "w") { tool.wi = (tool.wi + 1) % WIDTHS.length; b.querySelector("b").textContent = WIDTHS[tool.wi][1]; if (tool.mode === "er") setMode("pen"); }
-        if (t === "undo") { strokes.pop(); later(); }
-        if (t === "clr") { strokes = data[key] = []; later(); }
-        if (t === "done") pen(false);
-      });
-      return {
-        size: size,
-        load: function (k) { key = k; strokes = data[k] || (data[k] = []); size(); }
-      };
-    })();
-    function pen(v) {
-      penOn = v;
-      body.classList.toggle("drawing", v);
-      pager.querySelector('[data-a="pen"]').classList.toggle("on", v);
-      if (v) ink.size();
-    }
-
-    var mh = location.hash.match(/^#slide-(\d+)$/);
-    if (mh) { slideMode(true); show(parseInt(mh[1], 10) - 1); }
-  }
+    });
+    upd();
+  });
 
   /* ---- 펼쳐 보기 ---- */
   document.querySelectorAll(".reveal > button").forEach(function (b) {
