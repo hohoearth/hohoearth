@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지진파를 이용하여 진원과 진앙 찾기 | 충북사대부고 지구과학</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="지진파를 이용하여 진원과 진앙 찾기 | 충북사대부고 지구과학">
+<meta property="og:description" content="세 관측소의 지진 기록(P파·S파)으로 PS시 → 진원 거리 → 진앙 → 진원 깊이를 차례로 구하는 탐구 시뮬레이션">
+<meta property="og:image" content="https://hohoearth.github.io/hohoearth/assets/inquiry/earthquake/earthquake_thumb.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fa;--card:#fff;--ink:#1c2533;--muted:#5d6b7e;--line:#dde3ec;
+  --navy:#1d4e89;--p:#2563eb;--s:#dc2626;--est:#f59e0b;--true:#e11d48;--depth:#7c3aed;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+header{padding:16px 24px;background:linear-gradient(90deg,#0f2a4a,#1d4e89);color:#fff}
+header h1{margin:0;font-size:27px;letter-spacing:-.5px}
+header p{margin:5px 0 0;opacity:.88;font-size:14.5px}
+main{display:grid;grid-template-columns:minmax(380px,46%) 1fr;gap:16px;padding:16px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+#mapCard{position:sticky;top:12px}
+.maphead{display:flex;justify-content:space-between;align-items:center;font-size:15px;margin-bottom:6px}
+#coordRead{font-family:Consolas,monospace;font-size:13px;color:var(--muted)}
+#map{width:100%;height:calc(100vh - 190px);min-height:520px;border-radius:8px;background:#cfe6f5;z-index:0}
+.leaflet-container{font-family:inherit}
+#map.placing,#map.placing .leaflet-interactive,#map.placing .leaflet-grab{cursor:crosshair!important}
+#map.placing{box-shadow:0 0 0 4px #f59e0b}
+.lic{background:none;border:none}
+.cdot{width:16px;height:16px;display:grid;place-items:center;cursor:pointer}
+.cdot::after{content:'';width:9px;height:9px;border-radius:50%;background:#334155;border:2px solid #fff;box-shadow:0 0 3px rgba(0,0,0,.6)}
+.cdot:hover::after{background:#1d4e89;transform:scale(1.3)}
+.stn{position:relative;width:28px;height:28px;cursor:pointer}
+.stn svg{position:absolute;left:0;top:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.stn b{position:absolute;left:30px;top:-4px;white-space:nowrap;font-size:16px;color:var(--c);
+  text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
+.stn.p::before,.stn.s::before{content:'';position:absolute;left:-9px;top:-8px;width:40px;height:40px;border-radius:50%;border:3px solid;animation:pulse 1.2s ease-in-out infinite}
+.stn.p::before{border-color:#2563eb;background:rgba(37,99,235,.18)}
+.stn.s::before{border-color:#dc2626;background:rgba(220,38,38,.18)}
+@keyframes pulse{50%{transform:scale(1.25);opacity:.6}}
+.mlabel{background:none;border:none}
+.mlabel span{position:absolute;white-space:nowrap;font-weight:700;transform:translate(-50%,-50%);
+  text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
+.nomap{display:grid;place-items:center;height:100%;text-align:center;color:#475569;font-size:15px;line-height:1.8;background:#eef2f7}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px;transition:box-shadow .2s,border-color .2s}
+.step.active{border-color:var(--navy);box-shadow:0 0 0 3px rgba(29,78,137,.16)}
+.step h2{font-size:18.5px;margin:0 0 6px;display:flex;align-items:center;gap:9px}
+.step h3{font-size:15.5px;margin:14px 0 6px}
+.num{display:inline-grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#94a3b8;color:#fff;font-size:15px;flex:none}
+.step.active .num{background:var(--navy)}
+.step.done .num{background:#16a34a}
+.desc{margin:4px 0 10px;color:#334155;font-size:14.5px;line-height:1.65}
+.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:7px 0}
+.small{font-size:14px;color:var(--muted)}
+.hint{font-size:13.5px;color:var(--muted);margin:6px 0}
+button{font:inherit;font-size:14px;padding:7px 13px;border-radius:8px;border:1px solid #c5cfdc;background:#f8fafc;color:var(--ink);cursor:pointer}
+button:hover:not(:disabled){background:#e8eef6}
+button:disabled{opacity:.42;cursor:not-allowed}
+button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+button.primary:hover:not(:disabled){background:#163d6c}
+button.mini{padding:2px 8px;font-size:12.5px}
+input[type=number]{width:78px;font:inherit;font-size:14px;padding:4px 6px;border:1px solid #c5cfdc;border-radius:6px}
+select{font:inherit;font-size:14px;padding:3px 6px;border-radius:6px;border:1px solid #c5cfdc}
+.status{background:#f1f5f9;border-radius:8px;padding:9px 12px;font-size:14.5px;line-height:1.6}
+.status.alert{background:#fff1f2;color:#9f1239;font-weight:600}
+.trace{border:1px solid var(--line);border-radius:10px;padding:6px 8px 2px;margin-bottom:8px;background:#fcfdff}
+.thead{display:flex;align-items:center;gap:8px;font-size:14px;flex-wrap:wrap}
+.tag{color:#fff;border-radius:6px;padding:1px 8px;font-weight:700}
+.read{margin-left:auto;font-family:Consolas,monospace;font-size:13px}
+.tsvg{width:100%;height:auto;display:block;cursor:crosshair}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:#f1f5f9;font-weight:600}
+.ok{color:#16a34a;font-weight:700}.bad{color:#dc2626;font-weight:600}
+.out{background:#f8fafc;border-left:4px solid var(--navy);padding:8px 12px;border-radius:6px;font-size:14.5px;line-height:1.75;margin-top:8px}
+.out:empty{display:none}
+.formula{display:inline-block;background:#eef4fb;border-radius:6px;padding:3px 10px;margin:4px 0;font-weight:600}
+.cP{color:var(--p)}.cS{color:var(--s)}
+#ttc,#xsec{width:100%;height:auto;display:block}
+.howto{margin:4px 0 8px;padding-left:22px;font-size:14.5px;line-height:1.75;color:#334155}
+.calc{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:8px 12px}
+.cmp td:first-child{text-align:left;font-weight:600}
+.cmp tr.sub td{background:#fafbfc;font-size:13.5px}
+.questions ol{margin:6px 0;padding-left:22px;font-size:14.5px;line-height:1.8}
+footer{text-align:center;font-size:12.5px;color:var(--muted);padding:4px 0 18px}
+@media (max-width:1000px){main{grid-template-columns:1fr}#mapCard{position:static}#map{height:75vh}}
+
+/* =====================================================================
+   HoHo earth 탐구활동지 디자인 (겉모습만 바꿈 · 시뮬레이션 동작은 원본 그대로)
+   ===================================================================== */
+:root{--bg:#f8fafc;--line:#e2e8f0;--navy:#e11d48;--ink:#0f172a;--muted:#64748b}
+body{font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1440px;margin:0 auto;padding:0 20px}
+/* 상단 바 */
+.topnav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topnav .wrap{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topnav .l,.topnav .r{display:flex;align-items:center;gap:8px;min-width:0}
+.nbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;background:#f1f5f9;border:0;color:#334155;font-size:12.5px;font-weight:700;text-decoration:none;cursor:pointer;white-space:nowrap}
+.nbtn:hover:not(:disabled){background:#e2e8f0}
+.nbtn.red{background:#e11d48;color:#fff;box-shadow:0 4px 12px -4px rgba(225,29,72,.45)}
+.nbtn.red:hover:not(:disabled){background:#f43f5e}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;background:#ffe4e6;color:#9f1239;border:1px solid #fecdd3;white-space:nowrap}
+/* 제목 카드 */
+.titlecard{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px 30px;margin:22px 0 0;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.tc-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.tc-tag{display:inline-block;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:700;background:#fff1f2;color:#be123c;border:1px solid #fecdd3}
+.tc-lab{font-family:Consolas,monospace;font-size:12px;color:#94a3b8;margin-left:6px}
+.titlecard h1{margin:8px 0 0;font-size:30px;font-weight:900;letter-spacing:-.6px;color:var(--ink)}
+.student{display:flex;flex-wrap:wrap;gap:12px;background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.student label{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:#475569}
+.student input{width:96px;padding:7px 10px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;font-size:13px;font-weight:700;background:#fff}
+.student input:focus,.ans:focus{outline:none;border-color:#e11d48;box-shadow:0 0 0 3px rgba(225,29,72,.12)}
+.tc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.goal{background:#fff1f2;border:1px solid #fecdd3;border-radius:18px;padding:18px 20px}
+.concept{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:18px 20px;font-size:14px;line-height:1.7;color:#334155}
+.goal h2,.concept h2{margin:0 0 10px;font-size:14.5px;font-weight:800;color:#881337}
+.concept h2{color:#0f172a}
+.goal ul{margin:0;padding-left:18px;font-size:14px;line-height:1.75;color:#334155}
+.goal li::marker{color:#e11d48}
+.concept p{margin:6px 0}
+.fx{display:inline-block;background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;border-radius:8px;padding:3px 10px;font-weight:800}
+@media (max-width:860px){.tc-grid{grid-template-columns:1fr}}
+/* 시뮬레이션 카드 모양 */
+main{max-width:1440px;margin:0 auto;padding:22px 20px;gap:20px}
+.card{border-radius:24px;padding:18px;border-color:var(--line);box-shadow:0 1px 2px rgba(15,23,42,.04)}
+#mapCard{top:80px}
+#map{height:calc(100vh - 220px);border-radius:16px}
+.maphead b{font-size:16px;font-weight:800}
+.step{border-radius:24px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.step.active{border-color:#fda4af;box-shadow:0 0 0 4px rgba(225,29,72,.10)}
+.step h2{font-size:19px;font-weight:800;letter-spacing:-.3px}
+.num{border-radius:999px;background:#cbd5e1;font-weight:900}
+.step.active .num{background:#0f172a}
+.desc{color:#475569}
+button{border-radius:12px;font-weight:700;border-color:#cbd5e1;background:#fff}
+button:hover:not(:disabled){background:#f1f5f9}
+button.primary{background:#e11d48;border-color:#e11d48;box-shadow:0 4px 12px -4px rgba(225,29,72,.45)}
+button.primary:hover:not(:disabled){background:#f43f5e}
+input[type=number],select{border-radius:10px;border-color:#cbd5e1}
+.status{background:#f8fafc;border:1px solid var(--line);border-radius:14px}
+.trace{border-radius:16px}
+.out{border-left-color:#e11d48;background:#fff1f2;border-radius:12px}
+.formula{background:#fff1f2;color:#9f1239}
+.calc{border-radius:12px}
+th{background:#f8fafc;font-weight:800;color:#334155}
+.questions li{margin-bottom:10px}
+.ans{display:block;width:100%;min-height:64px;margin-top:6px;padding:9px 12px;border:1px solid #cbd5e1;border-radius:12px;font:inherit;font-size:14px;line-height:1.6;resize:vertical;background:#fff}
+.finish{max-width:1400px;margin:0 auto 22px;background:linear-gradient(135deg,#0f172a,#4c0519);color:#fff;border-radius:24px;padding:26px 30px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.finish h3{margin:0 0 6px;font-size:22px;font-weight:900}
+.finish p{margin:0;font-size:14px;color:#cbd5e1;line-height:1.6}
+.finish .nbtn{padding:12px 18px;font-size:13.5px}
+.finish .nbtn.dark{background:#1e293b;color:#fff;border:1px solid #334155}
+footer{padding:4px 0 26px}
+/* 인쇄용 결과 학습지 (화면에서는 숨김) */
+#report{display:none}
+@media print{
+  @page{size:A4 portrait;margin:11mm 12mm}
+  body{background:#fff}
+  body>*:not(#report){display:none!important}
+  #report{display:block;font-size:10.5pt;color:#000;line-height:1.5}
+  #report h1{font-size:17pt;margin:0 0 2mm}
+  #report h2{font-size:12pt;margin:5mm 0 2mm;padding:1.5mm 3mm;background:#f1f5f9;border-left:3px solid #e11d48}
+  #report table{border-collapse:collapse;width:100%;font-size:9.5pt}
+  #report th,#report td{border:1px solid #94a3b8;padding:1.5mm 2mm;text-align:center}
+  #report .who{display:flex;gap:8mm;font-size:10.5pt;margin:1mm 0 3mm;padding-bottom:2mm;border-bottom:1.5px solid #0f172a}
+  #report .box{border:1px solid #94a3b8;border-radius:2mm;padding:2mm 3mm;margin:1.5mm 0;min-height:12mm;white-space:pre-wrap}
+  #report .muted{color:#475569;font-size:9pt}
+  #report svg{width:100%;height:auto;max-height:62mm}
+  #report .avoid{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바 (HoHo earth 탐구활동지 양식) -->
+<div class="topnav">
+  <div class="wrap">
+    <div class="l">
+      <a class="nbtn" href="../index.html#showcase">‹ 탐구 활동으로</a>
+      <span class="chip">지구과학 · 지진파와 지구 내부</span>
+    </div>
+    <div class="r">
+      <button type="button" class="nbtn" id="wsSave">💾 임시 저장</button>
+      <button type="button" class="nbtn" id="wsReset" title="학번·이름·답변 지우기">↺ 초기화</button>
+      <button type="button" class="nbtn red" id="wsPrint">🖨 결과 학습지 인쇄 / PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="titlecard">
+    <div class="tc-head">
+      <div>
+        <span class="tc-tag">고등학교 과학과 탐구활동지</span><span class="tc-lab">Seismology Lab</span>
+        <h1>지진파를 이용하여 진원과 진앙 찾기</h1>
+      </div>
+      <div class="student">
+        <label>학번: <input id="wsId" placeholder="예: 20101"></label>
+        <label>이름: <input id="wsName" placeholder="예: 홍길동"></label>
+        <label>일시: <input id="wsDate" style="width:112px;font-weight:500"></label>
+      </div>
+    </div>
+    <div class="tc-grid">
+      <div class="goal">
+        <h2>🎯 탐구 목표</h2>
+        <ul>
+          <li>지진 기록에서 P파와 S파의 도착 시각을 읽고 PS시를 구할 수 있다.</li>
+          <li>PS시와 지진파의 속도로 각 관측소에서 진원까지의 거리를 계산할 수 있다.</li>
+          <li>세 관측소의 진원 거리 원과 공통현을 이용해 진앙을 찾고, 직각삼각형의 관계로 진원 깊이를 구할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="concept">
+        <h2>📖 관련 개념: PS시와 진원 거리</h2>
+        <p><b>진원</b>은 지진이 처음 발생한 땅속 지점이고, <b>진앙</b>은 진원 바로 위의 지표 지점입니다. 진원에서 P파와 S파가 동시에 출발하지만 P파가 더 빨라 먼저 도착하므로, 두 파의 도착 시각 차이인 <b>PS시</b>는 진원에서 멀수록 길어집니다.</p>
+        <p>진원 거리를 R이라 하면 R/V<sub>S</sub> − R/V<sub>P</sub> = PS시 이므로 <span class="fx">R = k × PS시, k = V<sub>P</sub>·V<sub>S</sub> ÷ (V<sub>P</sub> − V<sub>S</sub>)</span></p>
+        <p>진앙 거리 Δ, 진원 거리 R, 진원 깊이 h는 직각삼각형을 이루므로 <span class="fx">h = √(R² − Δ²)</span> 입니다.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<main>
+  <div class="card" id="mapCard">
+    <div class="maphead"><b>한반도 모형 지도</b><span id="coordRead"></span></div>
+    <div id="map"></div>
+    <div class="legend">
+      <span><svg width="14" height="14"><path d="M7 1 L13 12 L1 12Z" fill="#0891b2"/></svg>관측소</span>
+      <span><svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="#334155"/></svg>도시(클릭 → 관측소 지정)</span>
+      <span><svg width="16" height="10"><circle cx="8" cy="5" r="4" fill="none" stroke="#64748b" stroke-width="1.5"/></svg>진원 거리 원</span>
+      <span><svg width="18" height="6"><line x1="0" y1="3" x2="18" y2="3" stroke="#111827" stroke-width="2.5"/></svg>공통현</span>
+      <span style="color:#b45309">★ 추정 진앙</span>
+      <span style="color:#e11d48">◎ 실제 진앙</span>
+    </div>
+  </div>
+
+  <div id="panel">
+    <section class="step" id="st1">
+      <h2><span class="num">1</span>지진 발생과 관측</h2>
+      <p class="desc"><b>① 관측소 지정</b> — 먼저 지도에서 도시(●)를 클릭해 <b>관측소 3곳</b>을 정합니다. 관측소(▲)를 다시 클릭하면 해제됩니다.</p>
+      <div class="row">
+        <span id="stnList" class="small"></span>
+        <button id="btnResetSt" class="mini">관측소 모두 해제</button>
+      </div>
+      <p class="desc"><b>② 지진 발생</b> — 지진을 일으키는 방법은 두 가지입니다.<br>
+        <b>🎲 임의의 장소</b> — 한반도 어딘가에서 지진이 일어납니다. <b>진앙·진원 깊이가 숨겨지고 파면도 보이지 않으므로</b> 학생 탐구용으로 알맞습니다.<br>
+        <b>📍 지도를 클릭</b> — 원하는 곳(바다 포함)을 클릭해 지진을 일으키고, 지진파가 퍼져 나가는 모습을 볼 수 있습니다. 시범·설명용입니다.</p>
+      <div class="row">
+        <button id="btnQuake" class="primary">🎲 임의의 장소에서 지진</button>
+        <button id="btnPlace">📍 지도를 클릭해 지진 일으키기</button>
+        <label class="small">진원 깊이 <input type="number" id="depthIn" min="1" max="300" step="1" placeholder="무작위"> km
+          <span title="비워 두면 15~70 km 사이에서 무작위로 정해집니다. 클릭 방식에만 적용됩니다.">ⓘ</span></label>
+      </div>
+      <div class="row">
+        <button id="btnReplay">▶ 관측 다시 재생</button>
+        <label class="small">재생 속도
+          <select id="speed"><option value="4">4배</option><option value="10" selected>10배</option><option value="20">20배</option><option value="100000">즉시</option></select>
+        </label>
+      </div>
+      <div class="row small">
+        <label><input type="checkbox" id="chkWave" checked> 지진파 파면 보기 (📍 클릭 방식에서만)</label>
+        <label><input type="checkbox" id="chkTruth"> 실제 진앙 보기 (교사용)</label>
+      </div>
+      <div class="row small">
+        <label>P파 속도 <input type="number" id="vp" value="8" step="0.1" min="1"> km/s</label>
+        <label>S파 속도 <input type="number" id="vs" value="4" step="0.1" min="0.5"> km/s</label>
+      </div>
+      <p class="hint">💡 세 관측소가 진앙을 둘러싸도록 넓게 퍼져 있을수록 진앙을 정확히 찾을 수 있습니다. 지진이 난 뒤에 관측소를 바꾸면 같은 지진을 새 관측소에서 다시 기록합니다.</p>
+      <div id="status" class="status">먼저 지도에서 도시(●)를 클릭해 <b>관측소 3곳</b>을 지정하세요. (현재 0곳)</div>
+    </section>
+
+    <section class="step" id="st2">
+      <h2><span class="num">2</span>지진 기록 읽기 — PS시 구하기</h2>
+      <p class="desc">각 지진 기록에서 <b class="cP">P파가 처음 도착한 시각</b>을 클릭하고, 이어서 <b class="cS">S파가 처음 도착한 시각</b>을 클릭하세요. 두 도착 시각의 차이가 <b>PS시</b>입니다. (표시한 뒤 다시 클릭하면 가까운 쪽 표시가 옮겨집니다.)</p>
+      <div id="traces"><p class="hint">지진이 발생하면 이곳에 세 관측소의 지진 기록이 나타납니다.</p></div>
+      <div class="row small">
+        <button id="btnShowTrue">정답 도착 시각 보기 (교사용)</button>
+        <button id="btnAutoPick">자동 판독</button>
+      </div>
+    </section>
+
+    <section class="step" id="st3">
+      <h2><span class="num">3</span>진원 거리 구하기</h2>
+      <p class="desc">P파와 S파가 진원에서 동시에 출발하므로, 진원에서 멀수록 PS시가 길어집니다.<br>
+        R/V<sub>S</sub> − R/V<sub>P</sub> = PS시 &nbsp;⇒&nbsp;
+        <span class="formula">진원 거리 R = k × PS시, &nbsp; k = V<sub>P</sub>·V<sub>S</sub> / (V<sub>P</sub> − V<sub>S</sub>) = <span id="kval">8</span> km/s</span></p>
+      <table id="distTable">
+        <thead><tr><th>관측소</th><th>PS시 (초)</th><th>진원 거리 R (km) — 직접 계산해 입력</th><th>확인</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <h3>주시 곡선으로 확인하기</h3>
+      <svg id="ttc" viewBox="0 0 720 300"></svg>
+      <p class="hint">진원 거리를 입력하면 주시 곡선에 표시됩니다. 표시된 막대의 길이(그 거리에서 P파와 S파의 도달 시간 차)가 측정한 PS시와 같은지 확인해 보세요.</p>
+    </section>
+
+    <section class="step" id="st4">
+      <h2><span class="num">4</span>진앙 찾기 — 원과 공통현</h2>
+      <p class="desc">각 관측소를 중심으로 <b>진원 거리를 반지름</b>으로 하는 원을 그립니다. 진원은 땅속에 있으므로 원은 진앙보다 크게 그려져 세 원이 서로 겹칩니다. 두 원의 교점을 이은 <b>공통현</b> 3개가 만나는 점이 <b>진앙</b>입니다.</p>
+      <div class="row">
+        <button id="btnCircles">① 원 그리기</button>
+        <button id="btnChords">② 공통현 그리기 → 진앙 찾기</button>
+      </div>
+      <div id="epiOut" class="out"></div>
+    </section>
+
+    <section class="step" id="st5">
+      <h2><span class="num">5</span>진원 깊이 구하기</h2>
+      <p class="desc">관측소, 진앙, 진원을 이으면 <b>직각삼각형</b>이 됩니다. 아래 순서대로 지도에 작도해 보세요.</p>
+      <ol class="howto">
+        <li>진앙(★)과 관측소 한 곳을 직선으로 잇습니다. 이 길이가 <b>진앙 거리 Δ</b>입니다.</li>
+        <li>진앙에서 이 직선에 <b>수직인 직선</b>을 긋습니다.</li>
+        <li>수직선이 그 관측소의 원(반지름 = <b>진원 거리 R</b>)과 만나는 점까지의 길이가 <b>진원 깊이 h</b>입니다.</li>
+      </ol>
+      <div class="row">
+        <label class="small">작도할 관측소 <select id="depthSt"></select></label>
+        <button id="btnDepth">작도하기</button>
+      </div>
+      <div id="depthOut" class="out"></div>
+      <div id="depthCalc" class="row calc" style="display:none">
+        <label><b>진원 깊이 h =</b> <input type="number" id="hIn" step="0.1" min="0"> km</label>
+        <button id="btnCheckH" class="primary" style="display:none">🔍 실제 결과 확인하기</button>
+        <span id="hChk" class="small"></span>
+      </div>
+      <svg id="xsec" viewBox="0 0 720 230" style="display:none"></svg>
+      <p class="hint" id="xsecHint" style="display:none">💡 힌트: 위 그림은 관측소, 진앙, 진원을 지나는 땅속 단면입니다. 직각삼각형의 세 변 R, Δ, h 사이에는 어떤 관계가 있을까요?</p>
+    </section>
+
+    <section class="step" id="st6">
+      <h2><span class="num">6</span>결과 확인</h2>
+      <div class="row"><button id="btnReveal" class="primary">🔍 실제 진원 공개</button></div>
+      <div id="revealOut" class="out"></div>
+      <div class="questions">
+        <h3>생각해 보기 <span class="small" style="font-weight:500">— 답을 적으면 결과 학습지에 함께 인쇄됩니다</span></h3>
+        <ol>
+          <li><span class="qt">진원 거리를 반지름으로 그린 세 원이 한 점에서 만나지 않고 서로 겹치는 까닭은 무엇일까?</span><textarea class="ans" id="wsQ1"></textarea></li>
+          <li><span class="qt">진원 깊이가 더 깊어지면 세 원이 겹치는 부분은 어떻게 달라질까?</span><textarea class="ans" id="wsQ2"></textarea></li>
+          <li><span class="qt">PS시를 0.5초 잘못 읽으면 진원 거리는 몇 km 달라질까? 진원 깊이 추정에는 어떤 영향을 줄까?</span><textarea class="ans" id="wsQ3"></textarea></li>
+          <li><span class="qt">관측소가 한쪽에 몰려 있거나 거의 일직선 위에 있으면 진앙을 찾기 어려운 까닭은?</span><textarea class="ans" id="wsQ4"></textarea></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</main>
+<section class="finish">
+  <div>
+    <h3>탐구를 모두 마치셨나요?</h3>
+    <p>1~6단계를 끝내고 생각해 보기에 답을 적은 뒤 <b>[결과 학습지 인쇄 / PDF]</b>를 누르세요.<br>내가 측정한 PS시·진원 거리·진앙·진원 깊이와 실제 값 비교, 답변이 A4 학습지로 정리되어 인쇄(또는 PDF 저장)됩니다.</p>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button type="button" class="nbtn dark" id="wsSave2">💾 임시 저장</button>
+    <button type="button" class="nbtn red" id="wsPrint2">🖨 결과 학습지 인쇄 / PDF</button>
+  </div>
+</section>
+<footer>충북대학교사범대학부설고등학교 지구과학 · 지도: © OpenStreetMap contributors, © Esri (지도 표시에는 인터넷 연결 필요) · 지진파 기록은 균질한 지각을 가정한 모의 자료입니다.</footer>
+
+<!-- 인쇄용 결과 학습지: [결과 학습지 인쇄 / PDF]를 누르면 지금까지의 결과로 채워집니다 -->
+<div id="report"></div>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const halo = 'paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round';
+
+/* ---------------- 지리 (등장방형 투영, 단위 km) ---------------- */
+// 진앙을 원점으로 하는 국지 평면(km). 지진마다 원점을 진앙으로 옮겨 거리 오차를 줄입니다.
+let LON0 = 127.5, LAT0 = 36.5, KX = 111.32 * Math.cos(LAT0 * Math.PI / 180);
+const KY = 110.95;
+function setProj(lon0, lat0) {
+  LON0 = lon0; LAT0 = lat0; KX = 111.32 * Math.cos(lat0 * Math.PI / 180);
+  CITIES.forEach(c => { [c.x, c.y] = P(c.lon, c.lat); });
+}
+const P = (lon, lat) => [(lon - LON0) * KX, -(lat - LAT0) * KY];
+const LL = (x, y) => [x / KX + LON0, -y / KY + LAT0];
+
+const COAST = [
+  [124.35,39.95],[124.9,40.45],[125.6,40.8],[126.3,41.35],[126.9,41.8],[127.3,41.5],[128.0,41.4],
+  [128.15,41.95],[128.9,42.05],[129.4,42.4],[129.8,42.95],[130.25,42.85],[130.7,42.3],[130.3,42.25],
+  [129.8,41.8],[129.7,41.3],[129.2,40.7],[128.9,40.45],[128.2,40.0],[127.6,39.75],[127.4,39.3],
+  [127.6,39.0],[128.1,38.75],[128.35,38.55],[128.6,38.2],[128.95,37.75],[129.2,37.45],[129.42,37.0],
+  [129.42,36.5],[129.4,36.1],[129.58,36.05],[129.45,35.75],[129.43,35.45],[129.2,35.15],[129.0,35.05],
+  [128.7,34.9],[128.4,34.85],[128.0,34.9],[127.7,34.7],[127.4,34.55],[127.0,34.45],[126.75,34.35],
+  [126.53,34.3],[126.3,34.55],[126.35,34.8],[126.3,35.1],[126.45,35.5],[126.55,36.0],[126.5,36.35],
+  [126.15,36.75],[126.4,37.0],[126.6,37.25],[126.55,37.5],[126.45,37.75],[126.1,37.75],[125.7,37.9],
+  [125.2,37.75],[124.75,38.1],[125.1,38.55],[125.25,38.75],[125.0,39.2],[124.65,39.55]
+];
+// (위 COAST는 진앙을 육지 안에서 고르기 위한 대략적인 경계로만 사용합니다)
+
+const CITIES = [
+  ['서울',126.98,37.57],['인천',126.70,37.46],['춘천',127.73,37.88],['강릉',128.90,37.75],['속초',128.55,38.20],
+  ['원주',127.95,37.34],['서산',126.45,36.78],['청주',127.49,36.64],['대전',127.38,36.35],['안동',128.73,36.57],
+  ['울진',129.38,36.99],['포항',129.34,36.02],['대구',128.60,35.87],['울산',129.31,35.54],['부산',129.06,35.18],
+  ['창원',128.68,35.23],['진주',128.11,35.18],['군산',126.71,35.97],['전주',127.15,35.82],['광주',126.85,35.16],
+  ['목포',126.39,34.81],['여수',127.66,34.76],['제주',126.53,33.50],['울릉도',130.90,37.48],
+  ['개성',126.55,37.97],['평양',125.75,39.02],['원산',127.44,39.15],['함흥',127.54,39.92],['신의주',124.45,40.10],['청진',129.78,41.80]
+].map(([n, lon, lat]) => { const [x, y] = P(lon, lat); return { n, lon, lat, x, y }; });
+
+const ST_COLORS = ['#0891b2', '#65a30d', '#c026d3'];
+const LETTERS = ['A', 'B', 'C'];
+
+/* ---------------- 상태 ---------------- */
+const S = {
+  quake: null, cities: [], stations: [],
+  simT: 0, tEnd: 0, animating: false, recorded: false,
+  showTrue: false, circleProg: 0, circles: false, chords: false,
+  est: null, depth: null, revealed: false
+};
+let Vp = 8, Vs = 4;
+const kConst = () => Vp * Vs / (Vp - Vs);
+
+/* ---------------- 유틸 ---------------- */
+function inPoly(x, y, poly) {
+  let c = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+const pad = n => String(n).padStart(2, '0');
+function clk(t, dec = 1) {
+  let s = S.quake.origin + t; s = ((s % 86400) + 86400) % 86400;
+  const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+  const ss = dec ? sec.toFixed(dec).padStart(3 + dec, '0') : pad(Math.round(sec) % 60);
+  return `${pad(h)}:${pad(m)}:${ss}`;
+}
+function latlonStr(x, y) { const [lon, lat] = LL(x, y); return `북위 ${lat.toFixed(2)}°, 동경 ${lon.toFixed(2)}°`; }
+function nearPlace(x, y) {
+  let best = null, bd = 1e9;
+  for (const c of CITIES) { const d = Math.hypot(c.x - x, c.y - y); if (d < bd) { bd = d; best = c; } }
+  if (bd < 8) return `${best.n} 부근`;
+  const ang = Math.atan2(-(y - best.y), x - best.x) * 180 / Math.PI; // 동=0, 북=90
+  const dirs = ['동', '북동', '북', '북서', '서', '남서', '남', '남동'];
+  const dir = dirs[((Math.round(ang / 45) % 8) + 8) % 8];
+  return `${best.n}에서 ${dir}쪽으로 약 ${Math.round(bd)} km`;
+}
+
+/* ---------------- 지도 (Leaflet + OpenStreetMap) ---------------- */
+const toLL = (x, y) => { const [lon, lat] = LL(x, y); return [lat, lon]; };
+function circlePts(cx, cy, r, n = 160) {
+  const a = [];
+  for (let i = 0; i <= n; i++) { const t = i / n * 2 * Math.PI; a.push(toLL(cx + r * Math.cos(t), cy + r * Math.sin(t))); }
+  return a;
+}
+function starPath(cx, cy, r) {
+  let d = '';
+  for (let i = 0; i < 10; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.45 : r;
+    d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ',' + (cy + rr * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+const HAS_MAP = typeof L !== 'undefined';
+let lmap = null;
+const LG = {};
+if (HAS_MAP) {
+  lmap = L.map('map', { zoomSnap: 0.25, zoomDelta: 0.5 }).fitBounds([[33.1, 124.6], [42.9, 130.95]]);
+  const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
+  const street = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18, attribution: 'Tiles &copy; Esri' });
+  const topo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18, attribution: 'Tiles &copy; Esri' });
+  const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18, attribution: 'Tiles &copy; Esri' });
+  // 파일을 더블클릭해 열면(file://) OpenStreetMap 타일이 차단되므로 Esri 지도를 기본으로 사용
+  const isFile = location.protocol === 'file:';
+  (isFile ? street : osm).addTo(lmap);
+  const bases = isFile
+    ? { '일반 지도 (Esri)': street, '지형도 (Esri)': topo, '위성 사진 (Esri)': sat }
+    : { '일반 지도 (OpenStreetMap, 한글)': osm, '일반 지도 (Esri)': street, '지형도 (Esri)': topo, '위성 사진 (Esri)': sat };
+  L.control.layers(bases, null, { position: 'topright' }).addTo(lmap);
+  L.control.scale({ imperial: false, maxWidth: 160 }).addTo(lmap);
+  ['wave', 'circles', 'chords', 'depth', 'cities', 'stations', 'est', 'truth'].forEach(k => LG[k] = L.layerGroup().addTo(lmap));
+  lmap.on('mousemove', e => $('coordRead').textContent = `북위 ${e.latlng.lat.toFixed(2)}°, 동경 ${e.latlng.lng.toFixed(2)}°`);
+  lmap.on('mouseout', () => $('coordRead').textContent = '');
+  lmap.on('click', e => { if (S.placing) placeQuakeAt(e.latlng.lat, e.latlng.lng); });
+} else {
+  $('map').innerHTML = '<div class="nomap">🌐 지도를 불러오지 못했습니다.<br>지도 표시에는 인터넷 연결이 필요합니다.<br><span style="font-size:13px">(지진 기록 읽기와 계산 기능은 그대로 사용할 수 있습니다)</span></div>';
+}
+function divIcon(html, size, anchor, cls = '') { return L.divIcon({ html, className: 'lic ' + cls, iconSize: size, iconAnchor: anchor }); }
+function mlabel(latlng, text, color, dx = 0, dy = 0, size = 13) {
+  return L.marker(latlng, { interactive: false, keyboard: false,
+    icon: L.divIcon({ className: 'mlabel', iconSize: [0, 0], html: `<span style="color:${color};left:${dx}px;top:${dy}px;font-size:${size}px">${text}</span>` }) });
+}
+function fitKm(points, pad = 0.08) {
+  if (!HAS_MAP || !points.length) return;
+  lmap.fitBounds(L.latLngBounds(points).pad(pad), { animate: true });
+}
+function getR() { return S.stations.map((_, i) => { const v = parseFloat($('dist' + i)?.value); return isFinite(v) && v > 0 ? v : null; }); }
+
+let markerKey = '';
+function renderMap() {
+  if (!HAS_MAP) return;
+  const q = S.quake;
+  ['wave', 'circles', 'chords', 'depth'].forEach(k => LG[k].clearLayers());
+  // 파면
+  // 임의 지진(random)에서는 진앙이 드러나지 않도록 파면을 그리지 않음
+  if (q && q.mode === 'click' && S.animating && $('chkWave').checked) {
+    [[Vp, '#2563eb'], [Vs, '#dc2626']].forEach(([v, col]) => {
+      const R = v * S.simT; if (R <= q.depth) return;
+      const r = Math.sqrt(R * R - q.depth * q.depth);
+      L.polygon(circlePts(q.x, q.y, r), { color: col, weight: 2.5, opacity: .85, fillOpacity: .06, interactive: false }).addTo(LG.wave);
+    });
+  }
+  // 진원 거리 원
+  const Rs = getR();
+  if (S.circles || S.circleProg > 0) {
+    S.stations.forEach((st, i) => {
+      if (!Rs[i]) return;
+      const col = ST_COLORS[i], r = Rs[i] * S.circleProg;
+      L.polygon(circlePts(st.x, st.y, r), { color: col, weight: 2.8, opacity: .95, fillColor: col, fillOpacity: .08, interactive: false }).addTo(LG.circles);
+      if (S.circleProg >= 1) {
+        L.polyline([toLL(st.x, st.y), toLL(st.x + r, st.y)], { color: col, weight: 1.6, dashArray: '6 5', interactive: false }).addTo(LG.circles);
+        mlabel(toLL(st.x + r / 2, st.y), `R = ${Rs[i].toFixed(1)} km`, col, 0, 12).addTo(LG.circles);
+      }
+    });
+  }
+  // 공통현
+  if (S.chords && S.est) {
+    const E = S.est;
+    [[0, 1], [0, 2], [1, 2]].forEach(([a, b]) => {
+      const A = S.stations[a], B = S.stations[b], ra = Rs[a], rb = Rs[b];
+      const d = dist(A, B), ux = (B.x - A.x) / d, uy = (B.y - A.y) / d;
+      const aa = (ra * ra - rb * rb + d * d) / (2 * d);
+      const px = A.x + aa * ux, py = A.y + aa * uy, vx = -uy, vy = ux;
+      const hh2 = ra * ra - aa * aa, hh = hh2 > 0 ? Math.sqrt(hh2) : 0;
+      const sE = (E.x - px) * vx + (E.y - py) * vy;
+      const s0 = Math.min(-hh, sE) - 20, s1 = Math.max(hh, sE) + 20;
+      L.polyline([toLL(px + vx * s0, py + vy * s0), toLL(px + vx * s1, py + vy * s1)], { color: '#111827', weight: 1.4, dashArray: '5 5', opacity: .7, interactive: false }).addTo(LG.chords);
+      if (hh > 0) {
+        L.polyline([toLL(px - vx * hh, py - vy * hh), toLL(px + vx * hh, py + vy * hh)], { color: '#111827', weight: 3.2, interactive: false }).addTo(LG.chords);
+        [-1, 1].forEach(sg => L.circleMarker(toLL(px + sg * vx * hh, py + sg * vy * hh), { radius: 4, color: '#fff', weight: 1.5, fillColor: '#111827', fillOpacity: 1, interactive: false }).addTo(LG.chords));
+      }
+    });
+  }
+  // 깊이 작도
+  if (S.depth && S.depth.h) {
+    const { st, E, h, nx, ny, ax, ay } = S.depth;
+    const Q = { x: E.x + nx * h, y: E.y + ny * h }, m = Math.max(4, h * 0.15);
+    L.polyline([toLL(st.x, st.y), toLL(E.x, E.y)], { color: ST_COLORS[st.i], weight: 2.4, dashArray: '8 5', interactive: false }).addTo(LG.depth);
+    L.polyline([toLL(E.x + ax * m, E.y + ay * m), toLL(E.x + ax * m + nx * m, E.y + ay * m + ny * m), toLL(E.x + nx * m, E.y + ny * m)], { color: '#7c3aed', weight: 1.8, interactive: false }).addTo(LG.depth);
+    L.polyline([toLL(E.x, E.y), toLL(Q.x, Q.y)], { color: '#7c3aed', weight: 4.5, interactive: false }).addTo(LG.depth);
+    L.circleMarker(toLL(Q.x, Q.y), { radius: 5, color: '#fff', weight: 1.5, fillColor: '#7c3aed', fillOpacity: 1, interactive: false }).addTo(LG.depth);
+    mlabel(toLL((E.x + Q.x) / 2, (E.y + Q.y) / 2), S.hOk ? `h = ${S.hIn.toFixed(1)} km` : 'h = ?', '#7c3aed', 0, 22, 15).addTo(LG.depth);
+  }
+  // 마커 (바뀐 경우에만 다시 그림)
+  const truthOn = !!(q && ($('chkTruth').checked || S.revealed));
+  const key = JSON.stringify([q ? q.origin + q.depth : 0, S.cities.map(c => CITIES.indexOf(c)),
+    S.stations.map(st => !S.animating ? 0 : S.simT >= st.tS ? 2 : S.simT >= st.tP ? 1 : 0),
+    S.est && S.chords ? [S.est.x, S.est.y] : 0, truthOn]);
+  if (key === markerKey) return;
+  markerKey = key;
+  ['cities', 'stations', 'est', 'truth'].forEach(k => LG[k].clearLayers());
+  CITIES.forEach(c => {
+    if (S.cities.includes(c)) return;
+    L.marker([c.lat, c.lon], { icon: divIcon('<div class="cdot"></div>', [16, 16], [8, 8]), riseOnHover: true })
+      .bindTooltip(`${c.n} — 클릭하여 관측소로 지정`, { direction: 'top', offset: [0, -6] })
+      .on('click', () => toggleCity(c)).addTo(LG.cities);
+  });
+  S.cities.forEach((c, i) => {
+    const st = S.stations[i], col = ST_COLORS[i];
+    const state = st && S.animating ? (S.simT >= st.tS ? 's' : S.simT >= st.tP ? 'p' : '') : '';
+    const html = `<div class="stn ${state}" style="--c:${col}"><svg width="28" height="28" viewBox="0 0 28 28"><path d="M14 2 L26 24 L2 24Z" fill="${col}" stroke="#fff" stroke-width="2.5"/></svg><b>${LETTERS[i]} ${c.n}</b></div>`;
+    L.marker([c.lat, c.lon], { icon: divIcon(html, [28, 28], [14, 17]), zIndexOffset: 1000 })
+      .bindTooltip(`관측소 ${LETTERS[i]} (${c.n}) — 클릭하면 해제`, { direction: 'bottom', offset: [0, 10] })
+      .on('click', () => toggleCity(c)).addTo(LG.stations);
+  });
+  if (S.est && S.chords) {
+    L.marker(toLL(S.est.x, S.est.y), { interactive: false, zIndexOffset: 2000,
+      icon: divIcon(`<svg width="30" height="30" viewBox="0 0 30 30"><path d="${starPath(15, 15, 13)}" fill="#f59e0b" stroke="#7c2d12" stroke-width="1.5"/></svg>`, [30, 30], [15, 15]) }).addTo(LG.est);
+    mlabel(toLL(S.est.x, S.est.y), '추정 진앙', '#b45309', -52, 0, 14).addTo(LG.est);
+  }
+  if (truthOn) {
+    L.marker([q.lat, q.lon], { interactive: false, zIndexOffset: 1900,
+      icon: divIcon('<svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10" fill="rgba(255,255,255,.5)" stroke="#e11d48" stroke-width="3"/><circle cx="13" cy="13" r="4" fill="#e11d48"/></svg>', [26, 26], [13, 13]) }).addTo(LG.truth);
+    mlabel([q.lat, q.lon], `실제 진앙 (깊이 ${q.depth} km)`, '#e11d48', 0, -30, 14).addTo(LG.truth);
+  }
+}
+
+/* ---------------- 지진 · 관측소 ---------------- */
+function inTri(x, y, a, b, c) {
+  const s = (p, q, r) => (q.x - p.x) * (r.y - p.y) - (r.x - p.x) * (q.y - p.y);
+  const o = { x, y }, d1 = s(a, b, o), d2 = s(b, c, o), d3 = s(c, a, o);
+  return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0));
+}
+const triArea = (a, b, c) => Math.abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2;
+
+// mode: 'random'(진앙 숨김, 파면 없음) | 'click'(지도에서 지정, 파면 표시)
+// 두 지점(경위도) 사이의 거리(km)
+const kmLL = (lon1, lat1, lon2, lat2) => Math.hypot((lon1 - lon2) * 111.32 * Math.cos((lat1 + lat2) / 2 * Math.PI / 180), (lat1 - lat2) * KY);
+function needStations() {
+  setStatus(`먼저 지도에서 도시(●)를 클릭해 <b>관측소 3곳</b>을 지정하세요. (현재 ${S.cities.length}곳)`, true);
+}
+function startQuake(lon, lat, mode) {
+  if (S.cities.length !== 3) { needStations(); return false; }
+  setProj(lon, lat);
+  stopAnim();
+  const v = parseFloat($('depthIn').value);
+  const depth = mode === 'click' && isFinite(v) && v >= 1 && v <= 300 ? Math.round(v) : Math.round(15 + Math.random() * 55);
+  S.quake = { x: 0, y: 0, lon, lat, depth, mode, origin: Math.floor((9 + Math.random() * 8) * 3600) };
+  rebuild(true);
+  return true;
+}
+// 지정한 세 관측소 주변(주로 삼각형 안쪽)의 육지에서 무작위로 진앙을 고름
+function newQuake() {
+  setPlacing(false);
+  if (S.cities.length !== 3) { needStations(); return; }
+  const cs = S.cities, T = cs.map(c => ({ x: c.lon, y: c.lat }));
+  const lo0 = Math.min(...cs.map(c => c.lon)) - 0.8, lo1 = Math.max(...cs.map(c => c.lon)) + 0.8;
+  const la0 = Math.min(...cs.map(c => c.lat)) - 0.6, la1 = Math.max(...cs.map(c => c.lat)) + 0.6;
+  const fits = (lon, lat, maxD) => { const ds = cs.map(c => kmLL(lon, lat, c.lon, c.lat)); return Math.min(...ds) >= 20 && Math.max(...ds) <= maxD; };
+  const preferInside = Math.random() < 0.75;
+  const passes = [
+    (lon, lat) => inPoly(lon, lat, COAST) && (!preferInside || inTri(lon, lat, ...T)) && fits(lon, lat, 300),
+    (lon, lat) => inPoly(lon, lat, COAST) && fits(lon, lat, 400),
+    (lon, lat) => inTri(lon, lat, ...T) && fits(lon, lat, 600),
+  ];
+  for (const ok of passes) for (let tries = 0; tries < 4000; tries++) {
+    const lon = lo0 + Math.random() * (lo1 - lo0), lat = la0 + Math.random() * (la1 - la0);
+    if (ok(lon, lat)) { startQuake(lon, lat, 'random'); return; }
+  }
+  startQuake(cs.reduce((s, c) => s + c.lon, 0) / 3 + 0.05, cs.reduce((s, c) => s + c.lat, 0) / 3 + 0.05, 'random');
+}
+function resetStations() {
+  stopAnim(); setPlacing(false);
+  S.cities = []; S.quake = null;
+  rebuild(false);
+  setStatus('관측소를 모두 해제했습니다. 지도에서 도시(●)를 클릭해 <b>관측소 3곳</b>을 다시 지정하세요.', false);
+}
+function stationStatus() {
+  const list = S.cities.map((c, i) => `<b style="color:${ST_COLORS[i]}">${LETTERS[i]}(${c.n})</b>`).join(', ');
+  if (S.cities.length < 3) setStatus(`관측소 지정 중 (${S.cities.length}/3) ${list ? '— ' + list : ''}<br>지도에서 도시(●)를 클릭해 관측소를 지정하세요.`, false);
+  else setStatus(`✅ 관측소 ${list} 지정 완료! 이제 <b>🎲 임의의 장소에서 지진</b> 또는 <b>📍 지도를 클릭해 지진 일으키기</b>를 누르세요.` +
+    (triArea(...S.cities) < 3000 ? '<br>⚠ 세 관측소가 거의 일직선 위에 있어 진앙을 정확히 찾기 어려울 수 있습니다.' : ''), false);
+}
+function setPlacing(on) {
+  S.placing = on;
+  if (HAS_MAP) $('map').classList.toggle('placing', on);
+  $('btnPlace').textContent = on ? '✖ 클릭 취소' : '📍 지도를 클릭해 지진 일으키기';
+  $('btnPlace').classList.toggle('primary', on);
+  if (on) setStatus('📍 <b>지도에서 지진을 일으킬 곳을 클릭하세요.</b> (바다도 가능 · Esc 키로 취소)', true);
+}
+function placeQuakeAt(lat, lon) {
+  setPlacing(false);
+  startQuake(lon, lat, 'click');
+}
+
+function buildStation(c, i) {
+  const q = S.quake;
+  const d = Math.hypot(c.x - q.x, c.y - q.y), D = Math.hypot(d, q.depth);
+  const tP = D / Vp, tS = D / Vs;
+  const t0 = Math.floor(tP - 4 - Math.random() * 4), t1 = Math.ceil(tS + 14 + Math.random() * 6);
+  const dt = 0.05, N = Math.round((t1 - t0) / dt) + 1, data = new Float32Array(N);
+  const fp = 2.2 + Math.random() * 2, fs = 0.9 + Math.random() * 0.7, fr = 0.3 + Math.random() * 0.15;
+  const ph = Array.from({ length: 5 }, () => Math.random() * 6.28);
+  const aP = 0.2 + Math.random() * 0.1, tR = D / (Vs * 0.9);
+  let mx = 0;
+  for (let n = 0; n < N; n++) {
+    const t = t0 + n * dt; let v = gauss() * 0.012;
+    if (t >= tP) { const u = t - tP, env = (1 - Math.exp(-u / 0.12)) * Math.exp(-u / 7);
+      v += aP * env * (0.6 * Math.sin(2 * Math.PI * fp * u + ph[0]) + 0.35 * Math.sin(2 * Math.PI * fp * 1.7 * u + ph[1]) + 0.3 * gauss()); }
+    if (t >= tS) { const u = t - tS, env = (1 - Math.exp(-u / 0.2)) * Math.exp(-u / 9);
+      v += env * (0.7 * Math.sin(2 * Math.PI * fs * u + ph[2]) + 0.3 * Math.sin(2 * Math.PI * fs * 1.9 * u + ph[3]) + 0.25 * gauss()); }
+    if (t >= tR) { const u = t - tR, env = (1 - Math.exp(-u / 1.5)) * Math.exp(-u / 14);
+      v += 0.55 * env * Math.sin(2 * Math.PI * fr * u + ph[4]); }
+    data[n] = v; mx = Math.max(mx, Math.abs(v));
+  }
+  for (let n = 0; n < N; n++) data[n] /= mx;
+  return { i, city: c, name: c.n, x: c.x, y: c.y, d, D, tP, tS, t0, t1, dt, N, data, pick: { P: null, S: null } };
+}
+
+function rebuild(play) {
+  stopAnim();
+  resetDownstream();
+  if (S.cities.length === 3) {
+    S.stations = S.cities.map((c, i) => buildStation(c, i));
+    S.tEnd = Math.max(...S.stations.map(s => s.t1));
+    const ar = triArea(...S.cities);
+    setStatus((S.quake.mode === 'click'
+      ? `<b>📍 지정한 곳에서 지진 발생!</b> (진원 깊이 ${S.quake.depth} km) 관측소`
+      : `<b>⚠ 지진 발생!</b> 진앙과 진원 깊이는 비밀입니다. 관측소`) + ` ${S.stations.map(s => `<b style="color:${ST_COLORS[s.i]}">${LETTERS[s.i]}(${s.name})</b>`).join(', ')}에서 지진파를 기록하는 중…` +
+      (ar < 3000 ? '<br>⚠ 세 관측소가 거의 일직선 위에 있어 진앙을 정확히 찾기 어려울 수 있습니다.' : ''), true);
+  } else {
+    S.stations = [];
+    setStatus(`관측소를 3곳 지정하세요. (현재 ${S.cities.length}곳) 지도에서 도시(●)를 클릭하세요.`, false);
+  }
+  buildTraces(); buildDistTable(); buildDepthSelect(); renderTTC();
+  if (S.stations.length === 3 && play) fitKm(S.cities.map(c => [c.lat, c.lon]), 0.45);
+  if (S.stations.length === 3 && play) startAnim(); else { S.simT = S.stations.length ? S.tEnd : 0; finishIfDone(); }
+  renderMap(); updateUI();
+}
+
+function toggleCity(c) {
+  if (S.placing) { placeQuakeAt(c.lat, c.lon); return; }
+  const idx = S.cities.indexOf(c);
+  if (idx >= 0) S.cities.splice(idx, 1);
+  else {
+    if (S.cities.length >= 3) { setStatus('관측소는 3곳까지입니다. 먼저 관측소(▲)를 클릭해 하나를 해제하세요.', false); return; }
+    S.cities.push(c);
+  }
+  if (S.quake) rebuild(true);
+  else { renderMap(); updateUI(); stationStatus(); }
+}
+
+function resetDownstream() {
+  S.recorded = false; S.showTrue = false; S.revealed = false;
+  clearConstruction();
+}
+function clearConstruction() {
+  S.circles = false; S.circleProg = 0; S.chords = false; S.est = null; S.depth = null; S.revealed = false;
+  S.hOk = false; S.hIn = null;
+  $('epiOut').innerHTML = ''; $('depthOut').innerHTML = ''; $('revealOut').innerHTML = '';
+  $('xsec').style.display = 'none'; $('xsecHint').style.display = 'none'; $('depthCalc').style.display = 'none';
+  $('hIn').value = ''; $('hChk').innerHTML = '';
+}
+function setStatus(html, alert) { const s = $('status'); s.innerHTML = html; s.classList.toggle('alert', !!alert); }
+
+/* ---------------- 애니메이션 ---------------- */
+let rafId = null, lastTs = 0;
+function startAnim() {
+  stopAnim();
+  S.recorded = false;
+  if (parseFloat($('speed').value) > 1000) { S.simT = S.tEnd; finishIfDone(); renderMap(); return; }
+  S.simT = 0; S.animating = true; lastTs = performance.now();
+  rafId = requestAnimationFrame(tick);
+}
+function stopAnim() { if (rafId) cancelAnimationFrame(rafId); rafId = null; S.animating = false; }
+function tick(now) {
+  const dtr = Math.min(0.1, (now - lastTs) / 1000); lastTs = now;
+  S.simT += dtr * parseFloat($('speed').value);
+  if (S.simT >= S.tEnd) { S.simT = S.tEnd; S.animating = false; rafId = null; finishIfDone(); }
+  else rafId = requestAnimationFrame(tick);
+  renderMap(); S.stations.forEach(renderTrace);
+}
+function finishIfDone() {
+  if (S.stations.length === 3 && S.simT >= S.tEnd) {
+    S.recorded = true;
+    setStatus(`✅ 기록 완료! 관측소 ${S.stations.map(s => `${LETTERS[s.i]}(${s.name})`).join(', ')}의 지진 기록을 얻었습니다. <b>2단계</b>에서 PS시를 측정하세요.`, false);
+    S.stations.forEach(renderTrace);
+    updateUI();
+  }
+}
+
+/* ---------------- 지진 기록(진동 그래프) ---------------- */
+const TW = 720, TH = 140, TL = 10, TR = 710, TT = 10, TB = 108, MID = 59, AMP = 45;
+function buildTraces() {
+  const wrap = $('traces'); wrap.innerHTML = '';
+  if (S.stations.length !== 3) { wrap.innerHTML = '<p class="hint">관측소 3곳이 정해지면 이곳에 지진 기록이 나타납니다.</p>'; return; }
+  S.stations.forEach((st, i) => {
+    const div = document.createElement('div'); div.className = 'trace';
+    div.innerHTML = `<div class="thead"><span class="tag" style="background:${ST_COLORS[i]}">${LETTERS[i]}</span><b>${st.name} 관측소</b><span class="read" id="read${i}"></span><button class="mini" data-clear="${i}">지우기</button></div>`;
+    const svg = el('svg', { viewBox: `0 0 ${TW} ${TH}`, class: 'tsvg' });
+    div.appendChild(svg); wrap.appendChild(div);
+    const X = t => TL + (t - st.t0) / (st.t1 - st.t0) * (TR - TL);
+    st.X = X;
+    el('rect', { x: TL, y: TT, width: TR - TL, height: TB - TT, fill: '#fff', stroke: '#cbd5e1' }, svg);
+    const span = st.t1 - st.t0, lab = span > 45 ? 10 : 5;
+    const gg = el('g', {}, svg);
+    for (let t = Math.ceil(st.t0); t <= st.t1; t++) {
+      const sec = ((S.quake.origin + t) % 60 + 60) % 60, major = sec % 5 === 0;
+      el('line', { x1: X(t), y1: TT, x2: X(t), y2: TB, stroke: major ? '#cbd5e1' : '#eef2f7', 'stroke-width': 1 }, gg);
+      if (sec % lab === 0) el('text', { x: X(t), y: TB + 16, 'text-anchor': 'middle', 'font-size': 11.5, fill: '#475569', 'font-family': 'Consolas,monospace' }, gg).textContent = clk(t, 0);
+    }
+    el('text', { x: TR, y: TH - 2, 'text-anchor': 'end', 'font-size': 11, fill: '#94a3b8' }, svg).textContent = '시각 (시:분:초) · 가는 눈금 1초';
+    st.pts = new Array(st.N);
+    for (let n = 0; n < st.N; n++) st.pts[n] = X(st.t0 + n * st.dt).toFixed(1) + ',' + (MID - st.data[n] * AMP).toFixed(1);
+    st.gShade = el('g', {}, svg);
+    st.line = el('polyline', { fill: 'none', stroke: '#1f2937', 'stroke-width': 0.9 }, svg);
+    st.gWait = el('g', {}, svg);
+    st.gMarks = el('g', {}, svg);
+    st.gHover = el('g', { 'pointer-events': 'none' }, svg);
+    st.svg = svg;
+    const toT = e => { const r = svg.getBoundingClientRect(); const fx = (e.clientX - r.left) / r.width * TW; return st.t0 + (fx - TL) / (TR - TL) * (st.t1 - st.t0); };
+    svg.addEventListener('mousemove', e => {
+      const g = st.gHover; while (g.firstChild) g.removeChild(g.firstChild);
+      if (!S.recorded) return;
+      const t = Math.round(toT(e) * 10) / 10; if (t < st.t0 || t > st.t1) return;
+      el('line', { x1: X(t), y1: TT, x2: X(t), y2: TB, stroke: '#64748b', 'stroke-dasharray': '3 3' }, g);
+      const tx = Math.min(Math.max(X(t), TL + 40), TR - 40);
+      el('rect', { x: tx - 38, y: TT + 1, width: 76, height: 16, fill: '#1e293b', rx: 3, opacity: .85 }, g);
+      el('text', { x: tx, y: TT + 13, 'text-anchor': 'middle', 'font-size': 11.5, fill: '#fff', 'font-family': 'Consolas,monospace' }, g).textContent = clk(t, 1);
+    });
+    svg.addEventListener('mouseleave', () => { const g = st.gHover; while (g.firstChild) g.removeChild(g.firstChild); });
+    svg.addEventListener('click', e => {
+      if (!S.recorded) return;
+      const t = Math.round(toT(e) * 10) / 10; if (t < st.t0 || t > st.t1) return;
+      const pk = st.pick;
+      if (pk.P == null) pk.P = t;
+      else if (pk.S == null) pk.S = t;
+      else if (Math.abs(t - pk.P) <= Math.abs(t - pk.S)) pk.P = t; else pk.S = t;
+      picksChanged();
+    });
+  });
+  wrap.querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', () => {
+    const st = S.stations[+b.dataset.clear]; st.pick = { P: null, S: null }; picksChanged();
+  }));
+  S.stations.forEach(renderTrace);
+}
+
+function renderTrace(st) {
+  if (!st.svg) return;
+  const n = Math.max(0, Math.min(st.N, Math.floor((S.simT - st.t0) / st.dt) + 1));
+  st.line.setAttribute('points', st.pts.slice(0, n).join(' '));
+  const gw = st.gWait; while (gw.firstChild) gw.removeChild(gw.firstChild);
+  if (S.simT < st.t0) el('text', { x: (TL + TR) / 2, y: MID + 5, 'text-anchor': 'middle', 'font-size': 14, fill: '#94a3b8' }, gw).textContent = S.animating ? '기록 대기 중…' : '';
+  else if (n < st.N) el('circle', { cx: st.X(st.t0 + (n - 1) * st.dt), cy: MID - st.data[Math.max(0, n - 1)] * AMP, r: 3, fill: '#ef4444' }, gw);
+  const gm = st.gMarks, gs = st.gShade;
+  while (gm.firstChild) gm.removeChild(gm.firstChild);
+  while (gs.firstChild) gs.removeChild(gs.firstChild);
+  const X = st.X, pk = st.pick;
+  if (pk.P != null && pk.S != null) {
+    const a = Math.min(pk.P, pk.S), b = Math.max(pk.P, pk.S);
+    el('rect', { x: X(a), y: TT, width: X(b) - X(a), height: TB - TT, fill: '#fde68a', opacity: .35 }, gs);
+    el('line', { x1: X(a), y1: TB - 8, x2: X(b), y2: TB - 8, stroke: '#92400e', 'stroke-width': 1.3 }, gm);
+    el('text', { x: (X(a) + X(b)) / 2, y: TB - 12, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: '#92400e', style: halo }, gm).textContent = `PS시 ${(pk.S - pk.P).toFixed(1)}초`;
+  }
+  if (S.showTrue) [[st.tP, '#2563eb'], [st.tS, '#dc2626']].forEach(([t, c]) =>
+    el('line', { x1: X(t), y1: TT, x2: X(t), y2: TB, stroke: c, 'stroke-width': 1.3, 'stroke-dasharray': '2 3', opacity: .8 }, gm));
+  [['P', '#2563eb'], ['S', '#dc2626']].forEach(([k, c]) => {
+    if (pk[k] == null) return;
+    el('line', { x1: X(pk[k]), y1: TT, x2: X(pk[k]), y2: TB, stroke: c, 'stroke-width': 2 }, gm);
+    el('rect', { x: X(pk[k]) - 9, y: TT, width: 18, height: 16, fill: c, rx: 3 }, gm);
+    el('text', { x: X(pk[k]), y: TT + 12.5, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: '#fff' }, gm).textContent = k;
+  });
+  const rd = $('read' + st.i);
+  if (rd) {
+    const parts = [];
+    parts.push(`<span class="cP">P ${pk.P != null ? clk(pk.P) : '--:--:--.-'}</span>`);
+    parts.push(`<span class="cS">S ${pk.S != null ? clk(pk.S) : '--:--:--.-'}</span>`);
+    if (pk.P != null && pk.S != null) parts.push(pk.S > pk.P ? `PS시 <b>${(pk.S - pk.P).toFixed(1)}초</b>` : '<span class="bad">S파는 P파보다 늦게 도착해요!</span>');
+    rd.innerHTML = parts.join(' · ');
+  }
+}
+
+function psOf(st) { const p = st.pick; return p.P != null && p.S != null && p.S > p.P ? Math.round((p.S - p.P) * 10) / 10 : null; }
+function picksChanged() {
+  S.stations.forEach(renderTrace);
+  updateDistTable(); renderTTC(); clearConstruction(); renderMap(); updateUI();
+}
+
+/* ---------------- 진원 거리 표 ---------------- */
+function buildDistTable() {
+  const tb = document.querySelector('#distTable tbody'); tb.innerHTML = '';
+  if (S.stations.length !== 3) { tb.innerHTML = '<tr><td colspan="4" class="small">관측 자료가 없습니다.</td></tr>'; return; }
+  S.stations.forEach((st, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><span class="tag" style="background:${ST_COLORS[i]}">${LETTERS[i]}</span> ${st.name}</td>
+      <td id="ps${i}">-</td>
+      <td><input type="number" id="dist${i}" step="0.1" min="0" placeholder="km"></td>
+      <td id="chk${i}">-</td>`;
+    tb.appendChild(tr);
+    $('dist' + i).addEventListener('input', () => { updateDistTable(); renderTTC(); clearConstruction(); renderMap(); updateUI(); });
+  });
+  updateDistTable();
+}
+function updateDistTable() {
+  $('kval').textContent = +kConst().toFixed(2);
+  S.stations.forEach((st, i) => {
+    const ps = psOf(st), inp = $('dist' + i); if (!inp) return;
+    $('ps' + i).textContent = ps != null ? ps.toFixed(1) : '-';
+    const v = parseFloat(inp.value), c = $('chk' + i);
+    if (ps == null) { c.innerHTML = '<span class="small">PS시 먼저</span>'; return; }
+    if (!isFinite(v)) { c.innerHTML = '-'; return; }
+    const exp = kConst() * ps;
+    c.innerHTML = Math.abs(v - exp) <= Math.max(1, exp * 0.02)
+      ? '<span class="ok">✔ 정확해요</span>'
+      : `<span class="bad">✘ ${+kConst().toFixed(2)} × ${ps.toFixed(1)} = ?</span>`;
+  });
+}
+
+/* ---------------- 주시 곡선 ---------------- */
+function renderTTC() {
+  const svg = $('ttc'); while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const L = 56, R = 705, T = 14, B = 258;
+  const Rin = S.stations.length ? getR() : [];
+  const maxD = S.stations.length ? Math.max(...S.stations.map((s, i) => Math.max(s.D, Rin[i] || 0))) : 300;
+  const Dmax = Math.max(200, Math.ceil(maxD * 1.25 / 100) * 100);
+  const Tmax = Math.ceil(Dmax / Vs / 10) * 10;
+  const X = d => L + d / Dmax * (R - L), Y = t => B - t / Tmax * (B - T);
+  el('rect', { x: L, y: T, width: R - L, height: B - T, fill: '#fff', stroke: '#cbd5e1' }, svg);
+  const dx = Dmax <= 400 ? 50 : 100, ty = Tmax <= 80 ? 10 : 20;
+  for (let d = 0; d <= Dmax; d += dx) { el('line', { x1: X(d), y1: T, x2: X(d), y2: B, stroke: '#eef2f7' }, svg); el('text', { x: X(d), y: B + 16, 'text-anchor': 'middle', 'font-size': 12, fill: '#475569' }, svg).textContent = d; }
+  for (let t = 0; t <= Tmax; t += ty) { el('line', { x1: L, y1: Y(t), x2: R, y2: Y(t), stroke: '#eef2f7' }, svg); el('text', { x: L - 6, y: Y(t) + 4, 'text-anchor': 'end', 'font-size': 12, fill: '#475569' }, svg).textContent = t; }
+  el('text', { x: (L + R) / 2, y: 292, 'text-anchor': 'middle', 'font-size': 13, fill: '#334155' }, svg).textContent = '진원 거리 (km)';
+  el('text', { x: 14, y: (T + B) / 2, 'text-anchor': 'middle', 'font-size': 13, fill: '#334155', transform: `rotate(-90 14 ${(T + B) / 2})` }, svg).textContent = '도달 시간 (초)';
+  [[Vp, '#2563eb', 'P파'], [Vs, '#dc2626', 'S파']].forEach(([v, c, n]) => {
+    const dEnd = Math.min(Dmax, v * Tmax);
+    el('line', { x1: X(0), y1: Y(0), x2: X(dEnd), y2: Y(dEnd / v), stroke: c, 'stroke-width': 2.5 }, svg);
+    el('text', { x: X(dEnd) - 6, y: Y(dEnd / v) + (v === Vp ? -8 : 16), 'text-anchor': 'end', 'font-size': 13, 'font-weight': 700, fill: c }, svg).textContent = `${n} (${v} km/s)`;
+  });
+  S.stations.forEach((st, i) => {
+    // 학생이 입력한 진원 거리만 표시 (정답을 미리 보여 주지 않음)
+    const d = Rin[i]; if (d == null || d > Dmax) return;
+    const ps = psOf(st), gap = d / Vs - d / Vp;
+    const c = ST_COLORS[i];
+    el('line', { x1: X(d), y1: Y(d / Vs), x2: X(d), y2: B, stroke: c, 'stroke-dasharray': '4 3' }, svg);
+    el('line', { x1: X(d), y1: Y(d / Vp), x2: X(d), y2: Y(d / Vs), stroke: c, 'stroke-width': 5, 'stroke-linecap': 'round' }, svg);
+    const match = ps != null && Math.abs(gap - ps) <= Math.max(0.2, ps * 0.02);
+    const lx = X(d) > (L + R) / 2 ? X(d) - 7 : X(d) + 7;
+    el('text', { x: lx, y: Y((d / Vp + d / Vs) / 2) + 4 + (i - 1) * 16, 'text-anchor': lx < X(d) ? 'end' : 'start', 'font-size': 12.5, 'font-weight': 700, fill: c, style: halo }, svg).textContent =
+      `${LETTERS[i]} ${st.name}: R = ${d.toFixed(1)} km → 시간 차 ${gap.toFixed(1)}초 ` + (ps == null ? '' : match ? '✔ PS시와 일치' : `(측정 PS시 ${ps.toFixed(1)}초와 다름)`);
+  });
+}
+
+/* ---------------- 진앙 · 깊이 ---------------- */
+function animateCircles() {
+  S.circles = true; S.circleProg = 0;
+  const Rs = getR();
+  fitKm(S.stations.flatMap((st, i) => [toLL(st.x - Rs[i], st.y - Rs[i]), toLL(st.x + Rs[i], st.y + Rs[i])]), 0.03);
+  const t0 = performance.now();
+  const step = now => {
+    S.circleProg = Math.min(1, (now - t0) / 900);
+    renderMap();
+    if (S.circleProg < 1) requestAnimationFrame(step); else updateUI();
+  };
+  requestAnimationFrame(step);
+}
+function findEpicenter() {
+  const R = getR(), c = S.stations;
+  const eq = (a, b) => [2 * (c[b].x - c[a].x), 2 * (c[b].y - c[a].y),
+    (c[b].x ** 2 + c[b].y ** 2) - (c[a].x ** 2 + c[a].y ** 2) - R[b] ** 2 + R[a] ** 2];
+  const [a1, b1, c1] = eq(0, 1), [a2, b2, c2] = eq(0, 2);
+  const det = a1 * b2 - a2 * b1;
+  if (Math.abs(det) < 1e-6) { $('epiOut').innerHTML = '<span class="bad">세 관측소가 일직선 위에 있어 공통현이 한 점에서 만나지 않습니다. 관측소를 바꿔 보세요.</span>'; return; }
+  S.est = { x: (c1 * b2 - c2 * b1) / det, y: (a1 * c2 - a2 * c1) / det };
+  S.chords = true;
+  $('epiOut').innerHTML = `세 공통현이 한 점에서 만납니다. ★ <b>추정 진앙</b>: ${latlonStr(S.est.x, S.est.y)}<br><span class="small">(${nearPlace(S.est.x, S.est.y)})</span>`;
+  renderMap(); updateUI();
+}
+function buildDepthSelect() {
+  const sel = $('depthSt'); sel.innerHTML = '';
+  S.stations.forEach((st, i) => { const o = document.createElement('option'); o.value = i; o.textContent = `${LETTERS[i]} ${st.name}`; sel.appendChild(o); });
+}
+function constructDepth() {
+  const i = +$('depthSt').value, st = S.stations[i], R = getR()[i], E = S.est;
+  const delta = Math.hypot(E.x - st.x, E.y - st.y), h2 = R * R - delta * delta;
+  const out = $('depthOut');
+  S.hOk = false; S.hIn = null; $('hIn').value = ''; $('hChk').innerHTML = '';
+  if (!(h2 > 0)) {
+    S.depth = null;
+    $('xsec').style.display = 'none'; $('depthCalc').style.display = 'none'; $('xsecHint').style.display = 'none';
+    out.innerHTML = `<span class="bad">진앙 거리 Δ(${delta.toFixed(1)} km)가 진원 거리 R(${R.toFixed(1)} km)보다 커서 수직선이 원과 만나지 않습니다. 2~3단계의 PS시와 진원 거리를 다시 확인해 보세요.</span>`;
+    renderMap(); updateUI(); return;
+  }
+  const ax = (st.x - E.x) / delta, ay = (st.y - E.y) / delta;
+  const Rr = Math.round(R * 10) / 10, Dr = Math.round(delta * 10) / 10;
+  S.depth = { st, E, h: Math.sqrt(h2), R, delta, Rr, Dr, nx: -ay, ny: ax, ax, ay };
+  out.innerHTML = `지도에 관측소 <b style="color:${ST_COLORS[i]}">${LETTERS[i]}(${st.name})</b>를 이용한 작도가 그려졌습니다.<br>
+    · 진원 거리 R = <b>${Rr.toFixed(1)} km</b> <span class="small">(3단계에서 구한 값 = 원의 반지름)</span><br>
+    · 진앙 거리 Δ = <b>${Dr.toFixed(1)} km</b> <span class="small">(지도에서 잰 관측소–진앙 거리)</span><br>
+    아래 직각삼각형 그림을 참고하여 <b>진원 깊이 h</b>를 계산해 입력하세요.`;
+  $('depthCalc').style.display = 'flex'; $('xsecHint').style.display = 'block';
+  drawXsec(); renderMap(); updateUI();
+  $('hIn').focus();
+}
+function hExpected() { const d = S.depth; return Math.sqrt(Math.max(0, d.Rr * d.Rr - d.Dr * d.Dr)); }
+function checkH() {
+  if (!S.depth) return;
+  const v = parseFloat($('hIn').value);
+  if (!(isFinite(v) && v >= 0)) return;
+  S.hIn = v; S.hOk = true;
+  $('hChk').textContent = '';
+  drawXsec(); reveal();
+  $('st6').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function hInChanged() {
+  const v = parseFloat($('hIn').value);
+  $('btnCheckH').style.display = S.depth && isFinite(v) && v >= 0 ? '' : 'none';
+}
+function drawXsec() {
+  const { st, Rr: R, Dr: delta } = S.depth, h = hExpected();
+  const hTxt = S.hOk ? `h = ${S.hIn.toFixed(1)} km` : 'h = ?';
+  const svg = $('xsec'); svg.style.display = 'block';
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const s = Math.min(560 / delta, 150 / h), x0 = 70, y0 = 50, xe = x0 + delta * s, yh = y0 + h * s;
+  el('rect', { x: 0, y: 0, width: 720, height: y0, fill: '#e0f2fe' }, svg);
+  el('rect', { x: 0, y: y0, width: 720, height: 230 - y0, fill: '#f5ebdc' }, svg);
+  el('line', { x1: 0, y1: y0, x2: 720, y2: y0, stroke: '#78716c', 'stroke-width': 2 }, svg);
+  el('text', { x: 712, y: y0 - 6, 'text-anchor': 'end', 'font-size': 12, fill: '#475569' }, svg).textContent = '지표면 (땅속 단면도)';
+  el('path', { d: `M${x0},${y0 - 18}L${x0 + 11},${y0}L${x0 - 11},${y0}Z`, fill: ST_COLORS[st.i] }, svg);
+  el('text', { x: x0, y: y0 - 24, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 700, fill: ST_COLORS[st.i] }, svg).textContent = `관측소 ${LETTERS[st.i]}`;
+  el('path', { d: starPath(xe, y0, 10), fill: '#f59e0b', stroke: '#7c2d12' }, svg);
+  el('text', { x: xe, y: y0 - 16, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 700, fill: '#b45309' }, svg).textContent = '진앙';
+  el('line', { x1: x0, y1: y0, x2: xe, y2: y0, stroke: '#b45309', 'stroke-width': 3 }, svg);
+  el('line', { x1: x0, y1: y0, x2: xe, y2: yh, stroke: '#1c2533', 'stroke-width': 2.5, 'stroke-dasharray': '7 4' }, svg);
+  el('line', { x1: xe, y1: y0, x2: xe, y2: yh, stroke: '#7c3aed', 'stroke-width': 3 }, svg);
+  el('path', { d: `M${xe - 11},${y0}L${xe - 11},${y0 + 11}L${xe},${y0 + 11}`, fill: 'none', stroke: '#7c3aed', 'stroke-width': 1.5 }, svg);
+  el('circle', { cx: xe, cy: yh, r: 7, fill: '#e11d48' }, svg);
+  el('text', { x: xe + 12, y: yh + 5, 'font-size': 13, 'font-weight': 700, fill: '#e11d48' }, svg).textContent = '진원';
+  el('text', { x: (x0 + xe) / 2, y: y0 + 18, 'text-anchor': 'middle', 'font-size': 13.5, 'font-weight': 700, fill: '#b45309', style: halo }, svg).textContent = `진앙 거리 Δ = ${delta.toFixed(1)} km`;
+  el('text', { x: xe + 10, y: (y0 + yh) / 2 + 4, 'font-size': 14, 'font-weight': 700, fill: '#7c3aed' }, svg).textContent = `진원 깊이 ${hTxt}`;
+  el('text', { x: (x0 + xe) / 2 - 10, y: (y0 + yh) / 2 + 24, 'text-anchor': 'end', 'font-size': 13.5, 'font-weight': 700, fill: '#1c2533', style: halo }, svg).textContent = `진원 거리 R = ${R.toFixed(1)} km`;
+}
+
+function reveal() {
+  S.revealed = true;
+  const q = S.quake, sign = v => { const r = Math.round(v * 10) / 10; return r === 0 ? '±0.0' : (r > 0 ? '+' : '') + r.toFixed(1); };
+  const row = (name, mine, truth, diff, cls = '') => `<tr class="${cls}"><td>${name}</td><td>${mine}</td><td>${truth}</td><td>${diff}</td></tr>`;
+  const hS = S.hIn != null && isFinite(S.hIn) ? S.hIn : null;
+  let html = `<b>📊 내가 구한 값과 실제 값 비교</b>
+    <table class="cmp" style="margin-top:6px"><tr><th>항목</th><th>내가 구한 값</th><th>실제 값</th><th>차이</th></tr>`;
+  html += row('진앙 위치', S.est ? latlonStr(S.est.x, S.est.y) : '-', latlonStr(q.x, q.y), S.est ? `${dist(S.est, q).toFixed(1)} km 떨어짐` : '-');
+  html += row('진원 깊이', hS != null ? hS.toFixed(1) + ' km' : '-', q.depth + ' km', hS != null ? sign(hS - q.depth) + ' km' : '-');
+  S.stations.forEach((s, i) => {
+    const ps = psOf(s), r = getR()[i], tps = s.tS - s.tP;
+    html += row(`${LETTERS[i]} ${s.name} — PS시`, ps != null ? ps.toFixed(1) + '초' : '-', tps.toFixed(1) + '초', ps != null ? sign(ps - tps) + '초' : '-', 'sub');
+    html += row(`${LETTERS[i]} ${s.name} — 진원 거리`, r != null ? r.toFixed(1) + ' km' : '-', s.D.toFixed(1) + ' km', r != null ? sign(r - s.D) + ' km' : '-', 'sub');
+  });
+  html += `</table><span class="small">◎ 실제 진앙: ${nearPlace(q.x, q.y)} — 지도에 실제 진앙(◎)과 추정 진앙(★)이 함께 표시됩니다.<br>
+    ${S.depth ? `📐 5단계의 R = ${S.depth.Rr.toFixed(1)} km, Δ = ${S.depth.Dr.toFixed(1)} km로 계산하면 h = √(R² − Δ²) ≈ ${hExpected().toFixed(1)} km입니다.<br>` : ''}
+    💡 진원 깊이는 진원 거리보다 훨씬 작아서, PS시를 조금만 잘못 읽어도 깊이 값이 크게 달라질 수 있습니다.</span>`;
+  $('revealOut').innerHTML = html;
+  if (HAS_MAP && S.est) fitKm([toLL(S.est.x, S.est.y), [q.lat, q.lon], ...S.cities.map(c => [c.lat, c.lon])], 0.25);
+  renderMap(); updateUI();
+}
+
+/* ---------------- UI 상태 ---------------- */
+function updateUI() {
+  const has3 = S.quake && S.stations.length === 3;
+  const picksDone = has3 && S.stations.every(s => psOf(s) != null);
+  const R = getR(), distDone = has3 && R.length === 3 && R.every(v => v != null);
+  $('btnReplay').disabled = !has3;
+  $('btnQuake').disabled = $('btnPlace').disabled = S.cities.length !== 3;
+  $('btnResetSt').disabled = !S.cities.length;
+  $('stnList').innerHTML = `관측소 (${S.cities.length}/3): ` + (S.cities.length
+    ? S.cities.map((c, i) => `<b style="color:${ST_COLORS[i]}">▲${LETTERS[i]} ${c.n}</b>`).join(' · ') : '<span style="color:var(--muted)">아직 없음</span>');
+  $('chkWave').disabled = !(S.quake && S.quake.mode === 'click');
+  $('chkWave').parentElement.style.opacity = $('chkWave').disabled ? .5 : 1;
+  $('chkWave').parentElement.title = $('chkWave').disabled ? '임의의 장소에서 일으킨 지진은 진앙을 추론할 수 있도록 파면을 보여 주지 않습니다.' : '';
+  $('btnShowTrue').disabled = !S.recorded;
+  $('btnShowTrue').textContent = S.showTrue ? '정답 도착 시각 숨기기' : '정답 도착 시각 보기 (교사용)';
+  $('btnAutoPick').disabled = !S.recorded;
+  hInChanged();
+  $('btnCircles').disabled = !(S.recorded && distDone);
+  $('btnChords').disabled = !(S.circles && S.circleProg >= 1);
+  $('btnDepth').disabled = !S.est;
+  $('btnReveal').disabled = !S.recorded;
+  let cur = 1;
+  if (S.recorded) cur = 2;
+  if (S.recorded && picksDone) cur = 3;
+  if (cur === 3 && distDone) cur = 4;
+  if (cur === 4 && S.est) cur = 5;
+  if (cur === 5 && S.depth && S.hOk) cur = 6;
+  for (let n = 1; n <= 6; n++) {
+    const sec = $('st' + n);
+    sec.classList.toggle('active', n === cur);
+    sec.classList.toggle('done', n < cur || (n === 6 && S.revealed));
+  }
+}
+
+/* ---------------- 이벤트 ---------------- */
+$('btnQuake').addEventListener('click', newQuake);
+$('btnResetSt').addEventListener('click', resetStations);
+$('btnPlace').addEventListener('click', () => {
+  if (!HAS_MAP) { alert('지도를 불러오지 못해 클릭 방식을 사용할 수 없습니다.'); return; }
+  setPlacing(!S.placing);
+  if (!S.placing) setStatus(S.quake ? '클릭을 취소했습니다.' : '아직 지진이 발생하지 않았습니다.', false);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.placing) { setPlacing(false); setStatus('클릭을 취소했습니다.', false); } });
+$('btnReplay').addEventListener('click', () => { S.stations.forEach(s => s.pick = { P: null, S: null }); rebuild(true); });
+$('chkWave').addEventListener('change', renderMap);
+$('chkTruth').addEventListener('change', renderMap);
+$('btnShowTrue').addEventListener('click', () => { S.showTrue = !S.showTrue; S.stations.forEach(renderTrace); updateUI(); });
+$('btnAutoPick').addEventListener('click', () => {
+  S.stations.forEach(s => s.pick = { P: Math.round(s.tP * 10) / 10, S: Math.round(s.tS * 10) / 10 });
+  picksChanged();
+});
+$('btnCheckH').addEventListener('click', checkH);
+$('hIn').addEventListener('keydown', e => { if (e.key === 'Enter') checkH(); });
+$('hIn').addEventListener('input', () => {
+  hInChanged();
+  if (S.hOk) { S.hOk = false; S.hIn = null; drawXsec(); renderMap(); updateUI(); }
+});
+$('btnCircles').addEventListener('click', () => { clearConstruction(); animateCircles(); updateUI(); });
+$('btnChords').addEventListener('click', findEpicenter);
+$('btnDepth').addEventListener('click', constructDepth);
+$('btnReveal').addEventListener('click', reveal);
+['vp', 'vs'].forEach(id => $(id).addEventListener('change', () => {
+  const vp = parseFloat($('vp').value), vs = parseFloat($('vs').value);
+  if (!(vp > 0 && vs > 0 && vp > vs)) { alert('P파 속도는 S파 속도보다 커야 합니다.'); $('vp').value = Vp; $('vs').value = Vs; return; }
+  Vp = vp; Vs = vs; $('kval').textContent = +kConst().toFixed(2);
+  if (S.quake && S.cities.length) rebuild(true); else renderTTC();
+}));
+
+renderMap(); renderTTC(); updateUI();
+</script>
+
+<script>
+/* =====================================================================
+   HoHo earth 추가 기능: 학번·이름·답변 저장, 결과 학습지 인쇄(PDF)
+   - 위 시뮬레이션 코드는 그대로 두고, 그 결과(S 상태)를 읽어서 학습지를 만듭니다.
+   ===================================================================== */
+(function () {
+  var g = function (id) { return document.getElementById(id); };
+  var KEY = 'hohoearth_earthquake_sim_v1';
+  var FIELDS = ['wsId', 'wsName', 'wsDate', 'wsQ1', 'wsQ2', 'wsQ3', 'wsQ4'];
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function save(say) {
+    var d = {}; FIELDS.forEach(function (k) { d[k] = g(k).value; });
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
+    if (say) alert('학번·이름과 생각해 보기 답변을 이 브라우저에 임시 저장했습니다.');
+  }
+  function load() {
+    try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d) FIELDS.forEach(function (k) { if (d[k]) g(k).value = d[k]; }); } catch (e) {}
+  }
+  var now = new Date();
+  g('wsDate').value = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate();
+  load();
+  var t = 0;
+  FIELDS.forEach(function (k) { g(k).addEventListener('input', function () { clearTimeout(t); t = setTimeout(function () { save(false); }, 500); }); });
+  g('wsSave').onclick = g('wsSave2').onclick = function () { save(true); };
+  g('wsReset').onclick = function () {
+    if (!confirm('학번·이름과 생각해 보기 답변을 지울까요? (시뮬레이션 진행 상황은 그대로입니다)')) return;
+    FIELDS.forEach(function (k) { if (k !== 'wsDate') g(k).value = ''; });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  };
+
+  /* ---- 단면 지도: 해안선·관측소·진원 거리 원·진앙을 km 좌표로 그림 (인쇄용) ---- */
+  function mapSvg(R) {
+    if (!S.quake || !S.stations.length) return '';
+    var pts = S.stations.map(function (s) { return [s.x, s.y]; });
+    if (S.est) pts.push([S.est.x, S.est.y]);
+    if (S.revealed) pts.push([S.quake.x, S.quake.y]);
+    var minx = Infinity, maxx = -Infinity, miny = Infinity, maxy = -Infinity;
+    pts.forEach(function (p, i) { var r = (i < S.stations.length && R[i]) ? R[i] : 30; minx = Math.min(minx, p[0] - r); maxx = Math.max(maxx, p[0] + r); miny = Math.min(miny, p[1] - r); maxy = Math.max(maxy, p[1] + r); });
+    var pad = 20; minx -= pad; maxx += pad; miny -= pad; maxy += pad;
+    var W = 680, H = Math.min(420, Math.max(260, W * (maxy - miny) / (maxx - minx)));
+    var sc = Math.min(W / (maxx - minx), H / (maxy - miny));
+    var X = function (x) { return ((x - minx) * sc + (W - (maxx - minx) * sc) / 2).toFixed(1); };
+    var Y = function (y) { return ((y - miny) * sc + (H - (maxy - miny) * sc) / 2).toFixed(1); };
+    var coast = COAST.map(function (c) { var p = P(c[0], c[1]); return X(p[0]) + ',' + Y(p[1]); }).join(' ');
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg"><rect width="' + W + '" height="' + H + '" fill="#eef6fb"/>' +
+      '<polygon points="' + coast + '" fill="#f4efe4" stroke="#94a3b8" stroke-width="1"/>';
+    S.stations.forEach(function (st, i) {
+      if (R[i]) s += '<circle cx="' + X(st.x) + '" cy="' + Y(st.y) + '" r="' + (R[i] * sc).toFixed(1) + '" fill="' + ST_COLORS[i] + '14" stroke="' + ST_COLORS[i] + '" stroke-width="1.6"/>';
+    });
+    S.stations.forEach(function (st, i) {
+      s += '<path d="M' + X(st.x) + ',' + (Y(st.y) - 9) + 'l8,14h-16z" fill="' + ST_COLORS[i] + '" stroke="#fff" stroke-width="1"/>' +
+        '<text x="' + (+X(st.x) + 10) + '" y="' + (Y(st.y) - 6) + '" font-size="13" font-weight="700" fill="' + ST_COLORS[i] + '">' + LETTERS[i] + ' ' + esc(st.name) + '</text>';
+    });
+    if (S.est) s += '<path d="' + starPath(+X(S.est.x), +Y(S.est.y), 9) + '" fill="#f59e0b" stroke="#7c2d12"/><text x="' + (+X(S.est.x) + 11) + '" y="' + (+Y(S.est.y) + 4) + '" font-size="12" font-weight="700" fill="#b45309">추정 진앙</text>';
+    if (S.revealed) s += '<circle cx="' + X(S.quake.x) + '" cy="' + Y(S.quake.y) + '" r="7" fill="none" stroke="#e11d48" stroke-width="2.5"/><circle cx="' + X(S.quake.x) + '" cy="' + Y(S.quake.y) + '" r="2.5" fill="#e11d48"/><text x="' + (+X(S.quake.x) + 10) + '" y="' + (+Y(S.quake.y) + 16) + '" font-size="12" font-weight="700" fill="#e11d48">실제 진앙</text>';
+    return s + '</svg>';
+  }
+
+  function buildReport() {
+    var R = getR(), k = kConst(), q = S.quake;
+    var h = '<h1>지진파를 이용하여 진원과 진앙 찾기 · 탐구 결과</h1>' +
+      '<div class="who"><span>학번: <b>' + esc(g('wsId').value) + '</b></span><span>이름: <b>' + esc(g('wsName').value) + '</b></span><span>일시: ' + esc(g('wsDate').value) + '</span></div>';
+    if (!q || !S.stations.length) {
+      h += '<p>아직 지진을 일으키지 않았습니다. 시뮬레이션 1단계부터 진행한 뒤 다시 인쇄하세요.</p>';
+    } else {
+      h += '<h2>1. 관측소와 지진파의 속도</h2><p>관측소: ' + S.stations.map(function (s, i) { return LETTERS[i] + ' ' + esc(s.name); }).join(' · ') +
+        ' &nbsp;|&nbsp; V<sub>P</sub> = ' + Vp + ' km/s, V<sub>S</sub> = ' + Vs + ' km/s → k = V<sub>P</sub>·V<sub>S</sub> ÷ (V<sub>P</sub> − V<sub>S</sub>) = <b>' + (+k.toFixed(2)) + ' km/s</b></p>';
+      h += '<h2>2. 지진 기록 읽기 — PS시와 진원 거리</h2><table><tr><th>관측소</th><th>P파 도착 시각</th><th>S파 도착 시각</th><th>PS시 (초)</th><th>진원 거리 R (km)</th></tr>';
+      S.stations.forEach(function (s, i) {
+        var ps = psOf(s);
+        h += '<tr><td>' + LETTERS[i] + ' ' + esc(s.name) + '</td><td>' + (s.pick.P != null ? clk(s.pick.P) : '-') + '</td><td>' + (s.pick.S != null ? clk(s.pick.S) : '-') + '</td><td>' +
+          (ps != null ? ps.toFixed(1) : '-') + '</td><td>' + (R[i] != null ? R[i].toFixed(1) : '-') + '</td></tr>';
+      });
+      h += '</table>';
+      var ttc = g('ttc');
+      if (ttc && R.some(function (r) { return r != null; })) h += '<div class="avoid"><p class="muted">주시 곡선으로 확인 (시뮬레이션 3단계)</p>' + ttc.outerHTML + '</div>';
+      h += '<div class="avoid"><h2>3. 진앙 찾기 — 원과 공통현</h2>' + mapSvg(R) +
+        '<p>추정 진앙: <b>' + (S.est ? latlonStr(S.est.x, S.est.y) + ' (' + esc(nearPlace(S.est.x, S.est.y)) + ')' : '아직 구하지 않음') + '</b></p></div>';
+      h += '<div class="avoid"><h2>4. 진원 깊이 구하기</h2>';
+      if (S.depth) {
+        h += '<p>작도한 관측소: ' + LETTERS[S.depth.st.i] + ' ' + esc(S.depth.st.name) + ' &nbsp;|&nbsp; 진원 거리 R = ' + S.depth.Rr.toFixed(1) + ' km, 진앙 거리 Δ = ' + S.depth.Dr.toFixed(1) + ' km</p>' +
+          '<p>h = √(R² − Δ²) = √(' + S.depth.Rr.toFixed(1) + '² − ' + S.depth.Dr.toFixed(1) + '²) ≈ <b>' + (S.hIn != null && isFinite(S.hIn) ? S.hIn.toFixed(1) + ' km (내가 입력한 값)' : '아직 입력하지 않음') + '</b></p>';
+        var xs = g('xsec'); if (xs && xs.style.display !== 'none') h += xs.outerHTML;
+      } else h += '<p>아직 작도하지 않음</p>';
+      h += '</div>';
+      h += '<div class="avoid"><h2>5. 실제 진원과 비교</h2>';
+      if (S.revealed) {
+        var hS = S.hIn != null && isFinite(S.hIn) ? S.hIn : null;
+        h += '<table><tr><th>항목</th><th>내가 구한 값</th><th>실제 값</th><th>차이</th></tr>' +
+          '<tr><td>진앙 위치</td><td>' + (S.est ? latlonStr(S.est.x, S.est.y) : '-') + '</td><td>' + latlonStr(q.x, q.y) + '</td><td>' + (S.est ? dist(S.est, q).toFixed(1) + ' km 떨어짐' : '-') + '</td></tr>' +
+          '<tr><td>진원 깊이</td><td>' + (hS != null ? hS.toFixed(1) + ' km' : '-') + '</td><td>' + q.depth + ' km</td><td>' + (hS != null ? ((hS - q.depth >= 0 ? '+' : '') + (hS - q.depth).toFixed(1) + ' km') : '-') + '</td></tr>';
+        S.stations.forEach(function (s, i) {
+          var ps = psOf(s), tps = s.tS - s.tP;
+          h += '<tr><td>' + LETTERS[i] + ' ' + esc(s.name) + ' PS시</td><td>' + (ps != null ? ps.toFixed(1) + '초' : '-') + '</td><td>' + tps.toFixed(1) + '초</td><td>' + (ps != null ? ((ps - tps >= 0 ? '+' : '') + (ps - tps).toFixed(1) + '초') : '-') + '</td></tr>';
+        });
+        h += '</table><p class="muted">실제 진앙: ' + esc(nearPlace(q.x, q.y)) + '</p>';
+      } else h += '<p>아직 실제 진원을 공개하지 않았습니다 (6단계의 🔍 실제 진원 공개).</p>';
+      h += '</div>';
+    }
+    h += '<h2>6. 생각해 보기</h2>';
+    document.querySelectorAll('.questions li').forEach(function (li, i) {
+      var qt = li.querySelector('.qt'), ta = li.querySelector('textarea');
+      h += '<div class="avoid"><p><b>' + (i + 1) + '.</b> ' + esc(qt ? qt.textContent : '') + '</p><div class="box">' + esc(ta ? ta.value : '') + '</div></div>';
+    });
+    g('report').innerHTML = h;
+  }
+  function doPrint() { save(false); buildReport(); window.print(); }
+  g('wsPrint').onclick = g('wsPrint2').onclick = doPrint;
+  window.addEventListener('beforeprint', buildReport);   // Ctrl+P로 인쇄해도 결과 학습지가 나오도록
+})();
+</script>
+</body>
+</html>

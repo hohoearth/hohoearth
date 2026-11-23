@@ -647,6 +647,64 @@
       </div>
     </div>
 
+    <!-- 쇼케이스 6: [지구과학 탐구] 지진파를 이용하여 진원과 진앙 찾기 -->
+    <div class="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-xl shadow-slate-100 group">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+        <!-- 좌측 설명 -->
+        <div class="lg:col-span-6 p-8 sm:p-12 lg:p-14 flex flex-col justify-between z-10">
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-rose-50 text-rose-700 border border-rose-200/60">
+                지구과학 탐구 활동
+              </span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-sky-50 text-sky-700 border border-sky-200/60">
+                지진 관측 시뮬레이터
+              </span>
+              <span class="text-xs font-mono text-slate-500 font-semibold">2026 탐구활동</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+              지진파를 이용하여 진원과 진앙 찾기
+            </h3>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              한반도 지도에서 <strong>관측소 3곳</strong>을 정하고 가상의 지진을 일으킨 뒤, 지진 기록에서 <strong>P파·S파 도착 시각</strong>을 직접 읽어 PS시를 구합니다.
+              PS시로 <strong>진원 거리</strong>를 계산하고, 세 원의 <strong>공통현</strong>으로 진앙을 찾은 다음, 직각삼각형의 관계로 <strong>진원 깊이</strong>까지 구해 실제 진원과 비교하는 탐구활동입니다. 탐구 결과는 <strong>A4 결과 학습지로 인쇄·PDF 저장</strong>할 수 있습니다.
+            </p>
+          </div>
+
+          <!-- 하단 링크 & 액션 -->
+          <div class="pt-8 border-t border-slate-100 space-y-5">
+            <div class="grid grid-cols-3 gap-3 text-xs text-slate-500">
+              <div><strong class="text-slate-900 block text-sm font-bold">P파·S파</strong> 지진 기록 직접 판독</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">원과 공통현</strong> 지도 위 진앙 작도</div>
+              <div><strong class="text-slate-900 block text-sm font-bold">진원 깊이</strong> h = √(R² − Δ²)</div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <a
+                href="activities/earthquake-epicenter.html"
+                class="px-6 py-3.5 rounded-xl glass-btn-primary text-xs tracking-wider uppercase font-bold inline-flex items-center gap-2 shadow-md shadow-indigo-100"
+              >
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>탐구 시뮬레이션 &amp; 결과 학습지 시작</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측 비주얼 -->
+        <div class="lg:col-span-6 relative overflow-hidden h-72 lg:h-auto bg-slate-950 flex items-center justify-center p-6">
+          <img
+            src="assets/inquiry/earthquake/earthquake_thumb.jpg"
+            alt="지진 관측 시뮬레이터 화면"
+            class="w-full h-full object-cover object-left-top rounded-2xl border border-slate-800 shadow-2xl group-hover:scale-[1.02] transition-transform duration-700"
+          />
+          <div class="absolute bottom-10 right-10 bg-slate-900/90 backdrop-blur-md text-white px-4 py-2.5 rounded-xl border border-slate-700/80 text-xs font-mono shadow-lg flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-400 animate-pulse"></span>
+            <span>P–S Time · Epicenter · Focal Depth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </section>
 
